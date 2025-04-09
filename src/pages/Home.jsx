@@ -21,7 +21,8 @@ import contactUsImage from "@assets/images/Contact.webp";
 import faqImage from "@assets/images/FAQ.webp";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Loading from "../components/Loading";
+import Loading from "@components/Loading";
+import CategoryCircleCard from "@components/category/CategoryCircleCard";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -56,141 +57,32 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const searchPhrase = e.target.search.value;
-    if (searchPhrase?.length > 0) {
-      navigate(`/search/${searchPhrase}`);
-    } else {
-      toast.error("نام محصول مورد نظر را وارد کنید");
-    }
-  };
+  // const handleSearch = (e) => {
+  //   e.preventDefault();
+  //   const searchPhrase = e.target.search.value;
+  //   if (searchPhrase?.length > 0) {
+  //     navigate(`/search/${searchPhrase}`);
+  //   } else {
+  //     toast.error("نام محصول مورد نظر را وارد کنید");
+  //   }
+  // };
 
   if (loading) return <Loading />;
 
   return (
     <>
-
-
-      {/* Hero Section */}
-      {/* CTA */}
-      <section className="py-16 bg-CarbonicBlue-500 ">
-        {/* lets search */}
-        <div className="max-w-screen-xl  px-4 mx-auto lg:text-center lg:px-8">
-          <div className="max-w-xl space-y-3 lg:mx-auto">
-            <p className="text-white font-EstedadMedium text-center text-xl drop-shadow-2xl lg:text-3xl">
-              بدنبال کالای خاصی میگردید؟
-            </p>
-          </div>
-          <form
-            onSubmit={(e) => {
-              handleSearch(e);
-            }}
-            className="max-w-md px-4 mx-auto mt-7 lg:mt-12"
-          >
-            <div className="relative">
-              <button
-                type="submit"
-                className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 cursor-pointer left-3 hover:scale-105  hover:text-gray-900 transition-all duration-300 ease-in-out"
-              >
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-              <input
-                type="text"
-                name="search"
-                placeholder="جستجوی محصول"
-                className="w-full py-3 pl-12 pr-4 text-gray-500 border rounded-md outline-none font-EstedadLight bg-gray-50 focus:bg-white focus:border-CarbonicBlue-500"
-              />
-            </div>
-          </form>
-        </div>
-      </section>
-      {/* CTA */}
       {/* categories */}
-      <section className="py-8 lg:py-14">
-        <div className="xl:max-w-screen-xl xl:px-4 mx-auto text-CarbonicBlue-500 ">
-          <h3
-            className="  font-EstedadExtraBold text-center text-2xl drop-shadow-2xl
-            pb-6
-              lg:text-3xl
-              xl:text-4xl xl:font-bold xl:pb-12
-              text-transparent bg-clip-text bg-gradient-to-r from-Amber-500 to-CarbonicBlue-500
-              "
-          >
-            دسته بندی محصولات
-          </h3>
-          <div
-            className="w-full 
-          px-6
-          "
-          >
-            <div
-              className="w-full grid grid-cols-12 items-center justify-center 
-            
-            lg:gap-4
-            2xl:gap-8 "
-            >
-              <div
-                className="w-full 
-              col-span-12 gap-2
-            md:gap-4
-
-              lg:col-span-10 lg:gap-8
-               grid grid-cols-12
-              
-               "
-              >
-                {result?.categories?.map((item, idx) => (
-                  <Link
-                    key={idx}
-                    to={`/category/${Math.floor(item?.Code)}`}
-                    className="w-full flex lg:flex-row justify-between
-                    items-center border rounded-r-full shadow-md duration-300 shadow-CarbonicBlue-500/50 
-                    col-span-12 
-                    md:col-span-6 
-                    lg:col-span-4 
-                    xl:col-span-3
-                    hover:scale-105 ease-in-out transition-all "
-                  >
-                    <div className="flex flex-row">
-                      <img
-                        src={
-                          "https://kidsshopapi.electroshop24.ir/category-images/webp/" +
-                          `${item?.PicName}.webp`
-                        }
-                        alt={item?.Name}
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFFFFF'/%3E%3C/svg%3E";
-                        }}
-                        className="w-24 h-24 m-2 rounded-full shadow-md shadow-gray-300"
-                      />
-                    </div>
-                    <div className="flex flex-col px-3">
-                      <h4 className="mx-2 text-lg text-center text-CarbonicBlue-500 font-EstedadMedium">
-                        {item?.Name}
-                      </h4>
-                      <p className=" font-EstedadLight ">{item?.Comment}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-              <div className="w-full col-span-12 lg:col-span-2 lg:mt-0 mt-20 ">
-                <Link
-                  to={"/categoires"}
-                  className="block w-fit mx-auto lg:mx-0  text-white shadow-sm shadow-purple-500 font-semibold hover:bg-CarbonicBlue-500/20  font-EstedadMedium rounded-full text-sm p-2 duration-300  text-center"
-                >
-                  <img
-                    src={arrowLeft}
-                    className="text-white -rotate-90 lg:rotate-0 mx-auto hover:stroke-[#fff]"
-                    alt="left arrow to categories"
-                  />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section
+        className="max-w-7xl mx-auto 
+        xl:py-8 
+        col-span-12 gap-2
+        grid grid-cols-12
+        grid-rows-1
+        overflow-x-scroll"
+      >
+        {result?.categories?.map((item, idx) => (
+          <CategoryCircleCard item={item} key={idx} colSpan="xl:col-span-1" />
+        ))}
       </section>
       {/* categories */}
       {/* offered products */}
@@ -323,8 +215,6 @@ const Home = () => {
         </section>
       )}
       {/* products */}
-
-
 
       <section
         className=" grid grid-cols-12 w-full 
