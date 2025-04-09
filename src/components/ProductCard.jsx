@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
-import { formatCurrencyDisplay } from "../../utils/numeralHelpers";
-import { userPriceSelect } from "../../utils/userPriceHelper";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import { userPriceSelect } from "@utils/userPriceHelper";
 import { useContext } from "react";
-import UserContext from "../../UserContext";
+import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 import { FaBoxes } from "react-icons/fa";
 import { FaBox } from "react-icons/fa6";

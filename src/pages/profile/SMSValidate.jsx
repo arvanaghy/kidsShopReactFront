@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UserContext from "../../../UserContext";
+import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 const SMSValidate = () => {
   const [otp, setOtp] = useState("");

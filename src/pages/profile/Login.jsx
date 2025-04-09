@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import UserContext from "../../../UserContext";
+import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 import loginSvg from "/src/assets/images/login-svgrepo-com.svg";
 

@@ -1,9 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import UserContext from "UserContext";
-import { formatCurrencyDisplay } from "utils/numeralHelpers";
-import logoImage from "assets/images/HPE-self.webp";
+import UserContext from "@context/UserContext";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import logoImage from "@assets/images/HPE-self.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCartShopping,

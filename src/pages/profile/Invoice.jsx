@@ -2,14 +2,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import UserContext from "../../../UserContext";
-import { formatCurrencyDisplay } from "../../../utils/numeralHelpers";
+import UserContext from "@context/UserContext";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import ProfileLayout from "./ProfileLayout";
 import toast from "react-hot-toast";
 import { CiBarcode } from "react-icons/ci";
 import { IoCalendarOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import Loading from "../../components/Loading";
+import Loading from "@components/Loading";
 
 const Invoice = () => {
   const { user } = useContext(UserContext);

@@ -2,8 +2,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import UserContext from "../../../UserContext";
-import { formatCurrencyDisplay } from "../../../utils/numeralHelpers";
+import UserContext from "@context/UserContext";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import ProfileLayout from "./ProfileLayout";
 import toast from "react-hot-toast";
 import { CiBarcode } from "react-icons/ci";

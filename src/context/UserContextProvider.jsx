@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import UserContext from "../UserContext";
+import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 
 const UserContextProvider = ({ children }) => {

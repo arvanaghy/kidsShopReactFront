@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UserContext from "../../../UserContext";
+import UserContext from "@context/UserContext";
 import { useContext, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";

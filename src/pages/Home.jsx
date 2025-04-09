@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "@components/ProductCard";
 import FAQ from "./FAQ";
 import ContactUs from "./ContactUs";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,8 +17,8 @@ import arrowLeft from "/src/assets/images/left-arrow-direction-svgrepo-com.svg";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import toast from "react-hot-toast";
 
-import contactUsImage from "../../assets/images/Contact.webp";
-import faqImage from "../../assets/images/FAQ.webp";
+import contactUsImage from "@assets/images/Contact.webp";
+import faqImage from "@assets/images/FAQ.webp";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from "../components/Loading";

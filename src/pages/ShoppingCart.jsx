@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useState, useContext, useEffect, useReducer } from "react";
-import { formatCurrencyDisplay } from "../../utils/numeralHelpers";
-import { userPriceSelect } from "../../utils/userPriceHelper";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import { userPriceSelect } from "@utils/userPriceHelper";
 import { Link, useNavigate } from "react-router-dom";
-import UserContext from "../../UserContext";
+import UserContext from "@context/UserContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { IoTrashOutline } from "react-icons/io5";

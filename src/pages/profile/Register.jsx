@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import UserContext from "../../../UserContext";
+import UserContext from "@context/UserContext";
 import registerSVG from "/src/assets/images/sign-in-register-svgrepo-com.svg";
 
 const Register = () => {

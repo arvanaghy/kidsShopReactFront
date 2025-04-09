@@ -2,11 +2,11 @@
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import { formatCurrencyDisplay } from "../../utils/numeralHelpers";
-import UserContext from "../../UserContext";
-import { userPriceSelect } from "../../utils/userPriceHelper";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import UserContext from "@context/UserContext";
+import { userPriceSelect } from "@utils/userPriceHelper";
 import toast from "react-hot-toast";
-import ProductCard from "../components/ProductCard";
+import ProductCard from "@components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 

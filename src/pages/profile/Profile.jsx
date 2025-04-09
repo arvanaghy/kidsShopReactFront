@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import ProfileLayout from "./ProfileLayout";
-import UserContext from "../../../UserContext";
+import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { LuShieldCheck, LuShieldClose } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
-import { formatCurrencyDisplay } from "../../../utils/numeralHelpers";
-import Loading from "../../components/Loading";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import Loading from "@components/Loading";
 const Profile = () => {
   const navigateTo = useNavigate();
 
