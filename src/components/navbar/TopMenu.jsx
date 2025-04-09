@@ -1,5 +1,5 @@
-import TopBar from "../components/navbar/TopBar";
-import TopNavBar from "../components/navbar/TopNavBar";
+import TopBar from "@components/navbar/TopBar";
+import TopNavBar from "@components/navbar/TopNavBar";
 
 const TopMenu = () => {
   return (

@@ -1,16 +1,14 @@
 import { Outlet } from "react-router-dom";
-import TopMenu from "./TopMenu";
-import Footer from "./Footer";
+import TopMenu from "@components/navbar/TopMenu";
+import Footer from "@layouts/Footer";
 import { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
-import MobileNav from "./MobileNav";
+import MobileNav from "@components/navbar/MobileNav";
 
 const MainLayout = () => {
   return (
-    <div>
-      <div className="h-[10vh] ">
-        <TopMenu />
-      </div>
+    <div className="min-h-screen w-full ">
+      <TopMenu />
       <div className="min-h-[90vh] bg-gray-50 ">
         <Toaster
           toastOptions={{

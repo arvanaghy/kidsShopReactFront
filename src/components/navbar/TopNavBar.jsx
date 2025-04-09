@@ -67,7 +67,7 @@ const TopNavBar = () => {
 
   return (
     <nav
-      className={`block fixed top-0 shadow-md shadow-gray-700/70 z-50 font-EstedadMedium bg-CarbonicBlue-500 w-full`}
+      className={`block sticky top-0 shadow-md shadow-gray-700/70 z-50 font-EstedadMedium bg-CarbonicBlue-500 w-full`}
       style={{ zIndex: 9999 }}
     >
       <div
