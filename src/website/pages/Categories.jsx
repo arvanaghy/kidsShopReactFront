@@ -35,7 +35,7 @@ const Categories = () => {
   };
   useEffect(() => {
     fetchCategories(
-      `https://api.electroshop24.ir/api/v1/list-categories?page=1`
+      `https://kidsshopapi.electroshop24.ir/api/v1/list-categories?page=1`
     );
     window.scrollTo(0, 0);
   }, []);
@@ -97,7 +97,7 @@ const Categories = () => {
                                 "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFFFFF'/%3E%3C/svg%3E";
                             }}
                             src={
-                              "https://api.electroshop24.ir/category-images/webp/" +
+                              "https://kidsshopapi.electroshop24.ir/category-images/webp/" +
                               `${item.PicName}.webp`
                             }
                             alt={item.Name}

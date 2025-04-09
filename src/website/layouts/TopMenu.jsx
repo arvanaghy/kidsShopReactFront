@@ -33,7 +33,7 @@ const TopMenu = () => {
       });
 
       if (status !== 200) throw new Error(data?.message);
-      setCatgeoires(data?.result?.data);
+      setCatgeoires(data?.result?.categories);
     } catch (error) {
       toast.error(
         "لیست دسته بندی ها :  " + error?.response?.data?.message ||
@@ -59,7 +59,7 @@ const TopMenu = () => {
 
   useEffect(() => {
     if (!user) return;
-    fetchCategories("https://api.electroshop24.ir/api/v1/list-categories");
+    fetchCategories("https://kidsshopapi.electroshop24.ir/api/v2/top-menu");
   }, [user, cart]);
 
   return (
@@ -181,7 +181,7 @@ const TopMenu = () => {
                                   "
                             >
                               <img
-                                src={`https://api.electroshop24.ir/category-images/webp/${dropdownItem?.PicName}.webp`}
+                                src={`https://kidsshopapi.electroshop24.ir/category-images/webp/${dropdownItem?.PicName}.webp`}
                                 alt={dropdownItem?.Name}
                                 onError={(e) => {
                                   e.target.onerror = null;
@@ -192,7 +192,7 @@ const TopMenu = () => {
                               />
                               <div
                                 className="md:text-xs
-                                    lg:text-xs xl:text-sm
+                                    xl:text-sm
                                     2xl:text-xl 
                                      backdrop-shadow-lg  group-hover:text-stone-50 lg:text-base group-hover:scale-105 duration-150"
                               >

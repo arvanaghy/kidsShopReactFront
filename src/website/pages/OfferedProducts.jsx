@@ -11,7 +11,7 @@ const OfferedProducts = () => {
   const [links, setLinks] = useState([]);
   const [isProductsLoading, setIsProductsLoading] = useState(true);
   const [url, setUrl] = useState(
-    `https://api.electroshop24.ir/api/v1/offerd-products?page=1`
+    `https://kidsshopapi.electroshop24.ir/api/v1/offerd-products?page=1`
   );
 
   const fetchProducts = async () => {

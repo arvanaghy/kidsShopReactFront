@@ -34,7 +34,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    letsSearch(`https://api.electroshop24.ir/api/v1/search/${searchPhrase}`);
+    letsSearch(`https://kidsshopapi.electroshop24.ir/api/v1/search/${searchPhrase}`);
   }, [searchPhrase]);
 
   return (
@@ -82,7 +82,7 @@ const Search = () => {
                   onSubmit={(e) => {
                     e.preventDefault();
                     letsSearch(
-                      `https://api.electroshop24.ir/api/v1/search/${e.target.search.value}`
+                      `https://kidsshopapi.electroshop24.ir/api/v1/search/${e.target.search.value}`
                     );
                   }}
                   className="flex flex-col items-center justify-center w-full px-4 mx-auto my-2 font-EstedadMedium"

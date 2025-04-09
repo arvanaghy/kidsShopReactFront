@@ -17,7 +17,7 @@ const WebPayment = () => {
     document.body.style.overflow = "hidden";
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/zarinpal-payment-callback",
+        "https://kidsshopapi.electroshop24.ir/api/v1/zarinpal-payment-callback",
         {
           Authority: authority,
         }

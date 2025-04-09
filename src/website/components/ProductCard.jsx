@@ -80,12 +80,7 @@ const ProductCard = ({ item }) => {
   const handleInputChange = (e, product) => {
     const value = e.target?.value;
     if (value < 1 || value == null || value == "") {
-      setToast({
-        show: true,
-        message: "تعداد باید بیشتر از صفر باشد",
-        type: "error",
-        title: "خطا",
-      });
+      toast.error("تعداد باید بیشتر از صفر باشد")
       e.target.value = null;
       e.target.focus;
       return;
@@ -118,7 +113,7 @@ const ProductCard = ({ item }) => {
 
   return (
     <div
-      className='w-full border  rounded-lg shadow-lg border-CarbonicBlue-500/80 bg-stone-50 hover:shadow-xl lg:hover:scale-105 duration-300 ease-in-out relative overflow-hidden group
+      className='border  rounded-lg shadow-lg border-CarbonicBlue-500/80 bg-stone-50 hover:shadow-xl lg:hover:scale-105 duration-300 ease-in-out relative overflow-hidden group
       col-span-12 h-56
       sm:col-span-6
       md:col-span-6 md:h-64 w-fit
@@ -133,7 +128,7 @@ const ProductCard = ({ item }) => {
         
         lg:h-3/4">
         <img
-          src={`https://api.electroshop24.ir/products-image/webp/${Math.floor(
+          src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
             item?.GCode
           )}/${Math.floor(item?.SCode)}/${item?.PicName}.webp`}
           alt={item?.Name}
@@ -148,7 +143,7 @@ const ProductCard = ({ item }) => {
         />
       </Link>
 
-      <h2 className="text-center text-sm py-1 z-30 absolute top-0 text-white left-0 font-EstedadLight bg-CarbonicBlue-500/80  line-clamp-1 px-4 rounded-br-xl
+      <h2 className="text-center py-1 z-30 absolute top-0 text-white left-0 font-EstedadLight bg-CarbonicBlue-500/80  line-clamp-1 px-4 rounded-br-xl
       text-xs
       lg:text-sm
       
@@ -296,7 +291,7 @@ const ProductCard = ({ item }) => {
             <CommentShorter commentData={item?.Comment} />
           </div>
         )}
-        <div className="w-full hidden group-hover:flex flex-row space-x-1 py-2 justify-around w-full xl:px-10 duration-300">
+        <div className="hidden group-hover:flex flex-row space-x-1 py-2 justify-around w-full xl:px-10 duration-300">
           <div className="flex flex-row">
             <button
               className="w-8 h-8 font-bold text-CarbonicBlue-500 rounded-lg bg-Amber-500 hover:bg-Amber-500/80 hover:scale-105"

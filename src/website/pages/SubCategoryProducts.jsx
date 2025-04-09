@@ -76,10 +76,10 @@ const SubCategoryProducts = () => {
 
   useEffect(() => {
     fetchproducts(
-      `https://api.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/UCode?page=1`
+      `https://kidsshopapi.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/UCode?page=1`
     );
     fetchSubCategory(
-      `https://api.electroshop24.ir/api/v1/search-subcategory-by-code/${subCategoryCode}`
+      `https://kidsshopapi.electroshop24.ir/api/v1/search-subcategory-by-code/${subCategoryCode}`
     );
   }, [subCategoryCode]);
 
@@ -180,7 +180,7 @@ const SubCategoryProducts = () => {
                         className="w-full h-10 mx-1 my-3 text-white rounded-lg bg-Amber-500 duration-200 hover:scale-105 hover:bg-Amber-500/80 shadow-md shadow-gray-300"
                         onClick={() =>
                           fetchproducts(
-                            `https://api.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/price_asc?page=1`
+                            `https://kidsshopapi.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/price_asc?page=1`
                           )
                         }
                       >
@@ -190,7 +190,7 @@ const SubCategoryProducts = () => {
                         className="w-full h-10 mx-1 my-3 text-white rounded-lg bg-Amber-500 duration-200 hover:scale-105 hover:bg-Amber-500/80 shadow-md shadow-gray-300"
                         onClick={() =>
                           fetchproducts(
-                            `https://api.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/price_des?page=1`
+                            `https://kidsshopapi.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/price_des?page=1`
                           )
                         }
                       >
@@ -203,7 +203,7 @@ const SubCategoryProducts = () => {
                         className="w-full h-10 mx-1 my-3 text-white rounded-lg bg-Amber-500 duration-200 hover:scale-105 hover:bg-Amber-500/80 shadow-md shadow-gray-300"
                         onClick={() =>
                           fetchproducts(
-                            `https://api.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/UCode?page=1`
+                            `https://kidsshopapi.electroshop24.ir/api/v1/list-subcategory-products-for-website/${subCategoryCode}/UCode?page=1`
                           )
                         }
                       >

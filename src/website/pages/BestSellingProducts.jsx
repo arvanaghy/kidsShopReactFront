@@ -37,7 +37,7 @@ const BestSellingProducts = () => {
   };
 
   useEffect(() => {
-    fetchProducts(`https://api.electroshop24.ir/api/v1/best-seller`);
+    fetchProducts(`https://kidsshopapi.electroshop24.ir/api/v1/best-seller`);
   }, []);
 
   return (

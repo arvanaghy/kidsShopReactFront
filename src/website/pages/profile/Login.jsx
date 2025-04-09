@@ -22,7 +22,7 @@ const Login = () => {
     if (pattern.test(phoneNumber)) {
       try {
         const { data, status } = await axios.post(
-          "https://api.electroshop24.ir/api/v1/login",
+          "https://kidsshopapi.electroshop24.ir/api/v1/login",
           {
             phoneNumber: phoneNumber,
           }
@@ -73,7 +73,7 @@ const Login = () => {
     if (!user || user.length === 0 || user.UToken === null) return;
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/verify-token",
+        "https://kidsshopapi.electroshop24.ir/api/v1/verify-token",
         {
           UToken: user?.UToken,
         }

@@ -26,7 +26,7 @@ const UnconfirmedOrders = () => {
   const [modal, setModal] = useState(false);
 
   const fetchOrders = async (
-    orderUrl = "https://api.electroshop24.ir/api/v1/list-unverified-orders?page=1"
+    orderUrl = "https://kidsshopapi.electroshop24.ir/api/v1/list-unverified-orders?page=1"
   ) => {
     if (isOrderloading) return;
 
@@ -78,7 +78,7 @@ const UnconfirmedOrders = () => {
     setIsOrderDetailLoading(true);
     try {
       const { data, status } = await axios.get(
-        `https://api.electroshop24.ir/api/v1/list-unverified-orders-products/${Math.floor(
+        `https://kidsshopapi.electroshop24.ir/api/v1/list-unverified-orders-products/${Math.floor(
           orderCode
         )}?page=1`,
         {
@@ -121,7 +121,7 @@ const UnconfirmedOrders = () => {
   useEffect(() => {
     if (user && user?.UToken && user?.UToken !== null && user?.UToken !== "") {
       fetchOrders(
-        "https://api.electroshop24.ir/api/v1/list-unverified-orders?page=1"
+        "https://kidsshopapi.electroshop24.ir/api/v1/list-unverified-orders?page=1"
       );
     }
   }, [user]);

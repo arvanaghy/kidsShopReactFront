@@ -20,7 +20,7 @@ const MobileNav = () => {
         <div className="w-full grid grid-cols-6 justify-center items-center place-items-stretch h-full">
           <Link
             to={"/products"}
-            className="block flex flex-col items-center space-y-1.5"
+            className="flex flex-col items-center space-y-1.5"
           >
             <FontAwesomeIcon icon={faGift} />
             {/* <span className="text-xs">فروشگاه</span> */}

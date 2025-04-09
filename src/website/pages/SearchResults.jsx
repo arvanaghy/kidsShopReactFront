@@ -22,7 +22,7 @@ const Products = () => {
     if (user & user?.Utoken) {
       try {
         const { data, status } = await axios.get(
-          `https://api.electroshop24.ir/api/v1/search/${searchPhrase}?page=${currentPage}`,
+          `https://kidsshopapi.electroshop24.ir/api/v1/search/${searchPhrase}?page=${currentPage}`,
           {
             headers: {
               Authorization: `Bearer ${user.UToken}`,
@@ -46,7 +46,7 @@ const Products = () => {
     } else {
       try {
         const { data, status } = await axios.get(
-          `https://api.electroshop24.ir/api/v1/search/${searchPhrase}?page=${currentPage}`,
+          `https://kidsshopapi.electroshop24.ir/api/v1/search/${searchPhrase}?page=${currentPage}`,
           {
             headers: {
               cache: "no-cache",

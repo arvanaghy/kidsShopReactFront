@@ -26,7 +26,7 @@ const ProfileLayout = () => {
     setIsPending(true);
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/log-out",
+        "https://kidsshopapi.electroshop24.ir/api/v1/log-out",
         {
           UToken: user?.UToken,
         },

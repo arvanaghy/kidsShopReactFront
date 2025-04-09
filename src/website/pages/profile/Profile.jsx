@@ -54,10 +54,10 @@ const Profile = () => {
   useEffect(() => {
     if (!user) return;
     fetchConfirmedOrders(
-      "https://api.electroshop24.ir/api/v1/list-past-orders?page=1"
+      "https://kidsshopapi.electroshop24.ir/api/v1/list-past-orders?page=1"
     );
     fetchUnConfirmedOrders(
-      "https://api.electroshop24.ir/api/v1/list-unverified-orders?page=1"
+      "https://kidsshopapi.electroshop24.ir/api/v1/list-unverified-orders?page=1"
     );
     window.scrollTo(0, 0);
   }, [user]);

@@ -18,7 +18,7 @@ const Invoice = () => {
   const [balance, setBalance] = useState(0);
   const [links, setLinks] = useState([]);
   const [url, setUrl] = useState(
-    "https://api.electroshop24.ir/api/v1/list-past-invoice?page=1"
+    "https://kidsshopapi.electroshop24.ir/api/v1/list-past-invoice?page=1"
   );
 
   const navigateTo = useNavigate();
@@ -51,7 +51,7 @@ const Invoice = () => {
   const getDetails = async (orderCode) => {
     try {
       const { data, status } = await axios.get(
-        `https://api.electroshop24.ir/api/v1/list-past-orders-products/${Math.floor(
+        `https://kidsshopapi.electroshop24.ir/api/v1/list-past-orders-products/${Math.floor(
           orderCode
         )}?page=1`,
         {
@@ -76,7 +76,7 @@ const Invoice = () => {
     try {
       setLoading(true);
       const { data, status } = await axios.get(
-        `https://api.electroshop24.ir/api/v1/account-balance`,
+        `https://kidsshopapi.electroshop24.ir/api/v1/account-balance`,
         {
           headers: {
             Authorization: `Bearer ${user?.UToken}`,

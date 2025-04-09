@@ -15,7 +15,7 @@ const SMSValidate = () => {
     setIsPending(true);
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/verify-sms",
+        "https://kidsshopapi.electroshop24.ir/api/v1/verify-sms",
         {
           phoneNumber: phoneNumber,
           sms: otp,
@@ -54,7 +54,7 @@ const SMSValidate = () => {
   const resendSMS = async () => {
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/resend-sms",
+        "https://kidsshopapi.electroshop24.ir/api/v1/resend-sms",
         {
           phoneNumber: phoneNumber,
         },
@@ -82,7 +82,7 @@ const SMSValidate = () => {
     if (!user || user.length === 0 || user.UToken === null) return;
     try {
       const { data } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/verify-token",
+        "https://kidsshopapi.electroshop24.ir/api/v1/verify-token",
         {
           UToken: user?.UToken,
         },

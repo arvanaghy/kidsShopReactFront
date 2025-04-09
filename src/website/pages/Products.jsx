@@ -40,7 +40,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchProducts(
-      `https://api.electroshop24.ir/api/v1/list-products-for-website/UCode?page=1`
+      `https://kidsshopapi.electroshop24.ir/api/v1/list-products-for-website/UCode?page=1`
     );
   }, []);
 
@@ -119,7 +119,7 @@ const Products = () => {
                       className="w-full h-10 mx-1 my-3 text-white rounded-lg bg-Amber-500 duration-200 hover:scale-105 hover:bg-Amber-500/80 shadow-md shadow-gray-300"
                       onClick={() =>
                         fetchProducts(
-                          `https://api.electroshop24.ir/api/v1/list-products-for-website/price_asc?page=1`
+                          `https://kidsshopapi.electroshop24.ir/api/v1/list-products-for-website/price_asc?page=1`
                         )
                       }
                     >
@@ -129,7 +129,7 @@ const Products = () => {
                       className="w-full h-10 mx-1 my-3 text-white rounded-lg bg-Amber-500 duration-200 hover:scale-105 hover:bg-Amber-500/80 shadow-md shadow-gray-300"
                       onClick={() =>
                         fetchProducts(
-                          `https://api.electroshop24.ir/api/v1/list-products-for-website/price_des?page=1`
+                          `https://kidsshopapi.electroshop24.ir/api/v1/list-products-for-website/price_des?page=1`
                         )
                       }
                     >
@@ -142,7 +142,7 @@ const Products = () => {
                       className="w-full h-10 mx-1 my-3 text-white rounded-lg bg-Amber-500 duration-200 hover:scale-105 hover:bg-Amber-500/80 shadow-md shadow-gray-300"
                       onClick={() =>
                         fetchProducts(
-                          `https://api.electroshop24.ir/api/v1/list-products-for-website/UCode?page=1`
+                          `https://kidsshopapi.electroshop24.ir/api/v1/list-products-for-website/UCode?page=1`
                         )
                       }
                     >

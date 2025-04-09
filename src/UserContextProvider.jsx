@@ -11,13 +11,13 @@ const UserContextProvider = ({ children }) => {
 
   const fetchUser = () => {
     try {
-      const _user = window.localStorage.getItem("ElectroErfan_User");
+      const _user = window.localStorage.getItem("KidsShop_User");
       if (_user) {
         setUser(JSON.parse(_user));
       }
     } catch (err) {
       toast.error('fetchUser Context Error:' + err.message);
-      window.localStorage.removeItem("ElectroErfan_User");
+      window.localStorage.removeItem("KidsShop_User");
       setUser([]);
     }
   }
@@ -25,13 +25,13 @@ const UserContextProvider = ({ children }) => {
 
   const fetchCart = () => {
     try {
-      const _cart = window.localStorage.getItem("ElectroErfan_cart");
+      const _cart = window.localStorage.getItem("KidsShop_cart");
       if (_cart) {
         setCart(JSON.parse(_cart));
       }
     } catch (err) {
       toast.error('fetchCart Context Error:' + err?.message);
-      window.localStorage.removeItem("ElectroErfan_cart");
+      window.localStorage.removeItem("KidsShop_cart");
       setCart([]);
     }
   }
@@ -39,24 +39,24 @@ const UserContextProvider = ({ children }) => {
 
   const fetchOrder = () => {
     try {
-      const _order = window.localStorage.getItem("ElectroErfan_order");
+      const _order = window.localStorage.getItem("KidsShop_order");
       if (_order) {
         setOrder(JSON.parse(_order));
       }
     } catch (err) {
       toast.error('fetchOrder Context Error:' + err.message);
-      window.localStorage.removeItem("ElectroErfan_order");
+      window.localStorage.removeItem("KidsShop_order");
       setOrder([]);
     }
   }
 
   const updateUser = (__user) => {
     try {
-      window.localStorage.setItem("ElectroErfan_User", JSON.stringify(__user));
+      window.localStorage.setItem("KidsShop_User", JSON.stringify(__user));
       setUser(__user);
     } catch (err) {
       toast.error('updateUser Context Error:' + err.message);
-      window.localStorage.removeItem("ElectroErfan_User");
+      window.localStorage.removeItem("KidsShop_User");
       setUser([]);
     }
   }
@@ -64,24 +64,24 @@ const UserContextProvider = ({ children }) => {
   const updateCart = (__cart) => {
     try {
       setCart(__cart);
-      window.localStorage.setItem("ElectroErfan_cart", JSON.stringify(__cart));
+      window.localStorage.setItem("KidsShop_cart", JSON.stringify(__cart));
 
     } catch (err) {
       setCart([]);
       toast.error('updateCart Context Error:' + err.message);
-      window.localStorage.removeItem("ElectroErfan_cart");
+      window.localStorage.removeItem("KidsShop_cart");
     }
   }
 
   const updateOrder = (__order) => {
     try {
       setOrder(__order);
-      window.localStorage.setItem("ElectroErfan_order", JSON.stringify(__order));
+      window.localStorage.setItem("KidsShop_order", JSON.stringify(__order));
 
     } catch (err) {
       setOrder([]);
       toast.error('updateOrder Context Error:' + err.message);
-      window.localStorage.removeItem("ElectroErfan_order");
+      window.localStorage.removeItem("KidsShop_order");
     }
   }
 

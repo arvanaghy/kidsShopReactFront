@@ -26,7 +26,7 @@ const Register = () => {
     }
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/register",
+        "https://kidsshopapi.electroshop24.ir/api/v1/register",
         {
           name: name,
           phoneNumber: phoneNumber,
@@ -55,7 +55,7 @@ const Register = () => {
     setIsPending(true);
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/verify-token",
+        "https://kidsshopapi.electroshop24.ir/api/v1/verify-token",
         {
           UToken: user?.UToken,
         }

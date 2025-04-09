@@ -25,7 +25,7 @@ const Product = () => {
   const fetchProduct = async () => {
     try {
       const { data, status } = await axios.get(
-        `https://api.electroshop24.ir/api/v1/show-product/${productCode}`,
+        `https://kidsshopapi.electroshop24.ir/api/v1/show-product/${productCode}`,
         {
           headers: {
             cache: "no-cache",
@@ -48,7 +48,7 @@ const Product = () => {
   const fetchSameProduct = async () => {
     try {
       const { data, status } = await axios.get(
-        `https://api.electroshop24.ir/api/v1/same-price/${Math.floor(
+        `https://kidsshopapi.electroshop24.ir/api/v1/same-price/${Math.floor(
           productCode
         )}`,
         {
@@ -73,7 +73,7 @@ const Product = () => {
   const fetchSubCategoryProducts = async () => {
     try {
       const { data, status } = await axios.get(
-        `https://api.electroshop24.ir/api/v1/list-subcategory-products-for-website-with-PCode/${Math.floor(
+        `https://kidsshopapi.electroshop24.ir/api/v1/list-subcategory-products-for-website-with-PCode/${Math.floor(
           productCode
         )}/UCode`,
         {
@@ -281,7 +281,7 @@ const Product = () => {
                     product?.productImages?.map((image) => (
                       <img
                         key={image}
-                        src={`https://api.electroshop24.ir/products-image/webp/${Math.floor(
+                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
                           product?.GCode
                         )}/${Math.floor(product?.SCode)}/${image}.webp`}
                         alt={product?.Name}

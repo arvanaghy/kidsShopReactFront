@@ -22,7 +22,7 @@ const EditInfo = () => {
     e.preventDefault();
     try {
       const { data, status } = await axios.post(
-        "https://api.electroshop24.ir/api/v1/edit-user-info",
+        "https://kidsshopapi.electroshop24.ir/api/v1/edit-user-info",
         {
           Name: name,
           Phone: tell,
