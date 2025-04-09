@@ -23,7 +23,7 @@ const Footer = () => {
           2xl:text-xl
           border-b py-2"
             >
-              تامین لوازم برقی الکتروشاپ
+              تامین لوازم برقی کیدزشاپ
             </p>
             <p className="text-gray-300 font-EstedadLight my-2 leading-relaxed lg:leading-loose	 text-justify text-sm">
               در الکتروشاپ، افتخار داریم که به عنوان یک توزیع کننده لوازم برقی

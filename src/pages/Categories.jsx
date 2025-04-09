@@ -5,24 +5,25 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Loading from "../components/Loading";
 
 const Categories = () => {
   const [categories, setCatgeoires] = useState([]);
-  const [isCategoryLoading, setIsCategoryLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([]);
 
   const fetchCategories = async (_url) => {
-    if (isCategoryLoading) return;
+    if (loading) return;
     try {
-      setIsCategoryLoading(true);
+      setLoading(true);
       const { data, status } = await axios.get(_url, {
         headers: {
           cache: "no-cache",
         },
       });
       if (status !== 200) throw new Error(data?.message);
-      setCatgeoires(data?.result?.data);
-      setLinks(data?.result?.links);
+      setCatgeoires(data?.result?.categories?.data);
+      setLinks(data?.result?.categories?.links);
     } catch (error) {
       toast.error(
         " دسته بندی :" + error?.message ||
@@ -30,15 +31,17 @@ const Categories = () => {
           "خطا در اتصال"
       );
     } finally {
-      setIsCategoryLoading(false);
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchCategories(
-      `https://kidsshopapi.electroshop24.ir/api/v1/list-categories?page=1`
+      `https://kidsshopapi.electroshop24.ir/api/v2/list-categories?page=1`
     );
     window.scrollTo(0, 0);
   }, []);
+
+  if (loading) return <Loading />;
 
   return (
     <div className="w-full h-full flex inset-0 flex-col justify-center items-center">
@@ -56,13 +59,7 @@ const Categories = () => {
             </div>
           </div>
           <div className="relative mt-12">
-            {isCategoryLoading ? (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                className="flex flex-row items-center justify-center mx-auto text-7xl"
-              />
-            ) : (
+  
               <ul
                 className="w-full grid grid-cols-12
               gap-2
@@ -121,7 +118,7 @@ const Categories = () => {
                     </li>
                   ))}
               </ul>
-            )}
+        
           </div>
         </div>
       </section>

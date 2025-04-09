@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet-routing-machine";
 import L from "leaflet";
-import UserContext from "../../UserContext";
+import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 
 // Default icon workaround for Leaflet with Webpack
