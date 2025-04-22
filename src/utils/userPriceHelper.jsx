@@ -21,12 +21,12 @@ export function userPriceSelect(item, _user) {
         amount = item?.CheckPrice;
         break;
       default:
-        amount = item?.KhordePrice;
+        amount = item?.SPrice;
         break;
     }
     return amount;
   } else {
-    return item?.KhordePrice;
+    return item?.SPrice;
   }
 
 }

@@ -4,22 +4,17 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import UserContext from "@context/UserContext";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
-import logoImage from "@assets/images/HPE-self.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBagShopping,
   faBookmark,
   faBoxesPacking,
-  faCartShopping,
   faCertificate,
   faChevronUp,
-  faCodeCompare,
   faHeadphones,
-  faIdCardClip,
   faMagnifyingGlass,
   faRestroom,
   faSpinner,
-  faUser,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
@@ -29,6 +24,7 @@ const TopNavBar = () => {
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   const { user, cart } = useContext(UserContext);
+  const [categoryImage, setCategoryImage] = useState(null);
 
   const fetchCategories = async (_url) => {
     if (categoryLoading) return;
@@ -87,9 +83,9 @@ const TopNavBar = () => {
         <form className="w-full xl:col-span-5 bg-gray-200 rounded-xl relative">
           <input
             type="text"
-            placeholder="جستجو"
+            placeholder="جستجو محصول ..."
             onChange={() => {}}
-            className="w-full p-2 bg-gray-200 rounded-xl text-gray-800 placeholder:text-gray-600 "
+            className="w-full p-2 bg-gray-200 rounded-xl text-gray-600 placeholder:text-gray-600 "
           />
           <button
             type="submit"
@@ -217,59 +213,84 @@ const TopNavBar = () => {
                   )}
                 </div>
                 {item?.navs?.length > 0 && dropDown && (
-                  <div className="w-full inset-x-0 z-45 bg-CarbonicBlue-600 lg:top-16 2xl:top-20 lg:pt-6 2xl:pt-8 lg:absolute lg:border-y-2 lg:border-CarbonicBlue-600 lg:shadow-md">
+                  <div className="relative w-full ">
                     {categoryLoading ? (
-                      <div className="w-full text-center font-EstedadLight text-gray-600 animate-pulse">
+                      <div className="absolute top-10 z-50 right-0 left-0 w-[90vw] h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600  flex flex-row items-center justify-center shadow-md rounded-lg ">
                         <FontAwesomeIcon
                           icon={faSpinner}
-                          className="mx-auto"
+                          className="mx-auto
+                          xl:text-7xl"
                           spin
                         />
                       </div>
                     ) : (
                       <div
-                        className="w-full inset-x-0 z-50  grid grid-cols-12 items-center justify-between
-                  lg:gap-4
+                        className="absolute top-10 z-50 right-0 left-0 w-[90vw] min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600  grid grid-cols-12 items-center justify-center shadow-md rounded-lg 
+                        p-6
                   "
                       >
-                        {item?.navs.map((dropdownItem, idx) => (
-                          <Link
-                            onClick={() => setDropDown(false)}
-                            key={idx}
-                            className="lg:col-span-3 group  2xl:col-span-4 flex flex-col items-center justify-center"
-                            to={`/category/${Math.floor(dropdownItem?.Code)}`}
-                          >
-                            <div
-                              className="flex flex-col items-center justify-center
-                              lg:space-y-2 xl:space-y-4
-                              2xl:space-y-6
+                        <div className="w-full col-span-9 grid grid-cols-12 gap-6">
+                          {item?.navs.map((dropdownItem, idx) => (
+                            <Link
+                              onMouseEnter={() => {
+                                setCategoryImage(dropdownItem);
+                              }}
+                              onMouseLeave={() => {
+                                setCategoryImage(null);
+                              }}
+                              onFocus={() => {
+                                setCategoryImage(dropdownItem);
+                              }}
+                              onAbort={() => {
+                                setCategoryImage(null);
+                              }}
+                              onClick={() => setDropDown(false)}
+                              key={idx}
+                              className="w-fit col-span-4 
+                              pr-3
+                              hover:-translate-x-2
+                              hover:text-green-600
+                              transition-all ease-in-out duration-300
+                              border-r-4 border-blue-500  items-center 
+                              justify-center
+                              font-EstedadExtraBold
+                              tracking-wider
                               "
+                              to={`/category/${Math.floor(dropdownItem?.Code)}`}
                             >
+                              {dropdownItem?.Name}
+                            </Link>
+                          ))}
+                        </div>
+                        <div className="w-full col-span-3">
+                          {categoryImage && (
+                            <div className="flex flex-col items-center
+                            justify-center">
                               <img
-                                src={`https://kidsshopapi.electroshop24.ir/category-images/webp/${dropdownItem?.PicName}.webp`}
-                                alt={dropdownItem?.Name}
+                                src={`https://kidsshopapi.electroshop24.ir/category-images/webp/${categoryImage?.PicName}.webp`}
+                                alt={categoryImage?.Name}
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src =
-                                    "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFFFFF'/%3E%3C/svg%3E";
+                                    'https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg';
                                 }}
-                                className="w-10 h-10 lg:h-16 lg:w-16 mx-2 rounded-full group-hover:scale-105 drop-shadow-lg shadow-black"
+                                className=" rounded-lg w-64 h-64 object-scale-down drop-shadow-lg shadow-black"
                               />
-                              <div
-                                className="md:text-xs
-                                xl:text-sm
-                                2xl:text-xl 
-                                 backdrop-shadow-lg  group-hover:text-stone-50 lg:text-base group-hover:scale-105 duration-150"
-                              >
-                                {dropdownItem?.Name}
-                              </div>
+                              <p className="text-sm text-gray-600">
+                                 {categoryImage?.description}
+                              </p>
                             </div>
-                          </Link>
-                        ))}
+                          )}
+                        </div>
+
                         <Link
                           onClick={() => setDropDown(false)}
                           to="/categoires"
-                          className="col-span-12 p-3 flex items-center justify-center text-center text-green-600 hover:text-gray-600 duration-150"
+                          className="col-span-12 p-3 flex items-center justify-center text-center text-green-600 hover:text-green-900 duration-300
+                          hover:scale-105
+                          transition-all ease-in-out
+                          font-EstedadExtraBold
+                          "
                         >
                           لیست تمامی دسته بندی ها
                         </Link>
