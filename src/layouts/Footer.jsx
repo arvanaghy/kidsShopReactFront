@@ -4,11 +4,24 @@ import { LiaTelegramPlane } from "react-icons/lia";
 import { ImWhatsapp } from "react-icons/im";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faAddressBook,
+  faBoxesPacking,
+  faCertificate,
   faChevronUp,
+  faCircleInfo,
+  faCircleQuestion,
+  faDisease,
   faLocationDot,
+  faPersonHalfDress,
   faPhoneVolume,
+  faQuestion,
+  faSquareEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { toPersianDigits } from "@utils/numeralHelpers";
+import {
+  faSquareWhatsapp,
+  faTelegram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
@@ -35,7 +48,7 @@ const Footer = () => {
         </button>
         <div className="my-3 border-b-2 border-gray-300"></div>
         <div className="grid grid-cols-12 items-start justify-around gap-6 py-8">
-          <div className="col-span-3 w-full p-3 space-y-4">
+          <div className="col-span-6 w-full p-3 space-y-6">
             <p
               className="text-base font-EstedadMedium font-semibold lg:text-base
           xl:text-lg
@@ -49,28 +62,172 @@ const Footer = () => {
               تلگرام
             </p>
             <div className="flex items-center justify-start gap-3 ">
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className="text-3xl lg:text-3xl"
-              />
+              <FontAwesomeIcon icon={faLocationDot} className="text-3xl " />
               <p className=" leading-relaxed tracking-widest lg:text-sm xl:text-base	">
-                <strong className="font-EstedadExtraBold"> آدرس : </strong>
-                تبریز ارم
+                تبریز،شهرک ارم، منطقه ۷، دوبانده، ،جنب بیمه ما{" "}
               </p>
             </div>
             <div className="flex items-center justify-start gap-3 ">
               <FontAwesomeIcon
                 icon={faPhoneVolume}
-                className="text-3xl lg:text-3xl -scale-x-100"
+                className="text-2xl -scale-x-100"
               />
               <p className=" leading-relaxed tracking-widest lg:text-sm xl:text-base	">
-                <strong className="font-EstedadExtraBold">شماره تلفن:</strong>
-                ۳۵۵۵۱۰۸۰ - ۳۵۵۷۱۴۰۰ - ۳۵۵۴۴۳۹۲
+                ۰۹۱۴۹۲۷۶۵۹۰
               </p>
+            </div>
+            <div className="flex items-center justify-start gap-3 ">
+              <FontAwesomeIcon icon={faSquareEnvelope} className="text-3xl " />
+              <p className=" leading-relaxed tracking-widest lg:text-sm xl:text-base	">
+                info[at]kidsshop110.ir
+              </p>
+            </div>
+            <div className="flex items-center justify-start gap-6 ">
+              <Link
+                to={
+                  "https://api.whatsapp.com/send?phone=989149276590&text=kidsshop_website"
+                }
+                target="_blank"
+                className="hover:text-green-600 transition-all duration-300 ease-in-out"
+              >
+                <FontAwesomeIcon
+                  icon={faSquareWhatsapp}
+                  className="text-5xl "
+                />
+              </Link>
+              <Link
+                to={"https://t.me/kids_shop110"}
+                target="_blank"
+                className="hover:text-green-600 transition-all duration-300 ease-in-out"
+              >
+                <FontAwesomeIcon icon={faTelegram} className="text-5xl " />
+              </Link>
             </div>
           </div>
 
-          <div className="col-span-3 w-full p-3 space-y-4"></div>
+          <div className="col-span-3 w-full p-3 space-y-6">
+            <h3 className="text-lg font-EstedadExtraBold">دسترسی سریع</h3>
+            <Link
+              to="/offered-products"
+              className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            >
+              <FontAwesomeIcon
+                icon={faCertificate}
+                className="text-2xl
+                            group-hover:text-green-700
+duration-300 transition-all ease-in-out
+              "
+              />
+              <div
+                className="
+              group-hover:text-green-700
+              group-hover:-translate-x-2
+              duration-300 transition-all ease-in-out"
+              >
+                محصولات ویژه کیدزشاپ
+              </div>
+            </Link>
+            <Link
+              to="/best-selling-products"
+              className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            >
+              <FontAwesomeIcon
+                icon={faBoxesPacking}
+                className="text-2xl
+                            group-hover:text-green-700
+duration-300 transition-all ease-in-out
+              "
+              />
+              <div
+                className="
+              group-hover:text-green-700
+              group-hover:-translate-x-2
+              duration-300 transition-all ease-in-out"
+              >
+                پرفروشترین محصولات کیدزشاپ
+              </div>
+            </Link>
+            <Link
+              to="/categoires"
+              className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            >
+              <FontAwesomeIcon
+                icon={faPersonHalfDress}
+                className="text-2xl
+                            group-hover:text-green-700
+duration-300 transition-all ease-in-out
+              "
+              />
+              <div
+                className="
+              group-hover:text-green-700
+              group-hover:-translate-x-2
+              duration-300 transition-all ease-in-out"
+              >
+                دسته بندی محصولات
+              </div>
+            </Link>
+            <Link
+              to="/faq"
+              className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            >
+              <FontAwesomeIcon
+                icon={faCircleQuestion}
+                className="text-2xl
+                            group-hover:text-green-700
+duration-300 transition-all ease-in-out
+              "
+              />
+              <div
+                className="
+              group-hover:text-green-700
+              group-hover:-translate-x-2
+              duration-300 transition-all ease-in-out"
+              >
+                سوالات متداول
+              </div>
+            </Link>
+            <Link
+              to="/about-us"
+              className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            >
+              <FontAwesomeIcon
+                icon={faCircleInfo}
+                className="text-2xl
+                            group-hover:text-green-700
+duration-300 transition-all ease-in-out
+              "
+              />
+              <div
+                className="
+              group-hover:text-green-700
+              group-hover:-translate-x-2
+              duration-300 transition-all ease-in-out"
+              >
+                درباره ما
+              </div>
+            </Link>
+            <Link
+              to="/faq"
+              className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            >
+              <FontAwesomeIcon
+                icon={faAddressBook}
+                className="text-2xl
+                            group-hover:text-green-700
+duration-300 transition-all ease-in-out
+              "
+              />
+              <div
+                className="
+              group-hover:text-green-700
+              group-hover:-translate-x-2
+              duration-300 transition-all ease-in-out"
+              >
+                تماس با ما
+              </div>
+            </Link>
+          </div>
         </div>
         <div className="my-3 border-b-2 border-gray-300"></div>
         <div className="grid grid-cols-12 items-start justify-around gap-6 py-8">

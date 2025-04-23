@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ProductCard from "@components/ProductCard";
-import FAQ from "./FAQ";
-import ContactUs from "./ContactUs";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/scrollbar";
@@ -17,13 +16,11 @@ import arrowLeft from "/src/assets/images/left-arrow-direction-svgrepo-com.svg";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import toast from "react-hot-toast";
 
-import contactUsImage from "@assets/images/Contact.webp";
-import faqImage from "@assets/images/FAQ.webp";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from "@components/Loading";
 import CategoryCircleCard from "@components/category/CategoryCircleCard";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
+import OfferProductCard from "../components/OfferProductCard";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -35,8 +32,6 @@ const Home = () => {
     bestSeller: [],
   });
 
-  const navigate = useNavigate();
-
   const fetchData = async (_url) => {
     if (loading) return;
     try {
@@ -44,7 +39,6 @@ const Home = () => {
       const { data, status } = await axios.get(_url);
       if (status !== 200) throw new Error(data?.message);
       setResult(data?.result);
-      console.log("data", data?.result);
     } catch (error) {
       toast.error(
         "خطا در اتصال" + error?.response?.data?.message || error?.message
@@ -58,16 +52,6 @@ const Home = () => {
     fetchData("https://kidsshopapi.electroshop24.ir/api/v2/home-page");
     // window.scrollTo(0, 0);
   }, []);
-
-  // const handleSearch = (e) => {
-  //   e.preventDefault();
-  //   const searchPhrase = e.target.search.value;
-  //   if (searchPhrase?.length > 0) {
-  //     navigate(`/search/${searchPhrase}`);
-  //   } else {
-  //     toast.error("نام محصول مورد نظر را وارد کنید");
-  //   }
-  // };
 
   if (loading) return <Loading />;
 
@@ -253,20 +237,12 @@ const Home = () => {
             </h2>
           </div>
           <div className="col-span-9">
-            <div
-              className="grid  grid-cols-12
-           gap-2
-           md:gap-4
-           lg:gap-4
-           xl:gap-6
-          2xl:gap-12"
-            >
-              {result?.offeredProducts
-                ?.slice(0, 4)
+          {result?.newestProducts
+                ?.slice(0, 1)
                 .map((offeredProductsItem, idx) => (
-                  <ProductCard key={idx} item={offeredProductsItem} />
+                  <OfferProductCard key={idx} item={offeredProductsItem} />
                 ))}
-            </div>
+
           </div>
           <div className="col-span-12 text-center pt-12">
             <Link

@@ -144,15 +144,19 @@ const TopNavBar = () => {
               <span
                 className=" flex items-center justify-center absolute 
                   font-bold leading-none
-                  bg-green-600 rounded-full
+                  bg-green-600/80 rounded-full
                   text-center text-CarbonicBlue-600 transform 
+                  text-white
+                  p-2
+                  -top-3
+                  -right-3
 
                   group-hover:bg-white
                   group-hover:text-gray-600
-                  group
                   duration-300 transition-all ease-in-out
                   animate-bounce
-                  
+                  text-xs
+                  z-50
                   "
               >
                 {formatCurrencyDisplay(cart?.length)}
@@ -160,7 +164,9 @@ const TopNavBar = () => {
             )}
             <FontAwesomeIcon
               icon={faBagShopping}
-              className="text-gray-600 group-hover:text-green-600 
+              className="text-gray-600
+              text-xl
+              group-hover:text-green-600 
               group-hover:scale-105 drop-shadow-md duration-300 transition-all ease-in-out"
             />
           </Link>
