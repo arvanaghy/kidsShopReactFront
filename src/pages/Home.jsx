@@ -149,11 +149,9 @@ const Home = () => {
              xl:gap-6
             2xl:gap-12"
           >
-            {result?.newestProducts
-              
-              .map((newestProductsItem, idx) => (
-                <ProductCard key={idx} item={newestProductsItem} />
-              ))}
+            {result?.newestProducts.map((newestProductsItem, idx) => (
+              <ProductCard key={idx} item={newestProductsItem} />
+            ))}
           </div>
         </div>
         <div className="col-span-12 text-center pt-12">
@@ -226,7 +224,7 @@ const Home = () => {
         >
           <div className="w-full col-span-3">
             <h2
-              className="font-EstedadExtraBold  text-center  tracking-wide text-gray-700
+              className="font-EstedadExtraBold text-center  tracking-wide text-gray-700
             text-3xl leading-relaxed py-1.5
             md:text-5xl
             lg:text-2xl
@@ -237,11 +235,29 @@ const Home = () => {
             </h2>
           </div>
           <div className="col-span-9 h-full rounded-xl">
-          {result?.offeredProducts
-                ?.slice(0, 1)
-                .map((offeredProductsItem, idx) => (
-                  <OfferProductCard key={idx} item={offeredProductsItem} />
-                ))}
+            <Swiper
+              scrollbar={{
+                hide: true,
+              }}
+              modules={[Autoplay, FreeMode, Pagination, Navigation]}
+              className="h-full w-full "
+              freeMode={false}
+              navigation={true}
+              slidesPerView={1}
+              centeredSlides={true}
+              spaceBetween={0}
+              slidesPerGroup={1}
+              loop={true}
+              autoplay={{
+                delay: 4500,
+              }}
+            >
+              {result?.offeredProducts.map((offeredProductsItem, index) => (
+                <SwiperSlide key={index}>
+                  <OfferProductCard item={offeredProductsItem} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
           <div className="col-span-12 text-center pt-12">
             <Link
