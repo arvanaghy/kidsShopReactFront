@@ -4,14 +4,14 @@ import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { userPriceSelect } from "@utils/userPriceHelper";
 import { useContext } from "react";
 import UserContext from "@context/UserContext";
-
+import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
 const ProductCard = ({ item }) => {
   const { user } = useContext(UserContext);
 
   return (
     <div
-      className="rounded-lg shadow-md 
+      className="rounded-lg  
       w-full
       h-full
       col-span-12 
@@ -63,11 +63,11 @@ const ProductCard = ({ item }) => {
         </h2>
       </Link>
 
-      <div className="rounded-t-lg px-3 z-50 flex flex-col font-EstedadMedium w-full bg-gray-300/90 text-white">
+      <div className="rounded-b-lg px-3 z-50 flex flex-col font-EstedadMedium w-full bg-gray-300/90 text-white">
         <div className="flex flex-col justify-evenly items-center w-full">
           <Link
             to={`/product/${Math.floor(item?.Code)}`}
-            className="z-50  text-justify line-clamp-1 leading-relaxed py-1.5  
+            className="z-50  text-justify line-clamp-2 leading-relaxed py-1.5  
           text-xs 
           lg:text-sm lg:font-EstedadExtraBold
           2xl:text-lg
@@ -75,6 +75,7 @@ const ProductCard = ({ item }) => {
           hover:text-CarbonicBlue-700 transation-all duration-300 ease-in-out
           "
           >
+            {/* {item?.Code} */}
             {item?.Name}
           </Link>
           <div className="flex flex-row items-center gap-2 z-50 text-sm py-2 ">
@@ -83,9 +84,30 @@ const ProductCard = ({ item }) => {
               <span className="text-xs">ریال</span>
             </span>
           </div>
-          {item?.product_size_color?.length > 0 && (
-            <div className=""></div>
-          )}
+          <div className=" w-full flex flex-col items-center gap-2 z-50 text-sm py-2">
+            {item?.product_size_color?.length > 0 &&
+              item?.product_size_color?.map((product_size_color_item, idx) => (
+                <div
+                  className="w-full flex flex-row items-center
+                justify-between gap-2"
+                  key={idx}
+                >
+                  <p>{product_size_color_item?.SizeNum}</p>
+                  <div className="flex flex-row items-center justify-center gap-2 ">
+
+                    <p>{product_size_color_item?.ColorName}</p>
+                    <p
+                      className="w-5 h-5 flex flex-row items-center justify-center rounded-full"
+                      style={{
+                        backgroundColor: DecimalToHexConverter(
+                          product_size_color_item?.ColorCode
+                        ),
+                      }}
+                    ></p>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </div>

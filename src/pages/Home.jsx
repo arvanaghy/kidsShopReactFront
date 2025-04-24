@@ -123,7 +123,7 @@ const Home = () => {
        py-14
        p-6
        grid grid-cols-12 items-center justify-center
-       bg-yellow-300
+       bg-Cream-500
        rounded-xl
        "
       >
@@ -150,7 +150,7 @@ const Home = () => {
             2xl:gap-12"
           >
             {result?.newestProducts
-              ?.slice(0, 4)
+              
               .map((newestProductsItem, idx) => (
                 <ProductCard key={idx} item={newestProductsItem} />
               ))}
@@ -213,7 +213,7 @@ const Home = () => {
       </section>
 
       {/* offered products */}
-      {!result?.offeredProducts?.length > 0 && (
+      {result?.offeredProducts?.length > 0 && (
         <section
           className="
      my-10
@@ -236,13 +236,12 @@ const Home = () => {
               محصولات پیشنهادی کیدزشاپ
             </h2>
           </div>
-          <div className="col-span-9">
-          {result?.newestProducts
+          <div className="col-span-9 h-full rounded-xl">
+          {result?.offeredProducts
                 ?.slice(0, 1)
                 .map((offeredProductsItem, idx) => (
                   <OfferProductCard key={idx} item={offeredProductsItem} />
                 ))}
-
           </div>
           <div className="col-span-12 text-center pt-12">
             <Link
@@ -310,7 +309,7 @@ const Home = () => {
      py-14
      p-6
      grid grid-cols-12 items-center justify-center
-     bg-yellow-300
+     bg-Cream-500
      rounded-xl
      "
         >

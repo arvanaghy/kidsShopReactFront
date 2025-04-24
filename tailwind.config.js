@@ -17,6 +17,9 @@ export default {
         '1024': '256rem',
       },
       colors:{
+        Cream : {
+          500: '#D49E1726',
+        },
         CarbonicBlue : {
           500: '#0455cf',
         },

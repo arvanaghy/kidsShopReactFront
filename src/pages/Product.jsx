@@ -8,7 +8,7 @@ import { userPriceSelect } from "@utils/userPriceHelper";
 import toast from "react-hot-toast";
 import ProductCard from "@components/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faHouse, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Product = () => {
   const { productCode } = useParams();
@@ -208,35 +208,13 @@ const Product = () => {
                   to="/"
                   className="inline-flex items-center gap-2 lg:gap-10 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
                 >
-                  <svg
-                    className="w-3 h-3 me-2.5"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
-                  </svg>
+                  <FontAwesomeIcon icon={faHouse} className="text-lg" />
                   صفحه اصلی
                 </Link>
               </li>
               <li>
                 <div className="flex items-center font-EstedadMedium">
-                  <svg
-                    className="block w-3 h-3 mx-1 text-gray-400 rtl:rotate-180 "
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 6 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 9 4-4-4-4"
-                    />
-                  </svg>
+                  <FontAwesomeIcon icon={faChevronLeft} />
                   <Link
                     to={`/category/${Math.floor(product.GCode)}`}
                     className="text-sm font-medium text-gray-700 ms-1 hover:text-blue-600 lg:ms-2 dark:text-gray-400 dark:hover:text-gray-800"
@@ -247,21 +225,7 @@ const Product = () => {
               </li>
               <li aria-current="page">
                 <div className="flex items-center font-EstedadMedium">
-                  <svg
-                    className="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 6 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 9 4-4-4-4"
-                    />
-                  </svg>
+                  <FontAwesomeIcon icon={faChevronLeft} />
                   <Link
                     to={`/sub-category-products/${Math.floor(product.SCode)}`}
                     className="text-sm font-medium text-gray-700 ms-1 hover:text-blue-600 lg:ms-2 dark:text-gray-400 dark:hover:text-gray-800"
@@ -305,6 +269,14 @@ const Product = () => {
                         to={`/category/${Math.floor(product?.GCode)}`}
                       >
                         {product?.GName}
+                      </Link>
+                      <Link
+                        className="block text-sm  font-EstedadMedium text-black/80 underline underline-offset-8 hover:text-CarbonicBlue-500 duration-300 ease-in-out"
+                        to={`/sub-category-products/${Math.floor(
+                          product?.SCode
+                        )}`}
+                      >
+                        {product?.SName}
                       </Link>
                     </div>
                     {product?.Comment?.length > 0 && (
