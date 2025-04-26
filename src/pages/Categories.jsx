@@ -1,18 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
 import Loading from "../components/Loading";
 
 const Categories = () => {
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
+  const page = searchParams.get("page") || 1;
   const [categories, setCatgeoires] = useState([]);
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([]);
+  const navigate = useNavigate();
 
   const fetchCategories = async (_url) => {
+    window.scrollTo(0, 0);
     if (loading) return;
     try {
       setLoading(true);
@@ -36,10 +44,21 @@ const Categories = () => {
   };
   useEffect(() => {
     fetchCategories(
-      `https://kidsshopapi.electroshop24.ir/api/v2/list-categories?page=1`
+      `https://kidsshopapi.electroshop24.ir/api/v2/list-categories?search=${search}&page=${page}`
     );
-    window.scrollTo(0, 0);
-  }, []);
+  }, [page, search]);
+
+  const letsSearchCategory = (e) => {
+    e.preventDefault();
+    try {
+      const searchPhrase = e.target.search.value;
+      // if (searchPhrase?.length <= 0)
+      //   throw new Error("نام دسته بندی مورد نظر را وارد کنید");
+      navigate(`/categoires?search=${searchPhrase}`);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
 
   if (loading) return <Loading />;
 
@@ -48,77 +67,89 @@ const Categories = () => {
       {/* categories */}
       <section className="w-full py-14">
         <div className="w-full px-4 mx-auto text-gray-600 lg:px-8">
-          <div className="w-full relative mx-auto sm:text-center">
-            <div className="relative z-10">
-              <h3
-                className="w-fit text-right text-lg lg:text-2xl font-EstedadExtraBold py-4 leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
+          <div className="w-full flex flex-row justify-between items-center mx-auto sm:text-center">
+            <h3
+              className="w-fit text-right text-lg lg:text-2xl font-EstedadExtraBold py-4 leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
         "
+            >
+              <span>دسته بندی های محصولات کیدزشاپ </span>
+              {search?.length > 0 && <span>جستجو شده : {search}</span>}
+            </h3>
+            <form
+              onSubmit={(e) => letsSearchCategory(e)}
+              className="relative flex items-center "
+            >
+              <input
+                type="text"
+                name="search"
+                placeholder="جستجو در دسته بندی ها"
+                className="w-full p-3 text-sm text-gray-600 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+              />
+              <button
+                type="submit"
+                className="text-gray-600 hover:text-gray-700 absolute left-2.5"
               >
-                دسته بندی های الکتروشاپ
-              </h3>
-            </div>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+            </form>
           </div>
-          <div className="relative mt-12">
-  
-              <ul
-                className="w-full grid grid-cols-12
+          <div
+            className="
+              pt-12
+              w-full grid grid-cols-12
               gap-2
               
               md:gap-4
               lg:gap-6
               2xl:gap-8
               "
-              >
-                {categories &&
-                  categories.map((item, idx) => (
-                    <li
-                      key={idx}
-                      className="items-center justify-center duration-300 border rounded-r-full shadow-lg 
-                    hover:scale-105 hover:shadow-lg
+          >
+            {categories &&
+              categories.map((item, idx) => (
+                <Link
+                  key={idx}
+                  to={`/category/${Math.floor(item.Code)}`}
+                  className="flex flex-col items-center justify-between
+                    duration-300 rounded-xl  
+                    group
                     col-span-12 sm:col-span-6 md:col-span-4
                     lg:col-span-3
                     2xl:col-span-2
-
+                    gap-3
+                    
                     "
-                    >
-                      <Link
-                        to={`/category/${Math.floor(item.Code)}`}
-                        className="flex flex-row items-center justify-between"
-                      >
-                        <div className="flex flex-row">
-                          <img
-                            loading="lazy"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src =
-                                "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFFFFF'/%3E%3C/svg%3E";
-                            }}
-                            src={
-                              "https://kidsshopapi.electroshop24.ir/category-images/webp/" +
-                              `${item.PicName}.webp`
-                            }
-                            alt={item.Name}
-                            className="w-24 h-24 m-2 rounded-full shadow-md shadow-gray-300"
-                          />
-                        </div>
-                        <div className="flex flex-col px-3">
-                          <h4
-                            className="mx-2 
+                >
+                  <img
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+                    }}
+                    src={
+                      "https://kidsshopapi.electroshop24.ir/category-images/webp/" +
+                      `${item.PicName}.webp`
+                    }
+                    alt={item.Name}
+                    className="
+                    group-hover:scale-105 duration-300 ease-in-out
+                    rounded-xl shadow-md shadow-gray-300"
+                  />
+                  <div className="flex flex-col px-3 gap-2">
+                    <h4
+                      className=" 
                           text-sm
                           leading-relaxed
-                          2xl:text-lg text-center text-CarbonicBlue-500 font-EstedadMedium"
-                          >
-                            {item?.Name}
-                          </h4>
-                          <p className="text-CarbonicBlue-500 font-EstedadLight text-xs 2xl:text-sm ">
-                            {item?.Comment}
-                          </p>
-                        </div>
-                      </Link>
-                    </li>
-                  ))}
-              </ul>
-        
+                          2xl:text-lg text-center text-gray-500 font-EstedadMedium"
+                    >
+                      {item?.Name}
+                    </h4>
+                    <p className="text-gray-300 font-EstedadLight text-xs 2xl:text-sm ">
+                      {item?.Comment}
+                    </p>
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
       </section>
@@ -131,7 +162,7 @@ const Categories = () => {
           links.map((link, idx) => (
             <button
               key={idx}
-              onClick={() => fetchCategories(link.url)}
+              onClick={() => navigate(link.url.replace("https://kidsshopapi.electroshop24.ir/api/v2/list-categories", ""))}
               disabled={link.url === null}
               className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
                 2xl:text-sm

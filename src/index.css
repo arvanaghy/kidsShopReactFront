@@ -53,3 +53,23 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.custom-swiper {
+  overflow: none !important;
+}
+
+.custom-swiper .swiper-slide {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure cards stretch to parent container */
+}
+
+.product-card > div {
+  flex: 1; /* Distribute space evenly */
+}

@@ -283,7 +283,7 @@ const TopNavBar = () => {
                                 className=" rounded-lg w-64 h-64 object-scale-down drop-shadow-lg shadow-black"
                               />
                               <p className="text-sm text-gray-600">
-                                 {categoryImage?.description}
+                                 {categoryImage?.Comment}
                               </p>
                             </div>
                           )}

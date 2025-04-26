@@ -10,8 +10,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 
-import waveImage from "/src/assets/images/wave.svg";
-import arrowLeft from "/src/assets/images/left-arrow-direction-svgrepo-com.svg";
 
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import toast from "react-hot-toast";
@@ -119,53 +117,87 @@ const Home = () => {
       {/* newestproducts */}
       <section
         className="
-       my-10
-       py-14
-       p-6
-       grid grid-cols-12 items-center justify-center
-       bg-Cream-500
-       rounded-xl
-       "
+    my-10
+    py-14
+    p-6
+    grid grid-cols-12 items-center justify-center
+    bg-Cream-500
+    rounded-xl
+  "
       >
         <div className="w-full col-span-3">
           <h2
-            className="font-EstedadExtraBold  text-center  tracking-wide
-              text-3xl leading-relaxed py-1.5
-              md:text-5xl
-              lg:text-2xl
-                          2xl:text-5xl 2xl:leading-loose
- text-gray-700
-               "
+            className="font-EstedadExtraBold text-center tracking-wide
+        text-3xl leading-relaxed py-1.5
+        md:text-5xl
+        lg:text-2xl
+        2xl:text-5xl 2xl:leading-loose
+        text-gray-700
+      "
           >
             جدیدترین محصولات کیدزشاپ
           </h2>
         </div>
         <div className="col-span-9">
-          <div
-            className="grid  grid-cols-12
-             gap-2
-             md:gap-4
-             lg:gap-4
-             xl:gap-6
-            2xl:gap-12"
+          <Swiper
+            modules={[Autoplay, FreeMode, Pagination, Navigation]}
+            className="h-full w-full  custom-swiper"
+            freeMode={false}
+            // navigation={true}
+            slidesPerView={1}
+            centeredSlides={true}
+            spaceBetween={0}
+            pagination={{ clickable: true }}
+            slidesPerGroup={1}
+            loop={result?.newestProducts?.length >= 4}
+            autoplay={{
+              delay: 4500,
+              disableOnInteraction: false,
+            }}
           >
-            {result?.newestProducts.map((newestProductsItem, idx) => (
-              <ProductCard key={idx} item={newestProductsItem} />
-            ))}
-          </div>
+            {result?.newestProducts
+              ?.reduce((acc, item, index) => {
+                if (index % 4 === 0) acc.push([]);
+                acc[acc.length - 1].push(item);
+                return acc;
+              }, [])
+              .map((group, index) => (
+                <SwiperSlide key={index}>
+                  <div className="flex flex-row gap-2 justify-center w-full px-4">
+                    {group.map((product, productIndex) => (
+                      <div
+                        key={productIndex}
+                        className="w-[calc(25%-0.5rem)] flex-shrink-0"
+                      >
+                        <ProductCard item={product} />
+                      </div>
+                    ))}
+                    {group.length < 4 &&
+                      Array.from({ length: 4 - group.length }).map((_, i) => (
+                        <div
+                          key={`placeholder-${i}`}
+                          className="w-[calc(25%-0.5rem)] invisible flex-shrink-0"
+                        >
+                          <ProductCard item={group[0]} />
+                        </div>
+                      ))}
+                  </div>
+                </SwiperSlide>
+              ))}
+          </Swiper>
         </div>
+
         <div className="col-span-12 text-center pt-12">
           <Link
             to="/products"
             className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
-            transition-all duration-300 ease-in-out
-            "
+        transition-all duration-300 ease-in-out
+      "
           >
             مشاهده همه محصولات
           </Link>
         </div>
       </section>
-
       {/* thrid and fourth banners */}
       <section className="p-10">
         <div className="grid grid-cols-12 gap-8">
@@ -236,9 +268,6 @@ const Home = () => {
           </div>
           <div className="col-span-9 h-full rounded-xl">
             <Swiper
-              scrollbar={{
-                hide: true,
-              }}
               modules={[Autoplay, FreeMode, Pagination, Navigation]}
               className="h-full w-full "
               freeMode={false}
@@ -321,50 +350,82 @@ const Home = () => {
       {result?.bestSeller?.length > 0 && (
         <section
           className="
-     my-10
-     py-14
-     p-6
-     grid grid-cols-12 items-center justify-center
-     bg-Cream-500
-     rounded-xl
-     "
+  my-10
+  py-14
+  p-6
+  grid grid-cols-12 items-center justify-center
+  bg-Cream-500
+  rounded-xl
+"
         >
           <div className="w-full col-span-3">
             <h2
-              className="font-EstedadExtraBold  text-center  tracking-wide
-              text-gray-700
-            text-3xl leading-relaxed py-1.5
-            md:text-5xl
-            lg:text-2xl
-                        2xl:text-5xl 2xl:leading-loose
-
-             "
+              className="font-EstedadExtraBold text-center tracking-wide
+      text-3xl leading-relaxed py-1.5
+      md:text-5xl
+      lg:text-2xl
+      2xl:text-5xl 2xl:leading-loose
+      text-gray-700
+    "
             >
               پرفروشترین محصولات کیدزشاپ
             </h2>
           </div>
           <div className="col-span-9">
-            <div
-              className="grid  grid-cols-12
-           gap-2
-           md:gap-4
-           lg:gap-4
-           xl:gap-6
-          2xl:gap-12"
+            <Swiper
+              modules={[Autoplay, FreeMode, Pagination, Navigation]}
+              className="h-full w-full  custom-swiper"
+              freeMode={false}
+              // navigation={true}
+              slidesPerView={1}
+              centeredSlides={true}
+              spaceBetween={0}
+              pagination={{ clickable: true }}
+              slidesPerGroup={1}
+              loop={result?.bestSeller?.length >= 4}
+              autoplay={{
+                delay: 4500,
+                disableOnInteraction: false,
+              }}
             >
               {result?.bestSeller
-                ?.slice(0, 4)
-                .map((bestSellerProductsItem, idx) => (
-                  <ProductCard key={idx} item={bestSellerProductsItem} />
+                ?.reduce((acc, item, index) => {
+                  if (index % 4 === 0) acc.push([]);
+                  acc[acc.length - 1].push(item);
+                  return acc;
+                }, [])
+                .map((group, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="flex flex-row gap-2 justify-center w-full px-4">
+                      {group.map((product, productIndex) => (
+                        <div
+                          key={productIndex}
+                          className="w-[calc(25%-0.5rem)] flex-shrink-0"
+                        >
+                          <ProductCard item={product} />
+                        </div>
+                      ))}
+                      {group.length < 4 &&
+                        Array.from({ length: 4 - group.length }).map((_, i) => (
+                          <div
+                            key={`placeholder-${i}`}
+                            className="w-[calc(25%-0.5rem)] invisible flex-shrink-0"
+                          >
+                            <ProductCard item={group[0]} />
+                          </div>
+                        ))}
+                    </div>
+                  </SwiperSlide>
                 ))}
-            </div>
+            </Swiper>
           </div>
+
           <div className="col-span-12 text-center pt-12">
             <Link
               to="/best-selling-products"
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
-          transition-all duration-300 ease-in-out
-          "
+      transition-all duration-300 ease-in-out
+    "
             >
               لیست محصولات پرفروش
             </Link>

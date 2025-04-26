@@ -11,21 +11,28 @@ const OfferProductCard = ({ item }) => {
 
   const uniqueColorCodes = [
     ...new Map(
-      item?.product_size_color?.map((item) => [
-        item.ColorCode,
-        { ColorCode: item.ColorCode, ColorName: item.ColorName },
-      ])
+      item?.product_size_color
+        ?.filter((item) => item.Mande > 0)
+        .map((item) => [
+          item.ColorCode,
+          { ColorCode: item.ColorCode, ColorName: item.ColorName },
+        ])
     ).values(),
   ];
+
   const uniqueSizeNums = [
-    ...new Set(item?.product_size_color?.map((item) => item.SizeNum)),
+    ...new Set(
+      item?.product_size_color
+        ?.filter((item) => item.Mande > 0)
+        .map((item) => item.SizeNum)
+    ),
   ];
 
   return (
     <Link
       to={`/product/${item?.Code}`}
       className="grid grid-cols-12 bg-gray-100 rounded-xl h-full items-center justify-center w-full
-      p-4
+      px-16
     hover:grayscale
     hover:bg-gray-200
     duration-300 ease-in-out transition-all
@@ -42,36 +49,40 @@ const OfferProductCard = ({ item }) => {
           {item?.Name}
         </h3>
         <p className="text-gray-700 text-center font-EstedadLight leading-relaxed ">
-          {item?.Description}
+          {item?.Comment}
         </p>
-        {uniqueColorCodes?.length > 0 &&
-          uniqueColorCodes?.map((uniqueColorCodes_item, idx) => (
-            <div
-              className="flex flex-row items-center justify-center gap-2 "
-              key={idx}
-            >
-              <p className="text-gray-700 font-EstedadMedium ">
-                {uniqueColorCodes_item?.ColorName}
-              </p>
-              <p
-                className="w-5 h-5 flex flex-row items-center justify-center rounded-full "
-                style={{
-                  backgroundColor: DecimalToHexConverter(
-                    uniqueColorCodes_item?.ColorCode
-                  ),
-                }}
-              ></p>
-            </div>
-          ))}
+        <div className="flex flex-row items-center justify-center gap-2">
+          <p className="text-gray-700 font-EstedadMedium ">رنگ:</p>
+          {uniqueColorCodes?.length > 0 &&
+            uniqueColorCodes?.map((uniqueColorCodes_item, idx) => (
+              <div
+                className="flex flex-row items-center justify-center gap-2 "
+                key={idx}
+              >
+                <p className="text-gray-700 font-EstedadMedium ">
+                  {uniqueColorCodes_item?.ColorName}
+                </p>
+                <p className="text-gray-700 font-EstedadMedium "></p>
+                <p
+                  className="w-5 h-5 flex flex-row items-center justify-center rounded-full "
+                  style={{
+                    backgroundColor: DecimalToHexConverter(
+                      uniqueColorCodes_item?.ColorCode
+                    ),
+                  }}
+                ></p>
+              </div>
+            ))}
+        </div>
+        <div className="flex flex-row items-center justify-center gap-2 ">
+          <p className="text-gray-700 font-EstedadMedium ">سایز:</p>
           {uniqueSizeNums?.length > 0 &&
-          uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
-            <div
-              className="flex flex-row items-center justify-center gap-2 "
-              key={idx}
-            >
-              <p className="text-gray-700 font-EstedadMedium ">{uniqueSizeNums_item}</p>
-            </div>
-          ))}
+            uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
+              <p key={idx} className="text-gray-700 font-EstedadMedium ">
+                {uniqueSizeNums_item}
+              </p>
+            ))}
+        </div>
       </div>
       {/* images  */}
       <div className="col-span-6 flex flex-col items-start justify-center space-y-6">
