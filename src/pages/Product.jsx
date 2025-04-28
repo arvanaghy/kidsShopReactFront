@@ -352,7 +352,7 @@ const Product = () => {
       <div className="gap-4 grid grid-cols-12 py-6  lg:px-10  px-4  ">
         {data?.relatedProducts?.length > 0 &&
           data?.relatedProducts?.map((item, idx) => (
-            <ProductCard item={item} key={idx} />
+            <ProductCard item={item} key={idx} colSpan="col-span-2" />
           ))}
       </div>
 

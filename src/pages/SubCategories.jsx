@@ -1,12 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import Loading from "../components/Loading";
+import { formatCurrencyDisplay } from "../utils/numeralHelpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEraser, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const SubCategories = () => {
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
+  const subcategory_page = searchParams.get("subcategory_page") || 1;
+  const product_page = searchParams.get("product_page") || 1;
+  const size = searchParams.get("size") || null;
+  const color = searchParams.get("color") || null;
+  const min_price = searchParams.get("min_price") || null;
+  const max_price = searchParams.get("max_price") || null;
+
   const { categoryCode } = useParams();
+
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState({
     data: [],
@@ -17,6 +38,9 @@ const SubCategories = () => {
     links: [],
   });
   const [category, setCategory] = useState(null);
+  const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [price, setPrice] = useState({ max_price: 0, min_price: 0 });
 
   const fetchData = async (_url) => {
     window.scrollTo(0, 0);
@@ -28,6 +52,7 @@ const SubCategories = () => {
           cache: "no-cache",
         },
       });
+      console.log("data", data);
       if (status !== 200) throw new Error(data?.message);
       setSubCategories({
         data: data?.result?.subcategories?.data,
@@ -35,9 +60,12 @@ const SubCategories = () => {
       });
       setCategory(data?.result?.category);
       setProducts({
-        data: data?.result?.categoryProducts?.data,
-        links: data?.result?.categoryProducts?.links,
+        data: data?.result?.products?.data,
+        links: data?.result?.products?.links,
       });
+      setSizes(data?.result?.sizes);
+      setColors(data?.result?.colors);
+      setPrice(data?.result?.prices);
     } catch (error) {
       toast.error(
         "دسته بندی: " + error?.response?.data?.message ||
@@ -49,79 +77,175 @@ const SubCategories = () => {
     }
   };
 
+  const letsSearch = (e) => {
+    e.preventDefult();
+    try {
+      const searchPhrase = e.target.search.value;
+      if (searchPhrase?.length <= 0)
+        throw new Error("نام دسته بندی مورد نظر را وارد کنید");
+      navigate(`/categoires?search=${searchPhrase}`);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
+  
+
   useEffect(() => {
     fetchData(
-      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?page=1`
+      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
+        size != null ? `&size=${size}` : ""
+      }${color != null ? `&color=${color}` : ""}`
     );
-  }, [categoryCode]);
+  }, [categoryCode, product_page, subcategory_page, search, size, color]);
 
   if (loading) return <Loading />;
   return (
-    <div className="w-full m-h-[65vh] flex inset-0 flex-col justify-center items-center">
-      {/* categories */}
-      <section className="w-full  py-14 ">
-        <div className="w-full px-4 mx-auto text-gray-600 lg:px-8  py-10">
-          <div className="w-full relative  mx-auto sm:text-center">
-            <div className="relative z-10 w-full">
-              <div className=" w-full">
-                <h3 className="w-fit text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500">
-                  زیر دسته بندی های {category?.Name} :
-
-                  {categoryCode}
-                </h3>
-                {category?.Comment && (
-                  <p className="mt-4 text-gray-600 font-EstedadMedium">
-                    {category?.Comment}
-                  </p>
-                )}
-              </div>
+    <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start py-6 gap-4">
+      <div className="w-full col-span-3">
+        <div className="w-full">
+          <img
+            loading="lazy"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src =
+                "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+            }}
+            src={`https://kidsshopapi.electroshop24.ir/category-images/webp/${category?.PicName}.webp`}
+            alt={category?.Name}
+            className="w-full h-full object-cover rounded-lg"
+          />
+          <h3 className="w-fit text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+            {category?.Name} :
+          </h3>
+          {category?.Comment && (
+            <p className="py-4 text-gray-600 font-EstedadMedium">
+              {category?.Comment}
+            </p>
+          )}
+        </div>
+        <Link
+          className="flex 
+            hover:-translate-x-2 duration-300 ease-in-out 
+            font-EstedadExtraBold text-yellow-700 py-4  gap-x-2"
+          to={`/category/${Math.floor(category?.Code)}`}
+        >
+          <FontAwesomeIcon icon={faEraser} className="text-lg" />
+          <span>پاک کردن فیلتر ها</span>
+        </Link>
+        <form
+          onSubmit={letsSearch}
+          className="relative flex flex-row justify-between items-center"
+        >
+          <input
+            type="text"
+            className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
+            name="search"
+          />
+          <button type="submit" className="absolute left-1.5 text-lg p-1.5 bg-gray-100 rounded-full  ">
+            <FontAwesomeIcon icon={faSearch}  />
+          </button>
+        </form>
+        {sizes?.length > 0 && (
+          <div className="w-full">
+            <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+              سایز ها :
+            </h3>
+            <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+              {sizes?.map((item, idx) => (
+                <Link
+                  key={idx}
+                  to={`/category/${Math.floor(category?.Code)}?size=${item}`}
+                  className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
+                >
+                  {item}
+                </Link>
+              ))}
             </div>
           </div>
-          <div className="relative mt-12 font-EstedadLight text-center">
-            <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-6 w-full">
-              {subCategories?.data?.length > 0 ? (
-                subCategories?.data?.map((item, idx) => (
-                  <Link
-                    key={idx}
-                    to={`/sub-category-products/${Math.floor(item?.Code)}`}
-                    className="w-full flex flex-row justify-between
-                    items-center  border rounded-r-full shadow-lg duration-300 shadow-CarbonicBlue-500 hover:scale-105 ease-in-out "
-                  >
-                    <div className="flex flex-row">
-                      <img
-                        loading="lazy"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src =
-                            "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFFFFF'/%3E%3C/svg%3E";
-                        }}
-                        src={
-                          "https://kidsshopapi.electroshop24.ir/subCategory-images/webp/" +
-                          `${item.PicName}.webp`
-                        }
-                        alt={item?.Name}
-                        className="w-24 h-24 m-2 rounded-full shadow-md shadow-gray-300"
-                      />
-                    </div>
-                    <div className="flex flex-col px-3">
-                      <h4 className="mx-2 text-lg text-center text-CarbonicBlue-500 font-EstedadMedium">
-                        {item?.Name}
-                      </h4>
-                      <p className=" font-EstedadLight ">{item?.Comment}</p>
-                    </div>
-                  </Link>
-                ))
-              ) : (
-                <div
-                  className="w-full text-xl font-EstedadExtraBold py-4 text-center leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
-                  "
+        )}
+        {colors?.length > 0 && (
+          <div className="w-full">
+            <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+              رنگ ها :
+            </h3>
+            <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+              {colors?.map((item, idx) => (
+                <Link
+                  key={idx}
+                  to={`/category/${Math.floor(category?.Code)}?color=${
+                    item?.ColorCode
+                  }`}
+                  className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
                 >
-                  هیج دسته بندی وجود ندارد
-                </div>
-              )}
-            </ul>
+                  {item?.ColorName}
+                </Link>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-row flex-wrap items-center justify-center my-8">
+        )}
+        {price?.min_price > 0 && price?.max_price > 0 && (
+          <div className="w-full">
+            <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+              قیمت :
+            </h3>
+            <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+              <Link
+                to={`/sub-category-products/${Math.floor(category?.Code)}?min=${
+                  price?.min_price
+                }&max=${price?.max_price}`}
+                className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
+              >
+                {formatCurrencyDisplay(price?.min_price)} ریال تا{" "}
+                {formatCurrencyDisplay(price?.max_price)} ریال
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="w-full col-span-9 grid grid-cols-12 space-y-6 ">
+        <div className="w-full col-span-12 p-6 bg-gray-200 rounded-xl">
+          <div className="w-full grid grid-cols-12">
+            {subCategories?.data?.length > 0 ? (
+              subCategories?.data?.map((item, idx) => (
+                <Link
+                  key={idx}
+                  to={`/sub-category-products/${Math.floor(item?.Code)}`}
+                  className="w-full flex flex-col justify-between
+                    items-center gap-3 duration-300  hover:scale-105 ease-in-out col-span-1"
+                >
+                  <img
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src =
+                        "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+                    }}
+                    src={
+                      "https://kidsshopapi.electroshop24.ir/subCategory-images/webp/" +
+                      `${item.PicName}.webp`
+                    }
+                    alt={item?.Name}
+                    className="rounded-full shadow-md shadow-gray-300"
+                  />
+                  <div className="flex flex-col px-3">
+                    <h4 className="px-2 text-lg text-center text-CarbonicBlue-500 font-EstedadMedium">
+                      {item?.Name}
+                    </h4>
+                    <p className=" font-EstedadLight ">{item?.Comment}</p>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div
+                className="w-full text-xl col-span-12 font-EstedadExtraBold py-4 text-center leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
+                  "
+              >
+                هیج دسته بندی وجود ندارد
+              </div>
+            )}
+          </div>
+          <div className="flex flex-row flex-wrap items-center justify-center">
             {subCategories?.links?.length > 3 &&
               subCategories?.links.map((link, idx) => (
                 <button
@@ -152,42 +276,29 @@ const SubCategories = () => {
               ))}
           </div>
         </div>
-      </section>
-      {/* categories */}
-      {/* products */}
-      <section className="min-h-[32rem] w-full py-10 lg:px-8 ">
-        <div className=" w-full ">
-          <h3
-            className="w-fit text-xl lg:text-3xl mx-4 font-EstedadExtraBold py-4 text-right leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
-        "
-          >
-            محصولات {category?.Name} :
-          </h3>
-        </div>
-
-        <ul className="grid gap-8 grid-cols-12 w-full px-10 py-10">
-          {products?.data?.length > 0 ? (
-            products?.data?.map((item, idx) => (
-              <ProductCard item={item} key={idx} />
-            ))
-          ) : (
-            <div
-              className="w-fit  text-xl font-EstedadExtraBold py-4 text-center leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
+        <div className="w-full col-span-12 bg-Cream-500 p-6">
+          <div className="w-full grid grid-cols-12 gap-6">
+            {products?.data?.length > 0 ? (
+              products?.data?.map((item, idx) => (
+                <ProductCard item={item} key={idx} colSpan="col-span-3" />
+              ))
+            ) : (
+              <div
+                className="w-fit col-span-12  text-xl font-EstedadExtraBold py-4 text-center leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
               "
-            >
-              هیج محصولی وجود ندارد
-            </div>
-          )}
-        </ul>
-
-        <div className="flex flex-row flex-wrap items-center justify-center my-8">
-          {products?.links?.length > 3 &&
-            products?.links?.map((link, idx) => (
-              <button
-                key={idx}
-                disabled={link.url === null}
-                onClick={() => fetchData(link.url)}
-                className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
+              >
+                هیج محصولی وجود ندارد
+              </div>
+            )}
+          </div>
+          <div className="flex flex-row flex-wrap items-center justify-center py-8">
+            {products?.links?.length > 3 &&
+              products?.links?.map((link, idx) => (
+                <button
+                  key={idx}
+                  disabled={link.url === null}
+                  onClick={() => fetchData(link.url)}
+                  className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
                   2xl:text-sm
   
                   text-xs px-2 py-1 mx-1
@@ -199,17 +310,17 @@ const SubCategories = () => {
                       ? "bg-CarbonicBlue-500 text-white"
                       : "bg-gray-300 text-black"
                   }`}
-              >
-                {link.label === "&laquo; Previous"
-                  ? "قبلی"
-                  : link.label === "Next &raquo;"
-                  ? " بعدی"
-                  : link.label}
-              </button>
-            ))}
+                >
+                  {link.label === "&laquo; Previous"
+                    ? "قبلی"
+                    : link.label === "Next &raquo;"
+                    ? " بعدی"
+                    : link.label}
+                </button>
+              ))}
+          </div>
         </div>
-      </section>
-      {/* Pagination Controls */}
+      </div>
     </div>
   );
 };
