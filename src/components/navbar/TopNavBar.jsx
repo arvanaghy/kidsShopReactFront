@@ -78,9 +78,9 @@ const TopNavBar = () => {
         `}
       style={{ zIndex: 9999 }}
     >
-      <section className="w-full grid grid-cols-12 items-center justify-between">
-        <div className="w-full xl:col-span-3"></div>
-        <form className="w-full xl:col-span-5 bg-gray-200 rounded-xl relative">
+      <section className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs">
+        <div className="w-full md:col-span-3 xl:col-span-3">logo</div>
+        <form className="w-full md:col-span-4 xl:col-span-5 bg-gray-200 rounded-xl relative">
           <input
             type="text"
             placeholder="جستجو محصول ..."
@@ -97,11 +97,11 @@ const TopNavBar = () => {
             />
           </button>
         </form>
-        <div className="xl:col-span-4 w-full flex flex-row items-center justify-end gap-x-4">
+        <div className="md:col-span-5 xl:col-span-4 w-full flex flex-row items-center justify-end md:gap-x-5 xl:gap-x-4">
           <div className="flex flex-row items-center justify-center gap-x-2">
             <FontAwesomeIcon
               icon={faHeadphones}
-              className="block text-lg font-bold "
+              className="block md:text-base xl:text-lg font-bold "
             />
             <span>{toPersianDigits("09144744980")}</span>
           </div>
@@ -129,7 +129,7 @@ const TopNavBar = () => {
                     gap-x-1.5
                     "
               >
-                <FontAwesomeIcon icon={faUserTie} className="block" />
+                <FontAwesomeIcon icon={faUserTie} className="block md:text-base xl:text-lg" />
                 <span className="block">ورود | ثبت نام</span>
               </Link>
             </div>
@@ -165,7 +165,7 @@ const TopNavBar = () => {
             <FontAwesomeIcon
               icon={faBagShopping}
               className="text-gray-600
-              text-xl
+               md:text-base xl:text-xl
               group-hover:text-green-600 
               group-hover:scale-105 drop-shadow-md duration-300 transition-all ease-in-out"
             />
@@ -175,15 +175,11 @@ const TopNavBar = () => {
 
       <section className="w-full grid grid-cols-12 items-center justify-between">
         <nav
-          className={`xl:col-span-9 w-full flex justify-start items-center `}
+          className={`md:col-span-12 lg:col-span-8 xl:col-span-9 w-full flex md:justify-start md:py-5 xl:justify-start xl:py-0 items-center md:px-2 xl:px-0`}
         >
           <div
             className="inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
-        lg:text-xs lg:gap-x-4
-        xl:gap-x-6 xl:text-sm
-        2xl:gap-x-8 2xl:text-base
-        "
-          >
+        md:text-xs lg:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-sm 2xl:gap-x-8 2xl:text-base" >
             {navigation.map((item, idx) => (
               <div key={idx}>
                 <div
@@ -231,11 +227,11 @@ const TopNavBar = () => {
                       </div>
                     ) : (
                       <div
-                        className="absolute top-10 z-50 right-0 left-0 w-[90vw] min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600  grid grid-cols-12 items-center justify-center shadow-md rounded-lg 
+                        className="absolute md:top-10 lg:top-5 z-50 md:-right-5 right-0 left-0 md:w-[88vw] lg:w-[94vw] xl:w-[93vw] 2xl:w-[95vw] min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600 grid grid-cols-12 items-center justify-center shadow-md md:rounded-b-lg md:rounded-t-none xl:rounded-lg 
                         p-6
                   "
                       >
-                        <div className="w-full col-span-9 grid grid-cols-12 gap-6">
+                        <div className="w-full md:col-span-9 xl:col-span-9 grid grid-cols-12 gap-6">
                           {item?.navs.map((dropdownItem, idx) => (
                             <Link
                               onMouseEnter={() => {
@@ -268,7 +264,7 @@ const TopNavBar = () => {
                             </Link>
                           ))}
                         </div>
-                        <div className="w-full col-span-3">
+                        <div className="w-full md:col-span-3 col-span-3">
                           {categoryImage && (
                             <div className="flex flex-col items-center
                             justify-center">
@@ -308,22 +304,22 @@ const TopNavBar = () => {
             ))}
           </div>
         </nav>
-        <div className="w-full xl:col-span-3 flex flex-row items-center justify-end gap-x-4">
+        <div className="w-full md:col-span-12 lg:col-span-4 xl:col-span-3 flex flex-row items-center md:justify-end xl:justify-end md:gap-x-5 md:px-2 xl:px-0 xl:gap-x-4 md:pb-2 lg:pb-0 md:text-xs">
           <Link
-            className="
+            className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"
             title="مقایسه محصولات"
           >
-            <FontAwesomeIcon icon={faRestroom} className="text-xl" />
+            <FontAwesomeIcon icon={faRestroom} className="md:text-base xl:text-xl" />
           </Link>
           <Link
-            className="
+            className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"
             title="علاقه مندی ها"
           >
-            <FontAwesomeIcon icon={faBookmark} className="text-xl" />
+            <FontAwesomeIcon icon={faBookmark} className="md:text-base xl:text-xl" />
           </Link>
           <Link
             className="
@@ -334,7 +330,7 @@ const TopNavBar = () => {
             "
             title="محصولات ویژه"
           >
-            <FontAwesomeIcon icon={faCertificate} className="text-xl" />
+            <FontAwesomeIcon icon={faCertificate} className="md:text-base xl:text-xl" />
             <span className="text-xs leading-relaxed">محصولات ویژه</span>
           </Link>
           <Link
@@ -346,7 +342,7 @@ const TopNavBar = () => {
             "
             title="پرفروش ترین ها"
           >
-            <FontAwesomeIcon icon={faBoxesPacking} className="text-xl" />
+            <FontAwesomeIcon icon={faBoxesPacking} className="md:text-base xl:text-xl" />
             <span className="text-xs leading-relaxed">پرفروش ترین ها</span>
           </Link>
         </div>
