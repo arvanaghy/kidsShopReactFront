@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 import { formatCurrencyDisplay } from "../utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEraser, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
 const SubCategories = () => {
   const [searchParams] = useSearchParams();
@@ -29,6 +30,7 @@ const SubCategories = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [sortPrice, setSortPrice] = useState("");
   const [products, setProducts] = useState({
     data: [],
     links: [],
@@ -52,7 +54,6 @@ const SubCategories = () => {
           cache: "no-cache",
         },
       });
-      console.log("data", data);
       if (status !== 200) throw new Error(data?.message);
       setSubCategories({
         data: data?.result?.subcategories?.data,
@@ -89,20 +90,28 @@ const SubCategories = () => {
     }
   };
 
-  
-
   useEffect(() => {
     fetchData(
       `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
         size != null ? `&size=${size}` : ""
-      }${color != null ? `&color=${color}` : ""}`
+      }${color != null ? `&color=${color}` : ""}
+      ${sortPrice != "" ? `&sort_price=${sortPrice}` : ""}
+      `
     );
-  }, [categoryCode, product_page, subcategory_page, search, size, color]);
+  }, [
+    categoryCode,
+    product_page,
+    subcategory_page,
+    search,
+    size,
+    color,
+    sortPrice,
+  ]);
 
   if (loading) return <Loading />;
   return (
     <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start py-6 gap-4">
-      <div className="w-full col-span-3">
+      <div className="w-full col-span-3 sticky top-[10vh]">
         <div className="w-full">
           <img
             loading="lazy"
@@ -142,8 +151,14 @@ const SubCategories = () => {
             className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
             name="search"
           />
-          <button type="submit" className="absolute left-1.5 text-lg p-1.5 bg-gray-100 rounded-full  ">
-            <FontAwesomeIcon icon={faSearch}  />
+          <button
+            type="submit"
+            className="
+          hover:bg-gray-200
+          duration-300 ease-in-out transition-all
+                    absolute left-1.5 text-lg p-1.5 bg-gray-100 rounded-full  "
+          >
+            <FontAwesomeIcon icon={faSearch} />
           </button>
         </form>
         {sizes?.length > 0 && (
@@ -176,8 +191,15 @@ const SubCategories = () => {
                   to={`/category/${Math.floor(category?.Code)}?color=${
                     item?.ColorCode
                   }`}
-                  className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
+                  className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
                 >
+                  <p
+                    className="w-5 h-5 rounded-full"
+                    style={{
+                      backgroundColor: DecimalToHexConverter(item?.ColorCode),
+                    }}
+                  ></p>
+
                   {item?.ColorName}
                 </Link>
               ))}
@@ -203,6 +225,7 @@ const SubCategories = () => {
           </div>
         )}
       </div>
+      {/* main content */}
       <div className="w-full col-span-9 grid grid-cols-12 space-y-6 ">
         <div className="w-full col-span-12 p-6 bg-gray-200 rounded-xl">
           <div className="w-full grid grid-cols-12">
@@ -275,6 +298,31 @@ const SubCategories = () => {
                 </button>
               ))}
           </div>
+        </div>
+        <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
+          <button
+            onClick={() => {
+              setSortPrice("");
+            }}
+          >
+            جدید ترین ها
+          </button>
+          <button
+            className="bg-gray-200 rounded-lg p-2"
+            onClick={() => {
+              setSortPrice("asc");
+            }}
+          >
+            ارزان ترین ها
+          </button>
+          <button
+            className="bg-gray-200 rounded-lg p-2"
+            onClick={() => {
+              setSortPrice("desc");
+            }}
+          >
+            گرانترین ها
+          </button>
         </div>
         <div className="w-full col-span-12 bg-Cream-500 p-6">
           <div className="w-full grid grid-cols-12 gap-6">
