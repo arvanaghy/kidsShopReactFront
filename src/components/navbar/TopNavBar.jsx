@@ -71,7 +71,7 @@ const TopNavBar = () => {
 
   return (
     <header
-      className={`block sticky top-0 shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600  first-letter:
+      className={`hidden md:block sticky top-0 shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600  first-letter:
         xl:p-6
         xl:space-y-8
 

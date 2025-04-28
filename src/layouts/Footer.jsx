@@ -1,7 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
-import { RiInstagramFill } from "react-icons/ri";
-import { LiaTelegramPlane } from "react-icons/lia";
-import { ImWhatsapp } from "react-icons/im";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAddressBook,
@@ -10,11 +7,9 @@ import {
   faChevronUp,
   faCircleInfo,
   faCircleQuestion,
-  faDisease,
   faLocationDot,
   faPersonHalfDress,
   faPhoneVolume,
-  faQuestion,
   faSquareEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
 import { toPersianDigits } from "@utils/numeralHelpers";
@@ -25,7 +20,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="w-full">
       <div className="px-8 py-6 font-semibold font-EstedadMedium text-gray-700  rounded-b-xl w-full bg-gray-100 ">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
