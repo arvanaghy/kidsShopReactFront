@@ -24,13 +24,13 @@ const SubCategories = () => {
   const color = searchParams.get("color") || null;
   const min_price = searchParams.get("min_price") || null;
   const max_price = searchParams.get("max_price") || null;
+  const sort_price = searchParams.get("sort_price") || null;
 
   const { categoryCode } = useParams();
 
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [sortPrice, setSortPrice] = useState("");
   const [products, setProducts] = useState({
     data: [],
     links: [],
@@ -95,18 +95,10 @@ const SubCategories = () => {
       `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
         size != null ? `&size=${size}` : ""
       }${color != null ? `&color=${color}` : ""}
-      ${sortPrice != "" ? `&sort_price=${sortPrice}` : ""}
+      ${sort_price != null ? `&sort_price=${sort_price}` : ""}
       `
     );
-  }, [
-    categoryCode,
-    product_page,
-    subcategory_page,
-    search,
-    size,
-    color,
-    sortPrice,
-  ]);
+  }, [categoryCode, product_page, subcategory_page, search, size, color , sort_price]);
 
   if (loading) return <Loading />;
   return (
@@ -300,29 +292,29 @@ const SubCategories = () => {
           </div>
         </div>
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
-          <button
-            onClick={() => {
-              setSortPrice("");
-            }}
+          <Link
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
+              size != null ? `&size=${size}` : ""
+            }${color != null ? `&color=${color}` : ""}`}
           >
             جدید ترین ها
-          </button>
-          <button
+          </Link>
+          <Link
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
+              size != null ? `&size=${size}` : ""
+            }${color != null ? `&color=${color}` : ""}&sort_price=asc`}
             className="bg-gray-200 rounded-lg p-2"
-            onClick={() => {
-              setSortPrice("asc");
-            }}
           >
             ارزان ترین ها
-          </button>
-          <button
+          </Link>
+          <Link
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
+              size != null ? `&size=${size}` : ""
+            }${color != null ? `&color=${color}` : ""}&sort_price=desc`}
             className="bg-gray-200 rounded-lg p-2"
-            onClick={() => {
-              setSortPrice("desc");
-            }}
           >
             گرانترین ها
-          </button>
+          </Link>
         </div>
         <div className="w-full col-span-12 bg-Cream-500 p-6">
           <div className="w-full grid grid-cols-12 gap-6">
