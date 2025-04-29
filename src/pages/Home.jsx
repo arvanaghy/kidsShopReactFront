@@ -56,8 +56,8 @@ const Home = () => {
   return (
     <>
       {/* categories */}
-      {/* <section
-        className="w-full max-w-2xl xl:max-w-7xl xl:mx-auto xl:py-8 flex overflow-x-auto"
+      <section
+        className="w-full max-w-2xl xl:max-w-7xl mx-auto py-4 xl:py-8 flex overflow-x-auto"
       >
         {result?.categories?.map((item, idx) => (
           <div
@@ -83,16 +83,16 @@ const Home = () => {
                   </h4>
                 </Link>
           </div>
-      </section> */}
+      </section>
       {/* categories */}
 
       {/* frist two banners */}
-      {/* <section className="p-10">
-        <div className="grid grid-cols-12 gap-8">
+      <section className="py-4 xl:p-10">
+        <div className="grid grid-cols-12 gap-4 xl:gap-8">
           {result?.banners?.length > 0 ? (
             result?.banners?.slice(0, 2)?.map((item, idx) => (
               <div
-                className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
+                className="w-full col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
                 key={idx}
               >
                 <img
@@ -111,7 +111,7 @@ const Home = () => {
                     "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
                   }
                   alt="no-image"
-                  className="w-full h-96 object-fill shadow-sm shadow-black/60 rounded-xl
+                  className="w-full xl:h-96 object-cover xl:object-fill shadow-sm shadow-black/60 rounded-xl
                   "
                 />
               </div>
@@ -128,23 +128,24 @@ const Home = () => {
             </>
           )}
         </div>
-      </section> */}
+      </section>
 
       {/* newestproducts */}
-      {/* <section
+      <section
         className="
-    my-10
-    py-14
-    p-6
+    xl:my-10
+    xl:py-14
+    xl:p-6
     grid grid-cols-12 items-center justify-center
     bg-Cream-500
     rounded-xl
   "
       >
-        <div className="w-full col-span-3">
+        <div className="w-full col-span-12 xl:col-span-3">
           <h2
-            className="font-EstedadExtraBold text-center tracking-wide
-        text-3xl leading-relaxed py-1.5
+            className="font-EstedadExtraBold text-center xl:tracking-wide
+            py-4
+        text-2xl leading-relaxed xl:py-1.5
         md:text-5xl
         lg:text-2xl
         2xl:text-5xl 2xl:leading-loose
@@ -154,12 +155,11 @@ const Home = () => {
             جدیدترین محصولات کیدزشاپ
           </h2>
         </div>
-        <div className="col-span-9">
+        <div className="w-full col-span-12 xl:col-span-9">
           <Swiper
             modules={[Autoplay, FreeMode, Pagination, Navigation]}
             className="h-full w-full  custom-swiper"
             freeMode={false}
-            // navigation={true}
             slidesPerView={1}
             centeredSlides={true}
             spaceBetween={0}
@@ -179,14 +179,10 @@ const Home = () => {
               }, [])
               .map((group, index) => (
                 <SwiperSlide key={index}>
-                  <div className="flex flex-row gap-2 justify-center w-full px-4">
+                  <div className="xl:gap-2 justify-center w-full xl:px-4 flex flex-row  ">
                     {group.map((product, productIndex) => (
-                      <div
-                        key={productIndex}
-                        className="w-[calc(25%-0.5rem)] flex-shrink-0"
-                      >
-                        <ProductCard item={product} />
-                      </div>
+                                   <ProductCard item={product} />
+
                     ))}
                     {group.length < 4 &&
                       Array.from({ length: 4 - group.length }).map((_, i) => (
@@ -203,7 +199,7 @@ const Home = () => {
           </Swiper>
         </div>
 
-        <div className="col-span-12 text-center pt-12">
+        <div className="col-span-12 text-center pt-6 xl:pt-12">
           <Link
             to="/products"
             className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
@@ -213,7 +209,7 @@ const Home = () => {
             مشاهده همه محصولات
           </Link>
         </div>
-      </section> */}
+      </section>
 
       {/* thrid and fourth banners */}
       {/* <section className="p-10">
