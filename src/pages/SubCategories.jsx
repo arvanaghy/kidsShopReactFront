@@ -17,7 +17,7 @@ import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
 const SubCategories = () => {
   const [searchParams] = useSearchParams();
-  const search = searchParams.get("search") || "";
+  const search = searchParams.get("search") || null;
   const subcategory_page = searchParams.get("subcategory_page") || 1;
   const product_page = searchParams.get("product_page") || 1;
   const size = searchParams.get("size") || null;
@@ -92,13 +92,22 @@ const SubCategories = () => {
 
   useEffect(() => {
     fetchData(
-      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
-        size != null ? `&size=${size}` : ""
-      }${color != null ? `&color=${color}` : ""}
+      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}
+      ${search != null ? `&search=${search}` : ""}
+      ${size != null ? `&size=${size}` : ""}
+      ${color != null ? `&color=${color}` : ""}
       ${sort_price != null ? `&sort_price=${sort_price}` : ""}
       `
     );
-  }, [categoryCode, product_page, subcategory_page, search, size, color , sort_price]);
+  }, [
+    categoryCode,
+    product_page,
+    subcategory_page,
+    search,
+    size,
+    color,
+    sort_price,
+  ]);
 
   if (loading) return <Loading />;
   return (
@@ -293,24 +302,18 @@ const SubCategories = () => {
         </div>
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
-              size != null ? `&size=${size}` : ""
-            }${color != null ? `&color=${color}` : ""}`}
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}${search != null ? `&search=${search}` : ""}`}
           >
             جدید ترین ها
           </Link>
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
-              size != null ? `&size=${size}` : ""
-            }${color != null ? `&color=${color}` : ""}&sort_price=asc`}
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${search != null ? `&search=${search}` : ""}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}&sort_price=asc`}
             className="bg-gray-200 rounded-lg p-2"
           >
             ارزان ترین ها
           </Link>
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}&search=${search}${
-              size != null ? `&size=${size}` : ""
-            }${color != null ? `&color=${color}` : ""}&sort_price=desc`}
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${size != null ? `&size=${size}` : ""}${search != null ? `&search=${search}` : ""}${color != null ? `&color=${color}` : ""}&sort_price=desc`}
             className="bg-gray-200 rounded-lg p-2"
           >
             گرانترین ها
