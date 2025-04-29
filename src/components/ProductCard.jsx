@@ -12,10 +12,11 @@ import { faCertificate, faRestroom } from "@fortawesome/free-solid-svg-icons";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
   const { user } = useContext(UserContext);
-  const { favourite, updateFavourite, toggleFavourite  } = useContext(UserContext);
+  const { favourite, toggleFavourite, clearCompare } = useContext(UserContext);
   const isFavourite = favourite?.some((f) => f.Code === item.Code);
-  console.log (favourite);
-
+  const { compareList, toggleCompare } = useContext(UserContext);
+  const isCompared = compareList.some((p) => p.Code === item.Code);
+  console.log(compareList);
   const uniqueColorCodes = [
     ...new Map(
       item?.product_size_color
@@ -40,9 +41,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       className={`${colSpan} rounded-lg w-full h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}
     >
       {/* Top Section: Image and Labels */}
-      <div
-        className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all"
-      >
+      <div className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all">
         <img
           src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
             item?.GCode
@@ -73,7 +72,15 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
               className={isFavourite ? "text-red-600" : "text-gray-400"}
             />
           </button>
-          <FontAwesomeIcon icon={faRestroom} className="" />
+          <button
+            onClick={() => toggleCompare(item)}
+            className="text-xl text-red-500 hover:scale-110 transition-transform"
+            >
+              <FontAwesomeIcon
+                icon={faRestroom}
+                className={isCompared ? "text-red-600" : "text-gray-400"}
+              />
+          </button>
         </div>
       </div>
 
