@@ -300,14 +300,14 @@ const SubCategories = () => {
               ))}
           </div>
         </div>
-        <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
+        <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center font-EstedadMedium text-sm">
           <Link
             to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
             }`}
-            className={`font-EstedadLight text-sm  border border-CarbonicBlue-500 rounded-lg p-2
+            className={`border border-CarbonicBlue-500 rounded-lg p-2
               ${
                 sort_price != "asc" && sort_price != "desc"
                   ? "bg-CarbonicBlue-500 text-white"
