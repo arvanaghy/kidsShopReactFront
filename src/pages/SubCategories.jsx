@@ -17,6 +17,8 @@ import {
   faCircleCheck,
   faEraser,
   faSearch,
+  faSquare,
+  faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
@@ -50,6 +52,10 @@ const SubCategories = () => {
   const [price, setPrice] = useState({ max_price: 0, min_price: 0 });
   const [sizeSets, setSizeSets] = useState([]);
   const [colorSets, setColorSets] = useState([]);
+  const [priceRange, setPriceRange] = useState({
+    min_price: 0,
+    max_price: 100000000,
+  });
 
   const fetchData = async (_url) => {
     window.scrollTo(0, 0);
@@ -91,7 +97,7 @@ const SubCategories = () => {
       const searchPhrase = e.target.search.value;
       if (searchPhrase?.length <= 0)
         throw new Error("نام دسته بندی مورد نظر را وارد کنید");
-      navigate(`/categoires?search=${searchPhrase}`);
+      navigate(`/category/${categoryCode}?search=${searchPhrase}`);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -99,12 +105,11 @@ const SubCategories = () => {
 
   useEffect(() => {
     fetchData(
-      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}
-      ${search != null ? `&search=${search}` : ""}
-      ${size != null ? `&size=${size}` : ""}
-      ${color != null ? `&color=${color}` : ""}
-      ${sort_price != null ? `&sort_price=${sort_price}` : ""}
-      `
+      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${search != null ? `&search=${search}` : ""}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}${sort_price != null ? `&sort_price=${sort_price}` : ""}${priceRange?.min_price != 0 ? `&min_price=${priceRange?.min_price}` : ""}${
+        priceRange?.max_price != 100000000
+          ? `&max_price=${priceRange?.max_price}`
+          : ""
+      }`
     );
   }, [
     categoryCode,
@@ -114,6 +119,8 @@ const SubCategories = () => {
     size,
     color,
     sort_price,
+    priceRange?.min_price,
+    priceRange?.max_price,
   ]);
 
   const addSizeSet = (size) => {
@@ -125,6 +132,37 @@ const SubCategories = () => {
       newSizeSets.push(size);
       setSizeSets(newSizeSets);
     }
+  };
+
+  const addColorSet = (color) => {
+    const newColorSets = [...colorSets];
+    if (newColorSets.includes(color)) {
+      newColorSets.splice(newColorSets.indexOf(color), 1);
+      return setColorSets(newColorSets);
+    } else {
+      newColorSets.push(color);
+      setColorSets(newColorSets);
+    }
+  };
+
+  const applyFilters = () => {
+    navigate(
+      `/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
+        search != null ? `&search=${search}` : ""
+      }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
+        colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
+      }${min_price != null ? `&min_price=${priceRange?.min_price}` : ""}${
+        max_price != null ? `&max_price=${priceRange?.max_price}` : ""
+      }${sort_price != null ? `&sort_price=${sort_price}` : ""}
+      `
+    );
+  };
+
+  const removeFilters = () => {
+    setSizeSets([]);
+    setColorSets([]);
+    setPriceRange({ min_price: 0, max_price: 100000000 });
+    navigate(`/category/${categoryCode}`);
   };
 
   if (loading) return <Loading />;
@@ -156,15 +194,15 @@ const SubCategories = () => {
         </div>
         <div className="w-full sticky xl:top-[18vh]">
           {/* remove filters */}
-          <Link
+          <button
             className="flex 
             hover:-translate-x-2 duration-300 ease-in-out 
             font-EstedadExtraBold text-yellow-700 py-4  gap-x-2"
-            to={`/category/${Math.floor(category?.Code)}`}
+            onClick={removeFilters}
           >
             <FontAwesomeIcon icon={faEraser} className="text-lg" />
             <span>پاک کردن فیلتر ها</span>
-          </Link>
+          </button>
           {/* search */}
           <form
             onSubmit={letsSearch}
@@ -195,19 +233,22 @@ const SubCategories = () => {
                 {sizes?.map((item, idx) => (
                   <button
                     key={idx}
-                    onClick={(item) => {
+                    onClick={() => {
                       addSizeSet(item);
                     }}
-                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
+                    className="w-full flex flex-row justify-start items-center gap-3 duration-300 hover:-translate-x-2 ease-in-out transition-all"
                   >
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      className="text-white border border-black rounded-full "
-                    />
-                    <FontAwesomeIcon
-                      icon={faCircleCheck}
-                      className="text-green-600"
-                    />
+                    {sizeSets.includes(item) ? (
+                      <FontAwesomeIcon
+                        icon={faCircleCheck}
+                        className="text-green-600"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faCircle}
+                        className="text-white border border-black rounded-full "
+                      />
+                    )}
                     {item}
                   </button>
                 ))}
@@ -221,13 +262,25 @@ const SubCategories = () => {
               </h3>
               <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
                 {colors?.map((item, idx) => (
-                  <Link
+                  <button
                     key={idx}
-                    to={`/category/${Math.floor(category?.Code)}?color=${
-                      item?.ColorCode
-                    }`}
-                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
+                    onClick={() => {
+                      addColorSet(item?.ColorCode);
+                    }}
+                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:-translate-x-2 transition-all ease-in-out"
                   >
+                    {colorSets.includes(item?.ColorCode) ? (
+                      <FontAwesomeIcon
+                        icon={faSquareCheck}
+                        className="text-green-600"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSquare}
+                        className="text-white border border-black  "
+                      />
+                    )}
+
                     <p
                       className={`w-5 h-5 rounded-full
                       border border-gray-300
@@ -238,7 +291,7 @@ const SubCategories = () => {
                     ></p>
 
                     {item?.ColorName}
-                  </Link>
+                  </button>
                 ))}
               </div>
             </div>
@@ -253,7 +306,7 @@ const SubCategories = () => {
                   to={`/sub-category-products/${Math.floor(
                     category?.Code
                   )}?min=${price?.min_price}&max=${price?.max_price}`}
-                  className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
+                  className="w-full  gap-3 duration-300  ease-in-out"
                 >
                   {formatCurrencyDisplay(price?.min_price)} ریال تا{" "}
                   {formatCurrencyDisplay(price?.max_price)} ریال
@@ -261,6 +314,17 @@ const SubCategories = () => {
               </div>
             </div>
           )}
+          <div className="w-full">
+            <button
+              onClick={applyFilters}
+              className="w-fit text-base font-EstedadExtraBold p-4  leading-relaxed rounded-xl mx-auto text-center
+              bg-green-800 text-white hover:bg-green-900 transition-all duration-300 ease-in-out
+              border border-green-600 hover:border-green-700 
+              "
+            >
+              اعمال فیلتر ها
+            </button>
+          </div>
         </div>
       </div>
       {/* main content */}
@@ -338,9 +402,10 @@ const SubCategories = () => {
               ))}
           </div>
         </div>
+        {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+            to={`/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
@@ -356,7 +421,7 @@ const SubCategories = () => {
             جدید ترین ها
           </Link>
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+            to={`/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
               color != null ? `&color=${color}` : ""
@@ -373,7 +438,7 @@ const SubCategories = () => {
             ارزان ترین ها
           </Link>
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+            to={`/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
