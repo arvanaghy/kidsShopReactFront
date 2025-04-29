@@ -302,23 +302,37 @@ const SubCategories = () => {
         </div>
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}${search != null ? `&search=${search}` : ""}`}
-            className={`font-EstedadLight text-sm bg-Cream-500 border border-CarbonicBlue-500 rounded-lg p-2
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+              size != null ? `&size=${size}` : ""
+            }${color != null ? `&color=${color}` : ""}${
+              search != null ? `&search=${search}` : ""
+            }`}
+            className={`font-EstedadLight text-sm  border border-CarbonicBlue-500 rounded-lg p-2
               ${
-                sort_price != 
+                sort_price != "asc" && sort_price != "desc"
+                  ? "bg-CarbonicBlue-500 text-white"
+                  : "bg-Cream-500 text-gray-800 "
               }
               `}
           >
             جدید ترین ها
           </Link>
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${search != null ? `&search=${search}` : ""}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}&sort_price=asc`}
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+              search != null ? `&search=${search}` : ""
+            }${size != null ? `&size=${size}` : ""}${
+              color != null ? `&color=${color}` : ""
+            }&sort_price=asc`}
             className="bg-gray-200 rounded-lg p-2"
           >
             ارزان ترین ها
           </Link>
           <Link
-            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${size != null ? `&size=${size}` : ""}${search != null ? `&search=${search}` : ""}${color != null ? `&color=${color}` : ""}&sort_price=desc`}
+            to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+              size != null ? `&size=${size}` : ""
+            }${search != null ? `&search=${search}` : ""}${
+              color != null ? `&color=${color}` : ""
+            }&sort_price=desc`}
             className="bg-gray-200 rounded-lg p-2"
           >
             گرانترین ها
