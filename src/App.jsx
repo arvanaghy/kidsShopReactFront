@@ -31,6 +31,7 @@ import Failed from "@pages/paymentResults/Failed";
 import SuccessMobile from "@pages/paymentResults/SuccessMobile";
 import FailedMobile from "@pages/paymentResults/FailedMobile";
 import BestSellingProducts from "@pages/BestSellingProducts";
+import FavouritesPage from "@pages/FavouritesPage";
 
 function App() {
   const router = createBrowserRouter([
@@ -148,6 +149,9 @@ function App() {
         {
           path: "/best-selling-products",
           element: <BestSellingProducts />,
+        },{
+          path: "/my-favourite",
+          element: <FavouritesPage />,
         },
       ],
     },

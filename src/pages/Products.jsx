@@ -69,6 +69,8 @@ const Products = () => {
                   <ProductCard item={product} key={key} />
                 ))}
               </ul>
+
+              {/* pagination */}
               <div className="flex flex-row flex-wrap items-center justify-center my-8">
                 {links &&
                   links?.length > 3 &&

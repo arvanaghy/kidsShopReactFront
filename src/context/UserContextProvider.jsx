@@ -7,6 +7,7 @@ const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [cart, setCart] = useState([]);
   const [order, setOrder] = useState([]);
+  const [favourite, setFavourite] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchUser = () => {
@@ -59,6 +60,22 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const fetchFavourite = () => {
+    if (loading) return;
+    try {
+      const _favourite = window.localStorage.getItem("KidsShop_favourite");
+      if (_favourite) {
+        setFavourite(JSON.parse(_favourite));
+      }
+    } catch (err) {
+      toast.error("fetchFavourite Context Error:" + err.message);
+      window.localStorage.removeItem("KidsShop_favourite");
+      setFavourite([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const updateUser = (__user) => {
     if (loading) return;
     try {
@@ -104,15 +121,39 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const updateFavourite = (newFavourite) => {
+    if (loading) return;
+    try {
+      setLoading(true);
+      setFavourite(newFavourite);
+      window.localStorage.setItem("KidsShop_favourite", JSON.stringify(newFavourite));
+    } catch (err) {
+      setFavourite([]);
+      toast.error("updateFavourite Error:" + err.message);
+      window.localStorage.removeItem("KidsShop_favourite");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleFavourite = (product) => {
+    const exists = favourite.find((f) => f.Code === product.Code);
+    const newFavourite = exists
+      ? favourite.filter((f) => f.Code !== product.Code)
+      : [...favourite, product];
+    updateFavourite(newFavourite);
+  };
+
   useEffect(() => {
     fetchUser();
     fetchCart();
     fetchOrder();
+    fetchFavourite();
   }, []);
 
   return (
     <UserContext.Provider
-      value={{ user, updateUser, cart, updateCart, order, updateOrder }}
+      value={{ user, updateUser, cart, updateCart, order, updateOrder, favourite, updateFavourite, toggleFavourite }}
     >
       {children}
     </UserContext.Provider>
