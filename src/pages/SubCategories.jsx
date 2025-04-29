@@ -12,7 +12,12 @@ import ProductCard from "../components/ProductCard";
 import Loading from "../components/Loading";
 import { formatCurrencyDisplay } from "../utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faEraser, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircle,
+  faCircleCheck,
+  faEraser,
+  faSearch,
+} from "@fortawesome/free-solid-svg-icons";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
 const SubCategories = () => {
@@ -126,7 +131,7 @@ const SubCategories = () => {
   return (
     <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start py-6 gap-4">
       {/* side bar */}
-      <div className="w-full col-span-3 sticky top-[10vh]">
+      <div className="w-full col-span-3 h-full ">
         {/* category details */}
         <div className="w-full">
           <img
@@ -149,107 +154,114 @@ const SubCategories = () => {
             </p>
           )}
         </div>
-        {/* remove filters */}
-        <Link
-          className="flex 
+        <div className="w-full sticky xl:top-[18vh]">
+          {/* remove filters */}
+          <Link
+            className="flex 
             hover:-translate-x-2 duration-300 ease-in-out 
             font-EstedadExtraBold text-yellow-700 py-4  gap-x-2"
-          to={`/category/${Math.floor(category?.Code)}`}
-        >
-          <FontAwesomeIcon icon={faEraser} className="text-lg" />
-          <span>پاک کردن فیلتر ها</span>
-        </Link>
-        {/* search */}
-        <form
-          onSubmit={letsSearch}
-          className="relative flex flex-row justify-between items-center"
-        >
-          <input
-            type="text"
-            className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
-            placeholder={search != null ? search : "جستجو محصول ..."}
-            name="search"
-          />
-          <button
-            type="submit"
-            className="
+            to={`/category/${Math.floor(category?.Code)}`}
+          >
+            <FontAwesomeIcon icon={faEraser} className="text-lg" />
+            <span>پاک کردن فیلتر ها</span>
+          </Link>
+          {/* search */}
+          <form
+            onSubmit={letsSearch}
+            className="relative flex flex-row flex-wrap justify-between items-center"
+          >
+            <input
+              type="text"
+              className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
+              placeholder={search != null ? search : "جستجو محصول ..."}
+              name="search"
+            />
+            <button
+              type="submit"
+              className="
           hover:bg-gray-200
           duration-300 ease-in-out transition-all
                     absolute left-1.5 text-lg p-1.5 bg-gray-100 rounded-full  "
-          >
-            <FontAwesomeIcon icon={faSearch} />
-          </button>
-        </form>
-        {sizes?.length > 0 && (
-          <div className="w-full">
-            <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
-              سایز ها :
-            </h3>
-            <div className="w-full flex flex-row justify-start items-start gap-2 py-4">
-              {sizes?.map((item, idx) => (
-                <button
-                  key={idx}
-                  onClick={(item) => {
-                    addSizeSet(item);
-                  }}
-                  className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
-                >
-                  <p className="w-5 h-5 rounded-full border border-gray-300">
-                  <FontAwesomeIcon icon={faCircleCheck} />
-                  </p>
-                  {item}
-                </button>
-              ))}
+            >
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          </form>
+          {sizes?.length > 0 && (
+            <div className="w-full">
+              <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+                سایز ها :
+              </h3>
+              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 py-4">
+                {sizes?.map((item, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(item) => {
+                      addSizeSet(item);
+                    }}
+                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
+                  >
+                    <FontAwesomeIcon
+                      icon={faCircle}
+                      className="text-white border border-black rounded-full "
+                    />
+                    <FontAwesomeIcon
+                      icon={faCircleCheck}
+                      className="text-green-600"
+                    />
+                    {item}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
-        {colors?.length > 0 && (
-          <div className="w-full">
-            <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
-              رنگ ها :
-            </h3>
-            <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
-              {colors?.map((item, idx) => (
-                <Link
-                  key={idx}
-                  to={`/category/${Math.floor(category?.Code)}?color=${
-                    item?.ColorCode
-                  }`}
-                  className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
-                >
-                  <p
-                    className={`w-5 h-5 rounded-full
+          )}
+          {colors?.length > 0 && (
+            <div className="w-full">
+              <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+                رنگ ها :
+              </h3>
+              <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+                {colors?.map((item, idx) => (
+                  <Link
+                    key={idx}
+                    to={`/category/${Math.floor(category?.Code)}?color=${
+                      item?.ColorCode
+                    }`}
+                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
+                  >
+                    <p
+                      className={`w-5 h-5 rounded-full
                       border border-gray-300
                       `}
-                    style={{
-                      backgroundColor: DecimalToHexConverter(item?.ColorCode),
-                    }}
-                  ></p>
+                      style={{
+                        backgroundColor: DecimalToHexConverter(item?.ColorCode),
+                      }}
+                    ></p>
 
-                  {item?.ColorName}
+                    {item?.ColorName}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+          {price?.min_price > 0 && price?.max_price > 0 && (
+            <div className="w-full">
+              <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+                قیمت :
+              </h3>
+              <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+                <Link
+                  to={`/sub-category-products/${Math.floor(
+                    category?.Code
+                  )}?min=${price?.min_price}&max=${price?.max_price}`}
+                  className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
+                >
+                  {formatCurrencyDisplay(price?.min_price)} ریال تا{" "}
+                  {formatCurrencyDisplay(price?.max_price)} ریال
                 </Link>
-              ))}
+              </div>
             </div>
-          </div>
-        )}
-        {price?.min_price > 0 && price?.max_price > 0 && (
-          <div className="w-full">
-            <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
-              قیمت :
-            </h3>
-            <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
-              <Link
-                to={`/sub-category-products/${Math.floor(category?.Code)}?min=${
-                  price?.min_price
-                }&max=${price?.max_price}`}
-                className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
-              >
-                {formatCurrencyDisplay(price?.min_price)} ریال تا{" "}
-                {formatCurrencyDisplay(price?.max_price)} ریال
-              </Link>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
       {/* main content */}
       <div className="w-full col-span-9 grid grid-cols-12 space-y-6 ">
