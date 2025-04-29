@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 
-
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import toast from "react-hot-toast";
 
@@ -19,6 +18,7 @@ import Loading from "@components/Loading";
 import CategoryCircleCard from "@components/category/CategoryCircleCard";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import OfferProductCard from "../components/OfferProductCard";
+import { faArrowsToEye } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -56,22 +56,38 @@ const Home = () => {
   return (
     <>
       {/* categories */}
-      <section
-        className="max-w-7xl mx-auto 
-        xl:py-8 
-        col-span-12 gap-2
-        grid grid-cols-12
-        grid-rows-1
-        overflow-x-scroll"
+      {/* <section
+        className="w-full max-w-2xl xl:max-w-7xl xl:mx-auto xl:py-8 flex overflow-x-auto"
       >
         {result?.categories?.map((item, idx) => (
-          <CategoryCircleCard item={item} key={idx} colSpan="xl:col-span-1" />
+          <div
+            key={idx}
+            className="flex-shrink-0 w-24 xl:w-30"
+          >
+            <CategoryCircleCard item={item} />
+          </div>
         ))}
-      </section>
+        <div
+            className="flex-shrink-0 w-24 xl:w-30"
+          >
+            <Link
+                  to={`/categoires`}
+                  className={`w-full flex flex-col justify-center
+                                    items-center
+                                    cursor-pointer
+                                    xl:hover:scale-105  duration-300  ease-in-out transition-all`}
+                >
+                  <FontAwesomeIcon icon={faArrowsToEye} className="w-14 h-14 p-5 m-2 rounded-full text-gray-500"/>
+                  <h4 className="text-base text-center text-gray-900 font-EstedadMedium">
+                    تمام دسته بندی ها
+                  </h4>
+                </Link>
+          </div>
+      </section> */}
       {/* categories */}
 
       {/* frist two banners */}
-      <section className="p-10">
+      {/* <section className="p-10">
         <div className="grid grid-cols-12 gap-8">
           {result?.banners?.length > 0 ? (
             result?.banners?.slice(0, 2)?.map((item, idx) => (
@@ -112,10 +128,10 @@ const Home = () => {
             </>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* newestproducts */}
-      <section
+      {/* <section
         className="
     my-10
     py-14
@@ -197,9 +213,10 @@ const Home = () => {
             مشاهده همه محصولات
           </Link>
         </div>
-      </section>
+      </section> */}
+
       {/* thrid and fourth banners */}
-      <section className="p-10">
+      {/* <section className="p-10">
         <div className="grid grid-cols-12 gap-8">
           {result?.banners?.length > 0 ? (
             result?.banners?.slice(2, 4)?.map((item, idx) => (
@@ -240,10 +257,10 @@ const Home = () => {
             </>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* offered products */}
-      {result?.offeredProducts?.length > 0 && (
+      {/* {result?.offeredProducts?.length > 0 && (
         <section
           className="
      my-10
@@ -299,10 +316,10 @@ const Home = () => {
             </Link>
           </div>
         </section>
-      )}
+      )} */}
 
       {/* fifth and sixth banners */}
-      <section className="p-10">
+      {/* <section className="p-10">
         <div className="grid grid-cols-12 gap-8">
           {result?.banners?.length > 0 ? (
             result?.banners?.slice(4, 6)?.map((item, idx) => (
@@ -344,10 +361,10 @@ const Home = () => {
             </>
           )}
         </div>
-      </section>
+      </section> */}
 
       {/* best seller products */}
-      {result?.bestSeller?.length > 0 && (
+      {/* {result?.bestSeller?.length > 0 && (
         <section
           className="
   my-10
@@ -431,9 +448,10 @@ const Home = () => {
             </Link>
           </div>
         </section>
-      )}
+      )} */}
+
       {/* follow us in instagram */}
-      <section className="p-10">
+      {/* <section className="p-10">
         <Link
           to="https://www.instagram.com/kids_shop.110/"
           target="_blank"
@@ -457,7 +475,7 @@ const Home = () => {
             />
           </div>
         </Link>
-      </section>
+      </section> */}
     </>
   );
 };
