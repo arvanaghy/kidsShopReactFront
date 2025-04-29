@@ -144,16 +144,44 @@ const UserContextProvider = ({ children }) => {
     updateFavourite(newFavourite);
   };
 
+  const [compareList, setCompareList] = useState([]);
+
+const toggleCompare = (product) => {
+  const exists = compareList.find((p) => p.Code === product.Code);
+
+  let updated;
+  if (exists) {
+    updated = compareList.filter((p) => p.Code !== product.Code);
+  } else if (compareList.length < 3) {
+    updated = [...compareList, product];
+  } else {
+    toast.error("You can only compare 3 products at a time.");
+    return;
+  }
+
+  setCompareList(updated);
+  window.localStorage.setItem("KidsShop_compare", JSON.stringify(updated));
+};
+
+const clearCompare = () => {
+  setCompareList([]);
+  window.localStorage.removeItem("KidsShop_compare");
+};
+
   useEffect(() => {
     fetchUser();
     fetchCart();
     fetchOrder();
     fetchFavourite();
+    const saved = localStorage.getItem("KidsShop_compare");
+  if (saved) setCompareList(JSON.parse(saved));
   }, []);
 
   return (
     <UserContext.Provider
-      value={{ user, updateUser, cart, updateCart, order, updateOrder, favourite, updateFavourite, toggleFavourite }}
+      value={{ user, updateUser, cart, updateCart, order, updateOrder, favourite, updateFavourite, toggleFavourite, compareList,
+        toggleCompare,
+        clearCompare,}}
     >
       {children}
     </UserContext.Provider>
