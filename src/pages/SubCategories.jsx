@@ -303,6 +303,11 @@ const SubCategories = () => {
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
             to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}${search != null ? `&search=${search}` : ""}`}
+            className={`font-EstedadLight text-sm bg-Cream-500 border border-CarbonicBlue-500 rounded-lg p-2
+              ${
+                sort_price != 
+              }
+              `}
           >
             جدید ترین ها
           </Link>
