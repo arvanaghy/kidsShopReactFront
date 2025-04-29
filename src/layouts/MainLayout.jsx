@@ -36,7 +36,7 @@ const MainLayout = () => {
             },
           }}
         />
-        <div className="max-w-[80vw] mx-auto">
+        <div className="max-w-[95vw] xl:max-w-[80vw] mx-auto">
           <Outlet />
         </div>
       </div>
@@ -51,7 +51,7 @@ const MainLayout = () => {
         <FontAwesomeIcon icon={faChevronUp} className="text-2xl bg-black/60 text-white px-5 py-3  rounded-t-2xl hover:bg-green-700 transation-all duration-300 ease-in-out" />
       </button>
       <div
-        className="lg:hidden fixed h-[8vh] bottom-0 w-full bg-CarbonicBlue-500 rounded-t-lg"
+        className="md:hidden fixed h-[8vh] bottom-0 w-full bg-CarbonicBlue-500 rounded-t-lg"
         style={{ zIndex: 9999 }}
       >
         <MobileNav />

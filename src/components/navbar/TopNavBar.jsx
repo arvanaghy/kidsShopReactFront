@@ -78,14 +78,14 @@ const TopNavBar = () => {
         `}
       style={{ zIndex: 9999 }}
     >
-      <section className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs">
+      <section className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 2xl:text-xl">
         <div className="w-full md:col-span-3 xl:col-span-3">logo</div>
         <form className="w-full md:col-span-4 xl:col-span-5 bg-gray-200 rounded-xl relative">
           <input
             type="text"
             placeholder="جستجو محصول ..."
             onChange={() => {}}
-            className="w-full p-2 bg-gray-200 rounded-xl text-gray-600 placeholder:text-gray-600 "
+            className="w-full p-2 bg-gray-200 rounded-xl text-gray-600 placeholder:text-gray-600 2xl:py-4 "
           />
           <button
             type="submit"
@@ -101,7 +101,7 @@ const TopNavBar = () => {
           <div className="flex flex-row items-center justify-center gap-x-2">
             <FontAwesomeIcon
               icon={faHeadphones}
-              className="block md:text-base xl:text-lg font-bold "
+              className="block md:text-base xl:text-lg font-bold 2xl:text-2xl "
             />
             <span>{toPersianDigits("09144744980")}</span>
           </div>
@@ -115,7 +115,7 @@ const TopNavBar = () => {
                   gap-x-1.5
                   "
               >
-                <FontAwesomeIcon icon={faUserTie} className="block" />
+                <FontAwesomeIcon icon={faUserTie} className="block 2xl:text-2xl" />
                 <span>{user?.Name}</span>
               </Link>
             </div>
@@ -129,7 +129,7 @@ const TopNavBar = () => {
                     gap-x-1.5
                     "
               >
-                <FontAwesomeIcon icon={faUserTie} className="block md:text-base xl:text-lg" />
+                <FontAwesomeIcon icon={faUserTie} className="block md:text-base xl:text-lg 2xl:text-2xl" />
                 <span className="block">ورود | ثبت نام</span>
               </Link>
             </div>
@@ -165,21 +165,21 @@ const TopNavBar = () => {
             <FontAwesomeIcon
               icon={faBagShopping}
               className="text-gray-600
-               md:text-base xl:text-xl
-              group-hover:text-green-600 
+               md:text-base xl:text-xl 2xl:text-3xl
+              group-hover:text-green-600 mx-2 md:mx-5
               group-hover:scale-105 drop-shadow-md duration-300 transition-all ease-in-out"
             />
           </Link>
         </div>
       </section>
 
-      <section className="w-full grid grid-cols-12 items-center justify-between">
+      <section className="w-full grid grid-cols-12 items-center justify-between 2xl:text-xl">
         <nav
           className={`md:col-span-12 lg:col-span-8 xl:col-span-9 w-full flex md:justify-start md:py-5 xl:justify-start xl:py-0 items-center md:px-2 xl:px-0`}
         >
           <div
             className="inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
-        md:text-xs lg:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-sm 2xl:gap-x-8 2xl:text-base" >
+        md:text-xs lg:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-sm 2xl:gap-x-8 2xl:text-xl" >
             {navigation.map((item, idx) => (
               <div key={idx}>
                 <div
@@ -304,14 +304,14 @@ const TopNavBar = () => {
             ))}
           </div>
         </nav>
-        <div className="w-full md:col-span-12 lg:col-span-4 xl:col-span-3 flex flex-row items-center md:justify-end xl:justify-end md:gap-x-5 md:px-2 xl:px-0 xl:gap-x-4 md:pb-2 lg:pb-0 md:text-xs">
+        <div className="w-full md:col-span-12 lg:col-span-4 xl:col-span-3 flex flex-row items-center md:justify-end xl:justify-end md:gap-x-5 md:px-2 xl:px-0 xl:gap-x-4 md:pb-2 lg:pb-0 md:text-xs 2xl:text-xl">
           <Link
             className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"
             title="مقایسه محصولات"
           >
-            <FontAwesomeIcon icon={faRestroom} className="md:text-base xl:text-xl" />
+            <FontAwesomeIcon icon={faRestroom} className="md:text-base xl:text-xl 2xl:text-2xl" />
           </Link>
           <Link
             className="flex flex-row items-center
@@ -319,7 +319,7 @@ const TopNavBar = () => {
             hover:text-green-600 transition-all ease-in-out duration-300"
             title="علاقه مندی ها"
           >
-            <FontAwesomeIcon icon={faBookmark} className="md:text-base xl:text-xl" />
+            <FontAwesomeIcon icon={faBookmark} className="md:text-base xl:text-xl 2xl:text-2xl" />
           </Link>
           <Link
             className="
@@ -330,8 +330,8 @@ const TopNavBar = () => {
             "
             title="محصولات ویژه"
           >
-            <FontAwesomeIcon icon={faCertificate} className="md:text-base xl:text-xl" />
-            <span className="text-xs leading-relaxed">محصولات ویژه</span>
+            <FontAwesomeIcon icon={faCertificate} className="md:text-base xl:text-xl 2xl:text-2xl" />
+            <span className="text-xs leading-relaxed 2xl:text-xl">محصولات ویژه</span>
           </Link>
           <Link
             className="
@@ -342,8 +342,8 @@ const TopNavBar = () => {
             "
             title="پرفروش ترین ها"
           >
-            <FontAwesomeIcon icon={faBoxesPacking} className="md:text-base xl:text-xl" />
-            <span className="text-xs leading-relaxed">پرفروش ترین ها</span>
+            <FontAwesomeIcon icon={faBoxesPacking} className="md:text-base xl:text-xl 2xl:text-2xl" />
+            <span className="text-xs 2xl:text-xl leading-relaxed">پرفروش ترین ها</span>
           </Link>
         </div>
       </section>

@@ -9,6 +9,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
+import BannerGroup from "../components/BannerGroup";
 
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import toast from "react-hot-toast";
@@ -57,7 +58,7 @@ const Home = () => {
     <>
       {/* categories */}
       <section
-        className="w-full max-w-2xl xl:max-w-7xl mx-auto py-4 xl:py-8 flex overflow-x-auto"
+        className="w-full max-w-2xl xl:max-w-7xl 2xl:max-w-full mx-auto py-3 xl:py-8 flex overflow-x-auto 2xl:gap-5"
       >
         {result?.categories?.map((item, idx) => (
           <div
@@ -77,8 +78,8 @@ const Home = () => {
                                     cursor-pointer
                                     xl:hover:scale-105  duration-300  ease-in-out transition-all`}
                 >
-                  <FontAwesomeIcon icon={faArrowsToEye} className="w-14 h-14 p-5 m-2 rounded-full text-gray-500"/>
-                  <h4 className="text-base text-center text-gray-900 font-EstedadMedium">
+                  <FontAwesomeIcon icon={faArrowsToEye} className="w-10 h-10 p-4 m-2 rounded-full text-gray-500"/>
+                  <h4 className="text-xs xl:text-base text-center text-gray-900 font-EstedadMedium">
                     تمام دسته بندی ها
                   </h4>
                 </Link>
@@ -87,53 +88,13 @@ const Home = () => {
       {/* categories */}
 
       {/* frist two banners */}
-      <section className="py-4 xl:p-10">
-        <div className="grid grid-cols-12 gap-4 xl:gap-8">
-          {result?.banners?.length > 0 ? (
-            result?.banners?.slice(0, 2)?.map((item, idx) => (
-              <div
-                className="w-full col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
-                key={idx}
-              >
-                <img
-                  src={item?.image}
-                  alt={`${item?.title}`}
-                  className="w-full object-cover shadow-sm shadow-black rounded-xl
-                  "
-                />
-              </div>
-            ))
-          ) : (
-            <>
-              <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
-                <img
-                  src={
-                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
-                  }
-                  alt="no-image"
-                  className="w-full xl:h-96 object-cover xl:object-fill shadow-sm shadow-black/60 rounded-xl
-                  "
-                />
-              </div>
-              <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
-                <img
-                  src={
-                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
-                  }
-                  alt="no-image"
-                  className="w-full h-96 object-fill shadow-sm shadow-black/60 rounded-xl
-                  "
-                />
-              </div>
-            </>
-          )}
-        </div>
-      </section>
+      <BannerGroup banners={result?.banners?.slice(0, 2)} />
 
       {/* newestproducts */}
       <section
         className="
     xl:my-10
+    md:py-5
     xl:py-14
     xl:p-6
     grid grid-cols-12 items-center justify-center
@@ -144,11 +105,11 @@ const Home = () => {
         <div className="w-full col-span-12 xl:col-span-3">
           <h2
             className="font-EstedadExtraBold text-center xl:tracking-wide
-            py-4
-        text-2xl leading-relaxed xl:py-1.5
-        md:text-5xl
+            py-4 md:pb-5 
+        text-xl leading-relaxed xl:py-1.5
+        md:text-3xl
         lg:text-2xl
-        2xl:text-5xl 2xl:leading-loose
+       xl:text-4xl 2xl:text-6xl xl:leading-loose 2xl:leading-loose
         text-gray-700
       "
           >
@@ -203,7 +164,7 @@ const Home = () => {
           <Link
             to="/products"
             className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
-        transition-all duration-300 ease-in-out
+        transition-all duration-300 ease-in-out text-xs xl:text-base 2xl:text-2xl 2xl:font-EstedadMedium
       "
           >
             مشاهده همه محصولات
@@ -212,74 +173,34 @@ const Home = () => {
       </section>
 
       {/* thrid and fourth banners */}
-      {/* <section className="p-10">
-        <div className="grid grid-cols-12 gap-8">
-          {result?.banners?.length > 0 ? (
-            result?.banners?.slice(2, 4)?.map((item, idx) => (
-              <div
-                className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
-                key={idx}
-              >
-                <img
-                  src={item?.image}
-                  alt={`${item?.title}`}
-                  className="w-full object-cover shadow-sm shadow-black rounded-xl
-                  "
-                />
-              </div>
-            ))
-          ) : (
-            <>
-              <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
-                <img
-                  src={
-                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
-                  }
-                  alt="no-image"
-                  className="w-full h-96 object-fill shadow-sm shadow-black/60 rounded-xl
-                  "
-                />
-              </div>
-              <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
-                <img
-                  src={
-                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
-                  }
-                  alt="no-image"
-                  className="w-full h-96 object-fill shadow-sm shadow-black/60 rounded-xl
-                  "
-                />
-              </div>
-            </>
-          )}
-        </div>
-      </section> */}
+      <BannerGroup banners={result?.banners?.slice(2, 4)} />
 
       {/* offered products */}
-      {/* {result?.offeredProducts?.length > 0 && (
+      {result?.offeredProducts?.length > 0 && (
         <section
           className="
-     my-10
-     py-14
-     p-6
+     xl:my-10
+     md:py-5
+     xl:py-14
+     xl:p-6
      grid grid-cols-12 items-center justify-center
      bg-red-300
      rounded-xl
      "
         >
-          <div className="w-full col-span-3">
+          <div className="w-full col-span-12 xl:col-span-3 p-2 xl:p-0">
             <h2
-              className="font-EstedadExtraBold text-center  tracking-wide text-gray-700
-            text-3xl leading-relaxed py-1.5
-            md:text-5xl
+              className="font-EstedadExtraBold text-center  xl:tracking-wide text-gray-700
+            text-xl leading-loose xl:py-1.5
+            md:text-3xl md:pb-2
             lg:text-2xl
-            2xl:text-5xl 2xl:leading-loose
+            xl:text-4xl 2xl:text-6xl xl:leading-loose 2xl:leading-loose
              "
             >
               محصولات پیشنهادی کیدزشاپ
             </h2>
           </div>
-          <div className="col-span-9 h-full rounded-xl">
+          <div className="col-span-12 xl:col-span-9 h-full rounded-xl p-2 xl:p-0">
             <Swiper
               modules={[Autoplay, FreeMode, Pagination, Navigation]}
               className="h-full w-full "
@@ -301,90 +222,50 @@ const Home = () => {
               ))}
             </Swiper>
           </div>
-          <div className="col-span-12 text-center pt-12">
+          <div className="col-span-12 text-center pt-4 xl:pt-12">
             <Link
               to="/offered-products"
-              className="font-EstedadExtraBold text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
-          transition-all duration-300 ease-in-out
+              className="font-EstedadExtraBold text-xs text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
+          transition-all duration-300 ease-in-out 2xl:text-2xl 2xl:font-EstedadMedium
           "
             >
               تمامی آفرهای کیدزشاپ
             </Link>
           </div>
         </section>
-      )} */}
+      )}
 
       {/* fifth and sixth banners */}
-      {/* <section className="p-10">
-        <div className="grid grid-cols-12 gap-8">
-          {result?.banners?.length > 0 ? (
-            result?.banners?.slice(4, 6)?.map((item, idx) => (
-              <Link
-                to={`/category/${item?.id}`}
-                className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
-                key={idx}
-              >
-                <img
-                  src={item?.image}
-                  alt={`${item?.title}`}
-                  className="w-full object-cover shadow-sm shadow-black rounded-xl
-                  "
-                />
-              </Link>
-            ))
-          ) : (
-            <>
-              <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
-                <img
-                  src={
-                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
-                  }
-                  alt="no-image"
-                  className="w-full h-96 object-fill shadow-sm shadow-black/60 rounded-xl
-                  "
-                />
-              </div>
-              <div className="col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6">
-                <img
-                  src={
-                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
-                  }
-                  alt="no-image"
-                  className="w-full h-96 object-fill shadow-sm shadow-black/60 rounded-xl
-                  "
-                />
-              </div>
-            </>
-          )}
-        </div>
-      </section> */}
+      <BannerGroup banners={result?.banners?.slice(4, 6)} />
 
       {/* best seller products */}
-      {/* {result?.bestSeller?.length > 0 && (
+      {result?.bestSeller?.length > 0 && (
         <section
-          className="
-  my-10
-  py-14
-  p-6
-  grid grid-cols-12 items-center justify-center
-  bg-Cream-500
-  rounded-xl
-"
+        className="
+        xl:my-10
+        xl:py-14
+        md:py-5
+        xl:p-6
+        grid grid-cols-12 items-center justify-center
+        bg-Cream-500
+        rounded-xl
+      "
         >
-          <div className="w-full col-span-3">
+          <div className="w-full col-span-12 xl:col-span-3">
             <h2
-              className="font-EstedadExtraBold text-center tracking-wide
-      text-3xl leading-relaxed py-1.5
-      md:text-5xl
-      lg:text-2xl
-      2xl:text-5xl 2xl:leading-loose
-      text-gray-700
-    "
-            >
+            className="font-EstedadExtraBold text-center xl:tracking-wide
+            py-4
+        text-xl leading-relaxed xl:py-1.5
+        md:text-3xl md:pb-4
+        lg:text-2xl
+        xl:text-4xl 2xl:text-6xl xl:leading-loose 2xl:leading-loose
+        text-gray-700
+      "
+          >
               پرفروشترین محصولات کیدزشاپ
             </h2>
           </div>
-          <div className="col-span-9">
+          <div className="col-span-12 xl:col-span-9">
             <Swiper
               modules={[Autoplay, FreeMode, Pagination, Navigation]}
               className="h-full w-full  custom-swiper"
@@ -437,41 +318,41 @@ const Home = () => {
             <Link
               to="/best-selling-products"
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
-      transition-all duration-300 ease-in-out
-    "
+        transition-all duration-300 ease-in-out text-xs xl:text-base 2xl:text-2xl 2xl:font-EstedadMedium
+      "
             >
               لیست محصولات پرفروش
             </Link>
           </div>
         </section>
-      )} */}
+      )}
 
       {/* follow us in instagram */}
-      {/* <section className="p-10">
+      <section className="py-4 xl:p-10">
         <Link
           to="https://www.instagram.com/kids_shop.110/"
           target="_blank"
-          className="flex flex-row items-center justify-center gap-8 bg-gray-900 max-w-4xl mx-auto py-4 rounded-2xl
+          className="flex flex-col xl:flex-row items-center justify-center gap-8 bg-gray-900 max-w-4xl mx-auto py-4 rounded-2xl
         hover:shadow-md shadow-black
         md:hover:scale-105
         hover:bg-gray-800
         transition-all duration-300 ease-in-out
         "
         >
-          <p className="text-white text-2xl font-EstedadExtraBold">
-            مارا در اینستاگرام دنبال کنید
+          <p className="text-white text-base xl:text-2xl 2xl:text-3xl font-EstedadExtraBold">
+            ما را در اینستاگرام دنبال کنید
           </p>
           <div className="flex flex-row items-center justify-center gap-3">
-            <p className="text-white text-2xl font-extrabold">
-              kids_shop.110 @
+            <p className="text-white text-base xl:text-2xl font-extrabold 2xl:text-4xl">
+              kids_shop.110 
             </p>
             <FontAwesomeIcon
               icon={faInstagram}
-              className="text-7xl text-white"
+              className="text-xl xl:text-6xl text-white"
             />
           </div>
         </Link>
-      </section> */}
+      </section>
     </>
   );
 };
