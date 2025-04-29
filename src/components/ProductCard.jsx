@@ -6,7 +6,7 @@ import { useContext } from "react";
 import UserContext from "@context/UserContext";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
-const ProductCard = ({ item , colSpan = 'col-span-2' }) => {
+const ProductCard = ({ item  }) => {
   const { user } = useContext(UserContext);
 
   const uniqueColorCodes = [
@@ -29,7 +29,7 @@ const ProductCard = ({ item , colSpan = 'col-span-2' }) => {
   ];
 
   return (
-    <div className={`${colSpan} rounded-lg w-full h-full flex-shrink-0 flex flex-col`}>
+    <div className={`rounded-lg w-full h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}>
       {/* Top Section: Image and Labels */}
       <Link
         to={`/product/${Math.floor(item?.Code)}`}

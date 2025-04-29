@@ -34,7 +34,7 @@ const CategoryCircleCard = ({
         }}
         className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-full shadow-md shadow-gray-300"
       />
-      <h4 className="text-base text-center text-gray-900 font-EstedadMedium">
+      <h4 className="text-xs xl:text-base 2xl:text-lg text-center text-gray-900 font-EstedadMedium">
         {item?.Name}
       </h4>
     </Link>

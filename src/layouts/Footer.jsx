@@ -33,7 +33,7 @@ const Footer = () => {
         "
           />
           <p
-            className="text-sm md:text-base lg:text-lg font-semibold text-gray-700
+            className="text-sm md:text-base lg:text-lg 2xl:text-2xl font-semibold text-gray-700
         group-hover:text-green-700 transition-all duration-300 ease-in-out"
           >
             بازگشت به بالا
@@ -236,7 +236,7 @@ duration-300 transition-all ease-in-out
           </div>
         </div>
       </div>
-      <div className="w-full text-xs xl:text-base 2xl:text-2xl text-center leading-relaxed font-medium text-gray-800 flex flex-col md:flex-row items-center justify-center bg-gray-300 mb-10 lg:mb-0 py-2 lg:py-4 xl:py-6 gap-x-2 rounded-t-lg">
+      <div className="w-full text-xs xl:text-base 2xl:text-2xl text-center leading-relaxed font-medium text-gray-800 flex flex-col md:flex-row items-center justify-center bg-gray-300 mb-10 md:mb-0 py-2 lg:py-4 xl:py-6 gap-x-2 rounded-t-lg">
         تمامی حقوق برای سایت کیذزشاپ محفوظ است! 
         <div className="flex flex-row justify-center items-center gap-5">
         <p>تیم طراحی و توسعه</p>

@@ -38,21 +38,21 @@ const OfferProductCard = ({ item }) => {
     duration-300 ease-in-out transition-all
     "
     >
-      <div className="col-span-6 flex flex-col items-start justify-center space-y-6">
+      <div className="col-span-12 xl:col-span-6 flex flex-col items-start justify-center space-y-3 xl:space-y-6">
         <div className="flex flex-row items-center justify-start">
-          <span className="flex text-gray-700 flex-row items-center gap-1 text-3xl font-EstedadExtraBold text-center">
+          <span className="flex text-gray-700 flex-row items-center gap-1 text-base xl:text-3xl font-EstedadExtraBold text-center">
             {formatCurrencyDisplay(userPriceSelect(item, user))}
             <span className="text-sm">ریال</span>
           </span>
         </div>
-        <h3 className="text-gray-700 font-EstedadExtraBold text-3xl text-center ">
+        <h3 className="text-gray-700 font-EstedadExtraBold text-base xl:text-3xl text-center ">
           {item?.Name}
         </h3>
         <p className="text-gray-700 text-center font-EstedadLight leading-relaxed ">
           {item?.Comment}
         </p>
         <div className="flex flex-row items-center justify-center gap-2">
-          <p className="text-gray-700 font-EstedadMedium ">رنگ:</p>
+          <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl ">رنگ:</p>
           {uniqueColorCodes?.length > 0 &&
             uniqueColorCodes?.map((uniqueColorCodes_item, idx) => (
               <div
@@ -75,7 +75,7 @@ const OfferProductCard = ({ item }) => {
             ))}
         </div>
         <div className="flex flex-row items-center justify-center gap-2 ">
-          <p className="text-gray-700 font-EstedadMedium ">سایز:</p>
+          <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl">سایز:</p>
           {uniqueSizeNums?.length > 0 &&
             uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
               <p key={idx} className="text-gray-700 font-EstedadMedium ">
@@ -85,7 +85,7 @@ const OfferProductCard = ({ item }) => {
         </div>
       </div>
       {/* images  */}
-      <div className="col-span-6 flex flex-col items-start justify-center space-y-6">
+      <div className="col-span-12 xl:col-span-6 flex flex-col items-start justify-center space-y-6">
         {item?.product_images?.length > 0 && (
           <div className="w-full grid grid-cols-12 gap-4">
             <div className="w-full col-span-2 flex flex-col justify-center items-center gap-2">

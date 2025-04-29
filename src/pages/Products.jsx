@@ -60,7 +60,7 @@ const Products = () => {
       <section className="w-full p-2 lg:p-8">
         <div className="mx-auto">
           <h1 className="lg:w-fit text-center mt-10 lg:mt-4 text-xl lg:text-3xl font-EstedadExtraBold py-4  lg:text-right leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500">
-            لیست تمامی محصولات الکتروشاپ :
+            لیست تمامی محصولات کیدزشاپ :
           </h1>
           <div className="flex flex-row flex-wrap items-start justify-center w-full">
             <div className="w-full lg:w-9/12">

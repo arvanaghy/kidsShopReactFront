@@ -65,11 +65,11 @@ const Categories = () => {
   return (
     <div className="w-full h-full flex inset-0 flex-col justify-center items-center">
       {/* categories */}
-      <section className="w-full py-14">
+      <section className="w-full md:pt-7 lg:pt-10">
         <div className="w-full px-4 mx-auto text-gray-600 lg:px-8">
-          <div className="w-full flex flex-row justify-between items-center mx-auto sm:text-center">
+          <div className="w-full flex flex-col md:flex-row justify-between items-center mx-auto sm:text-center">
             <h3
-              className="w-fit text-right text-lg lg:text-2xl font-EstedadExtraBold py-4 leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
+              className="w-fit text-right text-lg lg:text-2xl 2xl:text-4xl font-EstedadExtraBold py-4 leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500 
         "
             >
               <span>دسته بندی های محصولات کیدزشاپ </span>
@@ -77,28 +77,27 @@ const Categories = () => {
             </h3>
             <form
               onSubmit={(e) => letsSearchCategory(e)}
-              className="relative flex items-center "
+              className="relative flex items-center pt-2 md:pt-0 "
             >
               <input
                 type="text"
                 name="search"
                 placeholder="جستجو در دسته بندی ها"
-                className="w-full p-3 text-sm text-gray-600 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                className="w-full font-EstedadMedium p-2 md:p-3 2xl:p-5 text-sm text-gray-600 border border-gray-300 2xl:text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500"
               />
               <button
                 type="submit"
                 className="text-gray-600 hover:text-gray-700 absolute left-2.5"
               >
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="2xl:text-3xl"/>
               </button>
             </form>
           </div>
           <div
             className="
-              pt-12
+              pt-4 md:pt-12
               w-full grid grid-cols-12
-              gap-2
-              
+              gap-x-3
               md:gap-4
               lg:gap-6
               2xl:gap-8
@@ -112,11 +111,10 @@ const Categories = () => {
                   className="flex flex-col items-center justify-between
                     duration-300 rounded-xl  
                     group
-                    col-span-12 sm:col-span-6 md:col-span-4
+                    col-span-6  md:col-span-4
                     lg:col-span-3
-                    2xl:col-span-2
-                    gap-3
-                    
+                    2xl:col-span-3
+                    gap-2
                     "
                 >
                   <img
@@ -140,7 +138,7 @@ const Categories = () => {
                       className=" 
                           text-sm
                           leading-relaxed
-                          2xl:text-lg text-center text-gray-500 font-EstedadMedium"
+                          2xl:text-3xl 2xl:pt-2 text-center text-gray-500 font-EstedadMedium"
                     >
                       {item?.Name}
                     </h4>
@@ -156,8 +154,7 @@ const Categories = () => {
       {/* categories */}
 
       {/* Pagination Controls */}
-
-      <div className="flex flex-row flex-wrap items-center justify-center my-8 ">
+      <div className="flex flex-row gap-y-2 flex-wrap items-center justify-center my-2 md:my-8 2xl:my-16 ">
         {links.length > 3 &&
           links.map((link, idx) => (
             <button
@@ -165,8 +162,7 @@ const Categories = () => {
               onClick={() => navigate(link.url.replace("https://kidsshopapi.electroshop24.ir/api/v2/list-categories", ""))}
               disabled={link.url === null}
               className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
-                2xl:text-sm
-
+                2xl:text-2xl
                 text-xs px-2 py-1 mx-1
                 disabled:cursor-not-allowed
                 transition-all duration-300 ease-in-out
