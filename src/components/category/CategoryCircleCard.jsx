@@ -19,7 +19,7 @@ const CategoryCircleCard = ({
       className={`w-full flex flex-col justify-center
                         items-center
                         cursor-pointer
-                        hover:scale-105  duration-300  ease-in-out transition-all ${colSpan}`}
+                        md:hover:scale-105  duration-300  ease-in-out transition-all ${colSpan}`}
     >
       <img
         src={
@@ -32,7 +32,7 @@ const CategoryCircleCard = ({
           e.target.src =
             "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FFFFFF'/%3E%3C/svg%3E";
         }}
-        className="w-24 h-24 m-2 rounded-full shadow-md shadow-gray-300"
+        className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-full shadow-md shadow-gray-300"
       />
       <h4 className="text-base text-center text-gray-900 font-EstedadMedium">
         {item?.Name}
