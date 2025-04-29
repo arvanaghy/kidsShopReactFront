@@ -105,7 +105,13 @@ const SubCategories = () => {
 
   useEffect(() => {
     fetchData(
-      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${search != null ? `&search=${search}` : ""}${size != null ? `&size=${size}` : ""}${color != null ? `&color=${color}` : ""}${sort_price != null ? `&sort_price=${sort_price}` : ""}${priceRange?.min_price != 0 ? `&min_price=${priceRange?.min_price}` : ""}${
+      `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+        search != null ? `&search=${search}` : ""
+      }${size != null ? `&size=${size}` : ""}${
+        color != null ? `&color=${color}` : ""
+      }${sort_price != null ? `&sort_price=${sort_price}` : ""}${
+        priceRange?.min_price != 0 ? `&min_price=${priceRange?.min_price}` : ""
+      }${
         priceRange?.max_price != 100000000
           ? `&max_price=${priceRange?.max_price}`
           : ""
@@ -301,16 +307,30 @@ const SubCategories = () => {
               <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
                 قیمت :
               </h3>
-              <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
-                <Link
-                  to={`/sub-category-products/${Math.floor(
-                    category?.Code
-                  )}?min=${price?.min_price}&max=${price?.max_price}`}
-                  className="w-full  gap-3 duration-300  ease-in-out"
-                >
-                  {formatCurrencyDisplay(price?.min_price)} ریال تا{" "}
-                  {formatCurrencyDisplay(price?.max_price)} ریال
-                </Link>
+              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 py-4">
+                <input
+                  type="number"
+                  placeholder={formatCurrencyDisplay(price?.min_price)}
+                  onChange={(e) => {
+                    setPriceRange({
+                      min_price: e.target.value,
+                      max_price: price?.max_price,
+                    });
+                  }}
+                />
+                <span>ریال</span>
+                <span>تا</span>
+                <input
+                  type="number"
+                  placeholder={formatCurrencyDisplay(price?.max_price)}
+                  onChange={(e) => {
+                    setPriceRange({
+                      min_price: price?.min_price,
+                      max_price: e.target.value,
+                    });
+                  }}
+                />
+                <span>ریال</span>
               </div>
             </div>
           )}
