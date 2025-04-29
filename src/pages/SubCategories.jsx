@@ -12,7 +12,7 @@ import ProductCard from "../components/ProductCard";
 import Loading from "../components/Loading";
 import { formatCurrencyDisplay } from "../utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEraser, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faEraser, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
 const SubCategories = () => {
@@ -43,6 +43,8 @@ const SubCategories = () => {
   const [sizes, setSizes] = useState([]);
   const [colors, setColors] = useState([]);
   const [price, setPrice] = useState({ max_price: 0, min_price: 0 });
+  const [sizeSets, setSizeSets] = useState([]);
+  const [colorSets, setColorSets] = useState([]);
 
   const fetchData = async (_url) => {
     window.scrollTo(0, 0);
@@ -109,10 +111,23 @@ const SubCategories = () => {
     sort_price,
   ]);
 
+  const addSizeSet = (size) => {
+    const newSizeSets = [...sizeSets];
+    if (newSizeSets.includes(size)) {
+      newSizeSets.splice(newSizeSets.indexOf(size), 1);
+      return setSizeSets(newSizeSets);
+    } else {
+      newSizeSets.push(size);
+      setSizeSets(newSizeSets);
+    }
+  };
+
   if (loading) return <Loading />;
   return (
     <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start py-6 gap-4">
+      {/* side bar */}
       <div className="w-full col-span-3 sticky top-[10vh]">
+        {/* category details */}
         <div className="w-full">
           <img
             loading="lazy"
@@ -134,6 +149,7 @@ const SubCategories = () => {
             </p>
           )}
         </div>
+        {/* remove filters */}
         <Link
           className="flex 
             hover:-translate-x-2 duration-300 ease-in-out 
@@ -143,6 +159,7 @@ const SubCategories = () => {
           <FontAwesomeIcon icon={faEraser} className="text-lg" />
           <span>پاک کردن فیلتر ها</span>
         </Link>
+        {/* search */}
         <form
           onSubmit={letsSearch}
           className="relative flex flex-row justify-between items-center"
@@ -150,6 +167,7 @@ const SubCategories = () => {
           <input
             type="text"
             className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
+            placeholder={search != null ? search : "جستجو محصول ..."}
             name="search"
           />
           <button
@@ -167,15 +185,20 @@ const SubCategories = () => {
             <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
               سایز ها :
             </h3>
-            <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+            <div className="w-full flex flex-row justify-start items-start gap-2 py-4">
               {sizes?.map((item, idx) => (
-                <Link
+                <button
                   key={idx}
-                  to={`/category/${Math.floor(category?.Code)}?size=${item}`}
-                  className="w-full  gap-3 duration-300  hover:scale-105 ease-in-out"
+                  onClick={(item) => {
+                    addSizeSet(item);
+                  }}
+                  className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
                 >
+                  <p className="w-5 h-5 rounded-full border border-gray-300">
+                  <FontAwesomeIcon icon={faCircleCheck} />
+                  </p>
                   {item}
-                </Link>
+                </button>
               ))}
             </div>
           </div>
@@ -195,7 +218,9 @@ const SubCategories = () => {
                   className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:scale-105 ease-in-out"
                 >
                   <p
-                    className="w-5 h-5 rounded-full"
+                    className={`w-5 h-5 rounded-full
+                      border border-gray-300
+                      `}
                     style={{
                       backgroundColor: DecimalToHexConverter(item?.ColorCode),
                     }}
@@ -228,6 +253,7 @@ const SubCategories = () => {
       </div>
       {/* main content */}
       <div className="w-full col-span-9 grid grid-cols-12 space-y-6 ">
+        {/* subcategories */}
         <div className="w-full col-span-12 p-6 bg-gray-200 rounded-xl">
           <div className="w-full grid grid-cols-12">
             {subCategories?.data?.length > 0 ? (
@@ -300,6 +326,7 @@ const SubCategories = () => {
               ))}
           </div>
         </div>
+        {/* sort */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
             to={`/category/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
@@ -307,11 +334,12 @@ const SubCategories = () => {
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
             }`}
-            className={`font-EstedadLight text-sm  border border-CarbonicBlue-500 rounded-lg p-2
+            className={`font-EstedadLight text-sm  border  rounded-lg p-2
+              transition-all duration-300 ease-in-out
               ${
                 sort_price != "asc" && sort_price != "desc"
-                  ? "bg-CarbonicBlue-500 text-white"
-                  : "bg-Cream-500 text-gray-800 "
+                  ? "bg-CarbonicBlue-500 text-white border-gray-100 hover:bg-CarbonicBlue-500/80 "
+                  : "bg-Cream-500 text-gray-800 border-CarbonicBlue-500  hover:text-black border-CarbonicBlue-500/40  hover:bg-Cream-500/50"
               }
               `}
           >
@@ -323,7 +351,14 @@ const SubCategories = () => {
             }${size != null ? `&size=${size}` : ""}${
               color != null ? `&color=${color}` : ""
             }&sort_price=asc`}
-            className="bg-gray-200 rounded-lg p-2"
+            className={`font-EstedadLight text-sm  border  rounded-lg p-2
+              transition-all duration-300 ease-in-out
+              ${
+                sort_price == "asc"
+                  ? "bg-CarbonicBlue-500 text-white border-gray-100 hover:bg-CarbonicBlue-500/80 "
+                  : "bg-Cream-500 text-gray-800 border-CarbonicBlue-500  hover:text-black border-CarbonicBlue-500/40  hover:bg-Cream-500/50"
+              }
+              `}
           >
             ارزان ترین ها
           </Link>
@@ -333,11 +368,19 @@ const SubCategories = () => {
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
             }&sort_price=desc`}
-            className="bg-gray-200 rounded-lg p-2"
+            className={`font-EstedadLight text-sm  border  rounded-lg p-2
+              transition-all duration-300 ease-in-out
+              ${
+                sort_price == "desc"
+                  ? "bg-CarbonicBlue-500 text-white border-gray-100 hover:bg-CarbonicBlue-500/80 "
+                  : "bg-Cream-500 text-gray-800 border-CarbonicBlue-500  hover:text-black border-CarbonicBlue-500/40  hover:bg-Cream-500/50"
+              }
+              `}
           >
             گرانترین ها
           </Link>
         </div>
+        {/* products */}
         <div className="w-full col-span-12 bg-Cream-500 p-6">
           <div className="w-full grid grid-cols-12 gap-6">
             {products?.data?.length > 0 ? (
