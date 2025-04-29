@@ -5,9 +5,16 @@ import { userPriceSelect } from "@utils/userPriceHelper";
 import { useContext } from "react";
 import UserContext from "@context/UserContext";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
+import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCertificate, faRestroom } from "@fortawesome/free-solid-svg-icons";
 
-const ProductCard = ({ item , colSpan="col-span-2" }) => {
+const ProductCard = ({ item, colSpan = "col-span-4" }) => {
   const { user } = useContext(UserContext);
+  const { favourite, updateFavourite, toggleFavourite  } = useContext(UserContext);
+  const isFavourite = favourite?.some((f) => f.Code === item.Code);
+  console.log (favourite);
 
   const uniqueColorCodes = [
     ...new Map(
@@ -29,10 +36,11 @@ const ProductCard = ({ item , colSpan="col-span-2" }) => {
   ];
 
   return (
-    <div className={`${colSpan} rounded-lg w-full h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}>
+    <div
+      className={`${colSpan} rounded-lg w-full h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}
+    >
       {/* Top Section: Image and Labels */}
-      <Link
-        to={`/product/${Math.floor(item?.Code)}`}
+      <div
         className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all"
       >
         <img
@@ -48,13 +56,26 @@ const ProductCard = ({ item , colSpan="col-span-2" }) => {
           }}
           className="w-full rounded-t-lg object-scale-down h-full"
         />
-        <h2 className="text-center py-1 z-30 absolute top-0 text-white left-0 font-EstedadLight bg-CarbonicBlue-500/80 line-clamp-1 px-2 rounded-br-xl rounded-tl-xl text-xs lg:text-sm">
+
+        <h2 className="text-center py-1 z-30 absolute top-0 left-0 text-white font-EstedadLight bg-CarbonicBlue-500/80 line-clamp-1 px-2 rounded-br-xl rounded-tl-xl text-xs lg:text-sm">
           {item?.GName}
         </h2>
         <h2 className="text-center py-1 z-30 absolute top-0 text-white right-0 font-EstedadLight bg-CarbonicBlue-500/80 line-clamp-1 px-1.5 rounded-bl-xl text-xs lg:text-sm">
           {item?.SName}
         </h2>
-      </Link>
+        <div className="absolute top-8 left-0 flex flex-col gap-1 px-1">
+          <button
+            onClick={() => toggleFavourite(item)}
+            className="text-xl text-red-500 hover:scale-110 transition-transform"
+          >
+            <FontAwesomeIcon
+              icon={isFavourite ? faSolidHeart : faHeart}
+              className={isFavourite ? "text-red-600" : "text-gray-400"}
+            />
+          </button>
+          <FontAwesomeIcon icon={faRestroom} className="" />
+        </div>
+      </div>
 
       {/* Bottom Section: Details */}
       <div className="rounded-b-lg px-3 flex flex-col font-EstedadMedium w-full bg-gray-300/90 text-white flex-grow">

@@ -313,7 +313,7 @@ const TopNavBar = () => {
           >
             <FontAwesomeIcon icon={faRestroom} className="md:text-base xl:text-xl 2xl:text-2xl" />
           </Link>
-          <Link
+          <Link to={"/my-favourite"}
             className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"
