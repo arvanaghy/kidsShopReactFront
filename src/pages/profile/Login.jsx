@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 import loginSvg from "/src/assets/images/login-svgrepo-com.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const { user, updateUser } = useContext(UserContext);
@@ -108,47 +110,44 @@ const Login = () => {
   }, [user]);
 
   return (
-    <main className="w-full grid grid-cols-1 items-center justify-center bg-CarbonicBlue-500 lg:grid-cols-2 min-h-[90vh]">
-      <div className="hidden lg:min-h-[90vh] lg:grid col-span-1 grid-cols-1 items-center justify-center bg-stone-50">
-        <div className="w-full grid grid-cols-12 items-center justify-center">
-          <img
-            src={loginSvg}
-            alt="loginSvg"
-            className="col-span-5 w-full h-full object-cover"
-          />
-          <div className="col-span-7 grid grid-cols-1 items-center justify-center text-center">
-            <h3 className="
+    <main className="w-full grid grid-cols-12 items-center justify-center bg-gray-300/60 min-h-[90vh] gap-3 p-4">
+      <div className="hidden md:grid w-fit mx-auto md:col-span-6 items-center justify-center bg-gray-100 p-6 xl:p-12 rounded-md shadow-md shadow-black/60 space-y-3">
+        <h3
+          className="
             lg:text-xl
             xl:text-2xl
             2xl:text-3xl
-            line-clamp-1 text-center leading-relaxed tracking-wider text-black font-EstedadExtraBold">
-              قوانین ورود و ثبت نام
-            </h3>
+            line-clamp-1 text-center leading-relaxed tracking-wider text-black font-EstedadExtraBold"
+        >
+          قوانین ورود
+        </h3>
 
-            <ul className="text-black font-EstedadMedium 
-            lg:text-sm lg:my-6 lg:space-y-2
-            xl:text-base xl:my-6 xl:space-y-3
-            2xl:text-lg 2xl:my-6 2xl:space-y-4
-            ">
-              <li>1 . لطفا شماره موبایل خود را وارد کنید</li>
-              <li>2 . شماره تماس شما به عنوان نام کاربری است</li>
-              <li>3 . پیام کوتاه تایید برای شماره تلفن مندرج ارسال خواهد شد</li>
-            </ul>
-          </div>
-        </div>
+        <ul
+          className="w-full leading-relaxed text-black font-EstedadMedium 
+          space-y-3 
+            lg:text-sm lg:space-y-2
+            xl:text-base xl:space-y-3
+            2xl:text-lg 2xl:space-y-4
+            "
+        >
+          <li className="w-full leading-loose">
+            1 . لطفا شماره موبایل خود را وارد کنید
+          </li>
+          <li className="w-full leading-loose text-pretty  ">
+            2 . شماره تماس شما به عنوان نام کاربری است
+          </li>
+          <li className="w-full leading-loose">
+            3 . پیام کوتاه تایید برای شماره تلفن مندرج ارسال خواهد شد
+          </li>
+        </ul>
       </div>
-      <div className="col-span-1 w-full grid grid-cols-1 items-center bg-CarbonicBlue-500 text-stone-50 justify-center  ">
-        <div className="w-full grid grid-cols-1 items-center justify-center lg:hidden px-8">
-          <img
-            src={loginSvg}
-            alt="logo"
-            className="w-60 h-60 mx-auto translate-x-5 "
-          />
-          <h3 className="font-EstedadExtraBold text-xl text-center leading-relaxed tracking-wider text-black my-4 ">
-            ورود به حساب کاربری
-          </h3>
-        </div>
-        <div className="w-full grid grid-cols-1 items-center justify-center text-center space-y-8 ">
+      <div className="col-span-12 md:col-span-6 w-full grid grid-cols-1 items-center text-gray-900 justify-center  ">
+        <div
+          className="w-fit mx-auto rounded-md p-4 md:p-12 bg-gray-100 grid grid-cols-1 items-center justify-center text-center space-y-8 
+          shadow-md shadow-black/60
+          "
+        >
+          <p className="font-EstedadExtraBold text-2xl">ورود به حساب کاربری</p>
           <form
             onSubmit={loginSubmit}
             className="space-y-5 px-5 max-w-md mx-auto "
@@ -165,7 +164,7 @@ const Login = () => {
                 id="phone"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
-                className="w-full px-3 py-2 my-2 bg-stone-50/60 text-CarbonicBlue-500 font-EstedadMedium focus-within:bg-stone-50 duration-150 border rounded-lg shadow-sm outline-none placeholder:text-gray-400 focus-within:ring-1 focus-within:ring-gray-500 focus-within:border-gray-500 ease-in-out"
+                className="w-full px-3 py-2 my-2 bg-stone-50/60 text-gray-500 font-EstedadMedium focus-within:bg-stone-50 duration-150 border rounded-lg shadow-sm outline-none placeholder:text-gray-400 focus-within:ring-1 focus-within:ring-gray-500 focus-within:border-gray-500 ease-in-out"
               />
             </div>
             {isPending ? (
@@ -176,43 +175,27 @@ const Login = () => {
                   disabled={true}
                 >
                   درحال پردازش
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
                 </button>
               </div>
             ) : (
-              <button className="w-full bg-white  px-4 py-2 border font-EstedadMedium text-CarbonicBlue-500 border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:scale-95 duration-150 ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
+              <button className="w-full bg-CarbonicBlue-500  px-4 py-2 border font-EstedadMedium text-white border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:scale-95 duration-150 ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
                 ورود
               </button>
             )}
           </form>
-          <p className="text-sm lg:text-base font-EstedadMedium text-center">
-            حساب کاربری ندارید.؟
+          <div className="text-sm lg:text-base font-EstedadMedium text-center flex flex-col lg:flex-row space-y-3 lg:space-y-0
+           items-center justify-center">
+            <p className="w-full">حساب کاربری ندارید.؟</p>
             <Link
               to="/register"
-              className="font-medium text-Amber-500  animate-pulse"
+              className="w-full font-medium text-red-600 hover:underline 
+              transition-all ease-in-out duration-300
+              px-1.5"
             >
               هم اکنون عضو شوید .
             </Link>
-          </p>
+          </div>
         </div>
       </div>
     </main>

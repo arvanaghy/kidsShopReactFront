@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import UserContext from "@context/UserContext";
 import registerSVG from "/src/assets/images/sign-in-register-svgrepo-com.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -91,43 +93,40 @@ const Register = () => {
   }, [user]);
 
   return (
-    <main className="w-full grid grid-cols-1 items-center justify-center bg-CarbonicBlue-500 lg:grid-cols-2 min-h-[90vh]">
-      <div className="hidden lg:min-h-[90vh] lg:grid col-span-1 grid-cols-1 items-center justify-center bg-stone-50 p-10">
-        <div className="w-full grid grid-cols-12 items-center justify-center">
-          <img
-            src={registerSVG}
-            alt="loginSvg"
-            className="col-span-5 w-full h-full object-cover"
-          />
-          <div className="col-span-7 grid grid-cols-1 items-center justify-center text-center">
-            <h3 className="text-2xl  line-clamp-1 text-center leading-relaxed tracking-wider text-black font-EstedadExtraBold">
-              قوانین عضویت و کاربری الکترو شاپ 24
-            </h3>
+    <main className="w-full grid grid-cols-12 items-center justify-center bg-gray-300/60 min-h-[90vh] gap-3 p-4">
+      <div className="hidden md:grid w-fit mx-auto md:col-span-6 items-center justify-center bg-gray-100 p-6 xl:p-12 rounded-md shadow-md shadow-black/60 space-y-3">
+        <h3
+          className="
+            lg:text-xl
+            xl:text-2xl
+            2xl:text-3xl
+            line-clamp-1 text-center leading-relaxed tracking-wider text-black font-EstedadExtraBold"
+        >
+          قوانین عضویت و کاربری
+        </h3>
 
-            <ul className="text-black font-EstedadMedium my-6 space-y-4">
-              <li>1 . لطفا شماره موبایل خود را وارد کنید</li>
-              <li>2 . شماره تماس شما به عنوان نام کاربری است</li>
-              <li>3 . پیام کوتاه تایید برای شماره تلفن مندرج ارسال خواهد شد</li>
-              <li>4 . آدرس شما حتما باید به صورت دقیق وارد شود</li>
-              <li>
-                5 . مشخصات فردی درج شده به منزله دارنده حساب کاربری میباشد
-              </li>
-            </ul>
-          </div>
-        </div>
+        <ul
+          className="w-full leading-relaxed text-black font-EstedadMedium 
+          space-y-3 
+            lg:text-sm lg:space-y-2
+            xl:text-base xl:space-y-3
+            2xl:text-lg 2xl:space-y-4
+            "
+        >
+          <li>1 . لطفا شماره موبایل خود را وارد کنید</li>
+          <li>2 . شماره تماس شما به عنوان نام کاربری است</li>
+          <li>3 . پیام کوتاه تایید برای شماره تلفن مندرج ارسال خواهد شد</li>
+          <li>4 . آدرس شما حتما باید به صورت دقیق وارد شود</li>
+          <li>5 . مشخصات فردی درج شده به منزله دارنده حساب کاربری میباشد</li>
+        </ul>
       </div>
-      <div className="col-span-1 w-full grid grid-cols-1 items-center bg-CarbonicBlue-500 text-stone-50 justify-center  ">
-        <div className="w-full grid grid-cols-1 items-center justify-center lg:hidden px-8">
-          <img
-            src={registerSVG}
-            alt="registerSVG"
-            className="w-60 h-60 mt-14 "
-          />
-          <h3 className="font-EstedadExtraBold text-xl text-center leading-relaxed tracking-wider text-black my-4 ">
-            عضویت در الکترو شاپ 24
-          </h3>
-        </div>
-        <div className="w-full grid grid-cols-1 items-center justify-center text-center space-y-8 ">
+      <div className="col-span-12 md:col-span-6 w-full grid grid-cols-1 items-center text-gray-900 justify-center  ">
+        <div
+          className="w-fit mx-auto rounded-md p-4 md:p-12 bg-gray-100 grid grid-cols-1 items-center justify-center text-center space-y-8 
+          shadow-md shadow-black/60
+          "
+        >
+          <p className="font-EstedadExtraBold text-2xl">عضویت در کیدزشاپ</p>
           <form
             onSubmit={(e) => submitRegister(e)}
             className="px-4 max-w-md mx-auto space-y-4 w-full font-EstedadMedium "
@@ -178,45 +177,32 @@ const Register = () => {
                   disabled={true}
                 >
                   درحال پردازش
-                  <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                    ></path>
-                  </svg>
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
                 </button>
               </div>
             ) : (
-              <button className="w-full bg-white  px-4 py-2 border font-EstedadMedium text-CarbonicBlue-500 border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:scale-95 duration-150 ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
+              <button className="w-full text-white  px-4 py-2 border font-EstedadMedium bg-CarbonicBlue-500 border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:scale-95 duration-150 ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
                 عضویت
               </button>
             )}
           </form>
-          <p className="text-sm lg:text-base font-EstedadMedium text-center">
-            قبلا ثبت نام کرده اید ! ؟{" "}
+          <div
+            className="text-sm lg:text-base font-EstedadMedium text-center flex flex-col lg:flex-row space-y-3 lg:space-y-0
+           items-center justify-center"
+          >
+            <p className="w-full">قبلا ثبت نام کرده اید ؟</p>
             <Link
               to="/login"
-              className="font-medium text-Amber-500 animate-pulse"
+              className="w-full font-medium text-red-600 hover:underline 
+              transition-all ease-in-out duration-300
+              px-1.5"
             >
-              هم اکنون وارد شوید .
+              هم اکنون وارد شوید
             </Link>
-          </p>
+          </div>
         </div>
       </div>
+
     </main>
   );
 };

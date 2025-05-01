@@ -33,6 +33,7 @@ const MainLayout = () => {
               color: "#fff",
               border: "1px solid #333",
               fontSize: "0.8rem",
+              marginBottom: "3rem",
             },
           }}
         />

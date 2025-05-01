@@ -152,22 +152,53 @@ const SubCategories = () => {
   };
 
   const applyFilters = () => {
-    navigate(
-      `/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
-        search != null ? `&search=${search}` : ""
-      }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
-        colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
-      }${min_price != null ? `&min_price=${priceRange?.min_price}` : ""}${
-        max_price != null ? `&max_price=${priceRange?.max_price}` : ""
-      }${sort_price != null ? `&sort_price=${sort_price}` : ""}
-      `
-    );
+    try {
+      const minPriceInput =
+        document.getElementById("minPriceInput")?.value || price?.min_price;
+      const maxPriceInput =
+        document.getElementById("maxPriceInput")?.value || price?.max_price;
+      if (minPriceInput > maxPriceInput)
+        throw new Error("حداکثر قیمت باید بزرگتر از حداقل قیمت باشد");
+
+      if (minPriceInput < price?.min_price)
+        throw new Error("حداقل قیمت نمیتواند کمتر از حداقل قیمت باشد");
+
+      if (maxPriceInput > price?.max_price)
+        throw new Error("حداکثر قیمت نمیتواند بزرگتر از حداکثر قیمت باشد");
+
+      if (minPriceInput > price?.max_price)
+        throw new Error(
+          "قیمت خارج از محدوده است، حداقل قیمت باید کمتر از حداکثر قیمت باشد"
+        );
+      setPriceRange({
+        min_price: minPriceInput,
+        max_price: maxPriceInput,
+      });
+      navigate(
+        `/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
+          search != null ? `&search=${search}` : ""
+        }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
+          colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
+        }${
+          minPriceInput >= priceRange?.min_price
+            ? `&min_price=${minPriceInput}`
+            : ""
+        }${
+          maxPriceInput <= priceRange?.max_price
+            ? `&max_price=${maxPriceInput}`
+            : ""
+        }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
+      );
+    } catch (error) {
+      toast.error(error?.message);
+    }
   };
 
   const removeFilters = () => {
     setSizeSets([]);
     setColorSets([]);
-    setPriceRange({ min_price: 0, max_price: 100000000 });
+    setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
+    
     navigate(`/category/${categoryCode}`);
   };
 
@@ -232,10 +263,10 @@ const SubCategories = () => {
           </form>
           {sizes?.length > 0 && (
             <div className="w-full">
-              <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+              <h3 className="w-full text-base xl:text-xl font-EstedadExtraBold xl:py-2 text-right leading-relaxed">
                 سایز ها :
               </h3>
-              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 py-4">
+              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 space-y-2">
                 {sizes?.map((item, idx) => (
                   <button
                     key={idx}
@@ -263,10 +294,10 @@ const SubCategories = () => {
           )}
           {colors?.length > 0 && (
             <div className="w-full">
-              <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+              <h3 className="w-full text-base xl:text-xl font-EstedadExtraBold py-2 text-right leading-relaxed">
                 رنگ ها :
               </h3>
-              <div className="w-full flex flex-col justify-start items-start gap-2 py-4">
+              <div className="w-full flex flex-col justify-start items-start gap-2 space-y-2">
                 {colors?.map((item, idx) => (
                   <button
                     key={idx}
@@ -304,31 +335,23 @@ const SubCategories = () => {
           )}
           {price?.min_price > 0 && price?.max_price > 0 && (
             <div className="w-full">
-              <h3 className="w-full text-lg lg:text-2xl font-EstedadExtraBold py-4 text-right leading-relaxed">
+              <h3 className="w-full text-base xl:text-xl font-EstedadExtraBold py-2 text-right leading-relaxed">
                 قیمت :
               </h3>
               <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 py-4">
                 <input
                   type="number"
+                  id="minPriceInput"
                   placeholder={formatCurrencyDisplay(price?.min_price)}
-                  onChange={(e) => {
-                    setPriceRange({
-                      min_price: e.target.value,
-                      max_price: price?.max_price,
-                    });
-                  }}
+                  name="minPriceInput"
                 />
                 <span>ریال</span>
                 <span>تا</span>
                 <input
                   type="number"
+                  id="maxPriceInput"
                   placeholder={formatCurrencyDisplay(price?.max_price)}
-                  onChange={(e) => {
-                    setPriceRange({
-                      min_price: price?.min_price,
-                      max_price: e.target.value,
-                    });
-                  }}
+                  name="maxPriceInput"
                 />
                 <span>ریال</span>
               </div>
@@ -429,6 +452,8 @@ const SubCategories = () => {
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
+            }${min_price != null ? `&min_price=${min_price}` : ""}${
+              max_price != null ? `&max_price=${max_price}` : ""
             }`}
             className={`font-EstedadLight text-sm  border border-CarbonicBlue-500 rounded-lg p-2
               ${
@@ -445,6 +470,8 @@ const SubCategories = () => {
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
               color != null ? `&color=${color}` : ""
+            }${min_price != null ? `&min_price=${min_price}` : ""}${
+              max_price != null ? `&max_price=${max_price}` : ""
             }&sort_price=asc`}
             className={`font-EstedadLight text-sm  border  rounded-lg p-2
               transition-all duration-300 ease-in-out
@@ -462,6 +489,8 @@ const SubCategories = () => {
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
+            }${min_price != null ? `&min_price=${min_price}` : ""}${
+              max_price != null ? `&max_price=${max_price}` : ""
             }&sort_price=desc`}
             className={`font-EstedadLight text-sm  border  rounded-lg p-2
               transition-all duration-300 ease-in-out

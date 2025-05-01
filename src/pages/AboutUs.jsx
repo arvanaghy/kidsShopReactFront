@@ -32,8 +32,8 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col justify-around items-center min-h-[90vh] space-y-5 pb-8 ">
-      <h1 className="w-fit font-EstedadExtraBold text-center  text-CarbonicBlue-500 bg-white border border-CarbonicBlue-500/40 drop-shadow-md rounded-3xl
+    <div className="w-full flex flex-col justify-around items-center min-h-[90vh] h-full space-y-5 py-8 ">
+      <h1 className="w-fit font-EstedadExtraBold text-center  text-gray-500 bg-white border border-gray-500/40 drop-shadow-md rounded-3xl
       text-base py-3 px-5 mt-12
       sm:text-lg sm:py-4 sm:px-7
       md:text-2xl md:py-5 md:px-10
@@ -57,11 +57,16 @@ const AboutUs = () => {
               key={item?.Code}
               className="border
               flex flex-col justify-between items-center w-full h-full bg-white rounded-2xl
-              border-CarbonicBlue-500/40
+              border-gray-500/40
               col-span-12
               md:col-span-4
               lg:col-span-4
-              overflow-hidden
+              xl:col-span-4
+              p-2
+              lg:p-4
+              xl:p-6
+
+              overflow-scroll
               "
             >
               <span className="
@@ -72,7 +77,7 @@ const AboutUs = () => {
               xl:text-2xl
               2xl:text-3xl
               font-EstedadExtraBold
-              text-CarbonicBlue-500 p-2 rounded-xl
+              text-gray-800 p-2 rounded-xl
               truncate
 
               whitespace-break-spaces ">
@@ -89,7 +94,7 @@ const AboutUs = () => {
               xl:text-lg
               2xl:text-lg
               overflow-hidden
-               font-EstedadMedium text-justify  leading-relaxed
+               font-EstedadMedium text-justify text-gray-500 leading-relaxed
                text-pretty 
               ">
                 {item?.Comment}
