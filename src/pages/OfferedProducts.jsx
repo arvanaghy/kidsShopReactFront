@@ -81,7 +81,7 @@ const Products = () => {
       const searchPhrase = e.target.search.value;
       if (searchPhrase?.length <= 0)
         throw new Error("نام دسته بندی مورد نظر را وارد کنید");
-      navigate(`/products?search=${searchPhrase}`);
+      navigate(`/offered-products?search=${searchPhrase}`);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -162,7 +162,7 @@ const Products = () => {
       //   max_price: maxPriceInput,
       // });
       // navigate(
-      //   `/products?product_page=${1}${
+      //   `/offered-products?product_page=${1}${
       //     search != null ? `&search=${search}` : ""
       //   }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
       //     colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
@@ -177,7 +177,7 @@ const Products = () => {
       //   }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
       // );
       navigate(
-        `/products?product_page=${1}${
+        `/offered-products?product_page=${1}${
           search != null ? `&search=${search}` : ""
         }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
           colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
@@ -193,7 +193,7 @@ const Products = () => {
     setColorSets([]);
     // setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
 
-    navigate(`/products`);
+    navigate(`/offered-products`);
   };
 
   if (loading) return <Loading />;
@@ -203,7 +203,9 @@ const Products = () => {
       {/* side bar */}
       <div className="w-full col-span-3 h-full ">
         {/* category details */}
-        <h2 className="text-xl font-EstedadExtraBold py-4 text-center leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500">محصولات پیشنهادی</h2>
+        <h2 className="text-xl font-EstedadExtraBold py-4 text-center leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500">
+          محصولات پیشنهادی
+        </h2>
         <div className="w-full sticky xl:top-[18vh] xl:space-y-3">
           {/* remove filters */}
           <button
@@ -354,7 +356,7 @@ const Products = () => {
         {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
-            to={`/products?product_page=${1}${
+            to={`/offered-products?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
@@ -370,7 +372,7 @@ const Products = () => {
             جدید ترین ها
           </Link>
           <Link
-            to={`/products?product_page=${1}${
+            to={`/offered-products?product_page=${1}${
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
               color != null ? `&color=${color}` : ""
@@ -387,7 +389,7 @@ const Products = () => {
             ارزان ترین ها
           </Link>
           <Link
-            to={`/products?product_page=${1}${
+            to={`/offered-products?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
