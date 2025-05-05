@@ -57,7 +57,7 @@ const Footer = () => {
             <div className="flex items-center justify-start gap-3 ">
               <FontAwesomeIcon icon={faLocationDot} className="text-lg md:text-3xl" />
               <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-2xl	">
-                تبریز،شهرک ارم، منطقه ۷، دوبانده، ،جنب بیمه ما{" "}
+                تبریز،شهرک ارم، منطقه ۷، دوبانده، جنب بیمه ما{" "}
               </p>
             </div>
             <div className="flex items-center justify-start gap-3 ">

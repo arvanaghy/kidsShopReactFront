@@ -54,9 +54,11 @@ const ContactUs = () => {
     return (
       <>
         <div className="relative ">
-          <div className="hidden  text-black absolute bg-CarbonicBlue-500/80 w-1/3 rounded-2xl xl:min-h-[40vh] 
+          <div
+            className="hidden  text-black absolute bg-CarbonicBlue-500/80 w-1/3 rounded-2xl xl:min-h-[40vh] 
           lg:top-[5%] lg:right-10
-          xl:top-[15%] xl:right-24 z-40 lg:flex flex-col font-EstedadMedium justify-evenly items-center shadow-2xl py-10">
+          xl:top-[15%] xl:right-24 z-40 lg:flex flex-col font-EstedadMedium justify-evenly items-center shadow-2xl py-10"
+          >
             <form
               onSubmit={(e) => handleSubmit(e)}
               className=" xl:max-h-[65vh] h-full w-full xl:p-10 rounded-3xl flex flex-col justify-evenly gap-3 px-1.5"
@@ -99,14 +101,13 @@ const ContactUs = () => {
                     <li className="text-sm xl:text-xl leading-relaxed text-CarbonicBlue-500">
                       شماره تماس :
                       <span className="text-black px-1.5 xl:text-lg">
-                        ۳۵۵۵۱۰۸۰ - ۳۵۵۷۱۴۰۰
+                      ۰۹۱۴۹۲۷۶۵۹۰
                       </span>
                     </li>
                     <li className="text-sm xl:text-xl leading-relaxed text-CarbonicBlue-500">
                       آدرس :
                       <span className="text-black text-sm xl:text-lg px-1.5">
-                        تبریز - خیابان فردوسی - سرای نصیرزاده - پلاک ۱۱ - الکترو
-                        عرفان
+                        تبریز،شهرک ارم، منطقه ۷، دوبانده،جنب بیمه ما
                       </span>
                     </li>
                   </ul>
@@ -165,7 +166,6 @@ const ContactUs = () => {
             className=" w-full   bg-white/60 rounded-3xl shadow-lg placeholder:text-white placeholder:indent-8 font-EstedadMedium placeholder:font-EstedadMedium     indent-4 py-1.5"
             type="text"
             name="email"
-         
             placeholder="ایمیل یا شماره تماس"
           />
           <input

@@ -57,33 +57,29 @@ const Home = () => {
   return (
     <>
       {/* categories */}
-      <section
-        className="w-full max-w-2xl xl:max-w-7xl 2xl:max-w-full mx-auto py-3 xl:py-8 flex overflow-x-auto 2xl:gap-5"
-      >
+      <section className="w-full max-w-2xl xl:max-w-7xl 2xl:max-w-full mx-auto py-3 xl:py-8 flex overflow-x-auto 2xl:gap-5">
         {result?.categories?.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex-shrink-0 w-24 xl:w-30"
-          >
+          <div key={idx} className="flex-shrink-0 w-24 xl:w-30">
             <CategoryCircleCard item={item} />
           </div>
         ))}
-        <div
-            className="flex-shrink-0 w-24 xl:w-30"
-          >
-            <Link
-                  to={`/categoires`}
-                  className={`w-full flex flex-col justify-center
+        <div className="flex-shrink-0 w-24 xl:w-30">
+          <Link
+            to={`/categoires`}
+            className={`w-full flex flex-col justify-center
                                     items-center
                                     cursor-pointer
                                     xl:hover:scale-105  duration-300  ease-in-out transition-all`}
-                >
-                  <FontAwesomeIcon icon={faArrowsToEye} className="w-10 h-10 p-4 m-2 rounded-full text-gray-500"/>
-                  <h4 className="text-xs xl:text-base text-center text-gray-900 font-EstedadMedium">
-                    تمام دسته بندی ها
-                  </h4>
-                </Link>
-          </div>
+          >
+            <FontAwesomeIcon
+              icon={faArrowsToEye}
+              className="w-10 h-10 p-4 m-2 rounded-full text-gray-500"
+            />
+            <h4 className="text-xs xl:text-base text-center text-gray-900 font-EstedadMedium">
+              تمام دسته بندی ها
+            </h4>
+          </Link>
+        </div>
       </section>
       {/* categories */}
 
@@ -142,8 +138,7 @@ const Home = () => {
                 <SwiperSlide key={index}>
                   <div className="xl:gap-2 justify-center w-full xl:px-4 flex flex-row  ">
                     {group.map((product, productIndex) => (
-                                   <ProductCard item={product} />
-
+                      <ProductCard item={product} key={productIndex} />
                     ))}
                     {group.length < 4 &&
                       Array.from({ length: 4 - group.length }).map((_, i) => (
@@ -241,7 +236,7 @@ const Home = () => {
       {/* best seller products */}
       {result?.bestSeller?.length > 0 && (
         <section
-        className="
+          className="
         xl:my-10
         xl:py-14
         md:py-5
@@ -253,7 +248,7 @@ const Home = () => {
         >
           <div className="w-full col-span-12 xl:col-span-3">
             <h2
-            className="font-EstedadExtraBold text-center xl:tracking-wide
+              className="font-EstedadExtraBold text-center xl:tracking-wide
             py-4
         text-xl leading-relaxed xl:py-1.5
         md:text-3xl md:pb-4
@@ -261,7 +256,7 @@ const Home = () => {
         xl:text-4xl 2xl:text-6xl xl:leading-loose 2xl:leading-loose
         text-gray-700
       "
-          >
+            >
               پرفروشترین محصولات کیدزشاپ
             </h2>
           </div>
@@ -316,7 +311,7 @@ const Home = () => {
 
           <div className="col-span-12 text-center pt-12">
             <Link
-              to="/best-selling-products"
+              to={"/best-seller-products"}
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
         transition-all duration-300 ease-in-out text-xs xl:text-base 2xl:text-2xl 2xl:font-EstedadMedium
       "
@@ -344,7 +339,7 @@ const Home = () => {
           </p>
           <div className="flex flex-row items-center justify-center gap-3">
             <p className="text-white text-base xl:text-2xl font-extrabold 2xl:text-4xl">
-              kids_shop.110 
+              kids_shop.110
             </p>
             <FontAwesomeIcon
               icon={faInstagram}

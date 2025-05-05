@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "@context/UserContext";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +25,7 @@ const TopNavBar = () => {
   const [dropDown, setDropDown] = useState(false);
   const { user, cart } = useContext(UserContext);
   const [categoryImage, setCategoryImage] = useState(null);
+  const navigate = useNavigate();
 
   const fetchCategories = async (_url) => {
     if (categoryLoading) return;
@@ -69,6 +70,19 @@ const TopNavBar = () => {
 
   useEffect(() => {}, [user, cart]);
 
+  const letsSearch = (e) => {
+    e.preventDefault();
+    try {
+      const searchPhrase = e.target.topNavBarSearch.value;
+      if (searchPhrase?.length <= 0)
+        throw new Error("نام کالای مورد نظر را وارد کنید");
+      e.target.topNavBarSearch.value = "";
+      navigate(`/products?search=${searchPhrase}`);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+
   return (
     <header
       className={`hidden md:block sticky top-0 shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600  first-letter:
@@ -80,11 +94,14 @@ const TopNavBar = () => {
     >
       <section className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 2xl:text-xl">
         <div className="w-full md:col-span-3 xl:col-span-3">logo</div>
-        <form className="w-full md:col-span-4 xl:col-span-5 bg-gray-200 rounded-xl relative">
+        <form
+          className="w-full md:col-span-4 xl:col-span-5 bg-gray-200 rounded-xl relative"
+          onSubmit={letsSearch}
+        >
           <input
             type="text"
+            name="topNavBarSearch"
             placeholder="جستجو محصول ..."
-            onChange={() => {}}
             className="w-full p-2 bg-gray-200 rounded-xl text-gray-600 placeholder:text-gray-600 2xl:py-4 "
           />
           <button
@@ -103,7 +120,7 @@ const TopNavBar = () => {
               icon={faHeadphones}
               className="block md:text-base xl:text-lg font-bold 2xl:text-2xl "
             />
-            <span>{toPersianDigits("09144744980")}</span>
+            <span>{toPersianDigits("۰۹۱۴۹۲۷۶۵۹۰")}</span>
           </div>
 
           {user?.Name !== undefined && user?.UToken !== undefined ? (
@@ -115,7 +132,10 @@ const TopNavBar = () => {
                   gap-x-1.5
                   "
               >
-                <FontAwesomeIcon icon={faUserTie} className="block 2xl:text-2xl" />
+                <FontAwesomeIcon
+                  icon={faUserTie}
+                  className="block 2xl:text-2xl"
+                />
                 <span>{user?.Name}</span>
               </Link>
             </div>
@@ -129,7 +149,10 @@ const TopNavBar = () => {
                     gap-x-1.5
                     "
               >
-                <FontAwesomeIcon icon={faUserTie} className="block md:text-base xl:text-lg 2xl:text-2xl" />
+                <FontAwesomeIcon
+                  icon={faUserTie}
+                  className="block md:text-base xl:text-lg 2xl:text-2xl"
+                />
                 <span className="block">ورود | ثبت نام</span>
               </Link>
             </div>
@@ -179,7 +202,8 @@ const TopNavBar = () => {
         >
           <div
             className="inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
-        md:text-xs lg:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-sm 2xl:gap-x-8 2xl:text-xl" >
+        md:text-xs lg:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-sm 2xl:gap-x-8 2xl:text-xl"
+          >
             {navigation.map((item, idx) => (
               <div key={idx}>
                 <div
@@ -266,20 +290,22 @@ const TopNavBar = () => {
                         </div>
                         <div className="w-full md:col-span-3 col-span-3">
                           {categoryImage && (
-                            <div className="flex flex-col items-center
-                            justify-center">
+                            <div
+                              className="flex flex-col items-center
+                            justify-center"
+                            >
                               <img
                                 src={`https://kidsshopapi.electroshop24.ir/category-images/webp/${categoryImage?.PicName}.webp`}
                                 alt={categoryImage?.Name}
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src =
-                                    'https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg';
+                                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
                                 }}
                                 className=" rounded-lg w-64 h-64 object-scale-down drop-shadow-lg shadow-black"
                               />
                               <p className="text-sm text-gray-600">
-                                 {categoryImage?.Comment}
+                                {categoryImage?.Comment}
                               </p>
                             </div>
                           )}
@@ -305,23 +331,32 @@ const TopNavBar = () => {
           </div>
         </nav>
         <div className="w-full md:col-span-12 lg:col-span-4 xl:col-span-3 flex flex-row items-center md:justify-end xl:justify-end md:gap-x-5 md:px-2 xl:px-0 xl:gap-x-4 md:pb-2 lg:pb-0 md:text-xs 2xl:text-xl">
-          <Link to={"/compare-products"}
+          <Link
+            to={"/compare-products"}
             className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"
             title="مقایسه محصولات"
           >
-            <FontAwesomeIcon icon={faRestroom} className="md:text-base xl:text-xl 2xl:text-2xl" />
+            <FontAwesomeIcon
+              icon={faRestroom}
+              className="md:text-base xl:text-xl 2xl:text-2xl"
+            />
           </Link>
-          <Link to={"/my-favourite"}
+          <Link
+            to={"/my-favourite"}
             className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"
             title="علاقه مندی ها"
           >
-            <FontAwesomeIcon icon={faBookmark} className="md:text-base xl:text-xl 2xl:text-2xl" />
+            <FontAwesomeIcon
+              icon={faBookmark}
+              className="md:text-base xl:text-xl 2xl:text-2xl"
+            />
           </Link>
           <Link
+            to={"/offered-products"}
             className="
             flex flex-row  items-center justify-center
             hover:scale-105 
@@ -330,10 +365,16 @@ const TopNavBar = () => {
             "
             title="محصولات ویژه"
           >
-            <FontAwesomeIcon icon={faCertificate} className="md:text-base xl:text-xl 2xl:text-2xl" />
-            <span className="text-xs leading-relaxed 2xl:text-xl">محصولات ویژه</span>
+            <FontAwesomeIcon
+              icon={faCertificate}
+              className="md:text-base xl:text-xl 2xl:text-2xl"
+            />
+            <span className="text-xs leading-relaxed 2xl:text-xl">
+              محصولات ویژه
+            </span>
           </Link>
           <Link
+          to={"/best-selling-products"}
             className="
             flex flex-row  items-center justify-center
             hover:scale-105 
@@ -342,8 +383,13 @@ const TopNavBar = () => {
             "
             title="پرفروش ترین ها"
           >
-            <FontAwesomeIcon icon={faBoxesPacking} className="md:text-base xl:text-xl 2xl:text-2xl" />
-            <span className="text-xs 2xl:text-xl leading-relaxed">پرفروش ترین ها</span>
+            <FontAwesomeIcon
+              icon={faBoxesPacking}
+              className="md:text-base xl:text-xl 2xl:text-2xl"
+            />
+            <span className="text-xs 2xl:text-xl leading-relaxed">
+              پرفروش ترین ها
+            </span>
           </Link>
         </div>
       </section>
