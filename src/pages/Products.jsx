@@ -56,7 +56,6 @@ const Products = () => {
         },
       });
       if (status !== 200) throw new Error(data?.message);
-      console.log("data", data);
       setProducts({
         data: data?.result?.products?.data,
         links: data?.result?.products?.links,

@@ -20,9 +20,9 @@ const MainLayout = () => {
     });
   }, []);
   return (
-    <div className="min-h-screen w-full ">
+    <div className="min-h-screen w-full bg-gray-50">
       <TopMenu />
-      <div className="min-h-[90vh] bg-gray-50 ">
+      <div className="min-h-[90vh]  ">
         <Toaster
           toastOptions={{
             className: "font-EstedadMedium",
@@ -45,9 +45,7 @@ const MainLayout = () => {
       <button
         id="scrollToTop"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="fixed bottom-0 right-8 z-50 hidden lg:block p-0 m-0
-        
-        "
+        className="fixed bottom-0 right-8 z-50 hidden lg:block p-0 m-0"
       >
         <FontAwesomeIcon icon={faChevronUp} className="text-2xl bg-black/60 text-white px-5 py-3  rounded-t-2xl hover:bg-green-700 transation-all duration-300 ease-in-out" />
       </button>

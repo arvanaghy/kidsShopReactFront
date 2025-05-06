@@ -62,7 +62,6 @@ const Invoice = () => {
         }
       );
       if (status !== 201) throw new Error(data?.message);
-      console.log('data', data);
     } catch (error) {
       toast.error(
         "جزییات سفارش " + (error?.response?.data?.message || error?.message) ||

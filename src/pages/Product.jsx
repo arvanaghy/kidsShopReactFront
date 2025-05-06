@@ -9,7 +9,12 @@ import toast from "react-hot-toast";
 import ProductCard from "@components/ProductCard";
 import Loading from "@components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faHouse } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCartPlus,
+  faChevronLeft,
+  faHouse,
+  faSquarePlus,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -25,6 +30,8 @@ const Product = () => {
   const [presentUnitQuantity, setPresentUnitQuantity] = useState(0);
   const [presentPackQuantity, setPresentPackQuantity] = useState(0);
   const { cart, updateCart, user } = useContext(UserContext);
+
+  const [feature, setFeature] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -49,7 +56,6 @@ const Product = () => {
       });
       if (status !== 200) throw new Error(data?.message);
       setData(data);
-      console.log(data?.product);
     } catch (error) {
       toast.error(
         " دریافت اطلاعات محصول  " + error?.response?.data?.message ||
@@ -82,28 +88,55 @@ const Product = () => {
     getProductCartQuantity();
   }, [cart]);
 
-  const addProductToCart = (item)=> {
+  const addProductToCart = (item) => {
     if (loading) return;
-    try{
+    if (!item) return;
+    try {
       setLoading(true);
-
-      toast.success(JSON.stringify(item?.Code))
-
-    }catch(error){
-      toast.error(
-        " دریافت اطلاعات محصول  " + error?.response?.data?.message ||
-          error?.message ||
-          "خطا در اتصال"
+      if (!feature || !feature?.SCCode) {
+        throw new Error("هیچ سایز و رنگ بندی انتخاب نشده است.");
+      }
+      const _cart = [...cart];
+      const isProductExists = _cart.find(
+        (cartItem) => cartItem.Code == item.Code
       );
-    }finally{
+      if (isProductExists) {
+        const isFeatureExists = isProductExists.basket.find(
+          (basketItem) => basketItem.feature.SCCode == feature.SCCode
+        );
+        if (isFeatureExists) {
+          isFeatureExists.quantity += 1;
+        } else {
+          isProductExists.basket.push({
+            feature: feature,
+            quantity: 1,
+          });
+        }
+        updateCart(_cart);
+      } else {
+        const newItem = {
+          item: item,
+          basket: [
+            {
+              feature: feature,
+              quantity: 1,
+            },
+          ],
+        };
+        _cart.push(newItem);
+        updateCart(_cart);
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
       setLoading(false);
     }
-  } 
+  };
 
   if (loading) return <Loading />;
 
   return (
-    <div className=" ">
+    <div className="w-full">
       <nav
         className="flex w-full px-5 py-3 text-gray-700 border border-gray-200 mb-4 mt-14 lg:my-4 rounded-lg bg-gray-50 "
         aria-label="Breadcrumb"
@@ -219,11 +252,11 @@ const Product = () => {
               />
             )}
           </div>
-          <div className="col-span-1 px-6 lg:col-span-6 w-full flex flex-col justify-start gap-4">
+          <div className="col-span-1 px-6 lg:col-span-5 w-full flex flex-col justify-start gap-4">
             <div className="lg:text-2xl font-EstedadExtraBold text-xl py-5 text-center lg:text-start border-b text-CarbonicBlue-500 drop-shadow-sm my-6 ">
               {data?.product?.Name}
             </div>
-            <div className="flex flex-col text-center lg:text-start lg:flex-row justify-between w-full text-gray-700 px-4 border-b">
+            <div className="flex flex-col text-center lg:text-start lg:flex-row justify-between w-full text-gray-700 px-4 ">
               <div className="flex flex-col gap-3">
                 <div className="font-EstedadMedium px-2 flex flex-row gap-2 items-center justify-start ">
                   <span className="block text-sm font-EstedadMedium text-Purple-500">
@@ -245,32 +278,36 @@ const Product = () => {
                   </Link>
                 </div>
                 {data?.product?.product_size_color?.length > 0 && (
-                  <div className="font-EstedadMedium px-2 flex flex-col gap-4  items-center justify-start">
+                  <div className="font-EstedadMedium px-2 flex flex-col gap-4  items-start justify-start leading-relaxed">
                     {data?.product?.product_size_color.map((item, index) => (
                       <button
                         disabled={item?.Mande <= 0}
                         onClick={() => {
-                          addProductToCart(item);
+                          setFeature(item);
                         }}
                         key={index}
-                        className="flex flex-row gap-2 text-sm  font-EstedadMedium text-black/80 underline underline-offset-8 duration-300 ease-in-out
-                        border-2 border-CarbonicBlue-500 rounded-md px-2 py-1 bg-white
-
+                        className={`flex flex-row gap-2 text-sm  font-EstedadMedium text-gray-800 
+                          bg-gray-100  duration-300 ease-in-out
+                        border-2 border-gray-200 rounded-md px-2 py-1
                         disabled:cursor-not-allowed
-
-                        hover:bg-CarbonicBlue-500 hover:text-white
-                        "
+                      hover:bg-gray-400 hover:text-gray-100
+                      ${
+                        item?.SCCode === feature?.SCCode
+                          ? "bg-green-500 text-white"
+                          : ""
+                      }
+                        `}
                       >
-                        <span className="block text-sm font-EstedadMedium text-Purple-500">
+                        <span className="block text-sm font-EstedadMedium ">
                           رنگ :
                         </span>
-                        <span className="text-3xl text-black">{item?.Code}</span>
+                        <span className="">{item?.SCCode}</span>
                         <span>{item.ColorName}</span>
-                        <span className="block text-sm font-EstedadMedium text-Purple-500">
+                        <span className="block text-sm font-EstedadMedium ">
                           سایز :
                         </span>
                         <span>{item.SizeNum}</span>
-                        <span className="block text-sm font-EstedadMedium text-Purple-500">
+                        <span className="block text-sm font-EstedadMedium ">
                           مبلغ :
                         </span>
                         <span>{formatCurrencyDisplay(item?.Mablag)}</span>
@@ -295,35 +332,29 @@ const Product = () => {
                 )}
               </div>
             </div>
-          </div>
-          <div className="col-span-1 lg:col-span-2 flex flex-col gap-6 justify-around items-center bg-white rounded-2xl shadow-lg shadow-gray-300 p-6 ">
-
-
-            <div className="space-y-4 flex flex-col justify-evenly items-center gap-8 ">
-              <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-2">
-                <div className=" pl-2 grid place-items-center gap-1 font-EstedadExtraBold text-sm text-center">
-                  <div>
-                    <span className=""> قیمت هر </span>
-                    <span className="text-Purple-500">
-                      {data?.product?.Vahed}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="font-EstedadExtraBold text-CarbonicBlue-500">
-                      {formatCurrencyDisplay(
-                        userPriceSelect(data?.product, user)
-                      )}
-                    </span>
-                    <span className="text-xs px-2">ریال</span>
-                  </div>
-                </div>
-                <div className="flex lg:flex-row items-center justify-center gap-2"></div>
-              </div>
-
-
-
+            <div className="w-full">
+              <button
+                className="w-fit flex flex-row gap-2 items-center justify-center border-2 border-green-600 rounded-md px-4 py-2 bg-green-500 text-white hover:bg-green-600 hover:text-white space-x-1.5
+              duration-300 ease-in-out transition-all
+              "
+                onClick={() => {
+                  addProductToCart(data?.product);
+                }}
+              >
+                <FontAwesomeIcon icon={faCartPlus} />
+                <div className="font-EstedadMedium">افزودن به سبد خرید</div>
+              </button>
             </div>
-            <div className="w-full flex justify-center items-center my-8"></div>
+          </div>
+          <div className="col-span-1 lg:col-span-3 flex flex-col gap-6 justify-around items-center bg-white rounded-2xl shadow-lg shadow-gray-300 p-6 ">
+            {cart?.length > 0 &&
+            cart?.find((item) => Math.floor(item?.Code) == productCode) ? (
+              <div className=""></div>
+            ) : (
+              <div className="">
+                شما از این محصول هیچ آیتمی در سبد خرید ندارید
+              </div>
+            )}
           </div>
         </div>
         {imageModal?.isOpen && (
@@ -346,28 +377,32 @@ const Product = () => {
       </div>
 
       {/* same price */}
-      <h2 className="lg:text-start my-8 text-center px-10 bg-CarbonicBlue-500 py-8 text-white font-EstedadMedium">
-        دیگر محصولات مشابه
-      </h2>
-      <div className="gap-4 grid grid-cols-12 py-6  lg:px-10  px-4  ">
-        {data?.relatedProducts?.length > 0 &&
-          data?.relatedProducts?.map((item, idx) => (
-            <ProductCard item={item} key={idx} colSpan="col-span-2" />
-          ))}
-      </div>
-
+      {data?.relatedProducts?.length > 0 && (
+        <>
+          <h2 className="lg:text-start my-8 text-center px-10 bg-CarbonicBlue-500 py-8 text-white font-EstedadMedium">
+            دیگر محصولات مشابه
+          </h2>
+          <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4">
+            {data?.relatedProducts?.map((item, idx) => (
+              <ProductCard item={item} key={idx} colSpan="col-span-2" />
+            ))}
+          </div>
+        </>
+      )}
       {/* same category */}
 
-      {/* same price */}
-      <h2 className="lg:text-start my-8 text-center px-10 bg-CarbonicBlue-500 py-8 text-white font-EstedadMedium">
-        محصولات پیشنهادی
-      </h2>
-      <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4  ">
-        {data?.offeredProducts?.length > 0 &&
-          data?.offeredProducts?.map((item, idx) => (
-            <ProductCard item={item} key={idx} />
-          ))}
-      </div>
+      {data?.offeredProducts?.length > 0 && (
+        <>
+          <h2 className="lg:text-start my-8 text-center px-10 bg-CarbonicBlue-500 py-8 text-white font-EstedadMedium">
+            محصولات پیشنهادی
+          </h2>
+          <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4">
+            {data?.offeredProducts?.map((item, idx) => (
+              <ProductCard item={item} key={idx} />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
