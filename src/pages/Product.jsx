@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import UserContext from "@context/UserContext";
-import { userPriceSelect } from "@utils/userPriceHelper";
 import toast from "react-hot-toast";
 import ProductCard from "@components/ProductCard";
 import Loading from "@components/Loading";
@@ -13,7 +12,7 @@ import {
   faCartPlus,
   faChevronLeft,
   faHouse,
-  faSquarePlus,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -27,9 +26,7 @@ import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 const Product = () => {
   const { productCode } = useParams();
 
-  const [presentUnitQuantity, setPresentUnitQuantity] = useState(0);
-  const [presentPackQuantity, setPresentPackQuantity] = useState(0);
-  const { cart, updateCart, user } = useContext(UserContext);
+  const { cart, updateCart } = useContext(UserContext);
 
   const [feature, setFeature] = useState(null);
 
@@ -67,26 +64,12 @@ const Product = () => {
     }
   };
 
-  const getProductCartQuantity = () => {
-    const isProductExists = cart.find(
-      (item) => Math.floor(item.Code) == productCode
-    );
-    if (isProductExists) {
-      setPresentUnitQuantity(isProductExists?.unitQuantity || 0);
-      setPresentPackQuantity(isProductExists?.packQuantity || 0);
-    }
-  };
-
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchData(
       `https://kidsshopapi.electroshop24.ir/api/v2/show-product/${productCode}`
     );
   }, [productCode]);
-
-  useEffect(() => {
-    getProductCartQuantity();
-  }, [cart]);
 
   const addProductToCart = (item) => {
     if (loading) return;
@@ -98,7 +81,8 @@ const Product = () => {
       }
       const _cart = [...cart];
       const isProductExists = _cart.find(
-        (cartItem) => cartItem.Code == item.Code
+        (cartItem) =>
+          Math.floor(cartItem?.item?.Code) == Math.floor(productCode)
       );
       if (isProductExists) {
         const isFeatureExists = isProductExists.basket.find(
@@ -124,6 +108,42 @@ const Product = () => {
           ],
         };
         _cart.push(newItem);
+        updateCart(_cart);
+      }
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const removeFeatureFromCart = (item) => {
+    if (loading) return;
+    if (!item) return;
+    try {
+      setLoading(true);
+      const _cart = [...cart];
+      const isProductExists = _cart.find(
+        (cartItem) =>
+          Math.floor(cartItem?.item?.Code) == Math.floor(productCode)
+      );
+      if (isProductExists) {
+         isProductExists?.basket?.splice(
+          isProductExists?.basket?.findIndex(
+            (basketItem) => basketItem.feature.SCCode == item?.feature?.SCCode
+          ),
+          1
+        );
+        // 33296082
+        if (isProductExists?.basket?.length === 0) {
+          _cart.splice(
+            _cart.findIndex(
+              (cartItem) =>
+                Math.floor(cartItem?.item?.Code) == Math.floor(productCode)
+            ),
+            1
+          );
+        }
         updateCart(_cart);
       }
     } catch (error) {
@@ -346,10 +366,55 @@ const Product = () => {
               </button>
             </div>
           </div>
-          <div className="col-span-1 lg:col-span-3 flex flex-col gap-6 justify-around items-center bg-white rounded-2xl shadow-lg shadow-gray-300 p-6 ">
+          <div className="col-span-1 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2">
             {cart?.length > 0 &&
-            cart?.find((item) => Math.floor(item?.Code) == productCode) ? (
-              <div className=""></div>
+            cart?.find(
+              (item) => Math.floor(item?.item?.Code) === Math.floor(productCode)
+            ) ? (
+              <div className="w-full text-pretty py-2">
+                <p className="font-EstedadMedium p-2 text-CarbonicBlue-500 leading-relaxed">
+                  لیست آیتم های این محصول در سبد خرید شما
+                </p>
+                {(() => {
+                  const foundItem = cart.find(
+                    (item) =>
+                      Math.floor(item?.item?.Code) === Math.floor(productCode)
+                  );
+                  return (
+                    <div className="font-EstedadMedium p-2 w-full space-y-3 text-pretty">
+                      {foundItem?.basket?.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex flex-row  w-full  text-pretty leading-loose text-sm text-gray-700 gap-1 items-center justify-between"
+                          >
+                            <div className="">
+                              {formatCurrencyDisplay(item?.quantity)}{" "}
+                              {data?.product?.Vahed} {data?.product?.Name}{" "}
+                              {item?.feature?.ColorName} رنگ به سایز{" "}
+                              {item?.feature?.SizeNum} و جمع مبلغ{" "}
+                              {formatCurrencyDisplay(
+                                item?.feature?.Mablag * item?.quantity
+                              )}{" "}
+                              ریال
+                            </div>
+                            <button
+                              onClick={() => {
+                                removeFeatureFromCart(item);
+                              }}
+                              className="text-red-500 p-1.5
+                           hover:text-red-700 duration-300 ease-in-out transition-all
+                           "
+                            >
+                              <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
+              </div>
             ) : (
               <div className="">
                 شما از این محصول هیچ آیتمی در سبد خرید ندارید
