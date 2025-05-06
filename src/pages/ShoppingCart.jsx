@@ -132,7 +132,7 @@ const ShoppingCart = () => {
       setIsPending(true);
       try {
         const { data, status } = await axios.post(
-          "https://kidsshopapi.electroshop24.ir/api/v1/submit-order",
+          "https://kidsshopapi.electroshop24.ir/api/v2/submit-order",
           {
             products: orderData,
             signature: null,
@@ -211,7 +211,7 @@ const ShoppingCart = () => {
       setIsPending(true);
       try {
         const { data, status } = await axios.post(
-          "https://kidsshopapi.electroshop24.ir/api/v1/submit-order",
+          "https://kidsshopapi.electroshop24.ir/api/v2/submit-order",
           {
             products: orderData,
             description: description,
@@ -251,7 +251,6 @@ const ShoppingCart = () => {
       setIsPending(false);
       updateCart([]);
       updateOrder([]);
-      dispatch({ type: "CLEAR_CART" });
       window.location.href = `https://kidsshopapi.electroshop24.ir/api/v1/checkout-with-order?BearerToken=${user?.UToken}&orderCode=${_order?.Code}`;
       toast.success("پیش فاکتور شما در سیستم ثبت شد. ");
     } catch (error) {
