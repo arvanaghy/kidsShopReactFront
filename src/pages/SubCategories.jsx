@@ -104,18 +104,25 @@ const SubCategories = () => {
   };
 
   useEffect(() => {
+    // fetchData(
+    //   `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+    //     search != null ? `&search=${search}` : ""
+    //   }${size != null ? `&size=${size}` : ""}${
+    //     color != null ? `&color=${color}` : ""
+    //   }${sort_price != null ? `&sort_price=${sort_price}` : ""}${
+    //     priceRange?.min_price != 0 ? `&min_price=${priceRange?.min_price}` : ""
+    //   }${
+    //     priceRange?.max_price != 100000000
+    //       ? `&max_price=${priceRange?.max_price}`
+    //       : ""
+    //   }`
+    // );
     fetchData(
       `https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
-      }${sort_price != null ? `&sort_price=${sort_price}` : ""}${
-        priceRange?.min_price != 0 ? `&min_price=${priceRange?.min_price}` : ""
-      }${
-        priceRange?.max_price != 100000000
-          ? `&max_price=${priceRange?.max_price}`
-          : ""
-      }`
+      }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
     );
   }, [
     categoryCode,
@@ -125,8 +132,8 @@ const SubCategories = () => {
     size,
     color,
     sort_price,
-    priceRange?.min_price,
-    priceRange?.max_price,
+    // priceRange?.min_price,
+    // priceRange?.max_price,
   ]);
 
   const addSizeSet = (size) => {
@@ -153,40 +160,32 @@ const SubCategories = () => {
 
   const applyFilters = () => {
     try {
-      const minPriceInput =
-        document.getElementById("minPriceInput")?.value || price?.min_price;
-      const maxPriceInput =
-        document.getElementById("maxPriceInput")?.value || price?.max_price;
-      if (minPriceInput > maxPriceInput)
-        throw new Error("حداکثر قیمت باید بزرگتر از حداقل قیمت باشد");
+      // const minPriceInput =
+      //   document.getElementById("minPriceInput")?.value || price?.min_price;
+      // const maxPriceInput =
+      //   document.getElementById("maxPriceInput")?.value || price?.max_price;
+      // if (minPriceInput > maxPriceInput)
+      //   throw new Error("حداکثر قیمت باید بزرگتر از حداقل قیمت باشد");
 
-      if (minPriceInput < price?.min_price)
-        throw new Error("حداقل قیمت نمیتواند کمتر از حداقل قیمت باشد");
+      // if (minPriceInput < price?.min_price)
+      //   throw new Error("حداقل قیمت نمیتواند کمتر از حداقل قیمت باشد");
 
-      if (maxPriceInput > price?.max_price)
-        throw new Error("حداکثر قیمت نمیتواند بزرگتر از حداکثر قیمت باشد");
+      // if (maxPriceInput > price?.max_price)
+      //   throw new Error("حداکثر قیمت نمیتواند بزرگتر از حداکثر قیمت باشد");
 
-      if (minPriceInput > price?.max_price)
-        throw new Error(
-          "قیمت خارج از محدوده است، حداقل قیمت باید کمتر از حداکثر قیمت باشد"
-        );
-      setPriceRange({
-        min_price: minPriceInput,
-        max_price: maxPriceInput,
-      });
+      // if (minPriceInput > price?.max_price)
+      //   throw new Error(
+      //     "قیمت خارج از محدوده است، حداقل قیمت باید کمتر از حداکثر قیمت باشد"
+      //   );
+      // setPriceRange({
+      //   min_price: minPriceInput,
+      //   max_price: maxPriceInput,
+      // });
       navigate(
         `/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
           search != null ? `&search=${search}` : ""
         }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
           colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
-        }${
-          minPriceInput >= priceRange?.min_price
-            ? `&min_price=${minPriceInput}`
-            : ""
-        }${
-          maxPriceInput <= priceRange?.max_price
-            ? `&max_price=${maxPriceInput}`
-            : ""
         }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
       );
     } catch (error) {
@@ -197,8 +196,8 @@ const SubCategories = () => {
   const removeFilters = () => {
     setSizeSets([]);
     setColorSets([]);
-    setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
-    
+    // setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
+
     navigate(`/category/${categoryCode}`);
   };
 
@@ -229,7 +228,7 @@ const SubCategories = () => {
             </p>
           )}
         </div>
-        <div className="w-full sticky xl:top-[18vh]">
+        <div className="w-full sticky xl:top-[18vh] xl:space-y-3">
           {/* remove filters */}
           <button
             className="flex 
@@ -263,17 +262,17 @@ const SubCategories = () => {
           </form>
           {sizes?.length > 0 && (
             <div className="w-full">
-              <h3 className="w-full text-base xl:text-xl font-EstedadExtraBold xl:py-2 text-right leading-relaxed">
-                سایز ها :
+              <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
+                سایز بندی :
               </h3>
-              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 space-y-2">
+              <div className="w-full py-1.5 flex flex-col justify-start items-start gap-1">
                 {sizes?.map((item, idx) => (
                   <button
                     key={idx}
                     onClick={() => {
                       addSizeSet(item);
                     }}
-                    className="w-full flex flex-row justify-start items-center gap-3 duration-300 hover:-translate-x-2 ease-in-out transition-all"
+                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-2"
                   >
                     {sizeSets.includes(item) ? (
                       <FontAwesomeIcon
@@ -294,17 +293,17 @@ const SubCategories = () => {
           )}
           {colors?.length > 0 && (
             <div className="w-full">
-              <h3 className="w-full text-base xl:text-xl font-EstedadExtraBold py-2 text-right leading-relaxed">
-                رنگ ها :
+              <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
+                رنگ بندی :
               </h3>
-              <div className="w-full flex flex-col justify-start items-start gap-2 space-y-2">
+              <div className="w-full py-1.5 flex flex-col justify-start items-start gap-1">
                 {colors?.map((item, idx) => (
                   <button
                     key={idx}
                     onClick={() => {
                       addColorSet(item?.ColorCode);
                     }}
-                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:-translate-x-2 transition-all ease-in-out"
+                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-2"
                   >
                     {colorSets.includes(item?.ColorCode) ? (
                       <FontAwesomeIcon
@@ -333,7 +332,7 @@ const SubCategories = () => {
               </div>
             </div>
           )}
-          {price?.min_price > 0 && price?.max_price > 0 && (
+          {/* {price?.min_price > 0 && price?.max_price > 0 && (
             <div className="w-full">
               <h3 className="w-full text-base xl:text-xl font-EstedadExtraBold py-2 text-right leading-relaxed">
                 قیمت :
@@ -356,32 +355,35 @@ const SubCategories = () => {
                 <span>ریال</span>
               </div>
             </div>
+          )} */}
+          {(sizes?.length > 0 || colors?.length > 0) && (
+            <div className="w-full flex items-end justify-between">
+              <button
+                onClick={applyFilters}
+                className="w-full text-base font-EstedadExtraBold p-2  leading-relaxed rounded-xl mx-auto text-center
+                justify-items-end
+                bg-green-800 text-white hover:bg-green-900 transition-all duration-300 ease-in-out
+                border border-green-600 hover:border-green-700 
+                "
+              >
+                اعمال فیلتر ها
+              </button>
+            </div>
           )}
-          <div className="w-full">
-            <button
-              onClick={applyFilters}
-              className="w-fit text-base font-EstedadExtraBold p-4  leading-relaxed rounded-xl mx-auto text-center
-              bg-green-800 text-white hover:bg-green-900 transition-all duration-300 ease-in-out
-              border border-green-600 hover:border-green-700 
-              "
-            >
-              اعمال فیلتر ها
-            </button>
-          </div>
         </div>
       </div>
       {/* main content */}
       <div className="w-full col-span-9 grid grid-cols-12 space-y-6 ">
         {/* subcategories */}
         <div className="w-full col-span-12 p-6 bg-gray-200 rounded-xl">
-          <div className="w-full grid grid-cols-12">
+          <div className="w-full grid grid-cols-12 gap-x-5">
             {subCategories?.data?.length > 0 ? (
               subCategories?.data?.map((item, idx) => (
                 <Link
                   key={idx}
                   to={`/sub-category-products/${Math.floor(item?.Code)}`}
                   className="w-full flex flex-col justify-between
-                    items-center gap-3 duration-300  hover:scale-105 ease-in-out col-span-1"
+                    items-center gap-1.5 duration-300  hover:scale-105 ease-in-out col-span-2"
                 >
                   <img
                     loading="lazy"
@@ -421,7 +423,12 @@ const SubCategories = () => {
                   disabled={link.url === null}
                   key={idx}
                   onClick={() => {
-                    fetchData(link?.url);
+                    navigate(
+                      link?.url.replace(
+                        "https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories",
+                        "/category"
+                      )
+                    );
                   }}
                   className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
                     2xl:text-sm
@@ -452,8 +459,6 @@ const SubCategories = () => {
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
-            }${min_price != null ? `&min_price=${min_price}` : ""}${
-              max_price != null ? `&max_price=${max_price}` : ""
             }`}
             className={`font-EstedadLight text-sm  border border-CarbonicBlue-500 rounded-lg p-2
               ${
@@ -470,8 +475,6 @@ const SubCategories = () => {
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
               color != null ? `&color=${color}` : ""
-            }${min_price != null ? `&min_price=${min_price}` : ""}${
-              max_price != null ? `&max_price=${max_price}` : ""
             }&sort_price=asc`}
             className={`font-EstedadLight text-sm  border  rounded-lg p-2
               transition-all duration-300 ease-in-out
@@ -489,8 +492,6 @@ const SubCategories = () => {
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
-            }${min_price != null ? `&min_price=${min_price}` : ""}${
-              max_price != null ? `&max_price=${max_price}` : ""
             }&sort_price=desc`}
             className={`font-EstedadLight text-sm  border  rounded-lg p-2
               transition-all duration-300 ease-in-out
@@ -526,7 +527,14 @@ const SubCategories = () => {
                 <button
                   key={idx}
                   disabled={link.url === null}
-                  onClick={() => fetchData(link.url)}
+                  onClick={() => {
+                    navigate(
+                      link?.url.replace(
+                        "https://kidsshopapi.electroshop24.ir/api/v2/list-subcategories",
+                        "/category"
+                      )
+                    );
+                  }}
                   className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
                   2xl:text-sm
   

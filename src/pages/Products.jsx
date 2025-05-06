@@ -425,7 +425,14 @@ const Products = () => {
                 <button
                   key={idx}
                   disabled={link.url === null}
-                  onClick={() => fetchData(link.url)}
+                  onClick={() => {
+                    navigate(
+                      link?.url.replace(
+                        "https://kidsshopapi.electroshop24.ir/api/v2/list-all-products",
+                        "/products"
+                      )
+                    );
+                  }}
                   className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
                   2xl:text-sm
   
