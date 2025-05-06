@@ -176,7 +176,7 @@ const ShoppingCart = () => {
     if (!user) {
       setIsPending(false);
       toast.error("برای ثبت سفارش حتما باید عضو شوید یا ورود کنید.");
-      navigate("/login");
+      navigate("/login?redirect=shopping-cart");
     } else if (cart.length === 0) {
       setIsPending(false);
       toast.error("سبد خرید خالی است.");
@@ -190,16 +190,15 @@ const ShoppingCart = () => {
       toast.error(
         "اطلاعات تماس شما ناقص است لطفا فرم اطلاعات حساب کاربری را  تکمیل نمایید"
       );
-      navigate("/edit-info");
+      navigate("/edit-info?redirect=shopping-cart");
     } else {
       setIsPending(false);
 
       const orderData = [];
       cart.map((item) =>
         orderData.push({
-          KCode: item?.Code,
-          KTedad: item?.packQuantity || 0,
-          Tedad: item?.unitQuantity || 0,
+          KCode: item?.item?.Code,
+          Basket: item?.basket,
         })
       );
 
