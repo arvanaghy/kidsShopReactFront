@@ -1,14 +1,15 @@
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import UserContext from "@context/UserContext";
-import registerSVG from "/src/assets/images/sign-in-register-svgrepo-com.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Register = () => {
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect") || null;
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
@@ -37,9 +38,11 @@ const Register = () => {
       );
       if (status == 202) {
         toast.success(data?.message);
-        navigate("/SMS-validate/" + phoneNumber);
+        navigate(
+          `/SMS-validate/${phoneNumber}${redirect && "?redirect=" + redirect}`
+        );
       } else if (status == 302) {
-        navigate("/login");
+        navigate(`/login${redirect && "?redirect=" + redirect}`);
         throw new Error(data?.message);
       } else {
         throw new Error(data?.message);
@@ -67,7 +70,7 @@ const Register = () => {
           toast.success(data?.message);
           updateUser(data?.result);
           setIsPending(false);
-          navigateTo("/profile");
+          navigateTo(`/profile${redirect && "?redirect=" + redirect}`);
           break;
         default:
           updateUser([]);
@@ -177,7 +180,7 @@ const Register = () => {
                   disabled={true}
                 >
                   درحال پردازش
-                <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
                 </button>
               </div>
             ) : (
@@ -202,7 +205,6 @@ const Register = () => {
           </div>
         </div>
       </div>
-
     </main>
   );
 };

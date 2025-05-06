@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext, useRef } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 import loginSvg from "/src/assets/images/login-svgrepo-com.svg";
@@ -9,6 +9,8 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const { user, updateUser } = useContext(UserContext);
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect") || null;
 
   const navigateTo = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -40,14 +42,18 @@ const Login = () => {
           case 202:
             setIsPending(false);
             toast.success(data?.message);
-            navigateTo("/SMS-validate/" + phoneNumber);
+            navigateTo(
+              `/SMS-validate/${phoneNumber}${
+                redirect && "?redirect=" + redirect
+              }`
+            );
             break;
           case 403:
             throw new Error(data?.message);
           case 404:
             setIsPending(false);
             toast.error(data?.message);
-            navigateTo("/register");
+            navigateTo(`/register${redirect && "?redirect=" + redirect}`);
             break;
           default:
             throw new Error(data?.message);
@@ -184,8 +190,10 @@ const Login = () => {
               </button>
             )}
           </form>
-          <div className="text-sm lg:text-base font-EstedadMedium text-center flex flex-col lg:flex-row space-y-3 lg:space-y-0
-           items-center justify-center">
+          <div
+            className="text-sm lg:text-base font-EstedadMedium text-center flex flex-col lg:flex-row space-y-3 lg:space-y-0
+           items-center justify-center"
+          >
             <p className="w-full">حساب کاربری ندارید.؟</p>
             <Link
               to="/register"

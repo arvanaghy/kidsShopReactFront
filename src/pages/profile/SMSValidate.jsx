@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 const SMSValidate = () => {
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect") || null;
   const [otp, setOtp] = useState("");
   const inputRefs = useRef(null);
   const { phoneNumber } = useParams();
@@ -31,7 +33,11 @@ const SMSValidate = () => {
           setIsPending(false);
           toast.success(data.message);
           updateUser(data.result);
-          navigateTo("/profile");
+          if (redirect) {
+            navigateTo(redirect);
+          } else {
+            navigateTo("/profile");
+          }
           break;
         default:
           setIsPending(false);

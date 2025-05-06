@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import UserContext from "@context/UserContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ProfileLayout from "./ProfileLayout";
 import toast from "react-hot-toast";
 
 const EditInfo = () => {
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get("redirect") || null;
   const { user, updateUser } = useContext(UserContext);
   const [name, setName] = useState(user?.Name || "");
   const [tell, setTell] = useState(user?.Tel || "");
@@ -41,7 +43,11 @@ const EditInfo = () => {
       setIsPending(false);
       updateUser(data?.result);
       toast.success(data?.message);
-      navigate("/profile");
+      if (redirect) {
+        navigate(redirect);
+      } else {
+        navigate("/profile");
+      }
     } catch (error) {
       setIsPending(false);
       toast.error(
