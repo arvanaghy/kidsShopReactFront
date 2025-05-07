@@ -90,11 +90,11 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
         <div className="flex flex-col justify-between items-center w-full h-full">
           <Link
             to={`/product/${Math.floor(item?.Code)}`}
-            className="z-50 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm lg:font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out"
+            className="z-20 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm lg:font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out"
           >
             {item?.Name}
           </Link>
-          <div className="flex flex-row items-center gap-2 z-50 text-sm py-2">
+          <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
             <span className="flex text-green-700 flex-row items-center gap-1">
               {formatCurrencyDisplay(userPriceSelect(item, user))}
               <span className="text-xs">ریال</span>

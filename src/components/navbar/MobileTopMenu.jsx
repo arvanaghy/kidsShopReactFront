@@ -6,8 +6,7 @@ import {
   faRestroom,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -18,25 +17,13 @@ const MobileTopMenu = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handelScrollUp = (event) => {
-      if (event.deltaY > 0) {
-        setHideMenu(true);
-      } else {
-        setHideMenu(false);
-      }
-    };
+    const menuElement = mobileTopMenuRef.current;
+    if (!menuElement) return;
 
-    window.addEventListener("wheel", handelScrollUp);
-    return () => {
-      window.removeEventListener("wheel", handelScrollUp);
-    };
-  }, [mobileTopMenuRef]);
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
+    let lastScrollY = menuElement.scrollTop;
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = menuElement.scrollTop;
       if (currentScrollY > lastScrollY) {
         setHideMenu(true);
       } else {
@@ -45,11 +32,12 @@ const MobileTopMenu = () => {
       lastScrollY = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    menuElement.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      menuElement.removeEventListener("scroll", handleScroll);
     };
-  }, [mobileTopMenuRef]);
+  }, []);
 
   const letsSearch = (e) => {
     e.preventDefault();
@@ -74,7 +62,7 @@ const MobileTopMenu = () => {
           ? "-translate-y-full duration-300 ease-in-out transition-all"
           : "translate-y-0 duration-300 ease-in-out transition-all "
       }  flex flex-col justify-center items-center sticky top-0 
-      shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600 p-0.5`}
+      shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600 p-0.5 overflow-y-auto`}
     >
       <Link to="/">
         <img
@@ -118,8 +106,7 @@ const MobileTopMenu = () => {
         </Link>
         <Link
           to={"/best-selling-products"}
-          className="
-             w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
+          className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
              "
           title="پرفروش ترین ها"

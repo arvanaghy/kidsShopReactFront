@@ -10,12 +10,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircle,
   faCircleCheck,
+  faClose,
   faEraser,
+  faFilter,
   faSearch,
   faSquare,
   faSquareCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
+import ColorFilter from "../components/filters/ColorFilter";
+import SizeFilter from "../components/filters/SizeFilter";
+import ProductSearch from "../components/filters/ProductSearch";
 
 const Products = () => {
   const [searchParams] = useSearchParams();
@@ -40,6 +44,35 @@ const Products = () => {
   const [price, setPrice] = useState({ max_price: 0, min_price: 0 });
   const [sizeSets, setSizeSets] = useState([]);
   const [colorSets, setColorSets] = useState([]);
+  const [isModal, setIsModal] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModal]);
+
+  // console.log(isMobile);
   // const [priceRange, setPriceRange] = useState({
   //   min_price: 0,
   //   max_price: 100000000,
@@ -74,18 +107,6 @@ const Products = () => {
     }
   };
 
-  const letsSearch = (e) => {
-    e.preventDefult();
-    try {
-      const searchPhrase = e.target.search.value;
-      if (searchPhrase?.length <= 0)
-        throw new Error("نام دسته بندی مورد نظر را وارد کنید");
-      navigate(`/products?search=${searchPhrase}`);
-    } catch (error) {
-      toast.error(error?.message);
-    }
-  };
-
   useEffect(() => {
     // fetchData(
     //   `https://kidsshopapi.electroshop24.ir/api/v2/list-all-products?product_page=${product_page}${
@@ -116,28 +137,6 @@ const Products = () => {
     // priceRange?.min_price,
     // priceRange?.max_price,
   ]);
-
-  const addSizeSet = (size) => {
-    const newSizeSets = [...sizeSets];
-    if (newSizeSets.includes(size)) {
-      newSizeSets.splice(newSizeSets.indexOf(size), 1);
-      return setSizeSets(newSizeSets);
-    } else {
-      newSizeSets.push(size);
-      setSizeSets(newSizeSets);
-    }
-  };
-
-  const addColorSet = (color) => {
-    const newColorSets = [...colorSets];
-    if (newColorSets.includes(color)) {
-      newColorSets.splice(newColorSets.indexOf(color), 1);
-      return setColorSets(newColorSets);
-    } else {
-      newColorSets.push(color);
-      setColorSets(newColorSets);
-    }
-  };
 
   const applyFilters = () => {
     try {
@@ -173,8 +172,9 @@ const Products = () => {
       //     maxPriceInput <= priceRange?.max_price
       //       ? `&max_price=${maxPriceInput}`
       //       : ""
-      //   }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
+      //   }${sort_price != null ? `&sort_price=$setColorSets{sort_price}` : ""}`
       // );
+      isModal && setIsModal(false);
       navigate(
         `/products?product_page=${1}${
           search != null ? `&search=${search}` : ""
@@ -188,6 +188,7 @@ const Products = () => {
   };
 
   const removeFilters = () => {
+    setSizeSets;
     setSizeSets([]);
     setColorSets([]);
     // setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
@@ -198,113 +199,97 @@ const Products = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
+    <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
+      {/* modal */}
+      {isModal && (
+        <div className="fixed  inset-5 max-h-128 mt-28 rounded-xl bg-stone-100 p-4 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-4">
+          <button
+            className={` md:flex 
+            hover:-translate-x-2 duration-300 ease-in-out 
+            font-EstedadExtraBold text-yellow-700 py-4  gap-x-2`}
+            onClick={removeFilters}
+          >
+            <FontAwesomeIcon icon={faEraser} className="text-lg" />
+            <span>پاک کردن فیلتر ها</span>
+          </button>
+          <ProductSearch search={search} />
+          {sizes?.length > 0 && (
+            <SizeFilter
+              sizes={sizes}
+              sizeSets={sizeSets}
+              setSizeSets={setSizeSets}
+            />
+          )}
+          {colors?.length > 0 && (
+            <ColorFilter
+              colors={colors}
+              colorSets={colorSets}
+              applyFilters={applyFilters}
+              setColorSets={setColorSets}
+            />
+          )}
+          <div className="w-full flex items-end justify-between">
+            <button
+              onClick={applyFilters}
+              className="w-full text-base font-EstedadExtraBold p-2  leading-relaxed rounded-xl mx-auto text-center
+              justify-items-end
+              bg-green-800 text-white hover:bg-green-900 transition-all duration-300 ease-in-out
+              border border-green-600 hover:border-green-700 
+              "
+            >
+              اعمال فیلتر ها
+            </button>
+          </div>
+          <button
+            onClick={() => setIsModal(false)}
+            className="absolute top-3 right-3 bg-red-500 px-2 py-1 text-white rounded-full"
+          >
+            <FontAwesomeIcon icon={faClose} />
+          </button>
+        </div>
+      )}
+
+      {/* modal Toggle */}
+
+      {!isModal && (
+        <button
+          onClick={() => setIsModal(true)}
+          className="md:hidden fixed bottom-20 z-50 left-5 bg-gray-600/80 p-4 px-5 rounded-full text-white"
+        >
+          <FontAwesomeIcon icon={faFilter} className="" />
+        </button>
+      )}
+      {/* remove filters */}
       {/* side bar */}
       <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full  order-2 md:order-1">
         {/* category details */}
         <div className="w-full sticky md:top-[18vh] xl:top-[18vh] xl:space-y-3 space-y-1">
           {/* remove filters */}
           <button
-            className="flex 
+            className={`hidden md:flex 
             hover:-translate-x-2 duration-300 ease-in-out 
-            font-EstedadExtraBold text-yellow-700 py-4  gap-x-2"
+            font-EstedadExtraBold text-yellow-700 py-4  gap-x-2`}
             onClick={removeFilters}
           >
             <FontAwesomeIcon icon={faEraser} className="text-lg" />
             <span>پاک کردن فیلتر ها</span>
           </button>
           {/* search */}
-          <form
-            onSubmit={letsSearch}
-            className="relative flex flex-row flex-wrap justify-between items-center"
-          >
-            <input
-              type="text"
-              className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
-              placeholder={search != null ? search : "جستجو محصول ..."}
-              name="search"
+          {!isMobile && <ProductSearch search={search} />}
+          {sizes?.length > 0 && !isMobile && (
+            <SizeFilter
+              sizes={sizes}
+              sizeSets={sizeSets}
+              setSizeSets={setSizeSets}
             />
-            <button
-              type="submit"
-              className="
-          hover:bg-gray-200
-          duration-300 ease-in-out transition-all
-                    absolute left-1.5 text-lg p-1.5 bg-gray-100 rounded-full  "
-            >
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
-          </form>
-          {sizes?.length > 0 && (
-            <div className="w-full">
-              <h3 className="w-full text-sm xl:text-lg px-2 font-EstedadExtraBold py-0.5 xl:py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
-                سایز بندی :
-              </h3>
-              <div className="w-full py-0.5 xl:py-1.5 flex flex-col justify-start items-start gap-1">
-                {sizes?.map((item, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      addSizeSet(item);
-                    }}
-                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-2"
-                  >
-                    {sizeSets.includes(item) ? (
-                      <FontAwesomeIcon
-                        icon={faCircleCheck}
-                        className="text-green-600"
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faCircle}
-                        className="text-white border border-black rounded-full "
-                      />
-                    )}
-                    {item}
-                  </button>
-                ))}
-              </div>
-            </div>
           )}
-          {colors?.length > 0 && (
-            <div className="w-full">
-              <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
-                رنگ بندی :
-              </h3>
-              <div className="w-full py-1.5 flex flex-col justify-start items-start gap-1">
-                {colors?.map((item, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      addColorSet(item?.ColorCode);
-                    }}
-                    className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-2"
-                  >
-                    {colorSets.includes(item?.ColorCode) ? (
-                      <FontAwesomeIcon
-                        icon={faSquareCheck}
-                        className="text-green-600"
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faSquare}
-                        className="text-white border border-black  "
-                      />
-                    )}
-
-                    <p
-                      className={`w-5 h-5 rounded-full
-                      border border-gray-300
-                      `}
-                      style={{
-                        backgroundColor: DecimalToHexConverter(item?.ColorCode),
-                      }}
-                    ></p>
-
-                    {item?.ColorName}
-                  </button>
-                ))}
-              </div>
-            </div>
+          {colors?.length > 0 && !isMobile && (
+            <ColorFilter
+              colors={colors}
+              colorSets={colorSets}
+              applyFilters={applyFilters}
+              setColorSets={setColorSets}
+            />
           )}
           {/* {price?.min_price > 0 && price?.max_price > 0 && (
             <div className="w-full">
@@ -333,7 +318,7 @@ const Products = () => {
               </div>
             </div>
           )} */}
-          <div className="w-full flex items-end justify-between">
+          <div className="w-full hidden md:flex items-end justify-between">
             <button
               onClick={applyFilters}
               className="w-full text-base font-EstedadExtraBold p-2  leading-relaxed rounded-xl mx-auto text-center
@@ -403,12 +388,16 @@ const Products = () => {
           </Link>
         </div>
         {/* products */}
-        <div className="w-full col-span-12 bg-Cream-500 p-6">
+        <div className="w-full col-span-12 bg-Cream-500 p-6 flex flex-col">
           <div className="w-full grid grid-cols-12 gap-6">
             {products?.data?.length > 0 ? (
               products?.data?.map((item, idx) => (
-                <ProductCard item={item} key={idx} colSpan="col-span-12
-                md:col-span-6 xl:col-span-3" />
+                <ProductCard
+                  item={item}
+                  key={idx}
+                  colSpan="col-span-12
+                md:col-span-6 xl:col-span-3"
+                />
               ))
             ) : (
               <div
