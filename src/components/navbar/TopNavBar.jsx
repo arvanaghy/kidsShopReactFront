@@ -349,7 +349,7 @@ const TopNavBar = () => {
 
                         <Link
                           onClick={() => setDropDown(false)}
-                          to="/categoires"
+                          to="/categories"
                           className="col-span-12 
 pt-8 flex items-center justify-center text-center text-green-600 hover:text-green-900 duration-300
                           hover:scale-105

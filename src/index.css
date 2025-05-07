@@ -32,7 +32,6 @@
 }
 
 @layer utilities {
-
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -44,8 +43,6 @@
     scrollbar-width: none;
     /* Firefox */
   }
-
-
 }
 
 input::-webkit-outer-spin-button,
@@ -63,7 +60,9 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
 }
-
+.swiper-pagination {
+  bottom: -5px !important;
+}
 .product-card {
   display: flex;
   flex-direction: column;

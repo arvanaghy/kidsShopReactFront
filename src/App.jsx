@@ -32,7 +32,7 @@ import SuccessMobile from "@pages/paymentResults/SuccessMobile";
 import FailedMobile from "@pages/paymentResults/FailedMobile";
 import BestSellingProducts from "@pages/BestSellingProducts";
 import FavouritesPage from "@pages/FavouritesPage";
-import ComparePage from "@pages/ComparePage"
+import ComparePage from "@pages/ComparePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -54,7 +54,7 @@ function App() {
           element: <ContactUs />,
         },
         {
-          path: "/categoires",
+          path: "/categories",
           element: <Categories />,
         },
         {
@@ -150,10 +150,12 @@ function App() {
         {
           path: "/best-selling-products",
           element: <BestSellingProducts />,
-        },{
+        },
+        {
           path: "/my-favourite",
           element: <FavouritesPage />,
-        },{
+        },
+        {
           path: "/compare-products",
           element: <ComparePage />,
         },

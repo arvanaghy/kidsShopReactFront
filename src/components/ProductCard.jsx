@@ -37,7 +37,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
 
   return (
     <div
-      className={`${colSpan} rounded-lg w-full h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}
+      className={`${colSpan} rounded-lg  h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}
     >
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all">

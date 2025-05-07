@@ -19,7 +19,7 @@ import Loading from "@components/Loading";
 import CategoryCircleCard from "@components/category/CategoryCircleCard";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import OfferProductCard from "../components/OfferProductCard";
-import { faArrowsToEye } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsToEye, faL } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -52,6 +52,8 @@ const Home = () => {
     // window.scrollTo(0, 0);
   }, []);
 
+  // console.log(result);
+
   if (loading) return <Loading />;
 
   return (
@@ -65,7 +67,7 @@ const Home = () => {
         ))}
         <div className="flex-shrink-0 w-24 xl:w-30">
           <Link
-            to={`/categoires`}
+            to={`/categories`}
             className={`w-full flex flex-col justify-center
                                     items-center
                                     cursor-pointer
@@ -91,7 +93,6 @@ const Home = () => {
         className="
     xl:my-10
     md:py-5
-    xl:py-14
     xl:p-6
     grid grid-cols-12 items-center justify-center
     bg-Cream-500
@@ -115,47 +116,46 @@ const Home = () => {
         <div className="w-full col-span-12 xl:col-span-9">
           <Swiper
             modules={[Autoplay, FreeMode, Pagination, Navigation]}
-            className="h-full w-full  custom-swiper"
+            className="h-full py-10  mySwiper"
             freeMode={false}
-            slidesPerView={1}
-            centeredSlides={true}
-            spaceBetween={0}
+            centeredSlides={false}
             pagination={{ clickable: true }}
-            slidesPerGroup={1}
             loop={result?.newestProducts?.length >= 4}
             autoplay={{
               delay: 4500,
               disableOnInteraction: false,
             }}
+            breakpoints={{
+              320: {
+                slidesPerView: 1,
+                spaceBetween: 10,
+              },
+
+              480: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 4,
+                spaceBetween: 10,
+              },
+            }}
           >
-            {result?.newestProducts
-              ?.reduce((acc, item, index) => {
-                if (index % 4 === 0) acc.push([]);
-                acc[acc.length - 1].push(item);
-                return acc;
-              }, [])
-              .map((group, index) => (
-                <SwiperSlide key={index}>
-                  <div className="xl:gap-2 justify-center w-full xl:px-4 flex flex-row  ">
-                    {group.map((product, productIndex) => (
-                      <ProductCard item={product} key={productIndex} />
-                    ))}
-                    {group.length < 4 &&
-                      Array.from({ length: 4 - group.length }).map((_, i) => (
-                        <div
-                          key={`placeholder-${i}`}
-                          className="w-[calc(25%-0.5rem)] invisible flex-shrink-0"
-                        >
-                          <ProductCard item={group[0]} />
-                        </div>
-                      ))}
-                  </div>
-                </SwiperSlide>
-              ))}
+            {result?.newestProducts?.map((product, index) => (
+              <SwiperSlide key={index}>
+                <div className="xl:gap-2 justify-center  xl:px-4 flex flex-row  ">
+                  <ProductCard item={product} key={index} />
+                </div>
+              </SwiperSlide>
+            ))}
           </Swiper>
         </div>
 
-        <div className="col-span-12 text-center pt-6 xl:pt-12">
+        <div className="col-span-12 text-center py-6 lg:py-12">
           <Link
             to="/products"
             className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
@@ -263,12 +263,10 @@ const Home = () => {
           <div className="col-span-12 xl:col-span-9">
             <Swiper
               modules={[Autoplay, FreeMode, Pagination, Navigation]}
-              className="h-full w-full  custom-swiper"
+              className=" py-10 mySwiper"
               freeMode={false}
               // navigation={true}
-              slidesPerView={1}
-              centeredSlides={true}
-              spaceBetween={0}
+              centeredSlides={false}
               pagination={{ clickable: true }}
               slidesPerGroup={1}
               loop={result?.bestSeller?.length >= 4}
@@ -276,40 +274,39 @@ const Home = () => {
                 delay: 4500,
                 disableOnInteraction: false,
               }}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+
+                480: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 4,
+                  spaceBetween: 10,
+                },
+              }}
             >
-              {result?.bestSeller
-                ?.reduce((acc, item, index) => {
-                  if (index % 4 === 0) acc.push([]);
-                  acc[acc.length - 1].push(item);
-                  return acc;
-                }, [])
-                .map((group, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="flex flex-row gap-2 justify-center w-full px-4">
-                      {group.map((product, productIndex) => (
-                        <div
-                          key={productIndex}
-                          className="w-[calc(25%-0.5rem)] flex-shrink-0"
-                        >
-                          <ProductCard item={product} />
-                        </div>
-                      ))}
-                      {group.length < 4 &&
-                        Array.from({ length: 4 - group.length }).map((_, i) => (
-                          <div
-                            key={`placeholder-${i}`}
-                            className="w-[calc(25%-0.5rem)] invisible flex-shrink-0"
-                          >
-                            <ProductCard item={group[0]} />
-                          </div>
-                        ))}
+              {result?.bestSeller?.map((product, index) => (
+                <SwiperSlide key={index}>
+                  <div className="flex flex-row gap-2 justify-center  px-4">
+                    <div key={index} className="">
+                      <ProductCard item={product} />
                     </div>
-                  </SwiperSlide>
-                ))}
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
 
-          <div className="col-span-12 text-center pt-12">
+          <div className="col-span-12 text-center py-6 lg:py-12">
             <Link
               to={"/best-seller-products"}
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl

@@ -26,7 +26,7 @@ const MobileNav = () => {
             {/* <span className="text-xs">فروشگاه</span> */}
           </Link>
           <Link
-            to={"/categoires"}
+            to={"/categories"}
             className="flex flex-col items-center space-y-1 col-span-1 justify-self-center text-center"
           >
             <FontAwesomeIcon icon={faBoxesStacked} />

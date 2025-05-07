@@ -54,7 +54,7 @@ const Categories = () => {
       const searchPhrase = e.target.search.value;
       // if (searchPhrase?.length <= 0)
       //   throw new Error("نام دسته بندی مورد نظر را وارد کنید");
-      navigate(`/categoires?search=${searchPhrase}`);
+      navigate(`/categories?search=${searchPhrase}`);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -89,7 +89,10 @@ const Categories = () => {
                 type="submit"
                 className="text-gray-600 hover:text-gray-700 absolute left-2.5"
               >
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="2xl:text-3xl"/>
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className="2xl:text-3xl"
+                />
               </button>
             </form>
           </div>
@@ -159,7 +162,14 @@ const Categories = () => {
           links.map((link, idx) => (
             <button
               key={idx}
-              onClick={() => navigate(link.url.replace("https://kidsshopapi.electroshop24.ir/api/v2/list-categories", ""))}
+              onClick={() =>
+                navigate(
+                  link.url.replace(
+                    "https://kidsshopapi.electroshop24.ir/api/v2/list-categories",
+                    ""
+                  )
+                )
+              }
               disabled={link.url === null}
               className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
                 2xl:text-2xl

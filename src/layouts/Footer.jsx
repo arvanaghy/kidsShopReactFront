@@ -55,7 +55,10 @@ const Footer = () => {
               تلگرام
             </p>
             <div className="flex items-center justify-start gap-3 ">
-              <FontAwesomeIcon icon={faLocationDot} className="text-lg md:text-3xl" />
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                className="text-lg md:text-3xl"
+              />
               <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-2xl	">
                 تبریز،شهرک ارم، منطقه ۷، دوبانده، جنب بیمه ما{" "}
               </p>
@@ -70,7 +73,10 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex items-center justify-start gap-3 ">
-              <FontAwesomeIcon icon={faSquareEnvelope} className="text-lg md:text-3xl" />
+              <FontAwesomeIcon
+                icon={faSquareEnvelope}
+                className="text-lg md:text-3xl"
+              />
               <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-2xl">
                 info[at]kidsshop110.ir
               </p>
@@ -93,13 +99,18 @@ const Footer = () => {
                 target="_blank"
                 className="hover:text-green-600 transition-all duration-300 ease-in-out"
               >
-                <FontAwesomeIcon icon={faTelegram} className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl" />
+                <FontAwesomeIcon
+                  icon={faTelegram}
+                  className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl"
+                />
               </Link>
             </div>
           </div>
 
           <div className="col-span-12 md:col-span-6 w-full p-3 space-y-6">
-            <h3 className="text-sm lg:text-lg 2xl:text-2xl font-EstedadExtraBold">دسترسی سریع</h3>
+            <h3 className="text-sm lg:text-lg 2xl:text-2xl font-EstedadExtraBold">
+              دسترسی سریع
+            </h3>
             <Link
               to="/offered-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
@@ -135,7 +146,7 @@ const Footer = () => {
               </div>
             </Link>
             <Link
-              to="/categoires"
+              to="/categories"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
               <FontAwesomeIcon
@@ -219,7 +230,9 @@ duration-300 transition-all ease-in-out
         <div className="my-1 md:my-3 border-b-2 border-gray-300"></div>
         <div className="grid grid-cols-12 items-start justify-around gap-2 md:gap-6 py-2 lg:py-4">
           <div className="col-span-12 md:col-span-8 w-full space-y-6 ">
-            <h2 className="text-base xl:text-xl 2xl:text-3xl 2xl:py-10 font-EstedadExtraBold">فروشگاه لباس کودک و نوجوان نهال</h2>
+            <h2 className="text-base xl:text-xl 2xl:text-3xl 2xl:py-10 font-EstedadExtraBold">
+              فروشگاه لباس کودک و نوجوان نهال
+            </h2>
             <p className="text-xs xl:text-base 2xl:text-2xl leading-loose xl:tracking-wider 2xl:leading-10 ">
               فروشگاه اینترنتی لباس بچه گانه نهال، فروشگاه آنلاین و تخصصی لباس
               کودک و نوجوان است. نهال از سال ۱۳۹۴ فعالیت خود را شروع کرده و به
@@ -237,20 +250,19 @@ duration-300 transition-all ease-in-out
         </div>
       </div>
       <div className="w-full text-xs xl:text-base 2xl:text-2xl text-center leading-relaxed font-medium text-gray-800 flex flex-col md:flex-row items-center justify-center bg-gray-300 mb-10 md:mb-0 py-2 lg:py-4 xl:py-6 gap-x-2 rounded-t-lg">
-        تمامی حقوق برای سایت کیذزشاپ محفوظ است! 
+        تمامی حقوق برای سایت کیذزشاپ محفوظ است!
         <div className="flex flex-row justify-center items-center gap-5">
-        <p>تیم طراحی و توسعه</p>
-        <Link
-          to="https://hesmasoft.ir"
-          target="_blank"
-          className="block text-CarbonicBlue-500 hover:text-CarbonicBlue-800 text-xs xl:text-base 2xl:text-2xl
+          <p>تیم طراحی و توسعه</p>
+          <Link
+            to="https://hesmasoft.ir"
+            target="_blank"
+            className="block text-CarbonicBlue-500 hover:text-CarbonicBlue-800 text-xs xl:text-base 2xl:text-2xl
             hover:-translate-x-2
             transition-all duration-300 ease-in-out"
-        >
-          حسما سافت
-        </Link>
+          >
+            حسما سافت
+          </Link>
         </div>
-        
       </div>
     </footer>
   );
