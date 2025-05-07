@@ -340,9 +340,7 @@ const ShoppingCart = () => {
                         .map((img, idx) => (
                           <img
                             key={idx}
-                            src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
-                              item?.item?.GCode
-                            )}/${Math.floor(item?.item?.SCode)}/${
+                            src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${
                               img?.PicName
                             }.webp`}
                             alt={item?.item?.Name}

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import UserContext from "@context/UserContext";
@@ -20,6 +20,7 @@ import {
 import toast from "react-hot-toast";
 
 const TopNavBar = () => {
+  const categoryRef = useRef(null);
   const [categories, setCatgeoires] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -69,6 +70,18 @@ const TopNavBar = () => {
   }, []);
 
   useEffect(() => {}, [user, cart]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (categoryRef.current && !categoryRef.current.contains(event.target)) {
+        setDropDown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
 
   const letsSearch = (e) => {
     e.preventDefault();
@@ -128,7 +141,7 @@ const TopNavBar = () => {
               <Link
                 to="/profile"
                 className="flex flex-row items-center justify-center text-center align-middle  
-                  hover:text-green-600 duration-300 transition-all ease-in-out text-gray-600
+                  hover:text-green-700 text-green-500 duration-300 transition-all ease-in-out 
                   gap-x-1.5
                   "
               >
@@ -172,7 +185,7 @@ const TopNavBar = () => {
                   text-white
                   p-2
                   -top-3
-                  -right-3
+                  left-2
 
                   group-hover:bg-white
                   group-hover:text-gray-600
@@ -239,20 +252,22 @@ const TopNavBar = () => {
                   )}
                 </div>
                 {item?.navs?.length > 0 && dropDown && (
-                  <div className="relative w-full ">
+                  <div className="relative w-full " ref={categoryRef}>
                     {categoryLoading ? (
-                      <div className="absolute top-10 z-50 right-0 left-0 w-[90vw] h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600  flex flex-row items-center justify-center shadow-md rounded-lg ">
+                      <div className="absolute xl:top-8 z-50  xl:w-[90vw] xl:min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600 flex flex-row items-center justify-center shadow-md rounded-lg ">
                         <FontAwesomeIcon
                           icon={faSpinner}
                           className="mx-auto
-                          xl:text-7xl"
+                          xl:text-6xl"
                           spin
                         />
                       </div>
                     ) : (
                       <div
-                        className="absolute md:top-10 lg:top-5 z-50 md:-right-5 right-0 left-0 md:w-[88vw] lg:w-[94vw] xl:w-[93vw] 2xl:w-[95vw] min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600 grid grid-cols-12 items-center justify-center shadow-md md:rounded-b-lg md:rounded-t-none xl:rounded-lg 
-                        p-6
+                        className="absolute md:top-10 lg:top-5
+                        xl:top-8
+                        z-50   md:w-[88vw] lg:w-[94vw] xl:w-[80vw] 2xl:w-[85vw] min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600 grid grid-cols-12 items-center justify-center shadow-md md:rounded-b-lg md:rounded-t-none xl:rounded-lg 
+                        2xl:p-6
                   "
                       >
                         <div className="w-full md:col-span-9 xl:col-span-9 grid grid-cols-12 gap-6">
@@ -302,11 +317,8 @@ const TopNavBar = () => {
                                   e.target.src =
                                     "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
                                 }}
-                                className=" rounded-lg w-64 h-64 object-scale-down drop-shadow-lg shadow-black"
+                                className=" rounded-lg xl:w-64 xl:h-64 object-scale-down drop-shadow-lg shadow-black"
                               />
-                              <p className="text-sm text-gray-600">
-                                {categoryImage?.Comment}
-                              </p>
                             </div>
                           )}
                         </div>
@@ -374,7 +386,7 @@ const TopNavBar = () => {
             </span>
           </Link>
           <Link
-          to={"/best-selling-products"}
+            to={"/best-selling-products"}
             className="
             flex flex-row  items-center justify-center
             hover:scale-105 

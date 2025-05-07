@@ -8,11 +8,11 @@ import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCertificate, faRestroom } from "@fortawesome/free-solid-svg-icons";
+import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
   const { user } = useContext(UserContext);
-  const { favourite, toggleFavourite, clearCompare } = useContext(UserContext);
+  const { favourite, toggleFavourite } = useContext(UserContext);
   const isFavourite = favourite?.some((f) => f.Code === item.Code);
   const { compareList, toggleCompare } = useContext(UserContext);
   const isCompared = compareList.some((p) => p.Code === item.Code);
@@ -42,9 +42,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all">
         <img
-          src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
-            item?.GCode
-          )}/${Math.floor(item?.SCode)}/${item?.PicName}.webp`}
+          src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${item?.PicName}.webp`}
           alt={item?.Name}
           loading="lazy"
           onError={(e) => {

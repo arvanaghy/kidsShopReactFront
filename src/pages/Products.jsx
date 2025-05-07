@@ -198,11 +198,11 @@ const Products = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start py-6 gap-4">
+    <div className="w-full m-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
       {/* side bar */}
-      <div className="w-full col-span-3 h-full ">
+      <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full  order-2 md:order-1">
         {/* category details */}
-        <div className="w-full sticky xl:top-[18vh] xl:space-y-3">
+        <div className="w-full sticky md:top-[18vh] xl:top-[18vh] xl:space-y-3 space-y-1">
           {/* remove filters */}
           <button
             className="flex 
@@ -236,10 +236,10 @@ const Products = () => {
           </form>
           {sizes?.length > 0 && (
             <div className="w-full">
-              <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
+              <h3 className="w-full text-sm xl:text-lg px-2 font-EstedadExtraBold py-0.5 xl:py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
                 سایز بندی :
               </h3>
-              <div className="w-full py-1.5 flex flex-col justify-start items-start gap-1">
+              <div className="w-full py-0.5 xl:py-1.5 flex flex-col justify-start items-start gap-1">
                 {sizes?.map((item, idx) => (
                   <button
                     key={idx}
@@ -348,7 +348,7 @@ const Products = () => {
         </div>
       </div>
       {/* main content */}
-      <div className="w-full col-span-9 grid grid-cols-12 space-y-6 ">
+      <div className="w-full col-span-12 md:col-span-8 xl:col-span-9 grid grid-cols-12 md:order-2 space-y-6 order-1 ">
         {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
@@ -407,7 +407,8 @@ const Products = () => {
           <div className="w-full grid grid-cols-12 gap-6">
             {products?.data?.length > 0 ? (
               products?.data?.map((item, idx) => (
-                <ProductCard item={item} key={idx} colSpan="col-span-3" />
+                <ProductCard item={item} key={idx} colSpan="col-span-12
+                md:col-span-6 xl:col-span-3" />
               ))
             ) : (
               <div
@@ -418,7 +419,7 @@ const Products = () => {
               </div>
             )}
           </div>
-          <div className="flex flex-row flex-wrap items-center justify-center py-8">
+          <div className="flex flex-row flex-wrap items-center justify-center py-8 gap-2">
             {products?.links?.length > 3 &&
               products?.links?.map((link, idx) => (
                 <button
@@ -432,10 +433,10 @@ const Products = () => {
                       )
                     );
                   }}
-                  className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
+                  className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 
                   2xl:text-sm
   
-                  text-xs px-2 py-1 mx-1
+                  text-xs px-2 py-1
                   disabled:cursor-not-allowed
                   transition-all duration-300 ease-in-out
                   hover:bg-CarbonicBlue-500/80 hover:text-white

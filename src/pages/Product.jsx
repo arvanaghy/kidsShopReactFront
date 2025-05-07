@@ -55,9 +55,8 @@ const Product = () => {
       setData(data);
     } catch (error) {
       toast.error(
-        " دریافت اطلاعات محصول  " + error?.response?.data?.message ||
-          error?.message ||
-          "خطا در اتصال"
+        " دریافت اطلاعات محصول  " +
+          (error?.response?.data?.message || error?.message) || "خطا در اتصال"
       );
     } finally {
       setLoading(false);
@@ -128,7 +127,7 @@ const Product = () => {
           Math.floor(cartItem?.item?.Code) == Math.floor(productCode)
       );
       if (isProductExists) {
-         isProductExists?.basket?.splice(
+        isProductExists?.basket?.splice(
           isProductExists?.basket?.findIndex(
             (basketItem) => basketItem.feature.SCCode == item?.feature?.SCCode
           ),
@@ -220,9 +219,7 @@ const Product = () => {
                   {data?.product?.product_images.map((imageItem, index) => (
                     <SwiperSlide key={index}>
                       <img
-                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
-                          data?.product?.GCode
-                        )}/${Math.floor(data?.product?.SCode)}/${
+                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${
                           imageItem?.PicName
                         }.webp`}
                         alt={data?.product?.Name}
@@ -237,9 +234,7 @@ const Product = () => {
                   {data?.product?.product_images.map((imageItem, index) => (
                     <img
                       key={index}
-                      src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
-                        data?.product?.GCode
-                      )}/${Math.floor(data?.product?.SCode)}/${
+                      src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${
                         imageItem?.PicName
                       }.webp`}
                       alt={data?.product?.Name}
@@ -254,9 +249,7 @@ const Product = () => {
                       onClick={() => {
                         setImageModal({
                           isOpen: true,
-                          image: `https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
-                            data?.product?.GCode
-                          )}/${Math.floor(data?.product?.SCode)}/${
+                          image: `https://kidsshopapi.electroshop24.ir/products-image/webp/${
                             imageItem?.PicName
                           }.webp`,
                         });
