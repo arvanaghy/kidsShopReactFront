@@ -98,10 +98,9 @@ const TopNavBar = () => {
 
   return (
     <header
-      className={`hidden md:block sticky top-0 shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600  first-letter:
+      className={`hidden md:block sticky top-0 shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600
         xl:p-6
         xl:space-y-8
-
         `}
       style={{ zIndex: 9999 }}
     >
@@ -179,19 +178,20 @@ const TopNavBar = () => {
             {cart?.length > 0 && (
               <span
                 className=" flex items-center justify-center absolute 
-                  font-bold leading-none
+                  leading-none
                   bg-green-600/80 rounded-full
-                  text-center text-CarbonicBlue-600 transform 
+                  text-center text-CarbonicBlue-600 
                   text-white
-                  p-2
+                  xl:p-2
+                  p-1
                   -top-3
                   left-2
-
-                  group-hover:bg-white
-                  group-hover:text-gray-600
+                group-hover:bg-white
+                 group-hover:text-gray-600
                   duration-300 transition-all ease-in-out
-                  animate-bounce
+                  lg:animate-bounce
                   text-xs
+                  font-EstedadLight
                   z-50
                   "
               >
@@ -254,23 +254,37 @@ const TopNavBar = () => {
                 {item?.navs?.length > 0 && dropDown && (
                   <div className="relative w-full " ref={categoryRef}>
                     {categoryLoading ? (
-                      <div className="absolute xl:top-8 z-50  xl:w-[90vw] xl:min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600 flex flex-row items-center justify-center shadow-md rounded-lg ">
+                      <div
+                        className="absolute z-50
+                      md:w-[80vw] md:min-h-[50vh]  md:top-14                   
+                      lg:w-[80vw] lg:min-h-[50vh] lg:top-8 
+                      xl:w-[90vw] xl:min-h-[50vh] xl:top-8
+                      
+                      text-center bg-gray-100 font-EstedadLight text-gray-600 flex flex-row items-center justify-center shadow-md rounded-lg "
+                      >
                         <FontAwesomeIcon
                           icon={faSpinner}
                           className="mx-auto
+                          md:text-2xl
+                          lg:text-4xl
                           xl:text-6xl"
                           spin
                         />
                       </div>
                     ) : (
                       <div
-                        className="absolute md:top-10 lg:top-5
-                        xl:top-8
-                        z-50   md:w-[88vw] lg:w-[94vw] xl:w-[80vw] 2xl:w-[85vw] min-h-[50vh] text-center bg-gray-100 font-EstedadLight text-gray-600 grid grid-cols-12 items-center justify-center shadow-md md:rounded-b-lg md:rounded-t-none xl:rounded-lg 
-                        2xl:p-6
-                  "
+                        className="absolute
+                        md:w-[85vw] md:top-14 md:px-1.5 py-6
+                        lg:w-[90vw] lg:top-8 lg:px-2
+                        xl:w-[80vw] xl:top-8 xl:px-4 
+                        2xl:w-[85vw] 2xl:top-8 2xl:px-6 
+                        z-50 text-center bg-gray-100 font-EstedadLight text-gray-600 grid grid-cols-12 items-center justify-center shadow-md md:rounded-b-lg md:rounded-t-none xl:rounded-lg"
                       >
-                        <div className="w-full md:col-span-9 xl:col-span-9 grid grid-cols-12 gap-6">
+                        <div
+                          className="w-full md:col-span-9 grid grid-cols-12 
+                        md:gap-3 lg:gap-4 xl:gap-5
+                        2xl:gap-6"
+                        >
                           {item?.navs.map((dropdownItem, idx) => (
                             <Link
                               onMouseEnter={() => {
@@ -288,11 +302,17 @@ const TopNavBar = () => {
                               onClick={() => setDropDown(false)}
                               key={idx}
                               className="w-fit col-span-4 
-                              pr-3
-                              hover:-translate-x-2
+                              md:pr-1
+                              lg:pr-1.5
+                              xl:pr-2
+                              2xl:pr-3
+                              lg:hover:-translate-x-2
                               hover:text-green-600
                               transition-all ease-in-out duration-300
-                              border-r-4 border-blue-500  items-center 
+                              md:border-r
+                              lg:border-r-2
+                              xl:border-r-4
+                               border-blue-500  items-center 
                               justify-center
                               font-EstedadExtraBold
                               tracking-wider
@@ -303,7 +323,7 @@ const TopNavBar = () => {
                             </Link>
                           ))}
                         </div>
-                        <div className="w-full md:col-span-3 col-span-3">
+                        <div className="w-full col-span-3">
                           {categoryImage && (
                             <div
                               className="flex flex-col items-center
@@ -317,7 +337,11 @@ const TopNavBar = () => {
                                   e.target.src =
                                     "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
                                 }}
-                                className=" rounded-lg xl:w-64 xl:h-64 object-scale-down drop-shadow-lg shadow-black"
+                                className=" rounded-lg 
+                                md:w-32 md:h-32
+                                lg:w-36 lg:h-36
+                                xl:w-40 xl:h-40
+                                2xl:w-64 2xl:h-64 object-scale-down drop-shadow-lg shadow-black"
                               />
                             </div>
                           )}
@@ -326,7 +350,8 @@ const TopNavBar = () => {
                         <Link
                           onClick={() => setDropDown(false)}
                           to="/categoires"
-                          className="col-span-12 p-3 flex items-center justify-center text-center text-green-600 hover:text-green-900 duration-300
+                          className="col-span-12 
+pt-8 flex items-center justify-center text-center text-green-600 hover:text-green-900 duration-300
                           hover:scale-105
                           transition-all ease-in-out
                           font-EstedadExtraBold
