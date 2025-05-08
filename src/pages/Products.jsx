@@ -1,22 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import Loading from "../components/Loading";
-import { formatCurrencyDisplay } from "../utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircle,
-  faCircleCheck,
-  faClose,
-  faEraser,
-  faFilter,
-  faSearch,
-  faSquare,
-  faSquareCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
 import ColorFilter from "../components/filters/ColorFilter";
 import SizeFilter from "../components/filters/SizeFilter";
 import ProductSearch from "../components/filters/ProductSearch";
@@ -30,6 +20,7 @@ const Products = () => {
   const min_price = searchParams.get("min_price") || null;
   const max_price = searchParams.get("max_price") || null;
   const sort_price = searchParams.get("sort_price") || null;
+  const mobileFilterRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -72,11 +63,21 @@ const Products = () => {
     };
   }, [isModal]);
 
-  // console.log(isMobile);
-  // const [priceRange, setPriceRange] = useState({
-  //   min_price: 0,
-  //   max_price: 100000000,
-  // });
+  useEffect(() => {
+    // set is modal false click outside
+    const handleClickOutside = (event) => {
+      if (
+        mobileFilterRef.current &&
+        !mobileFilterRef.current.contains(event.target)
+      ) {
+        setIsModal(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
+  }, []);
 
   const fetchData = async (_url) => {
     window.scrollTo(0, 0);
@@ -202,7 +203,10 @@ const Products = () => {
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
       {/* modal */}
       {isModal && (
-        <div className="fixed  inset-5 max-h-128 mt-28 rounded-xl bg-stone-100 p-4 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-4">
+        <div
+          ref={mobileFilterRef}
+          className="fixed inset-2 max-h-[74vh] top-[15vh] rounded-xl bg-stone-100 p-1.5 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-4 shadow-lg shadow-gray-600 "
+        >
           <button
             className={` md:flex 
             hover:-translate-x-2 duration-300 ease-in-out 
@@ -242,7 +246,7 @@ const Products = () => {
           </div>
           <button
             onClick={() => setIsModal(false)}
-            className="absolute top-3 right-3 bg-red-500 px-2 py-1 text-white rounded-full"
+            className="absolute top-2 left-2 bg-red-500 px-1.5 text-white rounded-xl hover:bg-red-700"
           >
             <FontAwesomeIcon icon={faClose} />
           </button>
@@ -254,14 +258,16 @@ const Products = () => {
       {!isModal && (
         <button
           onClick={() => setIsModal(true)}
-          className="md:hidden fixed bottom-20 z-50 left-5 bg-gray-600/80 p-4 px-5 rounded-full text-white"
+          className="md:hidden fixed bottom-[10vh] z-50 left-4 bg-blue-700/90 p-4 px-5 rounded-full text-white shadow-md shadow-black/80 
+          hover:bg-blue-900/90
+          "
         >
           <FontAwesomeIcon icon={faFilter} className="" />
         </button>
       )}
       {/* remove filters */}
       {/* side bar */}
-      <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full  order-2 md:order-1">
+      <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full order-2 md:order-1">
         {/* category details */}
         <div className="w-full sticky md:top-[18vh] xl:top-[18vh] xl:space-y-3 space-y-1">
           {/* remove filters */}

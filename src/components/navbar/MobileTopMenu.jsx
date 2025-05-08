@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { throttle } from 'lodash';
 
 const MobileTopMenu = () => {
   const [searchModal, setSearchModal] = useState(false);
@@ -17,25 +18,22 @@ const MobileTopMenu = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const menuElement = mobileTopMenuRef.current;
-    if (!menuElement) return;
-
-    let lastScrollY = menuElement.scrollTop;
-
-    const handleScroll = () => {
-      const currentScrollY = menuElement.scrollTop;
+    let lastScrollY = window.scrollY;
+  
+    const handleScroll = throttle(() => {
+      const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY) {
-        setHideMenu(true);
+        setHideMenu(true); // Scroll down, hide menu
       } else {
-        setHideMenu(false);
+        setHideMenu(false); // Scroll up, show menu
       }
       lastScrollY = currentScrollY;
-    };
-
-    menuElement.addEventListener("scroll", handleScroll);
-
+    }, 100); // Throttle to run every 100ms
+  
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      menuElement.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      handleScroll.cancel(); // Cancel throttle on cleanup
     };
   }, []);
 

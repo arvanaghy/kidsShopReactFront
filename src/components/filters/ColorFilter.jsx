@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { faSquare, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
@@ -16,7 +17,7 @@ const ColorFilter = ({ colors, colorSets, setColorSets }) => {
   };
   return (
     <div className="w-full">
-      <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
+      <h3 className="w-full text-sm xl:text-lg px-2 font-EstedadExtraBold py-0.5 xl:py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
         رنگ بندی :
       </h3>
       <div className="w-full py-1.5 flex flex-col justify-start items-start gap-1">
@@ -26,7 +27,7 @@ const ColorFilter = ({ colors, colorSets, setColorSets }) => {
             onClick={() => {
               addColorSet(item?.ColorCode);
             }}
-            className="w-full flex flex-row justify-start items-center gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-2"
+            className="w-full flex flex-row justify-start items-center gap-3 duration-300 font-EstedadLight hover:bg-gray-200 transition-all ease-in-out p-2"
           >
             {colorSets.includes(item?.ColorCode) ? (
               <FontAwesomeIcon
