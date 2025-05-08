@@ -192,6 +192,8 @@ const Products = () => {
     setSizeSets;
     setSizeSets([]);
     setColorSets([]);
+    setIsModal(false);
+
     // setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
 
     navigate(`/products`);
