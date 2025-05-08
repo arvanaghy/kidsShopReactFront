@@ -1,15 +1,18 @@
+/* eslint-disable react/prop-types */
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
-const ProductSearch = ({ search }) => {
+const ProductSearch = ({ search, page = "products" }) => {
+  const navigate = useNavigate();
   const letsSearch = (e) => {
     e.preventDefult();
     try {
       const searchPhrase = e.target.search.value;
       if (searchPhrase?.length <= 0)
         throw new Error("نام دسته بندی مورد نظر را وارد کنید");
-      navigate(`/products?search=${searchPhrase}`);
+      navigate(`/${page}?search=${searchPhrase}`);
     } catch (error) {
       toast.error(error?.message);
     }
@@ -17,7 +20,7 @@ const ProductSearch = ({ search }) => {
   return (
     <form
       onSubmit={letsSearch}
-      className="relative flex flex-row flex-wrap justify-between items-center"
+      className="w-full relative flex flex-row flex-wrap justify-between items-center"
     >
       <input
         type="text"
