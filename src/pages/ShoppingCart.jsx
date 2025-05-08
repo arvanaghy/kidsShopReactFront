@@ -281,7 +281,7 @@ const ShoppingCart = () => {
 
   return (
     <div className="grid grid-cols-12 w-full  p-3 gap-2 font-EstedadMedium ">
-      <div className="lg:col-span-9 border rounded-xl relative w-full bg-white/50">
+      <div className="col-span-12 lg:col-span-9 border rounded-xl relative w-full bg-white/50">
         <div
           className={`${
             cart?.length === 0 ? "opacity-60 cursor-not-allowed" : ""
@@ -293,7 +293,7 @@ const ShoppingCart = () => {
           <FontAwesomeIcon
             icon={faTrashCan}
             className={`
-              text-2xl ${cart?.length === 0 ? "" : "cursor-pointer"}`}
+              text-lg lg:text-2xl ${cart?.length === 0 ? "" : "cursor-pointer"}`}
             onClick={async () => {
               const isConfirmed = await confirmToast(
                 "آیا از حذف همه آیتم ها مطمئن هستید؟"
@@ -305,7 +305,7 @@ const ShoppingCart = () => {
           <p className="text-xs w-full cursor-pointer">حذف همه</p>
         </div>
 
-        <h1 className="w-full font-EstedadExtraBold lg:text-start text-center lg:indent-6 text-lg lg:text-2xl text-CarbonicBlue-500  py-5 ">
+        <h1 className="w-full font-EstedadExtraBold lg:text-start text-center lg:indent-6 text-base lg:text-2xl text-CarbonicBlue-500 py-5 ">
           سبد خرید شما
         </h1>
         <hr className=" mx-auto w-full" />
@@ -315,9 +315,11 @@ const ShoppingCart = () => {
           <div className=" flex flex-col gap-2 w-full ">
             {cart?.map((item, idx) => (
               <div key={idx}>
-                <div className="relative grid grid-cols-12 w-full p-4   place-items-center border-b gap-2 ">
-                  <div className="absolute bottom-3 lg:bottom-14 lg:left-6 text-center space-y-1">
-                    <div className="border-b py-1">جمع مبلغ این کالا</div>
+                <div className=" grid grid-cols-12 w-full p-4   place-items-center border-b gap-2 ">
+
+                  {/* جمع مبلغ کالا */}
+                  <div className="col-span-12 flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full order-last text-center bg-gray-200 rounded-sm py-3 ">
+                    <div className="border-b py-1 md:py-0">جمع مبلغ این کالا</div>
                     <div className="text-sm text-CarbonicBlue-500 font-EstedadExtraBold">
                       {item?.basket?.length > 0 &&
                         formatCurrencyDisplay(
@@ -333,7 +335,7 @@ const ShoppingCart = () => {
                     </div>
                   </div>
                   {/* image */}
-                  <div className="col-span-3 flex flex-col justify-around gap-2 ">
+                  <div className="col-span-12 md:col-span-3 flex flex-col justify-around gap-2 ">
                     {item?.item?.product_images?.length > 0 ? (
                       item?.item?.product_images
                         ?.filter((img) => img?.Def == 1)
@@ -355,14 +357,14 @@ const ShoppingCart = () => {
                     )}
                   </div>
                   {/* info */}
-                  <div className="col-span-9 flex flex-col place-self-start w-full text-black space-y-3 p-3">
+                  <div className="col-span-12 md:col-span-9 flex flex-col place-self-start w-full text-black space-y-3 p-1 lg:p-3">
                     <Link
                       to={`/product/${item?.item?.Code}`}
-                      className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-4 lg:py-0"
+                      className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
                     >
                       {item?.item?.Name}
                     </Link>
-                    <div className="w-full flex flex-row items-center gap-3 text-sm">
+                    <div className="w-full flex flex-row items-center gap-3 text-sm text-center">
                       <Link
                         className="block text-gray-500
                                 hover:text-gray-700
@@ -386,7 +388,7 @@ const ShoppingCart = () => {
                     </div>
                     <div className="flex flex-col text-xs lg:text-sm">
                       {item?.item?.Comment && (
-                        <div className="text-justify line-clamp-4 px-4 leading-relaxed">
+                        <div className="text-justify line-clamp-4 px-4 leading-loose">
                           {item?.item?.Comment}
                         </div>
                       )}
@@ -396,7 +398,7 @@ const ShoppingCart = () => {
                       item?.basket?.map((basketItem, idx) => (
                         <div
                           key={idx}
-                          className="px-1.5 flex flex-row gap-2 text-gray-500 text-sm"
+                          className="px-1.5 flex flex-row gap-2 text-gray-500 text-sm leading-loose"
                         >
                           <FontAwesomeIcon
                             icon={faSquareCheck}
@@ -419,10 +421,11 @@ const ShoppingCart = () => {
           </div>
         )}
       </div>
+
+      {/* مشخصات پرداخت */}
       <div
         className="
-      flex flex-col lg:col-span-3  text-center lg:sticky lg:top-[20vh] h-fit
-      w-full  space-y-5  border border-CarbonicBlue-500/20 p-4 rounded-xl bg-stone-100 shadow-xl justify-around "
+      col-span-12 flex flex-col lg:col-span-3  text-center lg:sticky lg:top-[20vh] h-fit w-full space-y-5 border border-CarbonicBlue-500/20 p-4 rounded-xl bg-stone-100 shadow-xl justify-around "
       >
         <div className="text-start  ">
           <div className="flex flex-row justify-between px-1 items-center border-b">
@@ -435,13 +438,13 @@ const ShoppingCart = () => {
             {cart?.length === 0 ? (
               <p className="text-center">سبد خرید شما خالی است.</p>
             ) : (
-              <div className=" text-gray-600 indent-2 py-2 marker:text-Amber-500 max-h-52 overflow-y-auto">
+              <div className="w-full  text-gray-600 indent-1 py-2 marker:text-Amber-500 max-h-52 overflow-y-auto">
                 {cart?.map((item, idx) => (
                   <div
                     key={idx}
-                    className="space-y-1 border-b py-2 flex  flex-row justify-between items-center"
+                    className="space-y-1 border-b py-2 flex flex-row justify-between items-center"
                   >
-                    <li className="text-sm font-EstedadMedium">
+                    <li className="text-xs font-EstedadMedium">
                       {item?.item?.Name}
                     </li>
                     <button
@@ -450,7 +453,7 @@ const ShoppingCart = () => {
                     >
                       <FontAwesomeIcon
                         icon={faTrash}
-                        className="text-red-500 hover:text-red-700 transition-all duration-300 ease-in-out"
+                        className="text-red-500 hover:text-red-700 transition-all duration-300 ease-in-out mx-1"
                       />
                     </button>
                   </div>
@@ -459,7 +462,7 @@ const ShoppingCart = () => {
             )}
           </ul>
         </div>
-        <div className="space-y-2">
+        <div className="space-y-2 ">
           <p>توضیحات پیش فاکتور</p>
           <textarea
             className="w-full p-2 border-2 rounded-lg border-CarbonicBlue-500 "
@@ -468,21 +471,23 @@ const ShoppingCart = () => {
           />
         </div>
         <select
-          className="ring-CarbonicBlue-500"
+          className=" ring-CarbonicBlue-500"
           onChange={(e) =>
             setSelectedTransferService(
               transferServices.find((s) => s.Code === e.target.value)
             )
           }
         >
-          <option value="">انتخاب نحوه ارسال</option>
+          <option value="" className=" rounded-md">انتخاب نحوه ارسال</option>
           {transferServices &&
             transferServices.map((service, idx) => (
-              <option key={idx} value={service.Code}>
+              <option key={idx} value={service.Code}
+              >
                 {service.Name} - {formatCurrencyDisplay(service.Mablag)} ریال
               </option>
             ))}
         </select>
+        
         <p className="text-center text-base lg:text-end">
           <span className="px-2 text-sm">جمع کل فاکتور :</span>
           <span className="text-xs font-bold text-green-800">
