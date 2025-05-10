@@ -203,6 +203,21 @@ const BestSellingProducts = () => {
 
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
+      <div
+        className="col-span-12 text-center  font-EstedadExtraBold tracking-wider leading-relaxed
+            text-lg py-4
+            sm:text-xl sm:py-4
+            md:text-2xl md:py-6
+            lg:text-3xl lg:py-7
+            xl:text-4xl xl:py-8 
+            2xl:text-5xl 2xl:py-10
+      
+            text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
+            
+            "
+      >
+        پرفروش ترین محصولات کیدزشاپ
+      </div>
       {/* modal */}
       {isModal && (
         <div

@@ -10,6 +10,7 @@ import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
 import ColorFilter from "../components/filters/ColorFilter";
 import SizeFilter from "../components/filters/SizeFilter";
 import ProductSearch from "../components/filters/ProductSearch";
+import { toPersianDigits } from "../utils/numeralHelpers";
 
 const OfferedProducts = () => {
   const [searchParams] = useSearchParams();
@@ -203,6 +204,18 @@ const OfferedProducts = () => {
 
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
+      <div className="col-span-12 text-center  font-EstedadExtraBold tracking-wider leading-relaxed
+      text-lg py-4
+      sm:text-xl sm:py-4
+      md:text-2xl md:py-6
+      lg:text-3xl lg:py-7
+      xl:text-4xl xl:py-8 
+      2xl:text-5xl 2xl:py-10
+
+      text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
+      
+      ">تخفیف‌های شگفت انگیز مد و پوشاک {toPersianDigits(2025)}</div>
+
       {/* modal */}
       {isModal && (
         <div
@@ -299,33 +312,6 @@ const OfferedProducts = () => {
               setColorSets={setColorSets}
             />
           )}
-          {/* {price?.min_price > 0 && price?.max_price > 0 && (
-            <div className="w-full">
-              <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
-                قیمت :
-              </h3>
-              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 py-4">
-                <input
-                  type="number"
-                  id="minPriceInput"
-                  placeholder={formatCurrencyDisplay(price?.min_price)}
-                  name="minPriceInput"
-                  min={price?.min_price}
-                  max={price?.}
-                />
-                <span>ریال</span>
-                <span>تا</span>
-                <input
-                  type="number"
-                  id="maxPriceInput"
-                  placeholder={formatCurrencyDisplay(price?.max_price)}
-                  name="maxPriceInput"
-
-                />
-                <span>ریال</span>
-              </div>
-            </div>
-          )} */}
           <div className="w-full hidden md:flex items-end justify-between">
             <button
               onClick={applyFilters}
