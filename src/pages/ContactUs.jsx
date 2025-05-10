@@ -112,23 +112,6 @@ const ContactUs = () => {
                     </li>
                   </ul>
                 </div>
-                {/* {destinationInfo?.distance != null &&
-                destinationInfo?.time != null ? (
-                  <p className="w-full h-full px-4 text-base flex mt-4">
-                    فاصله شما از فروشگاه {destinationInfo?.distance} کیلومتر است
-                    <br />
-                    {destinationInfo?.time >= 60 ? (
-                      ""
-                    ) : (
-                      <span>
-                        و با {destinationInfo?.time} دقیقه پیاده روی به فروشگاه
-                        میرسید
-                      </span>
-                    )}
-                  </p>
-                ) : (
-                  ""
-                )} */}
               </div>
               <button
                 className=" w-full lg:w-4/12 mx-auto text-white bg-Teal-500/50 font-EstedadExtraBold rounded-3xl shadow-2xl border border-Teal-500/80 text-sm py-2.5 transition duration-200 hover:scale-105"

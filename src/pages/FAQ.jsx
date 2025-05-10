@@ -36,7 +36,7 @@ const FAQ = ({ faqData }) => {
                 />
               </div>
               <div
-                className={`font-MontLight bg-white rounded-3xl leading-relaxed text-sm overflow-hidden transition-all duration-300 leading-relaxed ${
+                className={`font-MontLight bg-white rounded-3xl  text-sm overflow-hidden transition-all duration-300 leading-relaxed ${
                   isShowFaq[item?.Code]
                     ? "max-h-[500px] py-6 px-6"
                     : "max-h-0 py-0 px-6"

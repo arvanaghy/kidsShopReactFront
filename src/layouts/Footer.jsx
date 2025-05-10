@@ -112,6 +112,7 @@ const Footer = () => {
               دسترسی سریع
             </h3>
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/offered-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -129,6 +130,7 @@ const Footer = () => {
               </div>
             </Link>
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/best-selling-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -146,6 +148,7 @@ const Footer = () => {
               </div>
             </Link>
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/categories"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -165,12 +168,14 @@ duration-300 transition-all ease-in-out
                 دسته بندی محصولات
               </div>
             </Link>
+
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/faq"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
               <FontAwesomeIcon
-                icon={faCircleQuestion}
+                icon={faCircleInfo}
                 className="text-base md:text-2xl
                             group-hover:text-green-700
 duration-300 transition-all ease-in-out
@@ -182,10 +187,11 @@ duration-300 transition-all ease-in-out
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
               >
-                سوالات متداول
+               پرسش و پاسخ سوالات پرتکرار
               </div>
             </Link>
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/about-us"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -206,7 +212,8 @@ duration-300 transition-all ease-in-out
               </div>
             </Link>
             <Link
-              to="/faq"
+              onContextMenu={(e) => e.preventDefault()}
+              to="/contact-us"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
               <FontAwesomeIcon

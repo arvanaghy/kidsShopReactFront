@@ -10,7 +10,7 @@ const CommentShorter = ({commentData}) => {
     const firstThreeLines = lines?.slice(0, 3);
 
     return (
-        <ul className="xl:space-y-1 leading-relaxed text-xs list-disc  marker:text-Amber-500 list-inside text-xs xl:text-sm " >
+        <ul className="xl:space-y-1 leading-relaxed list-disc  marker:text-Amber-500 list-inside text-xs xl:text-sm " >
             {firstThreeLines?.map((line, index) => (
                 <li key={index} className='text-xs' >{line}</li>
             ))}

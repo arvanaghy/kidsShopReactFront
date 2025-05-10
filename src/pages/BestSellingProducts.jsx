@@ -211,10 +211,7 @@ const BestSellingProducts = () => {
             lg:text-3xl lg:py-7
             xl:text-4xl xl:py-8 
             2xl:text-5xl 2xl:py-10
-      
-            text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
-            
-            "
+            text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500            "
       >
         پرفروش ترین محصولات کیدزشاپ
       </div>
@@ -360,6 +357,7 @@ const BestSellingProducts = () => {
         {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
+            onContextMenu={(e) => e.preventDefault()}
             to={`/best-selling-products?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
@@ -376,6 +374,7 @@ const BestSellingProducts = () => {
             جدید ترین ها
           </Link>
           <Link
+            onContextMenu={(e) => e.preventDefault()}
             to={`/best-selling-products?product_page=${1}${
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
@@ -393,6 +392,7 @@ const BestSellingProducts = () => {
             ارزان ترین ها
           </Link>
           <Link
+            onContextMenu={(e) => e.preventDefault()}
             to={`/best-selling-products?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${

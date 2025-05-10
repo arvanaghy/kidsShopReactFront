@@ -33,6 +33,7 @@ import FailedMobile from "@pages/paymentResults/FailedMobile";
 import BestSellingProducts from "@pages/BestSellingProducts";
 import FavouritesPage from "@pages/FavouritesPage";
 import ComparePage from "@pages/ComparePage";
+import FAQ from "./pages/FAQ";
 
 function App() {
   const router = createBrowserRouter([
@@ -126,6 +127,10 @@ function App() {
         {
           path: "/checkout",
           element: <Checkout />,
+        },
+        {
+          path: "/faq",
+          element: <FAQ />,
         },
         {
           path: "/web-payment",
