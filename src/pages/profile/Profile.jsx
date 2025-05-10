@@ -72,6 +72,7 @@ const Profile = () => {
           <div className="text-2xl w-full py-6">سفارشات شما</div>
           <ul className="flex flex-row justify-around items-center ">
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/unconfirmed-orders"
               className="flex flex-col gap-2 lg:text-5xl text-red-600"
             >
@@ -81,6 +82,7 @@ const Profile = () => {
               </p>
             </Link>
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/confirmed-orders"
               className="flex flex-col gap-2 lg:text-5xl text-green-600"
             >
