@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
 import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
-import loginSvg from "/src/assets/images/login-svgrepo-com.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -53,7 +52,7 @@ const Login = () => {
           case 404:
             setIsPending(false);
             toast.error(data?.message);
-            navigateTo(`/register${redirect && "?redirect=" + redirect}`);
+            navigateTo(`/register${redirect ? "?redirect=" + redirect : ""}`);
             break;
           default:
             throw new Error(data?.message);
