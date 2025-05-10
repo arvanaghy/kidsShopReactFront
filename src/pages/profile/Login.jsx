@@ -196,6 +196,7 @@ const Login = () => {
           >
             <p className="w-full">حساب کاربری ندارید.؟</p>
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/register"
               className="w-full font-medium text-red-600 hover:underline 
               transition-all ease-in-out duration-300

@@ -391,6 +391,7 @@ const SubCategories = () => {
         {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
+            onContextMenu={(e) => e.preventDefault()}
             to={`/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
@@ -407,6 +408,7 @@ const SubCategories = () => {
             جدید ترین ها
           </Link>
           <Link
+            onContextMenu={(e) => e.preventDefault()}
             to={`/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
@@ -424,6 +426,7 @@ const SubCategories = () => {
             ارزان ترین ها
           </Link>
           <Link
+            onContextMenu={(e) => e.preventDefault()}
             to={`/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${

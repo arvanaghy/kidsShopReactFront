@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 
 const Orders = () => {
-
   const navigateTo = useNavigate();
 
   useEffect(() => {
@@ -29,6 +28,7 @@ const Orders = () => {
       </div>
       <div className="items-center justify-center mx-auto my-5 space-y-5 text-lg text-center lg:w-4/5 lg:my-auto lg:font-EstedadExtraBold lg:text-2xl font-EstedadLight">
         <Link
+          onContextMenu={(e) => e.preventDefault()}
           to="/unconfirmed-orders"
           className="inline-block py-5 font-bold text-white lg:p-14 px-14 lg:mx-20 rounded-xl drop-shadow-white"
         >
@@ -36,6 +36,7 @@ const Orders = () => {
         </Link>
 
         <Link
+          onContextMenu={(e) => e.preventDefault()}
           to="/confirmed-orders"
           className="inline-block py-5 font-bold text-white lg:p-14 px-14 lg:mx-20 rounded-xl drop-shadow-white"
         >

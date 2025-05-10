@@ -218,7 +218,7 @@ const Home = () => {
           </div>
           <div className="col-span-12 text-center pt-4 xl:pt-12">
             <Link
-            onContextMenu={(e) => e.preventDefault()}
+              onContextMenu={(e) => e.preventDefault()}
               to="/offered-products"
               className="font-EstedadExtraBold text-xs text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
           transition-all duration-300 ease-in-out 2xl:text-2xl 2xl:font-EstedadMedium
@@ -308,6 +308,7 @@ const Home = () => {
 
           <div className="col-span-12 text-center py-6 lg:py-12">
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to={"/best-seller-products"}
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
         transition-all duration-300 ease-in-out text-xs xl:text-base 2xl:text-2xl 2xl:font-EstedadMedium

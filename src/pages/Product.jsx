@@ -179,6 +179,7 @@ const Product = () => {
         <ol className="inline-flex items-center space-x-1 lg:space-x-2 rtl:space-x-reverse">
           <li className="inline-flex items-center font-EstedadMedium">
             <Link
+              onContextMenu={(e) => e.preventDefault()}
               to="/"
               className="inline-flex items-center gap-2 lg:gap-10 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
             >
@@ -190,6 +191,7 @@ const Product = () => {
             <div className="flex items-center font-EstedadMedium">
               <FontAwesomeIcon icon={faChevronLeft} />
               <Link
+                onContextMenu={(e) => e.preventDefault()}
                 to={`/category/${Math.floor(data?.product?.GCode)}`}
                 className="text-sm font-medium text-gray-700 ms-1 hover:text-blue-600 lg:ms-2 dark:text-gray-400 dark:hover:text-gray-800"
               >
@@ -201,6 +203,7 @@ const Product = () => {
             <div className="flex items-center font-EstedadMedium">
               <FontAwesomeIcon icon={faChevronLeft} />
               <Link
+                onContextMenu={(e) => e.preventDefault()}
                 to={`/sub-category-products/${Math.floor(
                   data?.product?.SCode
                 )}`}
@@ -482,7 +485,11 @@ const Product = () => {
           </h2>
           <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4">
             {data?.relatedProducts?.map((item, idx) => (
-              <ProductCard item={item} key={idx} colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 " />
+              <ProductCard
+                item={item}
+                key={idx}
+                colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 "
+              />
             ))}
           </div>
         </>
@@ -496,7 +503,11 @@ const Product = () => {
           </h2>
           <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4">
             {data?.offeredProducts?.map((item, idx) => (
-              <ProductCard item={item} key={idx} colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 " />
+              <ProductCard
+                item={item}
+                key={idx}
+                colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 "
+              />
             ))}
           </div>
         </>
