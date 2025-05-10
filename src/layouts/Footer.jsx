@@ -7,6 +7,7 @@ import {
   faChevronUp,
   faCircleInfo,
   faCircleQuestion,
+  faList,
   faLocationDot,
   faPersonHalfDress,
   faPhoneVolume,
@@ -153,7 +154,7 @@ const Footer = () => {
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
               <FontAwesomeIcon
-                icon={faPersonHalfDress}
+                icon={faList}
                 className="text-2xl
                             group-hover:text-green-700
 duration-300 transition-all ease-in-out
@@ -187,7 +188,7 @@ duration-300 transition-all ease-in-out
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
               >
-               پرسش و پاسخ سوالات پرتکرار
+                پرسش و پاسخ سوالات پرتکرار
               </div>
             </Link>
             <Link

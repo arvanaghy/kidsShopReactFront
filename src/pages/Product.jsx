@@ -119,6 +119,7 @@ const Product = () => {
         _cart.push(newItem);
         updateCart(_cart);
       }
+      toast.success("محصول به سبد خرید اضافه شد.");
     } catch (error) {
       toast.error(error?.message);
     } finally {
@@ -171,54 +172,107 @@ const Product = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full">
-      <nav
-        className="flex w-full px-5 py-3 text-gray-700 border border-gray-200 mb-4 mt-14 lg:my-4 rounded-lg bg-gray-50 "
-        aria-label="Breadcrumb"
-      >
-        <ol className="inline-flex items-center space-x-1 lg:space-x-2 rtl:space-x-reverse">
-          <li className="inline-flex items-center font-EstedadMedium">
-            <Link
-              onContextMenu={(e) => e.preventDefault()}
-              to="/"
-              className="inline-flex items-center gap-2 lg:gap-10 text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
-            >
-              <FontAwesomeIcon icon={faHouse} className="text-lg" />
-              صفحه اصلی
-            </Link>
-          </li>
-          <li>
-            <div className="flex items-center font-EstedadMedium">
-              <FontAwesomeIcon icon={faChevronLeft} />
+    <div className="w-full py-6">
+      {/* top bar */}
+      <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3">
+        <nav
+          className="flex flex-row w-fit px-7 py-3 text-gray-700 border border-gray-200  rounded-lg bg-gray-50 "
+          aria-label="Breadcrumb"
+        >
+          <ol className="inline-flex items-center space-x-2 ">
+            <li className="inline-flex items-center font-EstedadMedium">
               <Link
                 onContextMenu={(e) => e.preventDefault()}
-                to={`/category/${Math.floor(data?.product?.GCode)}`}
-                className="text-sm font-medium text-gray-700 ms-1 hover:text-blue-600 lg:ms-2 dark:text-gray-400 dark:hover:text-gray-800"
+                to="/"
+                className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
+                text-xs
+                md:text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
               >
-                {data?.product?.GName}
+                <FontAwesomeIcon
+                  icon={faHouse}
+                  className="text-sm md:text-lg"
+                />
+                <span>صفحه اصلی</span>
               </Link>
-            </div>
-          </li>
-          <li aria-current="page">
-            <div className="flex items-center font-EstedadMedium">
-              <FontAwesomeIcon icon={faChevronLeft} />
-              <Link
-                onContextMenu={(e) => e.preventDefault()}
-                to={`/sub-category-products/${Math.floor(
-                  data?.product?.SCode
-                )}`}
-                className="text-sm font-medium text-gray-700 ms-1 hover:text-blue-600 lg:ms-2 dark:text-gray-400 dark:hover:text-gray-800"
-              >
-                {data?.product?.SName}
-              </Link>
-            </div>
-          </li>
-        </ol>
-      </nav>
+            </li>
+            <li>
+              <div className="flex items-center font-EstedadMedium">
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  className="text-sm md:text-lg p-1"
+                />
+                <Link
+                  onContextMenu={(e) => e.preventDefault()}
+                  to={`/category/${Math.floor(data?.product?.GCode)}`}
+                  className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
+                text-xs
+                md:text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
+                >
+                  {data?.product?.GName}
+                </Link>
+              </div>
+            </li>
+            <li aria-current="page">
+              <div className="flex items-center font-EstedadMedium">
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  className="text-sm md:text-lg p-1"
+                />
+                <Link
+                  onContextMenu={(e) => e.preventDefault()}
+                  to={`/sub-category-products/${Math.floor(
+                    data?.product?.SCode
+                  )}`}
+                  className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
+                text-xs
+                md:text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
+                >
+                  {data?.product?.SName}
+                </Link>
+              </div>
+            </li>
+          </ol>
+        </nav>
+        <div className="flex w-fit flex-row  justify-between items-center gap-6">
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(window.location.href);
+              toast.success("لینک کپی شد");
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faSquareShareNodes}
+              className="text-2xl
+                hover:text-CarbonicBlue-500 duration-300 ease-in-out
+                "
+            />
+          </button>
+          <button onClick={() => toggleFavourite(data)}>
+            <FontAwesomeIcon
+              icon={faBookmark}
+              className={`text-2xl duration-300 ease-in-out
+                    ${
+                      isFavourite
+                        ? "text-Purple-500 hover:text-gray-500 "
+                        : "text-gray-500 hover:text-Purple-500"
+                    }`}
+            />
+          </button>
 
-      <div className="relative flex flex-col justify-around lg:justify-between w-full mx-auto">
-        <div className="grid w-full grid-cols-12">
-          <div className="col-span-12 md:col-span-5 xl:col-span-4 w-full space-y-3  ">
+          <button onClick={() => toggleCompare(data)}>
+            <FontAwesomeIcon icon={faRestroom} className="text-2xl" />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative flex flex-col justify-around lg:justify-between w-full">
+        <div
+          className="grid w-full grid-cols-12
+        gap-1.5 md:gap-3 lg:gap-5 xl:gap-6 
+        "
+        >
+          {/* side Image */}
+          <div className="col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full xl:space-y-3  ">
             {data?.product?.product_images?.length > 0 ? (
               <div className="flex flex-col p-6 space-y-3">
                 <Swiper
@@ -278,71 +332,29 @@ const Product = () => {
               />
             )}
           </div>
-          <div className="col-span-12 px-6 md:col-span-7 xl:col-span-5 w-full flex flex-col justify-start gap-4">
-            <div className="w-full flex justify-between items-center">
-              <button onClick={() => toggleFavourite(data)}>
-                <FontAwesomeIcon
-                  icon={faBookmark}
-                  className={`text-2xl duration-300 ease-in-out
-                    
-                    ${
-                      isFavourite
-                        ? "text-Purple-500 hover:text-gray-500 "
-                        : "text-gray-500 hover:text-Purple-500"
-                    }`}
-                />
-              </button>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(window.location.href);
-                  toast.success("لینک کپی شد");
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faSquareShareNodes}
-                  className="text-2xl
-                hover:text-CarbonicBlue-500 duration-300 ease-in-out
-                "
-                />
-              </button>
-              <button onClick={() => toggleCompare(data)}>
-                <FontAwesomeIcon icon={faRestroom} className="text-2xl" />
-              </button>
-            </div>
-            <div className="lg:text-2xl font-EstedadExtraBold text-xl py-5 text-center lg:text-start border-b text-CarbonicBlue-500 drop-shadow-sm my-6 ">
+          {/* center main content */}
+          <div
+            className="col-span-12 xl:px-6 md:col-span-7
+          lg:col-span-5
+          xl:col-span-5 w-full flex flex-col justify-start xl:gap-4
+          gap-1.5
+          "
+          >
+            <h1 className="lg:text-2xl font-EstedadExtraBold text-xl py-5 text-center lg:text-start border-b text-CarbonicBlue-500 drop-shadow-sm leading-relaxed ">
               {data?.product?.Name}
-            </div>
-            <div className="flex flex-col text-center lg:text-start lg:flex-row justify-between w-full text-gray-700 px-4 ">
-              <div className="flex flex-col gap-3">
-                <div className="font-EstedadMedium px-2 flex flex-row gap-2 items-center justify-start ">
-                  <span className="block text-sm font-EstedadMedium text-Purple-500">
-                    دسته بندی :
-                  </span>
-                  <Link
-                    className="block text-sm  font-EstedadMedium text-black/80 underline underline-offset-8 hover:text-CarbonicBlue-500 duration-300 ease-in-out"
-                    to={`/category/${Math.floor(data?.product?.GCode)}`}
-                  >
-                    {data?.product?.GName}
-                  </Link>
-                  <Link
-                    className="block text-sm  font-EstedadMedium text-black/80 underline underline-offset-8 hover:text-CarbonicBlue-500 duration-300 ease-in-out"
-                    to={`/sub-category-products/${Math.floor(
-                      data?.product?.SCode
-                    )}`}
-                  >
-                    {data?.product?.SName}
-                  </Link>
-                </div>
-                {data?.product?.product_size_color?.length > 0 && (
-                  <div className="font-EstedadMedium px-2 flex flex-col gap-4  items-start justify-start leading-relaxed">
-                    {data?.product?.product_size_color.map((item, index) => (
-                      <button
-                        disabled={item?.Mande <= 0}
-                        onClick={() => {
-                          setFeature(item);
-                        }}
-                        key={index}
-                        className={`flex flex-row gap-2 text-sm  font-EstedadMedium text-gray-800 
+            </h1>
+
+            <div className="flex flex-col gap-1.5 md:gap-3 flex-wrap">
+              {data?.product?.product_size_color?.length > 0 && (
+                <div className="font-EstedadMedium px-2 flex flex-col gap-4  items-start justify-start leading-relaxed">
+                  {data?.product?.product_size_color.map((item, index) => (
+                    <button
+                      disabled={item?.Mande <= 0}
+                      onClick={() => {
+                        setFeature(item);
+                      }}
+                      key={index}
+                      className={`flex flex-row gap-2 text-sm  font-EstedadMedium text-gray-800 
                           bg-gray-100  duration-300 ease-in-out
                         border-2 border-gray-200 rounded-md px-2 py-1
                         disabled:cursor-not-allowed
@@ -353,42 +365,27 @@ const Product = () => {
                           : ""
                       }
                         `}
-                      >
-                        <span className="block text-sm font-EstedadMedium ">
-                          رنگ :
-                        </span>
-                        <span className="">{item?.SCCode}</span>
-                        <span>{item.ColorName}</span>
-                        <span className="block text-sm font-EstedadMedium ">
-                          سایز :
-                        </span>
-                        <span>{item.SizeNum}</span>
-                        <span className="block text-sm font-EstedadMedium ">
-                          مبلغ :
-                        </span>
-                        <span>{formatCurrencyDisplay(item?.Mablag)}</span>
-                        <span>ریال</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-                {data?.product?.Comment?.length > 0 && (
-                  <div className="w-full  ">
-                    <div className="font-EstedadExtraBold text-start  text-Purple-500 text-xl py-4">
-                      توضیحات :
-                    </div>
-                    <ul className="list-disc marker:text-CarbonicBlue-500 lg:pr-6 space-y-2 text-start font-EstedadLight">
-                      {data?.product?.Comment.split("\r\n").map(
-                        (item, index) => (
-                          <li key={index}>{item}</li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                )}
-              </div>
+                    >
+                      <span className="block text-sm font-EstedadMedium ">
+                        رنگ
+                      </span>
+                      <span>{item.ColorName}</span>
+                      <span className="block text-sm font-EstedadMedium ">
+                        سایز
+                      </span>
+                      <span>{item.SizeNum}</span>
+                      <span className="block text-sm font-EstedadMedium ">
+                        مبلغ
+                      </span>
+                      <span>{formatCurrencyDisplay(item?.Mablag)}</span>
+                      <span>ریال</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-            <div className="w-full">
+
+            <div className="w-full flex flex-row justify-end items-center py-3 md:py-6">
               <button
                 className="w-fit flex flex-row gap-2 items-center justify-center border-2 border-green-600 rounded-md px-4 py-2 bg-green-500 text-white hover:bg-green-600 hover:text-white space-x-1.5
               duration-300 ease-in-out transition-all
@@ -401,7 +398,22 @@ const Product = () => {
                 <div className="font-EstedadMedium">افزودن به سبد خرید</div>
               </button>
             </div>
+            {data?.product?.Comment?.length > 0 && (
+              <div className="w-full  ">
+                <div className="font-EstedadExtraBold text-start  text-Purple-500 text-base lg:text-xl py-4">
+                  توضیحات :
+                </div>
+                <ul className="list-disc marker:text-CarbonicBlue-500 
+                md:pr-2
+                lg:pr-6 space-y-2 text-start font-EstedadLight">
+                  {data?.product?.Comment.split("\r\n").map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
+          {/* side cart bar */}
           <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2">
             {cart?.length > 0 &&
             cart?.find(
@@ -452,7 +464,7 @@ const Product = () => {
                 })()}
               </div>
             ) : (
-              <div className="">
+              <div className="font-EstedadMedium p-2 text-pretty leading-relaxed">
                 شما از این محصول هیچ آیتمی در سبد خرید ندارید
               </div>
             )}

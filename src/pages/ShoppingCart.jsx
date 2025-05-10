@@ -293,7 +293,9 @@ const ShoppingCart = () => {
           <FontAwesomeIcon
             icon={faTrashCan}
             className={`
-              text-lg lg:text-2xl ${cart?.length === 0 ? "" : "cursor-pointer"}`}
+              text-lg lg:text-2xl ${
+                cart?.length === 0 ? "" : "cursor-pointer"
+              }`}
             onClick={async () => {
               const isConfirmed = await confirmToast(
                 "آیا از حذف همه آیتم ها مطمئن هستید؟"
@@ -316,10 +318,11 @@ const ShoppingCart = () => {
             {cart?.map((item, idx) => (
               <div key={idx}>
                 <div className=" grid grid-cols-12 w-full p-4   place-items-center border-b gap-2 ">
-
                   {/* جمع مبلغ کالا */}
                   <div className="col-span-12 flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full order-last text-center bg-gray-200 rounded-sm py-3 ">
-                    <div className="border-b py-1 md:py-0">جمع مبلغ این کالا</div>
+                    <div className="border-b py-1 md:py-0">
+                      جمع مبلغ این کالا
+                    </div>
                     <div className="text-sm text-CarbonicBlue-500 font-EstedadExtraBold">
                       {item?.basket?.length > 0 &&
                         formatCurrencyDisplay(
@@ -342,9 +345,7 @@ const ShoppingCart = () => {
                         .map((img, idx) => (
                           <img
                             key={idx}
-                            src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${
-                              img?.PicName
-                            }.webp`}
+                            src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${img?.PicName}.webp`}
                             alt={item?.item?.Name}
                             className="w-full object-cover rounded-xl"
                           />
@@ -359,6 +360,7 @@ const ShoppingCart = () => {
                   {/* info */}
                   <div className="col-span-12 md:col-span-9 flex flex-col place-self-start w-full text-black space-y-3 p-1 lg:p-3">
                     <Link
+                      onContextMenu={(e) => e.preventDefault()}
                       to={`/product/${item?.item?.Code}`}
                       className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
                     >
@@ -366,6 +368,7 @@ const ShoppingCart = () => {
                     </Link>
                     <div className="w-full flex flex-row items-center gap-3 text-sm text-center">
                       <Link
+                        onContextMenu={(e) => e.preventDefault()}
                         className="block text-gray-500
                                 hover:text-gray-700
                                 duration-300 ease-in-out transition-all
@@ -375,6 +378,7 @@ const ShoppingCart = () => {
                         {item?.item?.GName}
                       </Link>
                       <Link
+                        onContextMenu={(e) => e.preventDefault()}
                         className="block text-gray-500
                         hover:text-gray-700
                         duration-300 ease-in-out transition-all
@@ -478,16 +482,17 @@ const ShoppingCart = () => {
             )
           }
         >
-          <option value="" className=" rounded-md">انتخاب نحوه ارسال</option>
+          <option value="" className=" rounded-md">
+            انتخاب نحوه ارسال
+          </option>
           {transferServices &&
             transferServices.map((service, idx) => (
-              <option key={idx} value={service.Code}
-              >
+              <option key={idx} value={service.Code}>
                 {service.Name} - {formatCurrencyDisplay(service.Mablag)} ریال
               </option>
             ))}
         </select>
-        
+
         <p className="text-center text-base lg:text-end">
           <span className="px-2 text-sm">جمع کل فاکتور :</span>
           <span className="text-xs font-bold text-green-800">
