@@ -137,7 +137,7 @@ const UserContextProvider = ({ children }) => {
   };
 
   const toggleFavourite = (product) => {
-    const exists = favourite.find((f) => f.Code === product.Code);
+    const exists = favourite.find((f) => Math.floor(f.Code) == Math.floor(product.Code));
     const newFavourite = exists
       ? favourite.filter((f) => f.Code !== product.Code)
       : [...favourite, product];

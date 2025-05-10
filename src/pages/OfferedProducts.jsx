@@ -214,7 +214,7 @@ const OfferedProducts = () => {
 
       text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
       
-      ">تخفیف‌های شگفت انگیز مد و پوشاک {toPersianDigits(2025)}</div>
+      ">تخفیف‌های شگفت انگیز مد و پوشاک {toPersianDigits(new Date().getFullYear())}</div>
 
       {/* modal */}
       {isModal && (

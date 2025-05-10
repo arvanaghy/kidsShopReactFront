@@ -9,9 +9,15 @@ import ProductCard from "@components/ProductCard";
 import Loading from "@components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBookmark,
   faCartPlus,
   faChevronLeft,
+  faHeart,
+  faHeartBroken,
   faHouse,
+  faRestroom,
+  faShare,
+  faSquareShareNodes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -26,9 +32,13 @@ import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 const Product = () => {
   const { productCode } = useParams();
 
+  const { favourite, toggleFavourite } = useContext(UserContext);
+  const { compareList, toggleCompare } = useContext(UserContext);
+
   const { cart, updateCart } = useContext(UserContext);
 
   const [feature, setFeature] = useState(null);
+  const [isFavourite, setIsFavourite] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -152,6 +162,12 @@ const Product = () => {
     }
   };
 
+  useEffect(() => {
+    setIsFavourite(
+      favourite.some((p) => Math.floor(p.Code) == Math.floor(productCode))
+    );
+  }, [favourite, productCode]);
+
   if (loading) return <Loading />;
 
   return (
@@ -198,8 +214,8 @@ const Product = () => {
       </nav>
 
       <div className="relative flex flex-col justify-around lg:justify-between w-full mx-auto">
-        <div className="grid grid-cols-1 w-full lg:grid-cols-12">
-          <div className="col-span-1 lg:col-span-4 w-full space-y-3  ">
+        <div className="grid w-full grid-cols-12">
+          <div className="col-span-12 md:col-span-5 xl:col-span-4 w-full space-y-3  ">
             {data?.product?.product_images?.length > 0 ? (
               <div className="flex flex-col p-6 space-y-3">
                 <Swiper
@@ -219,9 +235,7 @@ const Product = () => {
                   {data?.product?.product_images.map((imageItem, index) => (
                     <SwiperSlide key={index}>
                       <img
-                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${
-                          imageItem?.PicName
-                        }.webp`}
+                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${imageItem?.PicName}.webp`}
                         alt={data?.product?.Name}
                         className="p-4 w-full object-cover rounded-2xl
                         bg-gray-100
@@ -234,9 +248,7 @@ const Product = () => {
                   {data?.product?.product_images.map((imageItem, index) => (
                     <img
                       key={index}
-                      src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${
-                        imageItem?.PicName
-                      }.webp`}
+                      src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${imageItem?.PicName}.webp`}
                       alt={data?.product?.Name}
                       className="col-span-3 w-full object-scale-down rounded-md
                       hover:cursor-pointer
@@ -249,9 +261,7 @@ const Product = () => {
                       onClick={() => {
                         setImageModal({
                           isOpen: true,
-                          image: `https://kidsshopapi.electroshop24.ir/products-image/webp/${
-                            imageItem?.PicName
-                          }.webp`,
+                          image: `https://kidsshopapi.electroshop24.ir/products-image/webp/${imageItem?.PicName}.webp`,
                         });
                       }}
                     />
@@ -265,7 +275,37 @@ const Product = () => {
               />
             )}
           </div>
-          <div className="col-span-1 px-6 lg:col-span-5 w-full flex flex-col justify-start gap-4">
+          <div className="col-span-12 px-6 md:col-span-7 xl:col-span-5 w-full flex flex-col justify-start gap-4">
+            <div className="w-full flex justify-between items-center">
+              <button onClick={() => toggleFavourite(data)}>
+                <FontAwesomeIcon
+                  icon={faBookmark}
+                  className={`text-2xl duration-300 ease-in-out
+                    
+                    ${
+                      isFavourite
+                        ? "text-Purple-500 hover:text-gray-500 "
+                        : "text-gray-500 hover:text-Purple-500"
+                    }`}
+                />
+              </button>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  toast.success("لینک کپی شد");
+                }}
+              >
+                <FontAwesomeIcon
+                  icon={faSquareShareNodes}
+                  className="text-2xl
+                hover:text-CarbonicBlue-500 duration-300 ease-in-out
+                "
+                />
+              </button>
+              <button onClick={() => toggleCompare(data)}>
+                <FontAwesomeIcon icon={faRestroom} className="text-2xl" />
+              </button>
+            </div>
             <div className="lg:text-2xl font-EstedadExtraBold text-xl py-5 text-center lg:text-start border-b text-CarbonicBlue-500 drop-shadow-sm my-6 ">
               {data?.product?.Name}
             </div>
@@ -359,7 +399,7 @@ const Product = () => {
               </button>
             </div>
           </div>
-          <div className="col-span-1 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2">
+          <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2">
             {cart?.length > 0 &&
             cart?.find(
               (item) => Math.floor(item?.item?.Code) === Math.floor(productCode)
@@ -442,7 +482,7 @@ const Product = () => {
           </h2>
           <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4">
             {data?.relatedProducts?.map((item, idx) => (
-              <ProductCard item={item} key={idx} colSpan="col-span-2" />
+              <ProductCard item={item} key={idx} colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 " />
             ))}
           </div>
         </>
@@ -456,7 +496,7 @@ const Product = () => {
           </h2>
           <div className="gap-4 grid grid-cols-12 py-6 lg:px-10 px-4">
             {data?.offeredProducts?.map((item, idx) => (
-              <ProductCard item={item} key={idx} />
+              <ProductCard item={item} key={idx} colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 " />
             ))}
           </div>
         </>

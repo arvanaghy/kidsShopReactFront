@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { throttle } from 'lodash';
+import { throttle } from "lodash";
 
 const MobileTopMenu = () => {
   const [searchModal, setSearchModal] = useState(false);
@@ -19,7 +19,7 @@ const MobileTopMenu = () => {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
-  
+
     const handleScroll = throttle(() => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY) {
@@ -29,7 +29,7 @@ const MobileTopMenu = () => {
       }
       lastScrollY = currentScrollY;
     }, 100); // Throttle to run every 100ms
-  
+
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -62,7 +62,7 @@ const MobileTopMenu = () => {
       }  flex flex-col justify-center items-center sticky top-0 
       shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600 p-0.5 overflow-y-auto`}
     >
-      <Link to="/">
+      <Link onContextMenu={(e) => e.preventDefault()} to="/">
         <img
           src="https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
           alt="Logo"
@@ -75,6 +75,7 @@ const MobileTopMenu = () => {
         items-center p-1.5 "
       >
         <Link
+          onContextMenu={(e) => e.preventDefault()}
           to={"/compare-products"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
@@ -84,6 +85,7 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faRestroom} />
         </Link>
         <Link
+          onContextMenu={(e) => e.preventDefault()}
           to={"/my-favourite"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
@@ -93,6 +95,7 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faBookmark} />
         </Link>
         <Link
+          onContextMenu={(e) => e.preventDefault()}
           to={"/offered-products"}
           className="
              w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
@@ -103,6 +106,7 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faCertificate} />
         </Link>
         <Link
+          onContextMenu={(e) => e.preventDefault()}
           to={"/best-selling-products"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
