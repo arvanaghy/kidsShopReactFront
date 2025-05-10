@@ -44,7 +44,7 @@ const Login = () => {
             toast.success(data?.message);
             navigateTo(
               `/SMS-validate/${phoneNumber}${
-                redirect && "?redirect=" + redirect
+                redirect ? "?redirect=" + redirect : ""
               }`
             );
             break;

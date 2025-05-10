@@ -39,7 +39,9 @@ const Register = () => {
       if (status == 202) {
         toast.success(data?.message);
         navigate(
-          `/SMS-validate/${phoneNumber}${redirect && "?redirect=" + redirect}`
+          `/SMS-validate/${phoneNumber}${
+            redirect ? "?redirect=" + redirect : ""
+          }`
         );
       } else if (status == 302) {
         navigate(`/login${redirect && "?redirect=" + redirect}`);

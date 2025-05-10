@@ -35,7 +35,7 @@ const SMSValidate = () => {
           setIsPending(false);
           toast.success(data.message);
           updateUser(data.result);
-          if (redirect) {
+          if (redirect && redirect != "") {
             navigateTo(redirect);
           } else {
             navigateTo("/profile");
