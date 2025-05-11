@@ -30,7 +30,7 @@ const OfferProductCard = ({ item }) => {
 
   return (
     <Link
-      onContextMenu={(e) => e.preventDefault()}
+      
       to={`/product/${item?.Code}`}
       className="grid grid-cols-12 bg-gray-100 rounded-xl h-full items-center justify-center w-full
       px-16

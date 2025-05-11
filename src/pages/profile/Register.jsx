@@ -197,7 +197,7 @@ const Register = () => {
           >
             <p className="w-full">قبلا ثبت نام کرده اید ؟</p>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/login"
               className="w-full font-medium text-red-600 hover:underline 
               transition-all ease-in-out duration-300

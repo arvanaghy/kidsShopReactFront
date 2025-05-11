@@ -113,7 +113,7 @@ const Footer = () => {
               دسترسی سریع
             </h3>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/offered-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -131,7 +131,7 @@ const Footer = () => {
               </div>
             </Link>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/best-selling-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -149,7 +149,7 @@ const Footer = () => {
               </div>
             </Link>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/categories"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -171,7 +171,7 @@ duration-300 transition-all ease-in-out
             </Link>
 
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/faq"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -192,7 +192,7 @@ duration-300 transition-all ease-in-out
               </div>
             </Link>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/about-us"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -213,7 +213,7 @@ duration-300 transition-all ease-in-out
               </div>
             </Link>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/contact-us"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >

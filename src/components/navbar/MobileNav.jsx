@@ -19,7 +19,7 @@ const MobileNav = () => {
       <div className="w-full h-full rotate-180 text-white flex flex-row justify-between items-center font-EstedadMedium">
         <div className="w-full grid grid-cols-6 justify-center items-center place-items-stretch h-full">
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/products"}
             className="flex flex-col items-center space-y-1.5"
           >
@@ -35,7 +35,7 @@ const MobileNav = () => {
           </Link>
           <div className="col-span-2"></div>
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/shopping-cart"}
             className="flex flex-col items-center py-2"
           >
@@ -50,7 +50,7 @@ const MobileNav = () => {
 
           {user?.Name !== undefined && user?.UToken !== undefined ? (
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to={"/profile"}
               className="flex flex-col items-center "
             >
@@ -59,7 +59,7 @@ const MobileNav = () => {
             </Link>
           ) : (
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to={"/login"}
               className="flex flex-col items-center"
             >
@@ -72,7 +72,7 @@ const MobileNav = () => {
 
       <div className="bg-white w-20 h-20 rounded-full absolute -bottom-4 border-2 border-CarbonicBlue-500 shadow-xl rotate-180 left-1/2 transform -translate-x-1/2 flex justify-center items-center">
         <Link
-          onContextMenu={(e) => e.preventDefault()}
+          
           to={"/"}
           className="text-3xl flex flex-col items-center justify-center text-CarbonicBlue-500"
         >

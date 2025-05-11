@@ -5,7 +5,7 @@ const TopBar = () => {
   return (
     <Link
       to="/offered-products"
-      onContextMenu={(e) => e.preventDefault()}
+      
       className="
       hidden md:flex
       w-full min-h-[50px] bg-gradient-to-r from-[#368cd8] to-[#082d60]  items-center justify-center flex-wrap md:py-2 xl:py-4 px-2 z-[102] shadow-lg"

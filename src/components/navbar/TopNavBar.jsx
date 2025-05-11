@@ -139,7 +139,7 @@ const TopNavBar = () => {
           {user?.Name !== undefined && user?.UToken !== undefined ? (
             <div>
               <Link
-                onContextMenu={(e) => e.preventDefault()}
+                
                 to="/profile"
                 className="flex flex-row items-center justify-center text-center align-middle  
                   hover:text-green-700 text-green-500 duration-300 transition-all ease-in-out 
@@ -156,7 +156,7 @@ const TopNavBar = () => {
           ) : (
             <div className="flex flex-row">
               <Link
-                onContextMenu={(e) => e.preventDefault()}
+                
                 to={"/login"}
                 className="flex flex-row items-center justify-center 
                     text-center text-gray-600 align-middle
@@ -173,7 +173,7 @@ const TopNavBar = () => {
             </div>
           )}
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/shopping-cart"}
             className="relative flex items-center justify-center text-center text-gray-700 group
             
@@ -247,7 +247,7 @@ const TopNavBar = () => {
                     </button>
                   ) : (
                     <Link
-                      onContextMenu={(e) => e.preventDefault()}
+                      
                       onClick={() => setDropDown(false)}
                       className="flex items-center justify-center w-full"
                       to={item.path}
@@ -292,7 +292,7 @@ const TopNavBar = () => {
                         >
                           {item?.navs.map((dropdownItem, idx) => (
                             <Link
-                              onContextMenu={(e) => e.preventDefault()}
+                              
                               onMouseEnter={() => {
                                 setCategoryImage(dropdownItem);
                               }}
@@ -354,7 +354,7 @@ const TopNavBar = () => {
                         </div>
 
                         <Link
-                          onContextMenu={(e) => e.preventDefault()}
+                          
                           onClick={() => setDropDown(false)}
                           to="/categories"
                           className="col-span-12 
@@ -376,7 +376,7 @@ pt-8 flex items-center justify-center text-center text-green-600 hover:text-gree
         </nav>
         <div className="w-full md:col-span-12 lg:col-span-4 xl:col-span-3 flex flex-row items-center md:justify-end xl:justify-end md:gap-x-5 md:px-2 xl:px-0 xl:gap-x-4 md:pb-2 lg:pb-0 md:text-xs 2xl:text-xl">
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/compare-products"}
             className="flex flex-row items-center
             hover:scale-105
@@ -389,7 +389,7 @@ pt-8 flex items-center justify-center text-center text-green-600 hover:text-gree
             />
           </Link>
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/my-favourite"}
             className="flex flex-row items-center
             hover:scale-105
@@ -402,7 +402,7 @@ pt-8 flex items-center justify-center text-center text-green-600 hover:text-gree
             />
           </Link>
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/offered-products"}
             className="
             flex flex-row  items-center justify-center
@@ -421,7 +421,7 @@ pt-8 flex items-center justify-center text-center text-green-600 hover:text-gree
             </span>
           </Link>
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={"/best-selling-products"}
             className="
             flex flex-row  items-center justify-center

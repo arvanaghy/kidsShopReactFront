@@ -4,8 +4,10 @@ import Footer from "@layouts/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
 import MobileNav from "@components/navbar/MobileNav";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UserContext from "@context/UserContext";
+
 import {
   faChevronUp,
   faSquarePhoneFlip,
@@ -18,6 +20,18 @@ const MainLayout = () => {
   const [contactWithUsModal, setContactWithUsModal] = useState(false);
   const contactWithUsModalRef = useRef(null);
   const contactWithUsButtonRef = useRef(null);
+  const { fetchCart } = useContext(UserContext);
+
+  useEffect(() => {
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+  function handleStorageChange(e) {
+    if (e.key === "KidsShop_cart") {
+      fetchCart();
+    }
+  }
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -90,7 +104,7 @@ const MainLayout = () => {
         onClick={() => {
           setContactWithUsModal((prev) => !prev);
         }}
-        className="fixed bottom-[12vh] md:bottom-[8vh] right-4 md:right-10  z-50 p-0 m-0"
+        className="fixed bottom-[12vh] md:bottom-[8vh] right-4 md:right-10 z-30 p-0 m-0"
       >
         <FontAwesomeIcon
           icon={faSquarePhoneFlip}
@@ -111,7 +125,7 @@ const MainLayout = () => {
         className={`fixed
           
           bottom-[20vh] right-4
-          md:bottom-[18vh] md:right-10 z-50 p-3 bg-gray-100 shadow-md shadow-gray-300 rounded-lg flex flex-col justify-center items-center gap-2
+          md:bottom-[18vh] md:right-10 z-30 p-3 bg-gray-100 shadow-md shadow-gray-300 rounded-lg flex flex-col justify-center items-center gap-2
           ${contactWithUsModal ? "" : "hidden"}
           `}
       >
@@ -119,9 +133,12 @@ const MainLayout = () => {
           <h2 className="font-EstedadExtraBold tracking-wide leading-relaxed py-0.5 text-center w-fit">
             ارتباط با ما
           </h2>
-          <button onClick={() => setContactWithUsModal(false)} className="p-1 w-fit
+          <button
+            onClick={() => setContactWithUsModal(false)}
+            className="p-1 w-fit
           hover:text-red-500 transition-all duration-300 ease-in-out
-          ">
+          "
+          >
             <FontAwesomeIcon icon={faXmark} />
           </button>
         </div>

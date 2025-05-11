@@ -109,7 +109,7 @@ const Categories = () => {
             {categories &&
               categories.map((item, idx) => (
                 <Link
-                  onContextMenu={(e) => e.preventDefault()}
+                  
                   key={idx}
                   to={`/category/${Math.floor(item.Code)}`}
                   className="flex flex-col items-center justify-between

@@ -19,7 +19,7 @@ const Page404 = () => {
               آدرس مورد نظر اشتباه است یا از سیستم پاک شده است
             </p>
             <Link
-              onContextMenu={(e) => e.preventDefault()}
+              
               to="/"
               className="inline-flex items-center font-EstedadMedium text-CarbonicBlue-500 hover:text-Purple-500 gap-x-1 hover:-translate-x-3 duration-300 transition-all ease-in-out"
             >

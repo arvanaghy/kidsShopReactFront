@@ -357,7 +357,7 @@ const BestSellingProducts = () => {
         {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={`/best-selling-products?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
@@ -374,7 +374,7 @@ const BestSellingProducts = () => {
             جدید ترین ها
           </Link>
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={`/best-selling-products?product_page=${1}${
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
@@ -392,7 +392,7 @@ const BestSellingProducts = () => {
             ارزان ترین ها
           </Link>
           <Link
-            onContextMenu={(e) => e.preventDefault()}
+            
             to={`/best-selling-products?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${

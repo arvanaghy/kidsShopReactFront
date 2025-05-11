@@ -360,7 +360,7 @@ const ShoppingCart = () => {
                   {/* info */}
                   <div className="col-span-12 md:col-span-9 flex flex-col place-self-start w-full text-black space-y-3 p-1 lg:p-3">
                     <Link
-                      onContextMenu={(e) => e.preventDefault()}
+                      
                       to={`/product/${item?.item?.Code}`}
                       className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
                     >
@@ -368,7 +368,7 @@ const ShoppingCart = () => {
                     </Link>
                     <div className="w-full flex flex-row items-center gap-3 text-sm text-center">
                       <Link
-                        onContextMenu={(e) => e.preventDefault()}
+                        
                         className="block text-gray-500
                                 hover:text-gray-700
                                 duration-300 ease-in-out transition-all
@@ -378,7 +378,7 @@ const ShoppingCart = () => {
                         {item?.item?.GName}
                       </Link>
                       <Link
-                        onContextMenu={(e) => e.preventDefault()}
+                        
                         className="block text-gray-500
                         hover:text-gray-700
                         duration-300 ease-in-out transition-all

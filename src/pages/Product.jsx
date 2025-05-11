@@ -182,7 +182,7 @@ const Product = () => {
           <ol className="inline-flex items-center space-x-2 ">
             <li className="inline-flex items-center font-EstedadMedium">
               <Link
-                onContextMenu={(e) => e.preventDefault()}
+                
                 to="/"
                 className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
                 text-xs
@@ -202,7 +202,7 @@ const Product = () => {
                   className="text-sm md:text-lg p-1"
                 />
                 <Link
-                  onContextMenu={(e) => e.preventDefault()}
+                  
                   to={`/category/${Math.floor(data?.product?.GCode)}`}
                   className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
                 text-xs
@@ -219,7 +219,7 @@ const Product = () => {
                   className="text-sm md:text-lg p-1"
                 />
                 <Link
-                  onContextMenu={(e) => e.preventDefault()}
+                  
                   to={`/sub-category-products/${Math.floor(
                     data?.product?.SCode
                   )}`}

@@ -89,7 +89,6 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       <div className="rounded-b-lg px-3 flex flex-col font-EstedadMedium w-full bg-gray-300/90 text-white flex-grow">
         <div className="flex flex-col justify-between items-center w-full h-full">
           <Link
-            onContextMenu={(e) => e.preventDefault()}
             to={`/product/${Math.floor(item?.Code)}`}
             className="z-20 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm lg:font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out"
           >
