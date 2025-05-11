@@ -287,12 +287,15 @@ const Product = () => {
           </button>
 
           <button onClick={() => toggleCompare(data)}>
-            <FontAwesomeIcon icon={faRestroom}  className={`text-2xl duration-300 ease-in-out
+            <FontAwesomeIcon
+              icon={faRestroom}
+              className={`text-2xl duration-300 ease-in-out
                     ${
-                      isFavourite
+                      isCompared
                         ? "text-Purple-500 hover:text-gray-500 "
                         : "text-gray-500 hover:text-Purple-500"
-                    }`} />
+                    }`}
+            />
           </button>
         </div>
       </div>

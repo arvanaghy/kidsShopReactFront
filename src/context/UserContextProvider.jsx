@@ -160,6 +160,10 @@ const UserContextProvider = ({ children }) => {
     if (loading) return;
     try {
       setLoading(true);
+      if (__compareList.length > 4) {
+        __compareList.shift();
+        toast.error("حداکثر 4 محصول را میتوانید مقایسه کنید.");
+      }
       setCompareList(__compareList);
       window.localStorage.setItem(
         "KidsShop_compareList",

@@ -32,7 +32,6 @@ const OrderDetails = () => {
       if (status !== 201) throw new Error(data?.message);
       setOrderDetail(data?.result?.data);
       setDetailsLink(data?.result?.links);
-      console.log("getOrderDetails", data?.result?.data);
     } catch (error) {
       toast.error(
         "جزییات سفارش " + (error?.response?.data?.message || error?.message) ||

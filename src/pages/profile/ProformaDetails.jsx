@@ -6,10 +6,7 @@ import UserContext from "@context/UserContext";
 import axios from "axios";
 import Loading from "@components/Loading";
 import toast from "react-hot-toast";
-import {
-  formatCurrencyDisplay,
-  
-} from "@utils/numeralHelpers";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 
 const ProformaDetails = () => {
   const { orderCode } = useParams();
@@ -33,7 +30,6 @@ const ProformaDetails = () => {
       if (status !== 201) throw new Error(data?.message);
       setOrderDetail(data?.result?.data);
       setDetailsLink(data?.result?.links);
-      console.log("getOrderDetails", data?.result?.data);
     } catch (error) {
       toast.error(
         "جزییات سفارش " + (error?.response?.data?.message || error?.message) ||
@@ -58,9 +54,9 @@ const ProformaDetails = () => {
 
   return (
     <ProfileLayout>
-      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start" >
+      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start">
         <p className="text-lg md:text-xl font-EstedadExtraBold">
-         جزییات پیش فاکتور 
+          جزییات پیش فاکتور
         </p>
         <p className="text-lg md:text-xl font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
           {orderCode && formatCurrencyDisplay(orderCode)}

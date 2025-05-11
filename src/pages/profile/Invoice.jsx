@@ -35,7 +35,6 @@ const Invoice = () => {
       if (status !== 201) throw new Error(data?.message);
       setInvoiceList(data?.result?.data);
       setLinks(data?.result?.links);
-      console.log("fetchInvoice", data?.result?.data);
     } catch (error) {
       toast.error(
         " دریافت گردش حساب " +
