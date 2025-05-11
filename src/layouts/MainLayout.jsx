@@ -90,11 +90,11 @@ const MainLayout = () => {
         onClick={() => {
           setContactWithUsModal((prev) => !prev);
         }}
-        className="fixed bottom-[8vh] right-10  z-50 p-0 m-0"
+        className="fixed bottom-[12vh] md:bottom-[8vh] right-4 md:right-10  z-50 p-0 m-0"
       >
         <FontAwesomeIcon
           icon={faSquarePhoneFlip}
-          className={`text-6xl  opacity-70 
+          className={`text-6xl opacity-90 lg:opacity-70 
            
           duration-300 ease-in-out transition-all
         ${
@@ -108,7 +108,10 @@ const MainLayout = () => {
       <form
         ref={contactWithUsModalRef}
         onSubmit={(e) => contactWithUsFromSubmit(e)}
-        className={`fixed bottom-[18vh] right-10 z-50 p-3 bg-gray-100 shadow-md shadow-gray-300 rounded-lg flex flex-col justify-center items-center gap-2
+        className={`fixed
+          
+          bottom-[20vh] right-4
+          md:bottom-[18vh] md:right-10 z-50 p-3 bg-gray-100 shadow-md shadow-gray-300 rounded-lg flex flex-col justify-center items-center gap-2
           ${contactWithUsModal ? "" : "hidden"}
           `}
       >
