@@ -3,7 +3,8 @@ import UserContext from "@context/UserContext";
 import { Link } from "react-router-dom";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const ComparePage = () => {
   const { compareList, updateCompareList } = useContext(UserContext);
@@ -28,7 +29,7 @@ const ComparePage = () => {
             {compareList.map((item, index) => (
               <div
                 key={index}
-                className="w-full col-span-3 flex flex-col justify-center items-start lg:space-y-6 space-y-1
+                className="relative w-full col-span-3 flex flex-col justify-center items-start lg:space-y-6 space-y-1
                 md:space-y-3 border-x-2"
               >
                 <img
@@ -42,6 +43,19 @@ const ComparePage = () => {
                   }}
                   className="w-full rounded-t-lg object-contain aspect-square"
                 />
+                <button>
+                  <FontAwesomeIcon
+                    icon={faTimes}
+                    className="absolute top-2 left-2 text-CarbonicBlue-500"
+                    onClick={() => {
+                      updateCompareList(
+                        compareList.filter(
+                          (p) => Math.floor(p.Code) !== Math.floor(item.Code)
+                        )
+                      );
+                    }}
+                  />
+                </button>
                 <Link
                   to={`/product/${item?.Code}`}
                   className="w-full text-center font-EstedadExtraBold
