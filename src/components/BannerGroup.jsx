@@ -20,7 +20,8 @@ const BannerGroup = ({ banners = [] }) => {
             <img
               src={item?.image || fallbackImage}
               alt={item?.title || "no-image"}
-              className="w-full object-cover shadow-sm shadow-black/60 rounded-xl"
+              className="w-full object-fill shadow-sm shadow-black/60 rounded-xl  aspect-video
+"
             />
           </Link>
         ))}

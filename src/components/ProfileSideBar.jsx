@@ -71,7 +71,7 @@ const ProfileSideBar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed w-full  h-full bg-CarbonicBlue-500 text-white z-20 transform ${
+        className={`fixed w-full  h-full bg-gray-400 text-white z-20 transform ${
           isNavOpen ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:w-full md:max-w-none  `}
       >
