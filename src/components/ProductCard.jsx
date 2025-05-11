@@ -9,6 +9,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
   const { user } = useContext(UserContext);
@@ -38,6 +39,26 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
         .map((item) => item.SizeNum)
     ),
   ];
+
+  const toggleFavourite = (item) => {
+    if (isFavourite) {
+      updateFavourite(favourite.filter((p) => p.Code !== item.Code));
+      toast.error("محصول مورد نظر از علاقه مندی ها حذف شد.");
+    } else {
+      updateFavourite([...favourite, item]);
+      toast.success("محصول مورد نظر به علاقه مندی ها اضافه شد.");
+    }
+  };
+
+  const toggleCompare = (item) => {
+    if (isCompared) {
+      updateCompareList(compareList.filter((p) => p.Code !== item.Code));
+      toast.error("محصول مورد نظر از لیست مقایسه حذف شد.");
+    } else {
+      updateCompareList([...compareList, item]);
+      toast.success("محصول مورد نظر به لیست مقایسه اضافه شد.");
+    }
+  };
 
   return (
     <div

@@ -32,13 +32,14 @@ import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 const Product = () => {
   const { productCode } = useParams();
 
-  const { favourite, toggleFavourite } = useContext(UserContext);
-  const { compareList, toggleCompare } = useContext(UserContext);
+  const { favourite, updateFavourite } = useContext(UserContext);
+  const { compareList, updateCompareList } = useContext(UserContext);
 
   const { cart, updateCart } = useContext(UserContext);
 
   const [feature, setFeature] = useState(null);
   const [isFavourite, setIsFavourite] = useState(false);
+  const [isCompared, setIsCompared] = useState(false);
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -169,6 +170,34 @@ const Product = () => {
     );
   }, [favourite, productCode]);
 
+  useEffect(() => {
+    setIsCompared(
+      compareList.some((p) => Math.floor(p.Code) == Math.floor(productCode))
+    );
+  }, [compareList, productCode]);
+
+  const toggleFavourite = (item) => {
+    if (isFavourite) {
+      updateFavourite(favourite.filter((p) => p.Code !== item?.product?.Code));
+      toast.error("محصول مورد نظر از علاقه مندی ها حذف شد.");
+    } else {
+      updateFavourite([...favourite, item?.product]);
+      toast.success("محصول مورد نظر به علاقه مندی ها اضافه شد.");
+    }
+  };
+
+  const toggleCompare = (item) => {
+    if (isCompared) {
+      updateCompareList(
+        compareList.filter((p) => p.Code !== item?.product?.Code)
+      );
+      toast.error("محصول مورد نظر از مقایسه ها حذف شد.");
+    } else {
+      updateCompareList([...compareList, item?.product]);
+      toast.success("محصول مورد نظر به مقایسه ها اضافه شد.");
+    }
+  };
+
   if (loading) return <Loading />;
 
   return (
@@ -182,7 +211,6 @@ const Product = () => {
           <ol className="inline-flex items-center space-x-2 ">
             <li className="inline-flex items-center font-EstedadMedium">
               <Link
-                
                 to="/"
                 className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
                 text-xs
@@ -202,7 +230,6 @@ const Product = () => {
                   className="text-sm md:text-lg p-1"
                 />
                 <Link
-                  
                   to={`/category/${Math.floor(data?.product?.GCode)}`}
                   className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
                 text-xs
@@ -219,7 +246,6 @@ const Product = () => {
                   className="text-sm md:text-lg p-1"
                 />
                 <Link
-                  
                   to={`/sub-category-products/${Math.floor(
                     data?.product?.SCode
                   )}`}
@@ -233,8 +259,9 @@ const Product = () => {
             </li>
           </ol>
         </nav>
-        <div className="flex w-fit flex-row  justify-between items-center gap-6">
+        <div className="flex w-fit  flex-row  justify-between items-center gap-6">
           <button
+            className="bg-black rounded-lg px-1.5 py-1 hover:bg-purple-500 duration-300 ease-in-out"
             onClick={() => {
               navigator.clipboard.writeText(window.location.href);
               toast.success("لینک کپی شد");
@@ -242,8 +269,8 @@ const Product = () => {
           >
             <FontAwesomeIcon
               icon={faSquareShareNodes}
-              className="text-2xl
-                hover:text-CarbonicBlue-500 duration-300 ease-in-out
+              className="text-xl text-white
+                
                 "
             />
           </button>
@@ -260,7 +287,12 @@ const Product = () => {
           </button>
 
           <button onClick={() => toggleCompare(data)}>
-            <FontAwesomeIcon icon={faRestroom} className="text-2xl" />
+            <FontAwesomeIcon icon={faRestroom}  className={`text-2xl duration-300 ease-in-out
+                    ${
+                      isFavourite
+                        ? "text-Purple-500 hover:text-gray-500 "
+                        : "text-gray-500 hover:text-Purple-500"
+                    }`} />
           </button>
         </div>
       </div>
@@ -403,9 +435,11 @@ const Product = () => {
                 <div className="font-EstedadExtraBold text-start  text-Purple-500 text-base lg:text-xl py-4">
                   توضیحات :
                 </div>
-                <ul className="list-disc marker:text-CarbonicBlue-500 
+                <ul
+                  className="list-disc marker:text-CarbonicBlue-500 
                 md:pr-2
-                lg:pr-6 space-y-2 text-start font-EstedadLight">
+                lg:pr-6 space-y-2 text-start font-EstedadLight"
+                >
                   {data?.product?.Comment.split("\r\n").map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
