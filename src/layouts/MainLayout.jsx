@@ -20,7 +20,8 @@ const MainLayout = () => {
   const [contactWithUsModal, setContactWithUsModal] = useState(false);
   const contactWithUsModalRef = useRef(null);
   const contactWithUsButtonRef = useRef(null);
-  const { fetchCart } = useContext(UserContext);
+  const { fetchCart, fetchUser, fetchCompareList, fetchFavourite, fetchOrder } =
+    useContext(UserContext);
 
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);
@@ -30,6 +31,18 @@ const MainLayout = () => {
   function handleStorageChange(e) {
     if (e.key === "KidsShop_cart") {
       fetchCart();
+    }
+    if (e.key === "KidsShop_user") {
+      fetchUser();
+    }
+    if (e.key === "KidsShop_compareList") {
+      fetchCompareList();
+    }
+    if (e.key === "KidsShop_favourite") {
+      fetchFavourite();
+    }
+    if (e.key === "KidsShop_order") {
+      fetchOrder();
     }
   }
 

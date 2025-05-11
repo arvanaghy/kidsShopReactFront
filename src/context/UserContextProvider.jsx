@@ -8,19 +8,20 @@ const UserContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [order, setOrder] = useState([]);
   const [favourite, setFavourite] = useState([]);
+  const [compareList, setCompareList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchUser = () => {
     if (loading) return;
     try {
       setLoading(true);
-      const _user = window.localStorage.getItem("KidsShop_User");
+      const _user = window.localStorage.getItem("KidsShop_user");
       if (_user) {
         setUser(JSON.parse(_user));
       }
     } catch (err) {
       toast.error("fetchUser Context Error:" + err.message);
-      window.localStorage.removeItem("KidsShop_User");
+      window.localStorage.removeItem("KidsShop_user");
       setUser([]);
     } finally {
       setLoading(false);
@@ -76,15 +77,31 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const fetchCompareList = () => {
+    if (loading) return;
+    try {
+      const _compareList = window.localStorage.getItem("KidsShop_compareList");
+      if (_compareList) {
+        setCompareList(JSON.parse(_compareList));
+      }
+    } catch (err) {
+      toast.error("fetchCompareList Context Error:" + err.message);
+      window.localStorage.removeItem("KidsShop_compareList");
+      setCompareList([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const updateUser = (__user) => {
     if (loading) return;
     try {
       setLoading(true);
-      window.localStorage.setItem("KidsShop_User", JSON.stringify(__user));
+      window.localStorage.setItem("KidsShop_user", JSON.stringify(__user));
       setUser(__user);
     } catch (err) {
       toast.error("updateUser Context Error:" + err.message);
-      window.localStorage.removeItem("KidsShop_User");
+      window.localStorage.removeItem("KidsShop_user");
       setUser([]);
     } finally {
       setLoading(false);
@@ -121,14 +138,14 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const updateFavourite = (newFavourite) => {
+  const updateFavourite = (__favourite) => {
     if (loading) return;
     try {
       setLoading(true);
-      setFavourite(newFavourite);
+      setFavourite(__favourite);
       window.localStorage.setItem(
         "KidsShop_favourite",
-        JSON.stringify(newFavourite)
+        JSON.stringify(__favourite)
       );
     } catch (err) {
       setFavourite([]);
@@ -139,38 +156,22 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const toggleFavourite = (product) => {
-    const exists = favourite.find(
-      (f) => Math.floor(f.Code) == Math.floor(product.Code)
-    );
-    const newFavourite = exists
-      ? favourite.filter((f) => f.Code !== product.Code)
-      : [...favourite, product];
-    updateFavourite(newFavourite);
-  };
-
-  const [compareList, setCompareList] = useState([]);
-
-  const toggleCompare = (product) => {
-    const exists = compareList.find((p) => p.Code === product.Code);
-
-    let updated;
-    if (exists) {
-      updated = compareList.filter((p) => p.Code !== product.Code);
-    } else if (compareList.length < 3) {
-      updated = [...compareList, product];
-    } else {
-      toast.error("You can only compare 3 products at a time.");
-      return;
+  const updateCompareList = (__compareList) => {
+    if (loading) return;
+    try {
+      setLoading(true);
+      setCompareList(__compareList);
+      window.localStorage.setItem(
+        "KidsShop_compareList",
+        JSON.stringify(__compareList)
+      );
+    } catch (err) {
+      setCompareList([]);
+      toast.error("updateCompareList Error:" + err.message);
+      window.localStorage.removeItem("KidsShop_compareList");
+    } finally {
+      setLoading(false);
     }
-
-    setCompareList(updated);
-    window.localStorage.setItem("KidsShop_compare", JSON.stringify(updated));
-  };
-
-  const clearCompare = () => {
-    setCompareList([]);
-    window.localStorage.removeItem("KidsShop_compare");
   };
 
   useEffect(() => {
@@ -178,8 +179,7 @@ const UserContextProvider = ({ children }) => {
     fetchCart();
     fetchOrder();
     fetchFavourite();
-    const saved = localStorage.getItem("KidsShop_compare");
-    if (saved) setCompareList(JSON.parse(saved));
+    fetchCompareList();
   }, []);
 
   return (
@@ -187,17 +187,19 @@ const UserContextProvider = ({ children }) => {
       value={{
         user,
         updateUser,
-        fetchCart,
+        fetchUser,
         cart,
         updateCart,
+        fetchCart,
         order,
         updateOrder,
+        fetchOrder,
         favourite,
         updateFavourite,
-        toggleFavourite,
+        fetchFavourite,
         compareList,
-        toggleCompare,
-        clearCompare,
+        updateCompareList,
+        fetchCompareList,
       }}
     >
       {children}

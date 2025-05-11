@@ -12,10 +12,14 @@ import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
   const { user } = useContext(UserContext);
-  const { favourite, toggleFavourite } = useContext(UserContext);
-  const isFavourite = favourite?.some((f) => f.Code === item.Code);
-  const { compareList, toggleCompare } = useContext(UserContext);
-  const isCompared = compareList.some((p) => p.Code === item.Code);
+  const { favourite, updateFavourite } = useContext(UserContext);
+  const isFavourite = favourite?.some(
+    (f) => Math.floor(f.Code) === Math.floor(item.Code)
+  );
+  const { compareList, updateCompareList } = useContext(UserContext);
+  const isCompared = compareList.some(
+    (p) => Math.floor(p.Code) === Math.floor(item.Code)
+  );
   const uniqueColorCodes = [
     ...new Map(
       item?.product_size_color
