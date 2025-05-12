@@ -20,7 +20,7 @@ const UnconfirmedOrders = () => {
   const [totalOrder, setTotalOrder] = useState(0);
 
   const fetchOrders = async (
-    orderUrl = "https://kidsshopapi.electroshop24.ir/api/v1/list-unverified-orders?page=1"
+    orderUrl = "https://api.kidsshop110.ir/api/v1/list-unverified-orders?page=1"
   ) => {
     if (isOrderloading) return;
 
@@ -64,7 +64,7 @@ const UnconfirmedOrders = () => {
   useEffect(() => {
     if (user?.UToken !== "") {
       fetchOrders(
-        "https://kidsshopapi.electroshop24.ir/api/v1/list-unverified-orders?page=1"
+        "https://api.kidsshop110.ir/api/v1/list-unverified-orders?page=1"
       );
     }
   }, [user]);

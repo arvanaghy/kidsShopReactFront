@@ -8,7 +8,7 @@ const AboutUs = () => {
   const getData = async () => {
     try {
       const { data, status } = await axios.get(
-        "https://kidsshopapi.electroshop24.ir/api/v1/about-us",
+        "https://api.kidsshop110.ir/api/v1/about-us",
         {
           headers: {
             cache: "no-cache",

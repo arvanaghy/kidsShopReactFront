@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const BannerGroup = ({ banners = [] }) => {
   const fallbackImage =
-    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+    "https://api.kidsshop110.ir/No_Image_Available.jpg";
 
   const items = banners.length > 0 ? banners : [{}, {}];
   return (

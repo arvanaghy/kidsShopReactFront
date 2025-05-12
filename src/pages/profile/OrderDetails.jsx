@@ -46,7 +46,7 @@ const OrderDetails = () => {
     if (!orderCode) return;
     if (!user?.UToken) return;
     getOrderDetails(
-      `https://kidsshopapi.electroshop24.ir/api/v1/list-past-orders-products/${Math.floor(
+      `https://api.kidsshop110.ir/api/v1/list-past-orders-products/${Math.floor(
         orderCode
       )}?page=1`
     );

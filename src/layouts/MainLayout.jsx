@@ -78,7 +78,7 @@ const MainLayout = () => {
     e.preventDefault();
     try {
       const { data, status } = await axios.post(
-        "https://kidsshopapi.electroshop24.ir/api/v1/contact-us",
+        "https://api.kidsshop110.ir/api/v1/contact-us",
         {
           info: e.target.info.value,
           contact: e.target.contact.value,

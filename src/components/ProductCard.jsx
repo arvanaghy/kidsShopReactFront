@@ -67,13 +67,13 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all">
         <img
-          src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${item?.PicName}.webp`}
+          src={`https://api.kidsshop110.ir/products-image/webp/${item?.PicName}.webp`}
           alt={item?.Name}
           loading="lazy"
           onError={(e) => {
             e.target.onerror = null;
             e.target.src =
-              "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+              "https://api.kidsshop110.ir/No_Image_Available.jpg";
           }}
           className="w-full rounded-t-lg object-scale-down h-full"
         />

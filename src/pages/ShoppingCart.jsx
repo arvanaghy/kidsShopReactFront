@@ -33,7 +33,7 @@ const ShoppingCart = () => {
     if (user == true) {
       try {
         const { data, status } = await axios.get(
-          `https://kidsshopapi.electroshop24.ir/api/v1/customer-category/${Math.floor(
+          `https://api.kidsshop110.ir/api/v1/customer-category/${Math.floor(
             user?.CodeGroup
           )}`,
           {
@@ -57,7 +57,7 @@ const ShoppingCart = () => {
   const fetchTransferServices = async () => {
     try {
       const { data, status } = await axios.get(
-        "https://kidsshopapi.electroshop24.ir/api/v1/list-transfer-services",
+        "https://api.kidsshop110.ir/api/v1/list-transfer-services",
         {
           headers: {
             cache: "no-cache",
@@ -132,7 +132,7 @@ const ShoppingCart = () => {
       setIsPending(true);
       try {
         const { data, status } = await axios.post(
-          "https://kidsshopapi.electroshop24.ir/api/v2/submit-order",
+          "https://api.kidsshop110.ir/api/v2/submit-order",
           {
             products: orderData,
             signature: null,
@@ -211,7 +211,7 @@ const ShoppingCart = () => {
       setIsPending(true);
       try {
         const { data, status } = await axios.post(
-          "https://kidsshopapi.electroshop24.ir/api/v2/submit-order",
+          "https://api.kidsshop110.ir/api/v2/submit-order",
           {
             products: orderData,
             description: description,
@@ -245,13 +245,13 @@ const ShoppingCart = () => {
     setIsPending(false);
     try {
       const { data, status } = await axios.get(
-        `https://kidsshopapi.electroshop24.ir/api/v1/check-online-payment-available`
+        `https://api.kidsshop110.ir/api/v1/check-online-payment-available`
       );
       if (status !== 201) throw new Error(data?.message);
       setIsPending(false);
       updateCart([]);
       updateOrder([]);
-      window.location.href = `https://kidsshopapi.electroshop24.ir/api/v1/checkout-with-order?BearerToken=${user?.UToken}&orderCode=${_order?.Code}`;
+      window.location.href = `https://api.kidsshop110.ir/api/v1/checkout-with-order?BearerToken=${user?.UToken}&orderCode=${_order?.Code}`;
       toast.success("پیش فاکتور شما در سیستم ثبت شد. ");
     } catch (error) {
       setIsPending(false);
@@ -345,14 +345,14 @@ const ShoppingCart = () => {
                         .map((img, idx) => (
                           <img
                             key={idx}
-                            src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${img?.PicName}.webp`}
+                            src={`https://api.kidsshop110.ir/products-image/webp/${img?.PicName}.webp`}
                             alt={item?.item?.Name}
                             className="w-full object-cover rounded-xl"
                           />
                         ))
                     ) : (
                       <img
-                        src="https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
+                        src="https://api.kidsshop110.ir/No_Image_Available.jpg"
                         className="w-full t object-cover rounded-2xl shadow-lg shadow-gray-300"
                       />
                     )}

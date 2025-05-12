@@ -111,7 +111,7 @@ const OfferedProducts = () => {
 
   useEffect(() => {
     // fetchData(
-    //   `https://kidsshopapi.electroshop24.ir/api/v2/list-all-offers?product_page=${product_page}${
+    //   `https://api.kidsshop110.ir/api/v2/list-all-offers?product_page=${product_page}${
     //     search != null ? `&search=${search}` : ""
     //   }${size != null ? `&size=${size}` : ""}${
     //     color != null ? `&color=${color}` : ""
@@ -124,7 +124,7 @@ const OfferedProducts = () => {
     //   }`
     // );
     fetchData(
-      `https://kidsshopapi.electroshop24.ir/api/v2/list-all-offers?product_page=${product_page}${
+      `https://api.kidsshop110.ir/api/v2/list-all-offers?product_page=${product_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -419,7 +419,7 @@ const OfferedProducts = () => {
                   onClick={() => {
                     navigate(
                       link?.url.replace(
-                        "https://kidsshopapi.electroshop24.ir/api/v2/list-all-offers",
+                        "https://api.kidsshop110.ir/api/v2/list-all-offers",
                         "/offered-products"
                       )
                     );

@@ -48,7 +48,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchData("https://kidsshopapi.electroshop24.ir/api/v2/home-page");
+    fetchData("https://api.kidsshop110.ir/api/v2/home-page");
   }, []);
 
   if (loading) return <Loading />;

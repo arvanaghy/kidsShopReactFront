@@ -77,7 +77,7 @@ const Product = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchData(
-      `https://kidsshopapi.electroshop24.ir/api/v2/show-product/${productCode}`
+      `https://api.kidsshop110.ir/api/v2/show-product/${productCode}`
     );
   }, [productCode]);
 
@@ -327,7 +327,7 @@ const Product = () => {
                   {data?.product?.product_images.map((imageItem, index) => (
                     <SwiperSlide key={index}>
                       <img
-                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${imageItem?.PicName}.webp`}
+                        src={`https://api.kidsshop110.ir/products-image/webp/${imageItem?.PicName}.webp`}
                         alt={data?.product?.Name}
                         className="p-4 w-full object-cover rounded-2xl
                         bg-gray-100
@@ -340,7 +340,7 @@ const Product = () => {
                   {data?.product?.product_images.map((imageItem, index) => (
                     <img
                       key={index}
-                      src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${imageItem?.PicName}.webp`}
+                      src={`https://api.kidsshop110.ir/products-image/webp/${imageItem?.PicName}.webp`}
                       alt={data?.product?.Name}
                       className="col-span-3 w-full object-scale-down rounded-md
                       hover:cursor-pointer
@@ -353,7 +353,7 @@ const Product = () => {
                       onClick={() => {
                         setImageModal({
                           isOpen: true,
-                          image: `https://kidsshopapi.electroshop24.ir/products-image/webp/${imageItem?.PicName}.webp`,
+                          image: `https://api.kidsshop110.ir/products-image/webp/${imageItem?.PicName}.webp`,
                         });
                       }}
                     />
@@ -362,7 +362,7 @@ const Product = () => {
               </div>
             ) : (
               <img
-                src="https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
+                src="https://api.kidsshop110.ir/No_Image_Available.jpg"
                 className="w-full t object-cover rounded-2xl shadow-lg shadow-gray-300"
               />
             )}

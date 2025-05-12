@@ -64,7 +64,7 @@ const MobileTopMenu = () => {
     >
       <Link  to="/">
         <img
-          src="https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg"
+          src="https://api.kidsshop110.ir/No_Image_Available.jpg"
           alt="Logo"
           className="h-16 w-full object-scale-down
         py-1.5"

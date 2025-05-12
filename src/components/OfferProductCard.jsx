@@ -100,7 +100,7 @@ const OfferProductCard = ({ item }) => {
                 .map((product_image_item, idx) => (
                   <div key={idx} className="w-full">
                     <img
-                      src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
+                      src={`https://api.kidsshop110.ir/products-image/webp/${Math.floor(
                         item?.GCode
                       )}/${Math.floor(item?.SCode)}/${
                         product_image_item?.PicName
@@ -110,7 +110,7 @@ const OfferProductCard = ({ item }) => {
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src =
-                          "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+                          "https://api.kidsshop110.ir/No_Image_Available.jpg";
                       }}
                       className="w-full rounded-lg object-scale-down h-full"
                     />
@@ -126,7 +126,7 @@ const OfferProductCard = ({ item }) => {
                   .map((product_image_item, idx) => (
                     <div className="w-full h-full" key={idx}>
                       <img
-                        src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${Math.floor(
+                        src={`https://api.kidsshop110.ir/products-image/webp/${Math.floor(
                           item?.GCode
                         )}/${Math.floor(item?.SCode)}/${
                           product_image_item?.PicName
@@ -136,7 +136,7 @@ const OfferProductCard = ({ item }) => {
                         onError={(e) => {
                           e.target.onerror = null;
                           e.target.src =
-                            "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+                            "https://api.kidsshop110.ir/No_Image_Available.jpg";
                         }}
                         className="w-full rounded-lg object-cover h-full"
                       />

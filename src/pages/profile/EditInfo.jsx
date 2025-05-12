@@ -25,7 +25,7 @@ const EditInfo = () => {
     try {
       setIsPending(true);
       const { data, status } = await axios.post(
-        "https://kidsshopapi.electroshop24.ir/api/v1/edit-user-info",
+        "https://api.kidsshop110.ir/api/v1/edit-user-info",
         {
           Name: name,
           Phone: tell,

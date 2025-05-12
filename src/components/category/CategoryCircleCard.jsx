@@ -23,7 +23,7 @@ const CategoryCircleCard = ({
     >
       <img
         src={
-          "https://kidsshopapi.electroshop24.ir/category-images/webp/" +
+          "https://api.kidsshop110.ir/category-images/webp/" +
           `${item?.PicName}.webp`
         }
         alt={item?.Name}

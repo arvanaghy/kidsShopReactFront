@@ -16,7 +16,7 @@ const Checkout = () => {
     setIsPending(true);
     try {
       const { data, status } = await axios.get(
-        `https://kidsshopapi.electroshop24.ir/api/v1/check-online-payment-available`,
+        `https://api.kidsshop110.ir/api/v1/check-online-payment-available`,
         {
           headers: {
             cache: "no-cache",
@@ -27,7 +27,7 @@ const Checkout = () => {
       setIsPending(false);
       updateCart([]);
       updateOrder([]);
-      window.location.href = `https://kidsshopapi.electroshop24.ir/api/v1/checkout-with-order?BearerToken=${user.UToken}&orderCode=${order.Code}`;
+      window.location.href = `https://api.kidsshop110.ir/api/v1/checkout-with-order?BearerToken=${user.UToken}&orderCode=${order.Code}`;
       toast.success("پیش فاکتور شما در سیستم ثبت شد. ");
     } catch (error) {
       setIsPending(false);

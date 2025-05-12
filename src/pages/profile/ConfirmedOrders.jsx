@@ -22,7 +22,7 @@ const ConfirmedOrders = () => {
 
 
   const fetchOrders = async (
-    orderUrl = "https://kidsshopapi.electroshop24.ir/api/v1/list-past-orders?page=1"
+    orderUrl = "https://api.kidsshop110.ir/api/v1/list-past-orders?page=1"
   ) => {
     try {
       const { data, status } = await axios.get(orderUrl, {
@@ -69,7 +69,7 @@ const ConfirmedOrders = () => {
   useEffect(() => {
     if (user?.UToken !== "") {
       fetchOrders(
-        "https://kidsshopapi.electroshop24.ir/api/v1/list-past-orders?page=1"
+        "https://api.kidsshop110.ir/api/v1/list-past-orders?page=1"
       );
     }
   }, [user]);

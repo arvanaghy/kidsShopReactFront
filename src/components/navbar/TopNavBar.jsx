@@ -66,7 +66,7 @@ const TopNavBar = () => {
   ];
 
   useEffect(() => {
-    fetchCategories("https://kidsshopapi.electroshop24.ir/api/v2/top-menu");
+    fetchCategories("https://api.kidsshop110.ir/api/v2/top-menu");
   }, []);
 
   useEffect(() => {}, [cart]);
@@ -336,12 +336,12 @@ const TopNavBar = () => {
                             justify-center"
                             >
                               <img
-                                src={`https://kidsshopapi.electroshop24.ir/category-images/webp/${categoryImage?.PicName}.webp`}
+                                src={`https://api.kidsshop110.ir/category-images/webp/${categoryImage?.PicName}.webp`}
                                 alt={categoryImage?.Name}
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src =
-                                    "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+                                    "https://api.kidsshop110.ir/No_Image_Available.jpg";
                                 }}
                                 className=" rounded-lg 
                                 md:w-32 md:h-32

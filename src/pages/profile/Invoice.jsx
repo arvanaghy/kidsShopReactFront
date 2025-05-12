@@ -85,9 +85,9 @@ const Invoice = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchInvoice(
-      "https://kidsshopapi.electroshop24.ir/api/v1/list-past-invoice?page=1"
+      "https://api.kidsshop110.ir/api/v1/list-past-invoice?page=1"
     );
-    fetchBalance("https://kidsshopapi.electroshop24.ir/api/v1/account-balance");
+    fetchBalance("https://api.kidsshop110.ir/api/v1/account-balance");
   }, []);
 
   if (loading) return <Loading />;

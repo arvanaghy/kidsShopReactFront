@@ -34,13 +34,13 @@ const ComparePage = () => {
               >
                 {/* sarvsabztabriz@ */}
                 <img
-                  src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${item?.PicName}.webp`}
+                  src={`https://api.kidsshop110.ir/products-image/webp/${item?.PicName}.webp`}
                   alt={item?.Name}
                   loading="lazy"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src =
-                      "https://kidsshopapi.electroshop24.ir/No_Image_Available.jpg";
+                      "https://api.kidsshop110.ir/No_Image_Available.jpg";
                   }}
                   className="w-full rounded-t-lg object-contain aspect-square"
                 />

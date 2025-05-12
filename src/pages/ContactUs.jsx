@@ -25,7 +25,7 @@ const ContactUs = () => {
     try {
       setIsPending(true);
       const { data, status } = await axios.post(
-        "https://kidsshopapi.electroshop24.ir/api/v1/contact-us",
+        "https://api.kidsshop110.ir/api/v1/contact-us",
         {
           info: name,
           contact: email,
