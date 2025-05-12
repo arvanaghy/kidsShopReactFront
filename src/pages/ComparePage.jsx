@@ -32,6 +32,7 @@ const ComparePage = () => {
                 className="relative w-full col-span-3 flex flex-col justify-center items-start lg:space-y-6 space-y-1
                 md:space-y-3 border-x-2"
               >
+                {/* sarvsabztabriz@ */}
                 <img
                   src={`https://kidsshopapi.electroshop24.ir/products-image/webp/${item?.PicName}.webp`}
                   alt={item?.Name}
