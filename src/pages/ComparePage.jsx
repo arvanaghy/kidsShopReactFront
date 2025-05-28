@@ -95,7 +95,7 @@ const ComparePage = () => {
                         </p>
                         <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight flex flex-row justify-center items-center md:space-x-2 text-xs lg:text-base">
                           {formatCurrencyDisplay(item.Mablag)}
-                          <span className="text-xs block ">ریال</span>
+                          <span className="text-xs block ">تومان</span>
                         </p>
                       </div>
                     ))}

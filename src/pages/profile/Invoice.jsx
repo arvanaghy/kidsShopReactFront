@@ -99,7 +99,7 @@ const Invoice = () => {
         <p className="text-lg xl:text-xl font-EstedadExtraBold text-Amber-500 ">
           <span className="underline underline-offset-8">
             {Math.abs(balance) > 0
-              ? formatCurrencyDisplay(Math.abs(balance)) + " ریال "
+              ? formatCurrencyDisplay(Math.abs(balance)) + " تومان "
               : ""}
           </span>
 
@@ -147,15 +147,15 @@ const Invoice = () => {
                     </td>
                     <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                       {formatCurrencyDisplay(invoice?.Bestankar)}{" "}
-                      <span className="text-xs">ریال</span>
+                      <span className="text-xs">تومان</span>
                     </td>
                     <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                       {formatCurrencyDisplay(invoice?.Bedehkar)}{" "}
-                      <span className="text-xs">ریال</span>
+                      <span className="text-xs">تومان</span>
                     </td>
                     <td className="p-1.5 lg:p-4 text-center bg-stone-200 font-EstedadMedium leading-relaxed text-nowrap whitespace-nowrap">
                       {formatCurrencyDisplay(invoice?.Mande)}{" "}
-                      <span className="text-xs">ریال</span>
+                      <span className="text-xs">تومان</span>
                     </td>
                     <td className="p-1.5 lg:p-4 text-center  leading-relaxed text-nowrap whitespace-nowrap
 ">

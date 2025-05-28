@@ -3,8 +3,7 @@
 import { Link } from "react-router-dom";
 
 const BannerGroup = ({ banners = [] }) => {
-  const fallbackImage =
-    "https://api.kidsshop110.ir/No_Image_Available.jpg";
+  const fallbackImage = "https://api.kidsshop110.ir/No_Image_Available.jpg";
 
   const items = banners.length > 0 ? banners : [{}, {}];
   return (
@@ -12,8 +11,11 @@ const BannerGroup = ({ banners = [] }) => {
       <div className="grid grid-cols-12 gap-4 xl:gap-8">
         {items.slice(0, 2).map((item, idx) => (
           <Link
-            
-            to={`/sub-category-products/${item?.CodeKalaSubGroup}`}
+            to={`${
+              item?.CodeKalaSubGroup
+                ? `/sub-category-products/${item?.CodeKalaSubGroup}`
+                : "/"
+            }`}
             key={idx}
             className="w-full col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
           >

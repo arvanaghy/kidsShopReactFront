@@ -325,7 +325,7 @@ const BestSellingProducts = () => {
                   min={price?.min_price}
                   max={price?.}
                 />
-                <span>ریال</span>
+                <span>تومان</span>
                 <span>تا</span>
                 <input
                   type="number"
@@ -334,7 +334,7 @@ const BestSellingProducts = () => {
                   name="maxPriceInput"
 
                 />
-                <span>ریال</span>
+                <span>تومان</span>
               </div>
             </div>
           )} */}

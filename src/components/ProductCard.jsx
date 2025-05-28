@@ -122,7 +122,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
           <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
             <span className="flex text-green-700 flex-row items-center gap-1">
               {formatCurrencyDisplay(userPriceSelect(item, user))}
-              <span className="text-xs">ریال</span>
+              <span className="text-xs">تومان</span>
             </span>
           </div>
           {/* Color and Size Section with Fixed Height */}

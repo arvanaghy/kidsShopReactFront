@@ -19,7 +19,7 @@ import Loading from "@components/Loading";
 import CategoryCircleCard from "@components/category/CategoryCircleCard";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 import OfferProductCard from "../components/OfferProductCard";
-import { faArrowsToEye, faL } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsToEye } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [loading, setLoading] = useState(false);
@@ -64,7 +64,6 @@ const Home = () => {
         ))}
         <div className="flex-shrink-0 w-24 xl:w-30">
           <Link
-            
             to={`/categories`}
             className={`w-full flex flex-col justify-center
                                     items-center
@@ -148,7 +147,7 @@ const Home = () => {
                 },
               }}
             >
-              {result?.bestSeller?.map((product, index) => (
+              {result?.newestProducts?.map((product, index) => (
                 <SwiperSlide key={index}>
                   <div className="flex flex-row gap-2 justify-center  px-4">
                     <div key={index} className="">
@@ -162,7 +161,6 @@ const Home = () => {
 
           <div className="col-span-12 text-center py-6 lg:py-12">
             <Link
-              
               to={"/products"}
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
         transition-all duration-300 ease-in-out text-xs xl:text-base 2xl:text-2xl 2xl:font-EstedadMedium
@@ -226,7 +224,6 @@ const Home = () => {
           </div>
           <div className="col-span-12 text-center pt-4 xl:pt-12">
             <Link
-              
               to="/offered-products"
               className="font-EstedadExtraBold text-xs text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
           transition-all duration-300 ease-in-out 2xl:text-2xl 2xl:font-EstedadMedium
@@ -316,7 +313,6 @@ const Home = () => {
 
           <div className="col-span-12 text-center py-6 lg:py-12">
             <Link
-              
               to={"/best-seller-products"}
               className="font-EstedadExtraBold text-center bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded-xl
         transition-all duration-300 ease-in-out text-xs xl:text-base 2xl:text-2xl 2xl:font-EstedadMedium

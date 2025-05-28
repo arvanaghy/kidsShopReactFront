@@ -413,7 +413,7 @@ const Product = () => {
                         مبلغ
                       </span>
                       <span>{formatCurrencyDisplay(item?.Mablag)}</span>
-                      <span>ریال</span>
+                      <span>تومان</span>
                     </button>
                   ))}
                 </div>
@@ -481,7 +481,7 @@ const Product = () => {
                               {formatCurrencyDisplay(
                                 item?.feature?.Mablag * item?.quantity
                               )}{" "}
-                              ریال
+                              تومان
                             </div>
                             <button
                               onClick={() => {

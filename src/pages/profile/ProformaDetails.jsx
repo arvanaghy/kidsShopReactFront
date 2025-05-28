@@ -91,11 +91,11 @@ const ProformaDetails = () => {
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {formatCurrencyDisplay(orderDetail?.Fee)}{" "}
-                    <span className="text-xs">ریال</span>
+                    <span className="text-xs">تومان</span>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {formatCurrencyDisplay(orderDetail?.JamKol)}{" "}
-                    <span className="text-xs">ریال</span>
+                    <span className="text-xs">تومان</span>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {orderDetail?.Comment ? orderDetail?.Comment : "-"}

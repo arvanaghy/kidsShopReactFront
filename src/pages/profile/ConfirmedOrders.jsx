@@ -123,7 +123,7 @@ const ConfirmedOrders = () => {
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
                       {formatCurrencyDisplay(orderItem?.SumKala)}{" "}
-                      <span className="text-xs">ریال</span>
+                      <span className="text-xs">تومان</span>
                     </span>
                   </td>
                 </tr>

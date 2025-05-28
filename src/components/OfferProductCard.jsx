@@ -43,7 +43,7 @@ const OfferProductCard = ({ item }) => {
         <div className="flex flex-row items-center justify-start">
           <span className="flex text-gray-700 flex-row items-center gap-1 text-base xl:text-3xl font-EstedadExtraBold text-center">
             {formatCurrencyDisplay(userPriceSelect(item, user))}
-            <span className="text-sm">ریال</span>
+            <span className="text-sm">تومان</span>
           </span>
         </div>
         <h3 className="text-gray-700 font-EstedadExtraBold text-base xl:text-3xl text-center ">

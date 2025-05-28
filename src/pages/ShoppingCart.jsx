@@ -334,7 +334,7 @@ const ShoppingCart = () => {
                             0
                           )
                         )}
-                      <span className="text-xs px-1">ریال</span>
+                      <span className="text-xs px-1">تومان</span>
                     </div>
                   </div>
                   {/* image */}
@@ -415,7 +415,7 @@ const ShoppingCart = () => {
                           {formatCurrencyDisplay(
                             basketItem?.feature?.Mablag * basketItem?.quantity
                           )}{" "}
-                          ریال
+                          تومان
                         </div>
                       ))}
                   </div>
@@ -488,7 +488,7 @@ const ShoppingCart = () => {
           {transferServices &&
             transferServices.map((service, idx) => (
               <option key={idx} value={service.Code}>
-                {service.Name} - {formatCurrencyDisplay(service.Mablag)} ریال
+                {service.Name} - {formatCurrencyDisplay(service.Mablag)} تومان
               </option>
             ))}
         </select>
@@ -512,7 +512,7 @@ const ShoppingCart = () => {
                 ) + (selectedTransferService?.Mablag || 0)
               )}
           </span>
-          <span className="mx-1 text-sm">ریال</span>
+          <span className="mx-1 text-sm">تومان</span>
         </p>
         {isPending ? (
           <div className="flex items-center justify-center font-EstedadMedium">
