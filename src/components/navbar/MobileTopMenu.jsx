@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { throttle } from "lodash";
+import secondLogo from "@assets/images/secondLogo.png";
+
 
 const MobileTopMenu = () => {
   const [searchModal, setSearchModal] = useState(false);
@@ -63,8 +65,8 @@ const MobileTopMenu = () => {
       shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600 p-0.5 overflow-y-auto`}
     >
       <Link  to="/">
-        <img
-          src="https://api.kidsshop110.ir/No_Image_Available.jpg"
+        <img 
+          src={secondLogo}
           alt="Logo"
           className="h-16 w-full object-scale-down
         py-1.5"

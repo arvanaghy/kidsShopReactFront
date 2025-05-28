@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
-import { FaHome, FaStoreAlt, FaUserAlt } from "react-icons/fa";
-import { FaCartShopping } from "react-icons/fa6";
-import { TbCategory } from "react-icons/tb";
+import { useContext } from "react";
+import { FaHome } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 import UserContext from "@context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

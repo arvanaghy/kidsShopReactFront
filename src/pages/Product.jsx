@@ -12,11 +12,8 @@ import {
   faBookmark,
   faCartPlus,
   faChevronLeft,
-  faHeart,
-  faHeartBroken,
   faHouse,
   faRestroom,
-  faShare,
   faSquareShareNodes,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
@@ -76,9 +73,7 @@ const Product = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchData(
-      `https://api.kidsshop110.ir/api/v2/show-product/${productCode}`
-    );
+    fetchData(`https://api.kidsshop110.ir/api/v2/show-product/${productCode}`);
   }, [productCode]);
 
   const addProductToCart = (item) => {
@@ -98,6 +93,10 @@ const Product = () => {
         const isFeatureExists = isProductExists.basket.find(
           (basketItem) => basketItem.feature.SCCode == feature.SCCode
         );
+        console.log("isFeatureExists", isFeatureExists);
+        if (isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande) {
+          throw new Error("موجودی این محصول به حداکثر رسیده است.");
+        }
         if (isFeatureExists) {
           isFeatureExists.quantity += 1;
         } else {
@@ -224,7 +223,7 @@ const Product = () => {
               </Link>
             </li>
             <li>
-              <div className="flex items-center font-EstedadMedium">
+              <div className="flex items-center font-EstedadMedium gap-0.5">
                 <FontAwesomeIcon
                   icon={faChevronLeft}
                   className="text-sm md:text-lg p-1"
@@ -240,7 +239,7 @@ const Product = () => {
               </div>
             </li>
             <li aria-current="page">
-              <div className="flex items-center font-EstedadMedium">
+              <div className="flex items-center font-EstedadMedium gap-0.5">
                 <FontAwesomeIcon
                   icon={faChevronLeft}
                   className="text-sm md:text-lg p-1"
