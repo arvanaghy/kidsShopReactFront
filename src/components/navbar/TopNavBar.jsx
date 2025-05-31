@@ -239,13 +239,10 @@ const TopNavBar = () => {
 
       <section className="w-full grid grid-cols-12 items-center justify-between text-base">
         <nav
-          className={`md:col-span-12 lg:col-span-8 xl:col-span-9 w-full flex md:justify-start md:py-5 xl:justify-start xl:py-0 items-center md:px-2 xl:px-0`}
+          className={`md:col-span-12 lg:col-span-8 xl:col-span-9 w-full  md:justify-start md:py-5 xl:justify-start xl:py-0  md:px-2 xl:px-0 inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
+        md:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-base 2xl:gap-x-8 `}
         >
-          <div
-            className="inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
-        md:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-base 2xl:gap-x-8 "
-          >
-            {navigation.map((item, idx) => (
+                {navigation.map((item, idx) => (
               <div key={idx}>
                 <div
                   className="
@@ -354,13 +351,15 @@ const TopNavBar = () => {
                             </Link>
                           ))}
                         </div>
-                        <div className="w-full col-span-3 
+                        <div
+                          className="w-full col-span-3 
                         md:h-36
                         lg:h-40
                         xl:h-44
                         2xl:h-72
                         overflow-y-auto
-                        ">
+                        "
+                        >
                           {categoryImage && (
                             <div
                               className="flex flex-col items-center
@@ -402,7 +401,11 @@ pt-8 flex items-center justify-center text-center text-green-600 hover:text-gree
                 )}
               </div>
             ))}
-          </div>
+          {/* <div
+            className=""
+          >
+      
+          </div> */}
         </nav>
         <div className="w-full md:col-span-12 lg:col-span-4 xl:col-span-3 flex flex-row items-center md:justify-end xl:justify-end md:gap-x-5 md:px-2 xl:px-0 xl:gap-x-4 md:pb-2 lg:pb-0 md:text-xs 2xl:text-xl">
           <Link
