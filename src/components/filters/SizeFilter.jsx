@@ -18,14 +18,14 @@ const SizeFilter = ({ sizes, sizeSets, setSizeSets }) => {
       <h3 className="w-full text-sm xl:text-lg px-2 font-EstedadLight xl:font-EstedadExtraBold py-0.5 xl:py-2 text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
         سایز بندی :
       </h3>
-      <div className="w-full py-0.5 xl:py-1.5 flex flex-col justify-start items-start xl:gap-1">
+      <div className="w-full py-0.5 xl:py-1.5 flex flex-row flex-wrap justify-between items-start xl:gap-1">
         {sizes?.map((item, idx) => (
           <button
             key={idx}
             onClick={() => {
               addSizeSet(item);
             }}
-            className="w-full flex flex-row justify-start items-center gap-1 xl:gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-1.5 xl:p-2"
+            className="w-fit flex flex-row justify-start items-center gap-1 xl:gap-3 duration-300  hover:bg-gray-200 transition-all ease-in-out p-1.5 xl:p-2 font-EstedadMedium"
           >
             {sizeSets.includes(item) ? (
               <FontAwesomeIcon
@@ -38,6 +38,7 @@ const SizeFilter = ({ sizes, sizeSets, setSizeSets }) => {
                 className="text-white border border-black rounded-full "
               />
             )}
+
             {item}
           </button>
         ))}

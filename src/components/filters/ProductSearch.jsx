@@ -24,7 +24,7 @@ const ProductSearch = ({ search, page = "products" }) => {
     >
       <input
         type="text"
-        className="text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
+        className="border border-black text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
         placeholder={search != null ? search : "جستجو محصول ..."}
         name="search"
       />

@@ -106,7 +106,10 @@ const TopNavBar = () => {
         `}
       style={{ zIndex: 9999 }}
     >
-      <section className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 2xl:text-xl">
+      <section
+        className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 
+      xl:text-sm"
+      >
         <div className="w-full md:col-span-3 xl:col-span-3">
           <Link
             to="/"
@@ -115,7 +118,9 @@ const TopNavBar = () => {
             <img
               src={secondLogo}
               alt="logo"
-              className="2xl:w-
+              className="
+              w-36
+              2xl:w-52
               xl:w-48
               lg:w-44
               md:w-40
@@ -133,7 +138,9 @@ const TopNavBar = () => {
             type="text"
             name="topNavBarSearch"
             placeholder="جستجو محصول ..."
-            className="w-full p-2 bg-gray-200 rounded-xl text-gray-600 placeholder:text-gray-600 2xl:py-4 "
+            className="w-full p-2 bg-gray-200 rounded-xl text-gray-600 placeholder:text-gray-600 2xl:py-4
+            focus:bg-gray-50
+            "
           />
           <button
             type="submit"
@@ -141,7 +148,7 @@ const TopNavBar = () => {
           >
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
-              className="text-gray-600 hover:text-green-600 duration-300 transition-all ease-in-out"
+              className="text-gray-600 p-2 rounded-md duration-300 transition-all ease-in-out hover:bg-green-800 hover:text-white "
             />
           </button>
         </form>
@@ -171,11 +178,11 @@ const TopNavBar = () => {
               </Link>
             </div>
           ) : (
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center justify-center">
               <Link
                 to={"/login"}
                 className="flex flex-row items-center justify-center 
-                    text-center text-gray-600 align-middle
+                    text-center text-gray-600
                     hover:text-green-600 duration-300 transition-all ease-in-out
                     gap-x-1.5
                     "
@@ -184,7 +191,9 @@ const TopNavBar = () => {
                   icon={faUserTie}
                   className="block md:text-base xl:text-lg 2xl:text-2xl"
                 />
-                <span className="block">ورود | ثبت نام</span>
+                <span className="block leading-relaxed tracking-wide text-pretty">
+                  ورود (عضویت)
+                </span>
               </Link>
             </div>
           )}
@@ -228,34 +237,37 @@ const TopNavBar = () => {
         </div>
       </section>
 
-      <section className="w-full grid grid-cols-12 items-center justify-between 2xl:text-xl">
+      <section className="w-full grid grid-cols-12 items-center justify-between text-base">
         <nav
           className={`md:col-span-12 lg:col-span-8 xl:col-span-9 w-full flex md:justify-start md:py-5 xl:justify-start xl:py-0 items-center md:px-2 xl:px-0`}
         >
           <div
             className="inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
-        md:text-xs lg:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-sm 2xl:gap-x-8 2xl:text-xl"
+        md:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-base 2xl:gap-x-8 "
           >
             {navigation.map((item, idx) => (
               <div key={idx}>
                 <div
                   className="
+                  font-EstedadExtraBold
+                  tracking-wider leading-relaxed text-pretty
+              flex flex-row items-center justify-center
               hover:scale-105
               hover:underline
               hover:underline-offset-8
-              hover:text-green-600 transition-all ease-in-out duration-300 text-gray-800"
+              hover:text-green-600 transition-all ease-in-out duration-300 text-gray-800 "
                 >
                   {item?.navs !== undefined ? (
                     <button
                       className="flex items-center justify-center w-full"
                       onClick={() => {
-                        setDropDown(!dropDown);
+                        setDropDown((prev) => !prev);
                       }}
                     >
-                      {item?.title}
+                      <p>{item?.title}</p>
                       <FontAwesomeIcon
                         icon={faChevronUp}
-                        className={`mx-1.5 ${dropDown ? "" : "rotate-180"}
+                        className={`px-1.5 ${dropDown ? "" : "rotate-180"}
                       transation-all ease-in-out duration-300
                       `}
                       />
@@ -342,7 +354,13 @@ const TopNavBar = () => {
                             </Link>
                           ))}
                         </div>
-                        <div className="w-full col-span-3">
+                        <div className="w-full col-span-3 
+                        md:h-36
+                        lg:h-40
+                        xl:h-44
+                        2xl:h-72
+                        overflow-y-auto
+                        ">
                           {categoryImage && (
                             <div
                               className="flex flex-col items-center

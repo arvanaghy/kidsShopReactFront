@@ -60,14 +60,13 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
     }
   };
 
-  console.log('item', item);
 
   return (
     <div
-      className={`${colSpan} rounded-lg  h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}
+      className={`${colSpan} rounded-lg  h-full xl:flex-shrink-0 flex flex-col overflow-hidden group`}
     >
       {/* Top Section: Image and Labels */}
-      <div className="relative flex flex-col justify-center items-center w-full h-64 hover:grayscale rounded-t-lg duration-300 ease-in-out transition-all">
+      <div className="relative flex flex-col justify-center items-center w-full h-64 rounded-t-lg duration-300 ease-in-out transition-all">
         <img
           src={`https://api.kidsshop110.ir/products-image/webp/${item?.PicName}.webp`}
           alt={item?.Name}
@@ -112,14 +111,17 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       </div>
 
       {/* Bottom Section: Details */}
-      <div className="rounded-b-lg px-3 flex flex-col font-EstedadMedium w-full bg-gray-300/90 text-white flex-grow">
+      <Link
+        title={item?.Name}
+        to={`/product/${Math.floor(item?.Code)}`}
+        className="rounded-b-lg px-3 flex flex-col font-EstedadMedium w-full bg-gray-300/90 text-white flex-grow
+         hover:bg-gray-400/90 duration-300 ease-in-out transition-all
+        "
+      >
         <div className="flex flex-col justify-between items-center w-full h-full">
-          <Link
-            to={`/product/${Math.floor(item?.Code)}`}
-            className="z-20 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm lg:font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out"
-          >
+          <p className="z-20 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm lg:font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out">
             {item?.Name}
-          </Link>
+          </p>
           <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
             <span className="flex text-green-700 flex-row items-center gap-1">
               {formatCurrencyDisplay(userPriceSelect(item, user))}
@@ -143,7 +145,9 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
                       ),
                     }}
                   ></p>
-                  <p className="text-xs tracking-wide text-gray-800 ">{uniqueColorCodes_item?.ColorName}</p>
+                  <p className="text-xs tracking-wide text-gray-800 ">
+                    {uniqueColorCodes_item?.ColorName}
+                  </p>
                 </div>
               ))
             ) : (
@@ -155,7 +159,10 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
           <div className="w-full flex flex-row flex-wrap items-center justify-between gap-2 text-sm py-2">
             {uniqueSizeNums?.length > 0 ? (
               uniqueSizeNums.map((uniqueSizeNums_item, idx) => (
-                <div key={idx} className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md ">
+                <div
+                  key={idx}
+                  className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md "
+                >
                   {uniqueSizeNums_item}
                 </div>
               ))
@@ -164,7 +171,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
             )}
           </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

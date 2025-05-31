@@ -223,7 +223,7 @@ const Products = () => {
           <button
             className={` md:flex 
             hover:-translate-x-2 duration-300 ease-in-out 
-            font-EstedadExtraBold text-yellow-700 py-4  gap-x-2`}
+            font-EstedadExtraBold bg-red-600 text-white rounded-lg px-4 py-4  gap-x-2`}
             onClick={removeFilters}
           >
             <FontAwesomeIcon icon={faEraser} className="text-lg" />
@@ -287,7 +287,7 @@ const Products = () => {
           <button
             className={`hidden md:flex 
             hover:-translate-x-2 duration-300 ease-in-out 
-            font-EstedadExtraBold text-yellow-700 py-4  gap-x-2`}
+            font-EstedadExtraBold bg-red-600 text-white rounded-lg px-4 py-4  gap-x-2`}
             onClick={removeFilters}
           >
             <FontAwesomeIcon icon={faEraser} className="text-lg" />

@@ -6,10 +6,9 @@ import {
   faCertificate,
   faChevronUp,
   faCircleInfo,
-  faCircleQuestion,
+  faEnvelope,
   faList,
   faLocationDot,
-  faPersonHalfDress,
   faPhoneVolume,
   faSquareEnvelope,
 } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +16,7 @@ import { toPersianDigits } from "@utils/numeralHelpers";
 import {
   faSquareWhatsapp,
   faTelegram,
+  faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
@@ -29,12 +29,12 @@ const Footer = () => {
         >
           <FontAwesomeIcon
             icon={faChevronUp}
-            className="text-xs md:text-sm lg:text-2xl p-2 text-white bg-gray-900/80 rounded-lg group-hover:bg-green-700
+            className="text-xs md:text-sm lg:text-lg p-2 text-white bg-gray-900/80 rounded-lg group-hover:bg-green-700
         transition-all duration-300 ease-in-out
         "
           />
           <p
-            className="text-sm md:text-base lg:text-lg 2xl:text-2xl font-semibold text-gray-700
+            className="text-sm md:text-base lg:text-lg font-semibold text-gray-700
         group-hover:text-green-700 transition-all duration-300 ease-in-out"
           >
             بازگشت به بالا
@@ -46,7 +46,6 @@ const Footer = () => {
             <p
               className="font-EstedadExtraBold font-bold text-sm lg:text-base
           xl:text-lg
-          2xl:text-2xl
           py-5
           text-gray-700
           tracking-wide
@@ -60,7 +59,7 @@ const Footer = () => {
                 icon={faLocationDot}
                 className="text-lg md:text-3xl"
               />
-              <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-2xl	">
+              <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-lg	">
                 تبریز،شهرک ارم، منطقه ۷، دوبانده، جنب بیمه ما{" "}
               </p>
             </div>
@@ -69,17 +68,17 @@ const Footer = () => {
                 icon={faPhoneVolume}
                 className="text-base md:text-2xl -scale-x-100"
               />
-              <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-2xl">
+              <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-lg">
                 ۰۹۱۴۹۲۷۶۵۹۰
               </p>
             </div>
             <div className="flex items-center justify-start gap-3 ">
               <FontAwesomeIcon
-                icon={faSquareEnvelope}
+                icon={faEnvelope}
                 className="text-lg md:text-3xl"
               />
-              <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-2xl">
-                info[at]kidsshop110.ir
+              <p className=" leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-lg">
+                info@kidsshop۱۱۰.ir
               </p>
             </div>
             <div className="flex items-center justify-start gap-6 ">
@@ -91,18 +90,18 @@ const Footer = () => {
                 className="hover:text-green-600 transition-all duration-300 ease-in-out"
               >
                 <FontAwesomeIcon
-                  icon={faSquareWhatsapp}
-                  className="text-3xl md:text-4xl xl:text-5xl 2xl:text-6xl"
+                  icon={faWhatsapp}
+                  className="text-3xl md:text-4xl xl:text-5xl 2xl:text-4xl"
                 />
               </Link>
               <Link
-                to={"https://t.me/kids_shop110"}
+                to={"https://t.me/kids_shop۱۱۰"}
                 target="_blank"
                 className="hover:text-green-600 transition-all duration-300 ease-in-out"
               >
                 <FontAwesomeIcon
                   icon={faTelegram}
-                  className="text-2xl md:text-3xl xl:text-4xl 2xl:text-5xl"
+                  className="text-2xl md:text-3xl xl:text-4xl 2xl:text-3xl"
                 />
               </Link>
             </div>
@@ -113,7 +112,6 @@ const Footer = () => {
               دسترسی سریع
             </h3>
             <Link
-              
               to="/offered-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -122,7 +120,7 @@ const Footer = () => {
                 className="text-base md:text-2xl group-hover:text-green-700 duration-300 transition-all ease-in-out"
               />
               <div
-                className=" text-xs xl:text-base 2xl:text-2xl
+                className=" text-sm xl:text-base 2xl:text-lg
               group-hover:text-green-700
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
@@ -131,7 +129,6 @@ const Footer = () => {
               </div>
             </Link>
             <Link
-              
               to="/best-selling-products"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -140,7 +137,7 @@ const Footer = () => {
                 className="text-base md:text-2xl group-hover:text-green-700 duration-300 transition-all ease-in-out"
               />
               <div
-                className="text-xs xl:text-base 2xl:text-2xl
+                className="text-sm xl:text-base 2xl:text-lg
               group-hover:text-green-700
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
@@ -149,7 +146,6 @@ const Footer = () => {
               </div>
             </Link>
             <Link
-              
               to="/categories"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -161,7 +157,7 @@ duration-300 transition-all ease-in-out
               "
               />
               <div
-                className="text-xs xl:text-base 2xl:text-2xl
+                className="text-sm xl:text-base 2xl:text-lg
               group-hover:text-green-700
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
@@ -171,7 +167,6 @@ duration-300 transition-all ease-in-out
             </Link>
 
             <Link
-              
               to="/faq"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -183,7 +178,7 @@ duration-300 transition-all ease-in-out
               "
               />
               <div
-                className="text-xs xl:text-base 2xl:text-2xl
+                className="text-sm xl:text-base 2xl:text-lg
               group-hover:text-green-700
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
@@ -192,7 +187,6 @@ duration-300 transition-all ease-in-out
               </div>
             </Link>
             <Link
-              
               to="/about-us"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -204,7 +198,7 @@ duration-300 transition-all ease-in-out
               "
               />
               <div
-                className="text-xs xl:text-base 2xl:text-2xl
+                className="text-sm xl:text-base 2xl:text-lg
               group-hover:text-green-700
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
@@ -213,7 +207,6 @@ duration-300 transition-all ease-in-out
               </div>
             </Link>
             <Link
-              
               to="/contact-us"
               className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
             >
@@ -225,7 +218,7 @@ duration-300 transition-all ease-in-out
               "
               />
               <div
-                className="text-xs xl:text-base 2xl:text-2xl
+                className="text-sm xl:text-lg 
               group-hover:text-green-700
               group-hover:-translate-x-2
               duration-300 transition-all ease-in-out"
@@ -239,16 +232,16 @@ duration-300 transition-all ease-in-out
         <div className="grid grid-cols-12 items-start justify-around gap-2 md:gap-6 py-2 lg:py-4">
           <div className="col-span-12 md:col-span-8 w-full space-y-6 ">
             <h2 className="text-base xl:text-xl 2xl:text-3xl 2xl:py-10 font-EstedadExtraBold">
-              فروشگاه لباس کودک و نوجوان نهال
+              فروشگاه لباس کودک و نوجوان کیدزشاپ ۱۱۰
             </h2>
-            <p className="text-xs xl:text-base 2xl:text-2xl leading-loose xl:tracking-wider 2xl:leading-10 ">
-              فروشگاه اینترنتی لباس بچه گانه نهال، فروشگاه آنلاین و تخصصی لباس
-              کودک و نوجوان است. نهال از سال ۱۳۹۴ فعالیت خود را شروع کرده و به
-              صورت حضوری در شعب مختلف و همچنین به صورت آنلاین با کیفیت ترین لباس
-              های بچه گانه را با ارزان ترین قیمت به فروش می رساند. این فروشگاه
-              با بهترین و معتبرترین تولیدی های لباس کودک و نوجوان همکاری می کند
-              تا با کیفیت ترین لباس های دخترانه و پسرانه را به دست مشتریان عزیز
-              و وفادارش برساند.
+            <p className="flex text-xs xl:text-base leading-relaxed tracking-wide  ">
+              فروشگاه اینترنتی لباس بچه گانه کیدزشاپ ۱۱۰، فروشگاه آنلاین و تخصصی
+              لباس کودک و نوجوان است. کیدزشاپ ۱۱۰ از سال ۱۳۹۴ فعالیت خود را شروع
+              کرده و به صورت حضوری در شعب مختلف و همچنین به صورت آنلاین با کیفیت
+              ترین لباس های بچه گانه را با ارزان ترین قیمت به فروش می رساند. این
+              فروشگاه با بهترین و معتبرترین تولیدی های لباس کودک و نوجوان همکاری
+              می کند تا با کیفیت ترین لباس های دخترانه و پسرانه را به دست
+              مشتریان عزیز و وفادارش برساند.
             </p>
           </div>
           <div className="col-span-12 md:col-span-4 w-full md:space-y-6 flex flex-row items-center justify-center ">
