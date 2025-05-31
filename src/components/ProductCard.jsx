@@ -60,6 +60,8 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
     }
   };
 
+  console.log('item', item);
+
   return (
     <div
       className={`${colSpan} rounded-lg  h-full xl:flex-shrink-0 flex flex-col overflow-hidden`}
@@ -72,8 +74,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
           loading="lazy"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src =
-              "https://api.kidsshop110.ir/No_Image_Available.jpg";
+            e.target.src = "https://api.kidsshop110.ir/No_Image_Available.jpg";
           }}
           className="w-full rounded-t-lg object-scale-down h-full"
         />
@@ -122,43 +123,46 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
           <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
             <span className="flex text-green-700 flex-row items-center gap-1">
               {formatCurrencyDisplay(userPriceSelect(item, user))}
-              <span className="text-xs">تومان</span>
+              <span className="text-xs font-EstedadExtraBold tracking-tight ">
+                تومان
+              </span>
             </span>
           </div>
+          <div className="w-full flex flex-row flex-wrap justify-between items-center">
+            {uniqueColorCodes?.length > 0 ? (
+              uniqueColorCodes.map((uniqueColorCodes_item, idx) => (
+                <div
+                  key={idx}
+                  className="flex flex-row items-center justify-center gap-2"
+                >
+                  <p
+                    className="w-5 h-5 rounded-full"
+                    style={{
+                      backgroundColor: DecimalToHexConverter(
+                        uniqueColorCodes_item?.ColorCode
+                      ),
+                    }}
+                  ></p>
+                  <p className="text-xs tracking-wide text-gray-800 ">{uniqueColorCodes_item?.ColorName}</p>
+                </div>
+              ))
+            ) : (
+              <div className="h-5"></div>
+            )}
+          </div>
           {/* Color and Size Section with Fixed Height */}
-          {(uniqueColorCodes?.length > 0 || uniqueSizeNums?.length > 0) && (
-            <div className="w-full flex flex-row flex-wrap items-center justify-between gap-4 text-sm py-2">
-              {uniqueColorCodes?.length > 0 ? (
-                uniqueColorCodes.map((uniqueColorCodes_item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex flex-row items-center justify-center gap-2"
-                  >
-                    <p>{uniqueColorCodes_item?.ColorName}</p>
-                    <p
-                      className="w-5 h-5 rounded-full"
-                      style={{
-                        backgroundColor: DecimalToHexConverter(
-                          uniqueColorCodes_item?.ColorCode
-                        ),
-                      }}
-                    ></p>
-                  </div>
-                ))
-              ) : (
-                <div className="h-5"></div> // Placeholder to maintain height
-              )}
-              {uniqueSizeNums?.length > 0 ? (
-                uniqueSizeNums.map((uniqueSizeNums_item, idx) => (
-                  <div key={idx}>
-                    <p>{uniqueSizeNums_item}</p>
-                  </div>
-                ))
-              ) : (
-                <div className="h-5"></div> // Placeholder to maintain height
-              )}
-            </div>
-          )}
+
+          <div className="w-full flex flex-row flex-wrap items-center justify-between gap-2 text-sm py-2">
+            {uniqueSizeNums?.length > 0 ? (
+              uniqueSizeNums.map((uniqueSizeNums_item, idx) => (
+                <div key={idx} className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md ">
+                  {uniqueSizeNums_item}
+                </div>
+              ))
+            ) : (
+              <div className="h-5"></div>
+            )}
+          </div>
         </div>
       </div>
     </div>

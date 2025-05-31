@@ -81,12 +81,11 @@ const Home = () => {
         </div>
       </section>
       {/* categories */}
-
       {/* frist two banners */}
-      <BannerGroup banners={result?.banners?.slice(0, 2)} />
-
+      {result?.banners?.length == 2 && (
+        <BannerGroup banners={result?.banners?.slice(0, 2)} />
+      )}
       {/* newestproducts */}
-
       {result?.newestProducts?.length > 0 && (
         <section
           className="
@@ -171,10 +170,10 @@ const Home = () => {
           </div>
         </section>
       )}
-
       {/* thrid and fourth banners */}
-      <BannerGroup banners={result?.banners?.slice(2, 4)} />
-
+      {result?.banners?.length == 4 && (
+        <BannerGroup banners={result?.banners?.slice(2, 4)} />
+      )}
       {/* offered products */}
       {result?.offeredProducts?.length > 0 && (
         <section
@@ -234,10 +233,10 @@ const Home = () => {
           </div>
         </section>
       )}
-
       {/* fifth and sixth banners */}
-      <BannerGroup banners={result?.banners?.slice(4, 6)} />
-
+      {result?.banners?.length == 6 && (
+        <BannerGroup banners={result?.banners?.slice(4, 6)} />
+      )}
       {/* best seller products */}
       {result?.bestSeller?.length > 0 && (
         <section
@@ -323,7 +322,6 @@ const Home = () => {
           </div>
         </section>
       )}
-
       {/* follow us in instagram */}
       <section className="py-4 xl:p-10">
         <Link

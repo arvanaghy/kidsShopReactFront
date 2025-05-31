@@ -25,6 +25,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
+import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 
 const Product = () => {
   const { productCode } = useParams();
@@ -93,7 +94,6 @@ const Product = () => {
         const isFeatureExists = isProductExists.basket.find(
           (basketItem) => basketItem.feature.SCCode == feature.SCCode
         );
-        console.log("isFeatureExists", isFeatureExists);
         if (isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande) {
           throw new Error("موجودی این محصول به حداکثر رسیده است.");
         }
@@ -200,67 +200,51 @@ const Product = () => {
   if (loading) return <Loading />;
 
   return (
-    <div className="w-full py-6">
+    <div className="w-full py-6 space-y-3">
       {/* top bar */}
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3">
         <nav
-          className="flex flex-row w-fit px-7 py-3 text-gray-700 border border-gray-200  rounded-lg bg-gray-50 "
+          className="flex flex-row w-fit items-center gap-2 font-EstedadMedium tracking-wide text-pretty text-gray-700 border border-gray-200  rounded-lg bg-gray-50 "
           aria-label="Breadcrumb"
         >
-          <ol className="inline-flex items-center space-x-2 ">
-            <li className="inline-flex items-center font-EstedadMedium">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
+          <Link
+            to="/"
+            className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 p-1.5
                 text-xs
                 md:text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
-              >
-                <FontAwesomeIcon
-                  icon={faHouse}
-                  className="text-sm md:text-lg"
-                />
-                <span>صفحه اصلی</span>
-              </Link>
-            </li>
-            <li>
-              <div className="flex items-center font-EstedadMedium gap-0.5">
-                <FontAwesomeIcon
-                  icon={faChevronLeft}
-                  className="text-sm md:text-lg p-1"
-                />
-                <Link
-                  to={`/category/${Math.floor(data?.product?.GCode)}`}
-                  className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
+          >
+            <FontAwesomeIcon icon={faHouse} className="text-sm md:text-lg" />
+            <span>صفحه اصلی</span>
+          </Link>
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="text-sm md:text-lg p-1"
+          />
+          <Link
+            to={`/category/${Math.floor(data?.product?.GCode)}`}
+            className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 p-1.5
                 text-xs
                 md:text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
-                >
-                  {data?.product?.GName}
-                </Link>
-              </div>
-            </li>
-            <li aria-current="page">
-              <div className="flex items-center font-EstedadMedium gap-0.5">
-                <FontAwesomeIcon
-                  icon={faChevronLeft}
-                  className="text-sm md:text-lg p-1"
-                />
-                <Link
-                  to={`/sub-category-products/${Math.floor(
-                    data?.product?.SCode
-                  )}`}
-                  className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 
+          >
+            {data?.product?.GName}
+          </Link>
+
+          <FontAwesomeIcon
+            icon={faChevronLeft}
+            className="text-sm md:text-lg p-1"
+          />
+          <Link
+            to={`/sub-category-products/${Math.floor(data?.product?.SCode)}`}
+            className="inline-flex items-center gap-0.5 md:gap-2 lg:gap-8 p-1.5
                 text-xs
                 md:text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-gray-700"
-                >
-                  {data?.product?.SName}
-                </Link>
-              </div>
-            </li>
-          </ol>
+          >
+            {data?.product?.SName}
+          </Link>
         </nav>
         <div className="flex w-fit  flex-row  justify-between items-center gap-6">
           <button
-            className="bg-black rounded-lg px-1.5 py-1 hover:bg-purple-500 duration-300 ease-in-out"
+            className="bg-black rounded-lg px-1.5 pt-1 pb-0.5 hover:bg-purple-500 duration-300 ease-in-out"
             onClick={() => {
               navigator.clipboard.writeText(window.location.href);
               toast.success("لینک کپی شد");
@@ -374,13 +358,13 @@ const Product = () => {
           gap-1.5
           "
           >
-            <h1 className="lg:text-2xl font-EstedadExtraBold text-xl py-5 text-center lg:text-start border-b text-CarbonicBlue-500 drop-shadow-sm leading-relaxed ">
+            <h1 className="lg:text-2xl  text-xl py-5 text-center lg:text-start border-b font-EstedadExtraBold tracking-wide  text-CarbonicBlue-500 drop-shadow-sm leading-relaxed text-pretty ">
               {data?.product?.Name}
             </h1>
 
-            <div className="flex flex-col gap-1.5 md:gap-3 flex-wrap">
+            <div className="w-full flex flex-col gap-1.5 md:gap-3 flex-wrap">
               {data?.product?.product_size_color?.length > 0 && (
-                <div className="font-EstedadMedium px-2 flex flex-col gap-4  items-start justify-start leading-relaxed">
+                <div className="w-full font-EstedadMedium px-2 flex flex-col gap-4  items-start justify-start leading-relaxed">
                   {data?.product?.product_size_color.map((item, index) => (
                     <button
                       disabled={item?.Mande <= 0}
@@ -388,9 +372,9 @@ const Product = () => {
                         setFeature(item);
                       }}
                       key={index}
-                      className={`flex flex-row gap-2 text-sm  font-EstedadMedium text-gray-800 
+                      className={`w-full flex flex-row justify-between gap-2 text-sm  font-EstedadMedium text-gray-800 
                           bg-gray-100  duration-300 ease-in-out
-                        border-2 border-gray-200 rounded-md px-2 py-1
+                        border-2 border-gray-200 rounded-md p-2
                         disabled:cursor-not-allowed
                       hover:bg-gray-400 hover:text-gray-100
                       ${
@@ -403,6 +387,14 @@ const Product = () => {
                       <span className="block text-sm font-EstedadMedium ">
                         رنگ
                       </span>
+                      <p
+                        className="w-5 h-5 rounded-full"
+                        style={{
+                          backgroundColor: DecimalToHexConverter(
+                            item?.ColorCode
+                          ),
+                        }}
+                      ></p>
                       <span>{item.ColorName}</span>
                       <span className="block text-sm font-EstedadMedium ">
                         سایز

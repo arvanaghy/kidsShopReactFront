@@ -24,9 +24,37 @@ export function userPriceSelect(item, _user) {
         amount = item?.SPrice;
         break;
     }
-    return amount;
+    if (amount > 0) {
+      return amount;
+    } else if (item?.product_size_color?.length > 0) {
+      // find array items with Mande > 0 and lowest Mablag
+      const filteredItems = item?.product_size_color?.filter(
+        (item) => item.Mande > 0
+      );
+      if (filteredItems.length > 0) {
+        const sortedItems = filteredItems.sort((a, b) => a.Mablag - b.Mablag);
+        return sortedItems[0]?.Mablag;
+      } else {
+        return "0";
+      }
+    } else {
+      return "0";
+    }
   } else {
-    return item?.SPrice;
+    if (item?.SPrice > 0) {
+      return item?.SPrice;
+    } else if (item?.product_size_color?.length > 0) {
+      const filteredItems = item?.product_size_color?.filter(
+        (item) => item.Mande > 0
+      );
+      if (filteredItems.length > 0) {
+        const sortedItems = filteredItems.sort((a, b) => a.Mablag - b.Mablag);
+        return sortedItems[0]?.Mablag;
+      } else {
+        return "0";
+      }
+    } else {
+      return "0";
+    }
   }
-
 }
