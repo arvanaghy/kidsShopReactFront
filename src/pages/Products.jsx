@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
 import ColorFilter from "../components/filters/ColorFilter";
 import SizeFilter from "../components/filters/SizeFilter";
 import ProductSearch from "../components/filters/ProductSearch";
+import UserContext from "@context/UserContext";
 
 const Products = () => {
   const [searchParams] = useSearchParams();
@@ -37,6 +38,9 @@ const Products = () => {
   const [colorSets, setColorSets] = useState([]);
   const [isModal, setIsModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const { desktopNavbar } = useContext(UserContext);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -99,7 +103,7 @@ const Products = () => {
       setPrice(data?.result?.prices);
     } catch (error) {
       toast.error(
-        "دسته بندی: " + error?.response?.data?.message ||
+        "محصولات: " + error?.response?.data?.message ||
           error?.message ||
           "خطا در اتصال"
       );
@@ -203,32 +207,53 @@ const Products = () => {
 
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
-            <div className="col-span-12 text-center  font-EstedadExtraBold tracking-wider leading-relaxed
-      text-lg py-4
-      sm:text-xl sm:py-4
-      md:text-2xl md:py-6
-      lg:text-3xl lg:py-7
+      <div
+        className="col-span-12 text-center  font-EstedadExtraBold tracking-wider leading-relaxed
+      text-xl py-4
+      sm:text-2xl 
+      md:text-4xl md:py-6
+      lg:text-5xl lg:py-7
       xl:text-4xl xl:py-8 
       2xl:text-5xl 2xl:py-10
 
       text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
       
-      ">لیست جدید ترین محصولات کیدزشاپ</div>
+      "
+      >
+        لیست محصولات کیدزشاپ
+      </div>
       {/* modal */}
       {isModal && (
         <div
           ref={mobileFilterRef}
-          className="fixed inset-2 max-h-[74vh] top-[15vh] rounded-xl bg-stone-100 p-1.5 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-4 shadow-lg shadow-gray-600 "
+          className="fixed inset-2 max-h-[75vh] top-[15vh] rounded-xl bg-stone-100 p-1.5 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-2 shadow-lg shadow-gray-600 "
         >
-          <button
-            className={` md:flex 
-            hover:-translate-x-2 duration-300 ease-in-out 
-            font-EstedadExtraBold bg-red-600 text-white rounded-lg px-4 py-4  gap-x-2`}
-            onClick={removeFilters}
-          >
-            <FontAwesomeIcon icon={faEraser} className="text-lg" />
-            <span>پاک کردن فیلتر ها</span>
-          </button>
+          <div className="flex flex-row items-center justify-between w-full">
+            <button
+              className={`flex flex-row items-center justify-center font-EstedadLight gap-x-1.5
+             bg-red-600 text-white rounded-lg p-1.5`}
+              onClick={removeFilters}
+            >
+              <FontAwesomeIcon icon={faEraser} className="text-sm" />
+              <span className="block text-xs">پاک کردن فیلتر ها</span>
+            </button>
+            <button
+              onClick={applyFilters}
+              className="flex flex-row items-center justify-center font-EstedadLight gap-x-1.5
+             bg-green-600 text-white rounded-lg p-1.5 
+              "
+            >
+              <FontAwesomeIcon icon={faFilter} className="text-sm" />
+              <span className="block text-xs">اعمال فیلتر ها</span>
+            </button>
+            <button
+              onClick={() => setIsModal(false)}
+              className="bg-red-500 px-1.5 text-white rounded-xl hover:bg-red-700"
+            >
+              <FontAwesomeIcon icon={faClose} />
+            </button>
+          </div>
+
           <ProductSearch search={search} />
           {sizes?.length > 0 && (
             <SizeFilter
@@ -245,24 +270,6 @@ const Products = () => {
               setColorSets={setColorSets}
             />
           )}
-          <div className="w-full flex items-end justify-between">
-            <button
-              onClick={applyFilters}
-              className="w-full text-base font-EstedadExtraBold p-2  leading-relaxed rounded-xl mx-auto text-center
-              justify-items-end
-              bg-green-800 text-white hover:bg-green-900 transition-all duration-300 ease-in-out
-              border border-green-600 hover:border-green-700 
-              "
-            >
-              اعمال فیلتر ها
-            </button>
-          </div>
-          <button
-            onClick={() => setIsModal(false)}
-            className="absolute top-2 left-2 bg-red-500 px-1.5 text-white rounded-xl hover:bg-red-700"
-          >
-            <FontAwesomeIcon icon={faClose} />
-          </button>
         </div>
       )}
 
@@ -275,24 +282,48 @@ const Products = () => {
           hover:bg-blue-900/90
           "
         >
-          <FontAwesomeIcon icon={faFilter} className="" />
+          <FontAwesomeIcon icon={faFilter} />
         </button>
       )}
       {/* remove filters */}
       {/* side bar */}
       <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full order-2 md:order-1">
         {/* category details */}
-        <div className="w-full sticky md:top-[18vh] xl:top-[18vh] xl:space-y-3 space-y-1">
-          {/* remove filters */}
-          <button
-            className={`hidden md:flex 
-            hover:-translate-x-2 duration-300 ease-in-out 
-            font-EstedadExtraBold bg-red-600 text-white rounded-lg px-4 py-4  gap-x-2`}
-            onClick={removeFilters}
-          >
-            <FontAwesomeIcon icon={faEraser} className="text-lg" />
-            <span>پاک کردن فیلتر ها</span>
-          </button>
+        <div
+          className={`w-full sticky space-y-1
+            ${
+              desktopNavbar
+                ? "md:top-[21vh] lg:top-[19vh] xl:top-[23vh] 2xl:top-[21.5vh]"
+                : "md:top-[12vh] lg:top-[9vh] xl:top-[14vh] 2xl:top-[13vh]"
+            }
+            `}
+        >
+          {/* remove filters or apply filters */}
+          <div className="flex md:flex-col lg:flex-row items-center justify-between gap-1.5 ">
+            <button
+              className={`hidden md:flex 
+              group
+             bg-red-600 text-white rounded-lg w-full py-2 items-center justify-center 
+             hover:bg-red-800 transition-all duration-300 ease-in-out gap-x-2`}
+              onClick={removeFilters}
+            >
+              <FontAwesomeIcon icon={faEraser} className="text-lg" />
+              <span className="group-hover:-translate-x-1 duration-300 ease-in-out font-EstedadMedium">
+                پاک کردن فیلتر
+              </span>
+            </button>
+            <button
+              onClick={applyFilters}
+              className="hidden md:flex  flex-row gap-x-2 bg-green-600 text-white rounded-lg w-full py-2 items-center justify-center group hover:bg-green-800 transition-all duration-300 ease-in-out 
+              "
+            >
+              <FontAwesomeIcon icon={faFilter} />
+              <p className="group-hover:-translate-x-1 duration-300 ease-in-out font-EstedadMedium">
+                اعمال فیلتر
+              </p>
+            </button>
+          </div>
+
           {/* search */}
           {!isMobile && <ProductSearch search={search} />}
           {sizes?.length > 0 && !isMobile && (
@@ -337,24 +368,16 @@ const Products = () => {
               </div>
             </div>
           )} */}
-          <div className="w-full hidden md:flex items-end justify-between">
-            <button
-              onClick={applyFilters}
-              className="w-full text-base font-EstedadExtraBold p-2  leading-relaxed rounded-xl mx-auto text-center
-              justify-items-end
-              bg-green-800 text-white hover:bg-green-900 transition-all duration-300 ease-in-out
-              border border-green-600 hover:border-green-700 
-              "
-            >
-              اعمال فیلتر ها
-            </button>
-          </div>
         </div>
       </div>
       {/* main content */}
       <div className="w-full col-span-12 md:col-span-8 xl:col-span-9 grid grid-cols-12 md:order-2 space-y-6 order-1 ">
         {/* sort filters */}
-        <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
+        <div
+          className="w-full col-span-12 gap-3 flex flex-row justify-start items-center 
+        md:bg-gray-50 md:py-1.5
+        "
+        >
           <Link
             to={`/products?product_page=${1}${
               size != null ? `&size=${size}` : ""
@@ -394,7 +417,7 @@ const Products = () => {
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
             }&sort_price=desc`}
-            className={`font-EstedadLight text-sm  border  rounded-lg p-2
+            className={`font-EstedadLight text-sm  border rounded-lg p-2
               transition-all duration-300 ease-in-out
               ${
                 sort_price == "desc"

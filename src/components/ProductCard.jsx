@@ -86,7 +86,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
          opacity-80
         "
         >
-          <p className="w-full   line-clamp-1">{item?.SName}</p>
+          <p className="w-full line-clamp-1">{item?.SName}</p>
         </h2>
         <div className="absolute top-8 left-0 flex flex-col gap-1 px-1">
           <button
@@ -130,7 +130,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
               </span>
             </span>
           </div>
-          <div className="w-full flex flex-row flex-wrap justify-between items-center">
+          <div className="w-full flex flex-row flex-wrap justify-between items-center gap-2">
             {uniqueColorCodes?.length > 0 ? (
               uniqueColorCodes.map((uniqueColorCodes_item, idx) => (
                 <div
@@ -161,7 +161,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
               uniqueSizeNums.map((uniqueSizeNums_item, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md "
+                  className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md"
                 >
                   {uniqueSizeNums_item}
                 </div>

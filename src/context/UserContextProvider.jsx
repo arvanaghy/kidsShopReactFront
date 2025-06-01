@@ -10,6 +10,7 @@ const UserContextProvider = ({ children }) => {
   const [favourite, setFavourite] = useState([]);
   const [compareList, setCompareList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [desktopNavbar, setDesktopNavbar] = useState(false);
 
   const fetchUser = () => {
     if (loading) return;
@@ -178,6 +179,10 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const updateDesktopNavbar = (_desktopNavbar) => {
+    setDesktopNavbar(_desktopNavbar);
+  };
+
   useEffect(() => {
     fetchUser();
     fetchCart();
@@ -204,6 +209,8 @@ const UserContextProvider = ({ children }) => {
         compareList,
         updateCompareList,
         fetchCompareList,
+        desktopNavbar,
+        updateDesktopNavbar,
       }}
     >
       {children}

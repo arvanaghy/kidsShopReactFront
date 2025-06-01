@@ -6,6 +6,8 @@ import UserContext from "@context/UserContext";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import secondLogo from "@assets/images/secondLogo.png";
+import { throttle } from "lodash";
+
 import {
   faBagShopping,
   faBookmark,
@@ -22,10 +24,12 @@ import toast from "react-hot-toast";
 
 const TopNavBar = () => {
   const categoryRef = useRef(null);
+  const logoSearchLoginCardRef = useRef(null);
   const [categories, setCatgeoires] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
-  const { user, cart } = useContext(UserContext);
+  const { user, cart, desktopNavbar, updateDesktopNavbar } =
+    useContext(UserContext);
   const [categoryImage, setCategoryImage] = useState(null);
   const navigate = useNavigate();
 
@@ -72,6 +76,7 @@ const TopNavBar = () => {
 
   useEffect(() => {}, [cart]);
   useEffect(() => {}, [user]);
+  useEffect(() => {}, [desktopNavbar]);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -82,6 +87,26 @@ const TopNavBar = () => {
     document.addEventListener("mousedown", handleOutsideClick);
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = throttle(() => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY) {
+        updateDesktopNavbar(false);
+      } else {
+        updateDesktopNavbar(true);
+      }
+      lastScrollY = currentScrollY;
+    }, 250);
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      handleScroll.cancel();
     };
   }, []);
 
@@ -101,14 +126,18 @@ const TopNavBar = () => {
   return (
     <header
       className={`hidden md:block sticky top-0 shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600
+        transition-all duration-700 ease-in-out
         xl:p-6
         xl:space-y-8
         `}
       style={{ zIndex: 9999 }}
     >
       <section
-        className="w-full grid grid-cols-12 items-center md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 
-      xl:text-sm"
+        ref={logoSearchLoginCardRef}
+        className={` ${desktopNavbar ? "" : "hidden"} w-full grid grid-cols-12 items-center 
+        transition-all duration-700 ease-in-out
+        md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 
+      xl:text-sm`}
       >
         <div className="w-full md:col-span-3 xl:col-span-3">
           <Link
@@ -242,10 +271,10 @@ const TopNavBar = () => {
           className={`md:col-span-12 lg:col-span-8 xl:col-span-9 w-full  md:justify-start md:py-5 xl:justify-start xl:py-0  md:px-2 xl:px-0 inset-0 items-center justify-center text-gray-600 text-center align-middle flex flex-row  
         md:text-xs md:gap-x-6 lg:gap-x-4 xl:gap-x-6 xl:text-base 2xl:gap-x-8 `}
         >
-                {navigation.map((item, idx) => (
-              <div key={idx}>
-                <div
-                  className="
+          {navigation.map((item, idx) => (
+            <div key={idx}>
+              <div
+                className="
                   font-EstedadExtraBold
                   tracking-wider leading-relaxed text-pretty
               flex flex-row items-center justify-center
@@ -253,83 +282,83 @@ const TopNavBar = () => {
               hover:underline
               hover:underline-offset-8
               hover:text-green-600 transition-all ease-in-out duration-300 text-gray-800 "
-                >
-                  {item?.navs !== undefined ? (
-                    <button
-                      className="flex items-center justify-center w-full"
-                      onClick={() => {
-                        setDropDown((prev) => !prev);
-                      }}
-                    >
-                      <p>{item?.title}</p>
-                      <FontAwesomeIcon
-                        icon={faChevronUp}
-                        className={`px-1.5 ${dropDown ? "" : "rotate-180"}
+              >
+                {item?.navs !== undefined ? (
+                  <button
+                    className="flex items-center justify-center w-full"
+                    onClick={() => {
+                      setDropDown((prev) => !prev);
+                    }}
+                  >
+                    <p>{item?.title}</p>
+                    <FontAwesomeIcon
+                      icon={faChevronUp}
+                      className={`px-1.5 ${dropDown ? "" : "rotate-180"}
                       transation-all ease-in-out duration-300
                       `}
-                      />
-                    </button>
-                  ) : (
-                    <Link
-                      onClick={() => setDropDown(false)}
-                      className="flex items-center justify-center w-full"
-                      to={item.path}
-                    >
-                      {item?.title}
-                    </Link>
-                  )}
-                </div>
-                {item?.navs?.length > 0 && dropDown && (
-                  <div className="relative w-full " ref={categoryRef}>
-                    {categoryLoading ? (
-                      <div
-                        className="absolute z-50
+                    />
+                  </button>
+                ) : (
+                  <Link
+                    onClick={() => setDropDown(false)}
+                    className="flex items-center justify-center w-full"
+                    to={item.path}
+                  >
+                    {item?.title}
+                  </Link>
+                )}
+              </div>
+              {item?.navs?.length > 0 && dropDown && (
+                <div className="relative w-full " ref={categoryRef}>
+                  {categoryLoading ? (
+                    <div
+                      className="absolute z-50
                       md:w-[80vw] md:min-h-[50vh]  md:top-14                   
                       lg:w-[80vw] lg:min-h-[50vh] lg:top-8 
                       xl:w-[90vw] xl:min-h-[50vh] xl:top-8
                       
                       text-center bg-gray-100 font-EstedadLight text-gray-600 flex flex-row items-center justify-center shadow-md rounded-lg "
-                      >
-                        <FontAwesomeIcon
-                          icon={faSpinner}
-                          className="mx-auto
+                    >
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        className="mx-auto
                           md:text-2xl
                           lg:text-4xl
                           xl:text-6xl"
-                          spin
-                        />
-                      </div>
-                    ) : (
-                      <div
-                        className="absolute
+                        spin
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="absolute
                         md:w-[85vw] md:top-14 md:px-1.5 py-6
                         lg:w-[90vw] lg:top-8 lg:px-2
                         xl:w-[80vw] xl:top-8 xl:px-4 
                         2xl:w-[85vw] 2xl:top-8 2xl:px-6 
                         z-50 text-center bg-gray-100 font-EstedadLight text-gray-600 grid grid-cols-12 items-center justify-center shadow-md md:rounded-b-lg md:rounded-t-none xl:rounded-lg"
-                      >
-                        <div
-                          className="w-full md:col-span-9 grid grid-cols-12 
+                    >
+                      <div
+                        className="w-full md:col-span-9 grid grid-cols-12 
                         md:gap-3 lg:gap-4 xl:gap-5
                         2xl:gap-6"
-                        >
-                          {item?.navs.map((dropdownItem, idx) => (
-                            <Link
-                              onMouseEnter={() => {
-                                setCategoryImage(dropdownItem);
-                              }}
-                              onMouseLeave={() => {
-                                setCategoryImage(null);
-                              }}
-                              onFocus={() => {
-                                setCategoryImage(dropdownItem);
-                              }}
-                              onAbort={() => {
-                                setCategoryImage(null);
-                              }}
-                              onClick={() => setDropDown(false)}
-                              key={idx}
-                              className="w-fit col-span-4 
+                      >
+                        {item?.navs.map((dropdownItem, idx) => (
+                          <Link
+                            onMouseEnter={() => {
+                              setCategoryImage(dropdownItem);
+                            }}
+                            onMouseLeave={() => {
+                              setCategoryImage(null);
+                            }}
+                            onFocus={() => {
+                              setCategoryImage(dropdownItem);
+                            }}
+                            onAbort={() => {
+                              setCategoryImage(null);
+                            }}
+                            onClick={() => setDropDown(false)}
+                            key={idx}
+                            className="w-fit col-span-4 
                               md:pr-1
                               lg:pr-1.5
                               xl:pr-2
@@ -345,62 +374,62 @@ const TopNavBar = () => {
                               font-EstedadExtraBold
                               tracking-wider
                               "
-                              to={`/category/${Math.floor(dropdownItem?.Code)}`}
-                            >
-                              {dropdownItem?.Name}
-                            </Link>
-                          ))}
-                        </div>
-                        <div
-                          className="w-full col-span-3 
+                            to={`/category/${Math.floor(dropdownItem?.Code)}`}
+                          >
+                            {dropdownItem?.Name}
+                          </Link>
+                        ))}
+                      </div>
+                      <div
+                        className="w-full col-span-3 
                         md:h-36
                         lg:h-40
                         xl:h-44
                         2xl:h-72
                         overflow-y-auto
                         "
-                        >
-                          {categoryImage && (
-                            <div
-                              className="flex flex-col items-center
+                      >
+                        {categoryImage && (
+                          <div
+                            className="flex flex-col items-center
                             justify-center"
-                            >
-                              <img
-                                src={`https://api.kidsshop110.ir/category-images/webp/${categoryImage?.PicName}.webp`}
-                                alt={categoryImage?.Name}
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src =
-                                    "https://api.kidsshop110.ir/No_Image_Available.jpg";
-                                }}
-                                className=" rounded-lg 
+                          >
+                            <img
+                              src={`https://api.kidsshop110.ir/category-images/webp/${categoryImage?.PicName}.webp`}
+                              alt={categoryImage?.Name}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src =
+                                  "https://api.kidsshop110.ir/No_Image_Available.jpg";
+                              }}
+                              className=" rounded-lg 
                                 md:w-32 md:h-32
                                 lg:w-36 lg:h-36
                                 xl:w-40 xl:h-40
                                 2xl:w-64 2xl:h-64 object-scale-down drop-shadow-lg shadow-black"
-                              />
-                            </div>
-                          )}
-                        </div>
+                            />
+                          </div>
+                        )}
+                      </div>
 
-                        <Link
-                          onClick={() => setDropDown(false)}
-                          to="/categories"
-                          className="col-span-12 
+                      <Link
+                        onClick={() => setDropDown(false)}
+                        to="/categories"
+                        className="col-span-12 
 pt-8 flex items-center justify-center text-center text-green-600 hover:text-green-900 duration-300
                           hover:scale-105
                           transition-all ease-in-out
                           font-EstedadExtraBold
                           "
-                        >
-                          لیست تمامی دسته بندی ها
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            ))}
+                      >
+                        لیست تمامی دسته بندی ها
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
           {/* <div
             className=""
           >

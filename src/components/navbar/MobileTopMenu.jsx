@@ -12,7 +12,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { throttle } from "lodash";
 import secondLogo from "@assets/images/secondLogo.png";
 
-
 const MobileTopMenu = () => {
   const [searchModal, setSearchModal] = useState(false);
   const [hideMenu, setHideMenu] = useState(false);
@@ -25,17 +24,17 @@ const MobileTopMenu = () => {
     const handleScroll = throttle(() => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY) {
-        setHideMenu(true); // Scroll down, hide menu
+        setHideMenu(true);
       } else {
-        setHideMenu(false); // Scroll up, show menu
+        setHideMenu(false);
       }
       lastScrollY = currentScrollY;
-    }, 100); // Throttle to run every 100ms
+    }, 100);
 
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      handleScroll.cancel(); // Cancel throttle on cleanup
+      handleScroll.cancel();
     };
   }, []);
 
@@ -64,8 +63,8 @@ const MobileTopMenu = () => {
       }  flex flex-col justify-center items-center sticky top-0 
       shadow-md shadow-gray-600/70 z-50 font-EstedadMedium bg-gray-100 w-full text-gray-600 p-0.5 overflow-y-auto`}
     >
-      <Link  to="/">
-        <img 
+      <Link to="/">
+        <img
           src={secondLogo}
           alt="Logo"
           className="h-16 w-full object-scale-down
@@ -77,7 +76,6 @@ const MobileTopMenu = () => {
         items-center p-1.5 "
       >
         <Link
-          
           to={"/compare-products"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
@@ -87,7 +85,6 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faRestroom} />
         </Link>
         <Link
-          
           to={"/my-favourite"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
@@ -97,7 +94,6 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faBookmark} />
         </Link>
         <Link
-          
           to={"/offered-products"}
           className="
              w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
@@ -108,7 +104,6 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faCertificate} />
         </Link>
         <Link
-          
           to={"/best-selling-products"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all

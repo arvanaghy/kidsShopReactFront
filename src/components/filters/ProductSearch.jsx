@@ -20,20 +20,19 @@ const ProductSearch = ({ search, page = "products" }) => {
   return (
     <form
       onSubmit={letsSearch}
-      className="w-full relative flex flex-row flex-wrap justify-between items-center"
+      className="w-full relative flex flex-row flex-wrap justify-between items-center group"
     >
       <input
         type="text"
-        className="border border-black text-lg w-full py-3 px-1.5 rounded-lg shadow-md shadow-gray-300"
+        className="border  text-sm font-EstedadLight w-full p-1.5 rounded placeholder:text-sm placeholder:font-EstedadLight         active:border-blue-600 
+        "
         placeholder={search != null ? search : "جستجو محصول ..."}
         name="search"
       />
       <button
         type="submit"
-        className="
-hover:bg-gray-200
-duration-300 ease-in-out transition-all
-          absolute left-1.5 text-lg p-1.5 bg-gray-100 rounded-full  "
+        className="hover:bg-green-500
+        hover:text-gray-50 duration-300 ease-in-out transition-all px-1.5 absolute left-1.5  rounded  "
       >
         <FontAwesomeIcon icon={faSearch} />
       </button>
