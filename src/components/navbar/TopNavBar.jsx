@@ -91,6 +91,10 @@ const TopNavBar = () => {
   }, []);
 
   useEffect(() => {
+    if (window.scrollY === 0) {
+      updateDesktopNavbar(true);
+    }
+
     let lastScrollY = window.scrollY;
 
     const handleScroll = throttle(() => {
@@ -134,7 +138,9 @@ const TopNavBar = () => {
     >
       <section
         ref={logoSearchLoginCardRef}
-        className={` ${desktopNavbar ? "" : "hidden"} w-full grid grid-cols-12 items-center 
+        className={` ${
+          desktopNavbar ? "" : "hidden"
+        } w-full grid grid-cols-12 items-center 
         transition-all duration-700 ease-in-out
         md:justify-center xl:justify-between md:p-2 xl:p-0 md:text-xs 
       xl:text-sm`}
