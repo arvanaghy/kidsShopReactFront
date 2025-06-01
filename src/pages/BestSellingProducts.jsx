@@ -101,9 +101,8 @@ const BestSellingProducts = () => {
       setPrice(data?.result?.prices);
     } catch (error) {
       toast.error(
-        "دسته بندی: " + error?.response?.data?.message ||
-          error?.message ||
-          "خطا در اتصال"
+        "پرفروش ترین ها: " +
+          (error?.response?.data?.message || error?.message) || "خطا در اتصال"
       );
     } finally {
       setLoading(false);
@@ -111,19 +110,6 @@ const BestSellingProducts = () => {
   };
 
   useEffect(() => {
-    // fetchData(
-    //   `https://api.kidsshop110.ir/api/v2/list-all-offers?product_page=${product_page}${
-    //     search != null ? `&search=${search}` : ""
-    //   }${size != null ? `&size=${size}` : ""}${
-    //     color != null ? `&color=${color}` : ""
-    //   }${sort_price != null ? `&sort_price=${sort_price}` : ""}${
-    //     priceRange?.min_price != 0 ? `&min_price=${priceRange?.min_price}` : ""
-    //   }${
-    //     priceRange?.max_price != 100000000
-    //       ? `&max_price=${priceRange?.max_price}`
-    //       : ""
-    //   }`
-    // );
     fetchData(
       `https://api.kidsshop110.ir/api/v2/list-best-seller?product_page=${product_page}${
         search != null ? `&search=${search}` : ""
@@ -137,8 +123,6 @@ const BestSellingProducts = () => {
     size,
     color,
     sort_price,
-    // priceRange?.min_price,
-    // priceRange?.max_price,
   ]);
 
   const applyFilters = () => {

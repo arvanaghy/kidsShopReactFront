@@ -33,7 +33,7 @@ const Product = () => {
   const { favourite, updateFavourite } = useContext(UserContext);
   const { compareList, updateCompareList } = useContext(UserContext);
 
-  const { cart, updateCart } = useContext(UserContext);
+  const { cart, updateCart, desktopNavbar } = useContext(UserContext);
 
   const [feature, setFeature] = useState(null);
   const [isFavourite, setIsFavourite] = useState(false);
@@ -95,7 +95,7 @@ const Product = () => {
           (basketItem) => basketItem.feature.SCCode == feature.SCCode
         );
         if (isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande) {
-          throw new Error("موجودی این محصول به حداکثر رسیده است.");
+          throw new Error("سفارش شما بیشتر از موجودی است.");
         }
         if (isFeatureExists) {
           isFeatureExists.quantity += 1;
@@ -290,7 +290,7 @@ const Product = () => {
         "
         >
           {/* side Image */}
-          <div className="col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full xl:space-y-3  ">
+          <div className=" col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full xl:space-y-3  ">
             {data?.product?.product_images?.length > 0 ? (
               <div className="flex flex-col p-6 space-y-3">
                 <Swiper
@@ -384,27 +384,33 @@ const Product = () => {
                       }
                         `}
                     >
-                      <span className="block text-sm font-EstedadMedium ">
-                        رنگ
-                      </span>
-                      <p
-                        className="w-5 h-5 rounded-full"
-                        style={{
-                          backgroundColor: DecimalToHexConverter(
-                            item?.ColorCode
-                          ),
-                        }}
-                      ></p>
-                      <span>{item.ColorName}</span>
-                      <span className="block text-sm font-EstedadMedium ">
-                        سایز
-                      </span>
-                      <span>{item.SizeNum}</span>
-                      <span className="block text-sm font-EstedadMedium ">
-                        مبلغ
-                      </span>
-                      <span>{formatCurrencyDisplay(item?.Mablag)}</span>
-                      <span>تومان</span>
+                      <p className="flex flex-row gap-2">
+                        <span className="block text-sm font-EstedadMedium ">
+                          رنگ
+                        </span>
+                        <span
+                          className="block w-5 h-5 rounded-full"
+                          style={{
+                            backgroundColor: DecimalToHexConverter(
+                              item?.ColorCode
+                            ),
+                          }}
+                        ></span>
+                        <span>{item.ColorName}</span>
+                      </p>
+                      <p className="flex flex-row gap-2">
+                        <span className="block text-sm font-EstedadMedium ">
+                          سایز
+                        </span>
+                        <span>{item.SizeNum}</span>
+                      </p>
+                      <p className="flex flex-row gap-2">
+                        <span className="block text-sm font-EstedadMedium ">
+                          مبلغ
+                        </span>
+                        <span>{formatCurrencyDisplay(item?.Mablag)}</span>
+                        <span>تومان</span>
+                      </p>
                     </button>
                   ))}
                 </div>
@@ -442,7 +448,15 @@ const Product = () => {
             )}
           </div>
           {/* side cart bar */}
-          <div className="col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2">
+          <div
+            className={`col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2 h-fit lg:sticky
+            ${
+              desktopNavbar
+                ? "2xl:top-[21.5vh] xl:top-[22vh] lg:top-[19vh]"
+                : "2xl:top-[12vh] xl:top-[12vh] lg:top-[9vh]"
+            }
+            `}
+          >
             {cart?.length > 0 &&
             cart?.find(
               (item) => Math.floor(item?.item?.Code) === Math.floor(productCode)
@@ -492,7 +506,7 @@ const Product = () => {
                 })()}
               </div>
             ) : (
-              <div className="font-EstedadMedium p-2 text-pretty leading-relaxed">
+              <div className="font-EstedadMedium lg:p-0.5 text-pretty  lg:text-xs leading-relaxed ">
                 شما از این محصول هیچ آیتمی در سبد خرید ندارید
               </div>
             )}

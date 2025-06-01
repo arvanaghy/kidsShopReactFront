@@ -105,7 +105,7 @@ const TopNavBar = () => {
         updateDesktopNavbar(true);
       }
       lastScrollY = currentScrollY;
-    }, 250);
+    }, 300);
 
     window.addEventListener("scroll", handleScroll);
     return () => {
