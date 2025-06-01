@@ -283,90 +283,12 @@ const BestSellingProducts = () => {
               setColorSets={setColorSets}
             />
           )}
-          {/* {price?.min_price > 0 && price?.max_price > 0 && (
-            <div className="w-full">
-              <h3 className="w-full text-base xl:text-lg px-2 font-EstedadExtraBold py-2  text-right leading-relaxed bg-gray-800 rounded-md text-gray-50 tracking-wide">
-                قیمت :
-              </h3>
-              <div className="w-full flex flex-row flex-wrap justify-start items-start gap-2 py-4">
-                <input
-                  type="number"
-                  id="minPriceInput"
-                  placeholder={formatCurrencyDisplay(price?.min_price)}
-                  name="minPriceInput"
-                  min={price?.min_price}
-                  max={price?.}
-                />
-                <span>تومان</span>
-                <span>تا</span>
-                <input
-                  type="number"
-                  id="maxPriceInput"
-                  placeholder={formatCurrencyDisplay(price?.max_price)}
-                  name="maxPriceInput"
-
-                />
-                <span>تومان</span>
-              </div>
-            </div>
-          )} */}
         </div>
       </div>
       {/* main content */}
       <div className="w-full col-span-12 md:col-span-8 xl:col-span-9 grid grid-cols-12 md:order-2 space-y-6 order-1 ">
         {/* sort filters */}
-        <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
-          <Link
-            to={`/best-selling-products?product_page=${1}${
-              size != null ? `&size=${size}` : ""
-            }${color != null ? `&color=${color}` : ""}${
-              search != null ? `&search=${search}` : ""
-            }`}
-            className={`font-EstedadLight text-sm  border border-CarbonicBlue-500 rounded-lg p-2
-              ${
-                sort_price != "asc" && sort_price != "desc"
-                  ? "bg-CarbonicBlue-500 text-white border-gray-100 hover:bg-CarbonicBlue-500/80 "
-                  : "bg-Cream-500 text-gray-800 border-CarbonicBlue-500  hover:text-black border-CarbonicBlue-500/40  hover:bg-Cream-500/50"
-              }
-              `}
-          >
-            جدید ترین ها
-          </Link>
-          <Link
-            to={`/best-selling-products?product_page=${1}${
-              search != null ? `&search=${search}` : ""
-            }${size != null ? `&size=${size}` : ""}${
-              color != null ? `&color=${color}` : ""
-            }&sort_price=asc`}
-            className={`font-EstedadLight text-sm  border  rounded-lg p-2
-              transition-all duration-300 ease-in-out
-              ${
-                sort_price == "asc"
-                  ? "bg-CarbonicBlue-500 text-white border-gray-100 hover:bg-CarbonicBlue-500/80 "
-                  : "bg-Cream-500 text-gray-800 border-CarbonicBlue-500  hover:text-black border-CarbonicBlue-500/40  hover:bg-Cream-500/50"
-              }
-              `}
-          >
-            ارزان ترین ها
-          </Link>
-          <Link
-            to={`/best-selling-products?product_page=${1}${
-              size != null ? `&size=${size}` : ""
-            }${search != null ? `&search=${search}` : ""}${
-              color != null ? `&color=${color}` : ""
-            }&sort_price=desc`}
-            className={`font-EstedadLight text-sm  border  rounded-lg p-2
-              transition-all duration-300 ease-in-out
-              ${
-                sort_price == "desc"
-                  ? "bg-CarbonicBlue-500 text-white border-gray-100 hover:bg-CarbonicBlue-500/80 "
-                  : "bg-Cream-500 text-gray-800 border-CarbonicBlue-500  hover:text-black border-CarbonicBlue-500/40  hover:bg-Cream-500/50"
-              }
-              `}
-          >
-            گرانترین ها
-          </Link>
-        </div>
+
         {/* products */}
         <div className="w-full col-span-12 bg-Cream-500 p-6 flex flex-col">
           <div className="w-full grid grid-cols-12 gap-6">
