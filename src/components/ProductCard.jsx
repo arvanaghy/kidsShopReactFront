@@ -13,7 +13,6 @@ import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
-  console.log("item is : ", item);
   const { user } = useContext(UserContext);
   const { favourite, updateFavourite } = useContext(UserContext);
   const isFavourite = favourite?.some(

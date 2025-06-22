@@ -2,6 +2,7 @@
 import { faSquare, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DecimalToHexConverter } from "../../utils/DecimalToHexConverter";
+import { RGBtoHexConverter } from "../../utils/RGBtoHexConverter";
 
 const ColorFilter = ({ colors, colorSets, setColorSets }) => {
   const addColorSet = (color) => {
@@ -45,7 +46,7 @@ const ColorFilter = ({ colors, colorSets, setColorSets }) => {
                       border border-gray-300
                       `}
               style={{
-                backgroundColor: DecimalToHexConverter(item?.ColorCode),
+                backgroundColor: RGBtoHexConverter(item?.RGB),
               }}
             ></p>
 

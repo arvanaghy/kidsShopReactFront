@@ -26,6 +26,7 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
+import { RGBtoHexConverter } from "../utils/RGBtoHexConverter";
 
 const Product = () => {
   const { productCode } = useParams();
@@ -391,8 +392,8 @@ const Product = () => {
                         <span
                           className="block w-5 h-5 rounded-full"
                           style={{
-                            backgroundColor: DecimalToHexConverter(
-                              item?.ColorCode
+                            backgroundColor: RGBtoHexConverter(
+                              item?.RGB
                             ),
                           }}
                         ></span>
