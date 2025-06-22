@@ -30,9 +30,9 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
         .map((item) => [
           item.ColorCode,
           {
-            ColorCode: item?.ColorCode,
-            ColorName: item?.ColorName,
-            RGB: item?.RGB,
+            ColorCode: item.ColorCode,
+            ColorName: item.ColorName,
+            RGB: item.RGB,
           },
         ])
     ).values(),
@@ -158,7 +158,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
                       ),
                     }}
                   ></p>
-                  {/* <p>{RGBtoHexConverter(uniqueColorCodes_item?.RGB)}</p> */}
+                  <p>{RGBtoHexConverter(uniqueColorCodes_item?.RGB)}</p>
                   <p className="text-xs tracking-wide text-gray-800 ">
                     {uniqueColorCodes_item?.ColorName}
                   </p>

@@ -5,7 +5,6 @@ import { userPriceSelect } from "@utils/userPriceHelper";
 import { useContext } from "react";
 import UserContext from "@context/UserContext";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
-import { RGBtoHexConverter } from "../utils/RGBtoHexConverter";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +12,6 @@ import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
-  console.log("item is : ", item);
   const { user } = useContext(UserContext);
   const { favourite, updateFavourite } = useContext(UserContext);
   const isFavourite = favourite?.some(
@@ -29,11 +27,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
         ?.filter((item) => item.Mande > 0)
         .map((item) => [
           item.ColorCode,
-          {
-            ColorCode: item?.ColorCode,
-            ColorName: item?.ColorName,
-            RGB: item?.RGB,
-          },
+          { ColorCode: item.ColorCode, ColorName: item.ColorName },
         ])
     ).values(),
   ];
@@ -65,6 +59,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       toast.success("محصول مورد نظر به لیست مقایسه اضافه شد.");
     }
   };
+
 
   return (
     <div
@@ -142,23 +137,14 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
                   key={idx}
                   className="flex flex-row items-center justify-center gap-2"
                 >
-                  {/* <p
+                  <p
                     className="w-5 h-5 rounded-full"
                     style={{
                       backgroundColor: DecimalToHexConverter(
                         uniqueColorCodes_item?.ColorCode
                       ),
                     }}
-                  ></p> */}
-                  <p
-                    className="w-5 h-5 rounded-full"
-                    style={{
-                      backgroundColor: RGBtoHexConverter(
-                        uniqueColorCodes_item?.RGB
-                      ),
-                    }}
                   ></p>
-                  {/* <p>{RGBtoHexConverter(uniqueColorCodes_item?.RGB)}</p> */}
                   <p className="text-xs tracking-wide text-gray-800 ">
                     {uniqueColorCodes_item?.ColorName}
                   </p>
