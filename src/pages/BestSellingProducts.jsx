@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import Loading from "../components/Loading";
