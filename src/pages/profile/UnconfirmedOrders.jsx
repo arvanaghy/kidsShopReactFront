@@ -1,19 +1,16 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import UserContext from "@context/UserContext";
-import {
-  formatCurrencyDisplay,
-  toPersianDigits,
-} from "@utils/numeralHelpers";
-import ProfileLayout from "./ProfileLayout";
+import { useMainStore } from "@store/useMainStore";
+import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
+import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loading from "@components/Loading";
 
 const UnconfirmedOrders = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useMainStore();
   const [orderList, setOrderList] = useState([]);
   const [isOrderloading, setIsOrderloading] = useState(false);
   const [links, setLinks] = useState([]);

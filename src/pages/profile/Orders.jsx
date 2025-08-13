@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import ProfileLayout from "./ProfileLayout";
+import ProfileLayout from "@layouts/user/ProfileLayout";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 

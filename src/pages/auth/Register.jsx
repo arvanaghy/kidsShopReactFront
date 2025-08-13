@@ -1,9 +1,9 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import UserContext from "@context/UserContext";
+import { useMainStore } from "@store/useMainStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,7 +15,7 @@ const Register = () => {
   const [address, setAddress] = useState("");
   const mobilePattern = /^09[0-9]{9}$/;
   const navigate = useNavigate();
-  const { user, updateUser } = useContext(UserContext);
+  const { user, updateUser } = useMainStore();
   const navigateTo = useNavigate();
   const [isPending, setIsPending] = useState(false);
 
@@ -197,7 +197,6 @@ const Register = () => {
           >
             <p className="w-full">قبلا ثبت نام کرده اید ؟</p>
             <Link
-              
               to="/login"
               className="w-full font-medium text-red-600 hover:underline 
               transition-all ease-in-out duration-300

@@ -1,14 +1,14 @@
 /* eslint-disable no-dupe-else-if */
 import axios from "axios";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserContext from "@context/UserContext";
+import { useMainStore } from "@store/useMainStore";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Checkout = () => {
-  const { user, order, updateOrder, updateCart } = useContext(UserContext);
+  const { user, order, updateOrder, updateCart } = useMainStore();
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false);
 

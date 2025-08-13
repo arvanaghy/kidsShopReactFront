@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import ProfileLayout from "./ProfileLayout";
-import UserContext from "@context/UserContext";
+import { useEffect, useState } from "react";
+import ProfileLayout from "@layouts/user/ProfileLayout";
+import { useMainStore } from "@store/useMainStore";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { LuShieldCheck, LuShieldClose } from "react-icons/lu";
@@ -14,7 +14,7 @@ const Profile = () => {
   const [confirmedOrderList, setConfirmedOrderList] = useState(0);
   const [unConfirmedOrderList, setUnConfirmedOrderList] = useState(0);
 
-  const { user } = useContext(UserContext);
+  const { user } = useMainStore();
 
   const fetchConfirmedOrders = async (confirmedOrderUrl) => {
     try {
@@ -72,7 +72,6 @@ const Profile = () => {
           <div className="text-2xl w-full py-6">سفارشات شما</div>
           <ul className="flex flex-row justify-around items-center ">
             <Link
-              
               to="/unconfirmed-orders"
               className="flex flex-col gap-2 lg:text-5xl text-red-600"
             >
@@ -82,7 +81,6 @@ const Profile = () => {
               </p>
             </Link>
             <Link
-              
               to="/confirmed-orders"
               className="flex flex-col gap-2 lg:text-5xl text-green-600"
             >

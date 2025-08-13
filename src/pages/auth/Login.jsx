@@ -1,13 +1,13 @@
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate, Link, useSearchParams } from "react-router-dom";
-import UserContext from "@context/UserContext";
+import { useMainStore } from "@store/useMainStore";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
-  const { user, updateUser } = useContext(UserContext);
+  const { user, updateUser } = useMainStore();
   const [searchParams] = useSearchParams();
   const redirect = searchParams.get("redirect") || null;
 
@@ -195,7 +195,6 @@ const Login = () => {
           >
             <p className="w-full">حساب کاربری ندارید.؟</p>
             <Link
-              
               to="/register"
               className="w-full font-medium text-red-600 hover:underline 
               transition-all ease-in-out duration-300

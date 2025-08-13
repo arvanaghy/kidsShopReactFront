@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, useContext } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import UserContext from "@context/UserContext";
+import { useMainStore } from "@store/useMainStore";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -11,7 +11,7 @@ const SMSValidate = () => {
   const [otp, setOtp] = useState("");
   const inputRefs = useRef(null);
   const { phoneNumber } = useParams();
-  const { user, updateUser } = useContext(UserContext);
+  const { user, updateUser } = useMainStore();
   const [isPending, setIsPending] = useState(false);
   const navigateTo = useNavigate();
 

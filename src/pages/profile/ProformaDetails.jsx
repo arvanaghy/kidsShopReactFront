@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ProfileLayout from "./ProfileLayout";
-import UserContext from "@context/UserContext";
+import ProfileLayout from "@layouts/user/ProfileLayout";
+import { useMainStore } from "@store/useMainStore";
 import axios from "axios";
 import Loading from "@components/Loading";
 import toast from "react-hot-toast";
@@ -10,7 +10,7 @@ import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 
 const ProformaDetails = () => {
   const { orderCode } = useParams();
-  const { user } = useContext(UserContext);
+  const { user } = useMainStore();
   const [isloading, setIsloading] = useState(false);
   const [orderDetail, setOrderDetail] = useState([]);
   const [detailsLink, setDetailsLink] = useState([]);

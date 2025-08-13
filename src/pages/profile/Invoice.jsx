@@ -1,19 +1,16 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import UserContext from "@context/UserContext";
-import {
-  formatCurrencyDisplay,
-  toPersianDigits,
-} from "@utils/numeralHelpers";
-import ProfileLayout from "./ProfileLayout";
+import { useMainStore } from "@store/useMainStore";
+import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
+import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loading from "@components/Loading";
 
 const Invoice = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useMainStore();
   const [invoiceList, setInvoiceList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [balance, setBalance] = useState(0);
@@ -84,9 +81,7 @@ const Invoice = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchInvoice(
-      "https://api.kidsshop110.ir/api/v1/list-past-invoice?page=1"
-    );
+    fetchInvoice("https://api.kidsshop110.ir/api/v1/list-past-invoice?page=1");
     fetchBalance("https://api.kidsshop110.ir/api/v1/account-balance");
   }, []);
 
@@ -125,7 +120,9 @@ const Invoice = () => {
                   <th className="p-1.5 lg:p-4 text-right text-sm">تاریخ</th>
                   <th className="p-1.5 lg:p-4 text-right text-sm">بستانکار</th>
                   <th className="p-1.5 lg:p-4 text-right text-sm">بدهکار</th>
-                  <th className="p-1.5 lg:p-4 text-right text-sm">مانده فاکتور</th>
+                  <th className="p-1.5 lg:p-4 text-right text-sm">
+                    مانده فاکتور
+                  </th>
                   <th className="p-1.5 lg:p-4 text-right text-sm">توضیحات</th>
                 </tr>
               </thead>
@@ -157,8 +154,10 @@ const Invoice = () => {
                       {formatCurrencyDisplay(invoice?.Mande)}{" "}
                       <span className="text-xs">تومان</span>
                     </td>
-                    <td className="p-1.5 lg:p-4 text-center  leading-relaxed text-nowrap whitespace-nowrap
-">
+                    <td
+                      className="p-1.5 lg:p-4 text-center  leading-relaxed text-nowrap whitespace-nowrap
+"
+                    >
                       {invoice?.Comment ? invoice.Comment : "-"}
                       {invoice?.Comment2 ? " - " + invoice.Comment2 : ""}
                     </td>

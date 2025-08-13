@@ -1,19 +1,17 @@
 import { Outlet } from "react-router-dom";
 import TopMenu from "@components/navbar/TopMenu";
-import Footer from "@layouts/Footer";
+import Footer from "@layouts/website/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
 import MobileNav from "@components/navbar/MobileNav";
 import {  useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import UserContext from "@context/UserContext";
-
 import {
   faChevronUp,
   faSquarePhoneFlip,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-import MobileTopMenu from "../components/navbar/MobileTopMenu";
+import MobileTopMenu from "@components/navbar/MobileTopMenu";
 import axios from "axios";
 import { useMainStore } from "@store/useMainStore";
 

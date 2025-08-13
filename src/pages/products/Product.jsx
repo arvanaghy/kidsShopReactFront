@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-import UserContext from "@context/UserContext";
 import toast from "react-hot-toast";
 import ProductCard from "@components/ProductCard";
 import Loading from "@components/Loading";

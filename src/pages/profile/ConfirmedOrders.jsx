@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import UserContext from "@context/UserContext";
+import { useMainStore } from "@store/useMainStore";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
-import ProfileLayout from "./ProfileLayout";
+import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loading from "@components/Loading";
 
 const ConfirmedOrders = () => {
-  const { user } = useContext(UserContext);
+  const { user } = useMainStore(UserContext);
   const [orderList, setOrderList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([]);
@@ -19,7 +19,6 @@ const ConfirmedOrders = () => {
   const navigateTo = useNavigate();
 
   const [detailsLink, setDetailsLink] = useState([]);
-
 
   const fetchOrders = async (
     orderUrl = "https://api.kidsshop110.ir/api/v1/list-past-orders?page=1"
@@ -51,7 +50,6 @@ const ConfirmedOrders = () => {
     if (!orderCode) return;
     navigateTo(`/order-details/${Math.floor(orderCode)}`);
     return;
-  
   };
 
   useEffect(() => {
@@ -68,9 +66,7 @@ const ConfirmedOrders = () => {
 
   useEffect(() => {
     if (user?.UToken !== "") {
-      fetchOrders(
-        "https://api.kidsshop110.ir/api/v1/list-past-orders?page=1"
-      );
+      fetchOrders("https://api.kidsshop110.ir/api/v1/list-past-orders?page=1");
     }
   }, [user]);
 
@@ -78,7 +74,7 @@ const ConfirmedOrders = () => {
 
   return (
     <ProfileLayout>
-      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start" >
+      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start">
         <p className="text-lg md:text-xl font-EstedadExtraBold">
           سفارشات تایید شده
         </p>
@@ -159,8 +155,6 @@ const ConfirmedOrders = () => {
             </button>
           ))}
       </div>
-
-
     </ProfileLayout>
   );
 };
