@@ -20,7 +20,6 @@ const AboutUs: React.FC = () => {
       ">
         با ما بیشتر آشنا شوید
       </h1>
-
       <div className="w-full grid place-items-center
       grid-cols-12 
       px-4

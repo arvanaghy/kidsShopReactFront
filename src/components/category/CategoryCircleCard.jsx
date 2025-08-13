@@ -1,8 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react/prop-types
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CategoryCircleCard = ({
   item = {
@@ -23,8 +22,7 @@ const CategoryCircleCard = ({
     >
       <img
         src={
-          "https://api.kidsshop110.ir/category-images/webp/" +
-          `${item?.PicName}.webp`
+          `${import.meta.env.VITE_CDN_URL}/category-images/webp/${item?.PicName}.webp`
         }
         alt={item?.Name}
         onError={(e) => {

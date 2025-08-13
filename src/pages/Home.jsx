@@ -9,7 +9,7 @@ import "swiper/css/scrollbar";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
-import BannerGroup from "../components/BannerGroup";
+import BannerGroup from "@components/BannerGroup";
 
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import toast from "react-hot-toast";
@@ -18,7 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Loading from "@components/Loading";
 import CategoryCircleCard from "@components/category/CategoryCircleCard";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
-import OfferProductCard from "../components/OfferProductCard";
+import OfferProductCard from "@components/OfferProductCard";
 import { faArrowsToEye } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {

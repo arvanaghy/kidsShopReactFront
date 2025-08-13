@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Loading from "@components/Loading";
+import CategorySquareCard from "@components/category/CategorySquareCard";
+import Pagination from "@components/Pagination";
+import CategorySearch from "@components/category/CategorySearch";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
   const page = searchParams.get("page") || 1;
-  const [categories, setCatgeoires] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [links, setLinks] = useState([]);
-  const navigate = useNavigate();
 
   const fetchCategories = async (_url) => {
     window.scrollTo(0, 0);
@@ -27,7 +27,7 @@ const Categories = () => {
         },
       });
       if (status !== 200) throw new Error(data?.message);
-      setCatgeoires(data?.result?.categories?.data);
+      setCategories(data?.result?.categories?.data);
       setLinks(data?.result?.categories?.links);
     } catch (error) {
       toast.error(
@@ -41,21 +41,11 @@ const Categories = () => {
   };
   useEffect(() => {
     fetchCategories(
-      `https://api.kidsshop110.ir/api/v2/list-categories?search=${search}&page=${page}`
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/list-categories?search=${search}&page=${page}`
     );
   }, [page, search]);
-
-  const letsSearchCategory = (e) => {
-    e.preventDefault();
-    try {
-      const searchPhrase = e.target.search.value;
-      // if (searchPhrase?.length <= 0)
-      //   throw new Error("نام دسته بندی مورد نظر را وارد کنید");
-      navigate(`/categories?search=${searchPhrase}`);
-    } catch (error) {
-      toast.error(error?.message);
-    }
-  };
 
   if (loading) return <Loading />;
 
@@ -72,26 +62,7 @@ const Categories = () => {
               <span>دسته بندی های محصولات کیدزشاپ </span>
               {search?.length > 0 && <span>جستجو شده : {search}</span>}
             </h3>
-            <form
-              onSubmit={(e) => letsSearchCategory(e)}
-              className="relative flex items-center pt-2 md:pt-0 "
-            >
-              <input
-                type="text"
-                name="search"
-                placeholder="جستجو در دسته بندی ها"
-                className="w-full font-EstedadMedium p-2 md:p-3 2xl:p-5 text-sm text-gray-600 border border-gray-300 2xl:text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500"
-              />
-              <button
-                type="submit"
-                className="text-gray-600 hover:text-gray-700 absolute left-2.5"
-              >
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  className="2xl:text-3xl"
-                />
-              </button>
-            </form>
+            <CategorySearch />
           </div>
           <div
             className="
@@ -105,48 +76,7 @@ const Categories = () => {
           >
             {categories &&
               categories.map((item, idx) => (
-                <Link
-                  key={idx}
-                  to={`/category/${Math.floor(item.Code)}`}
-                  className="flex flex-col items-center justify-between
-                    duration-300 rounded-xl  
-                    group
-                    col-span-6  md:col-span-4
-                    lg:col-span-3
-                    2xl:col-span-3
-                    gap-2
-                    "
-                >
-                  <img
-                    loading="lazy"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src =
-                        "https://api.kidsshop110.ir/No_Image_Available.jpg";
-                    }}
-                    src={
-                      "https://api.kidsshop110.ir/category-images/webp/" +
-                      `${item.PicName}.webp`
-                    }
-                    alt={item.Name}
-                    className="
-                    group-hover:scale-105 duration-300 ease-in-out
-                    rounded-xl shadow-md shadow-gray-300"
-                  />
-                  <div className="flex flex-col px-3 gap-2">
-                    <h4
-                      className=" 
-                          text-sm
-                          leading-relaxed
-                          2xl:text-3xl 2xl:pt-2 text-center text-gray-500 font-EstedadMedium"
-                    >
-                      {item?.Name}
-                    </h4>
-                    <p className="text-gray-300 font-EstedadLight text-xs 2xl:text-sm ">
-                      {item?.Comment}
-                    </p>
-                  </div>
-                </Link>
+                <CategorySquareCard key={idx} item={item} />
               ))}
           </div>
         </div>
@@ -154,40 +84,10 @@ const Categories = () => {
       {/* categories */}
 
       {/* Pagination Controls */}
-      <div className="flex flex-row gap-y-2 flex-wrap items-center justify-center my-2 md:my-8 2xl:my-16 ">
-        {links.length > 3 &&
-          links.map((link, idx) => (
-            <button
-              key={idx}
-              onClick={() =>
-                navigate(
-                  link.url.replace(
-                    "https://api.kidsshop110.ir/api/v2/list-categories",
-                    "/categories"
-                  )
-                )
-              }
-              disabled={link.url === null}
-              className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 2xl:mx-2
-                2xl:text-2xl
-                text-xs px-2 py-1 mx-1
-                disabled:cursor-not-allowed
-                transition-all duration-300 ease-in-out
-                hover:bg-CarbonicBlue-500/80 hover:text-white
-                ${
-                  link.active
-                    ? "bg-CarbonicBlue-500 text-white"
-                    : "bg-gray-300 text-black"
-                }`}
-            >
-              {link.label === "&laquo; Previous"
-                ? "قبلی"
-                : link.label === "Next &raquo;"
-                ? " بعدی"
-                : link.label}
-            </button>
-          ))}
-      </div>
+      <Pagination
+        links={links}
+        replace={{ url: "/v2/list-categories", phrase: "/categories" }}
+      />
     </div>
   );
 };
