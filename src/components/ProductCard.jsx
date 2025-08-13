@@ -2,23 +2,21 @@
 import { Link } from "react-router-dom";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { userPriceSelect } from "@utils/userPriceHelper";
-import { useContext } from "react";
-import UserContext from "@context/UserContext";
-import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
 import { RGBtoHexConverter } from "../utils/RGBtoHexConverter";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+import { useMainStore } from "@store/useMainStore";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
-  const { user } = useContext(UserContext);
-  const { favourite, updateFavourite } = useContext(UserContext);
-  const isFavourite = favourite?.some(
+  const { user, favorite, updateFavorite, compareList, updateCompareList } =
+    useMainStore();
+
+  const isFavorite = favorite?.some(
     (f) => Math.floor(f.Code) === Math.floor(item.Code)
   );
-  const { compareList, updateCompareList } = useContext(UserContext);
   const isCompared = compareList.some(
     (p) => Math.floor(p.Code) === Math.floor(item.Code)
   );
@@ -45,12 +43,12 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
     ),
   ];
 
-  const toggleFavourite = (item) => {
-    if (isFavourite) {
-      updateFavourite(favourite.filter((p) => p.Code !== item.Code));
+  const toggleFavorite = (item) => {
+    if (isFavorite) {
+      updateFavorite(favorite.filter((p) => p.Code !== item.Code));
       toast.error("محصول مورد نظر از علاقه مندی ها حذف شد.");
     } else {
-      updateFavourite([...favourite, item]);
+      updateFavorite([...favorite, item]);
       toast.success("محصول مورد نظر به علاقه مندی ها اضافه شد.");
     }
   };
@@ -94,12 +92,12 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
         </h2>
         <div className="absolute top-8 left-0 flex flex-col gap-1 px-1">
           <button
-            onClick={() => toggleFavourite(item)}
+            onClick={() => toggleFavorite(item)}
             className="text-xl text-red-500 hover:scale-110 transition-transform"
           >
             <FontAwesomeIcon
-              icon={isFavourite ? faSolidHeart : faHeart}
-              className={isFavourite ? "text-red-600" : "text-gray-400"}
+              icon={isFavorite ? faSolidHeart : faHeart}
+              className={isFavorite ? "text-red-600" : "text-gray-400"}
             />
           </button>
           <button

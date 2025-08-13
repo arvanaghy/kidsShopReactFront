@@ -81,11 +81,11 @@ const Home = () => {
         </div>
       </section>
       {/* categories */}
-      {/* frist two banners */}
+      {/* first two banners */}
       {result?.banners?.length == 2 && (
         <BannerGroup banners={result?.banners?.slice(0, 2)} />
       )}
-      {/* newestproducts */}
+      {/* newest products */}
       {result?.newestProducts?.length > 0 && (
         <section
           className="
@@ -170,7 +170,7 @@ const Home = () => {
           </div>
         </section>
       )}
-      {/* thrid and fourth banners */}
+      {/* third and fourth banners */}
       {result?.banners?.length == 4 && (
         <BannerGroup banners={result?.banners?.slice(2, 4)} />
       )}

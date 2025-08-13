@@ -32,7 +32,7 @@ const Register = () => {
         "https://api.kidsshop110.ir/api/v1/register",
         {
           name: name,
-          phoneNumber: phoneNumber,
+          phone_number: phoneNumber,
           Address: address,
         }
       );

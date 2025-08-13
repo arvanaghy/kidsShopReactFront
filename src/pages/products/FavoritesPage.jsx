@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import UserContext from "@context/UserContext";
-import ProductCard from "../components/ProductCard"; // adjust path
-
-const FavouritesPage = () => {
-  const { favourite } = useContext(UserContext);
+import ProductCard from "@components/ProductCard";
+import { useMainStore } from "@store/useMainStore";
+const FavoritesPage = () => {
+  const { favorite } = useMainStore();
 
   return (
     <div className="px-4 py-8 min-h-screen bg-white text-black">
@@ -11,13 +9,13 @@ const FavouritesPage = () => {
         لیست علاقه مندی ها
       </h1>
       <div className="grid grid-cols-12 py-6 ">
-        {favourite.length === 0 ? (
+        {favorite.length === 0 ? (
           <p className="w-full col-span-12 text-gray-600">
             هیچ محصولی به لیست علاقه مندی ها اضافه نکرده اید!
           </p>
         ) : (
           <div className="col-span-12 grid grid-cols-12 gap-4">
-            {favourite.map((item) => (
+            {favorite.map((item) => (
               <ProductCard
                 key={item.Code}
                 item={item}
@@ -31,4 +29,4 @@ const FavouritesPage = () => {
   );
 };
 
-export default FavouritesPage;
+export default FavoritesPage;

@@ -27,7 +27,7 @@ const Login = () => {
         const { data, status } = await axios.post(
           "https://api.kidsshop110.ir/api/v1/login",
           {
-            phoneNumber: phoneNumber,
+            phone_number: phoneNumber,
           }
         );
 

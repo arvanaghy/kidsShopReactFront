@@ -21,7 +21,7 @@ const SMSValidate = () => {
       const { data, status } = await axios.post(
         "https://api.kidsshop110.ir/api/v1/verify-sms",
         {
-          phoneNumber: phoneNumber,
+          phone_number: phoneNumber,
           sms: otp,
         },
         {
@@ -64,7 +64,7 @@ const SMSValidate = () => {
       const { data, status } = await axios.post(
         "https://api.kidsshop110.ir/api/v1/resend-sms",
         {
-          phoneNumber: phoneNumber,
+          phone_number: phoneNumber,
         },
         {
           headers: {

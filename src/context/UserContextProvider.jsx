@@ -7,7 +7,7 @@ const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState([]);
   const [cart, setCart] = useState([]);
   const [order, setOrder] = useState([]);
-  const [favourite, setFavourite] = useState([]);
+  const [favorite, setFavorite] = useState([]);
   const [compareList, setCompareList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [desktopNavbar, setDesktopNavbar] = useState(false);
@@ -62,17 +62,17 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const fetchFavourite = () => {
+  const fetchFavorite = () => {
     if (loading) return;
     try {
-      const _favourite = window.localStorage.getItem("KidsShop_favourite");
-      if (_favourite) {
-        setFavourite(JSON.parse(_favourite));
+      const _favorite = window.localStorage.getItem("KidsShop_favorite");
+      if (_favorite) {
+        setFavorite(JSON.parse(_favorite));
       }
     } catch (err) {
-      toast.error("fetchFavourite Context Error:" + err.message);
-      window.localStorage.removeItem("KidsShop_favourite");
-      setFavourite([]);
+      toast.error("fetchFavorite Context Error:" + err.message);
+      window.localStorage.removeItem("KidsShop_favorite");
+      setFavorite([]);
     } finally {
       setLoading(false);
     }
@@ -139,19 +139,19 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const updateFavourite = (__favourite) => {
+  const updateFavorite = (__favorite) => {
     if (loading) return;
     try {
       setLoading(true);
-      setFavourite(__favourite);
+      setFavorite(__favorite);
       window.localStorage.setItem(
-        "KidsShop_favourite",
-        JSON.stringify(__favourite)
+        "KidsShop_favorite",
+        JSON.stringify(__favorite)
       );
     } catch (err) {
-      setFavourite([]);
-      toast.error("updateFavourite Error:" + err.message);
-      window.localStorage.removeItem("KidsShop_favourite");
+      setFavorite([]);
+      toast.error("updateFavorite Error:" + err.message);
+      window.localStorage.removeItem("KidsShop_favorite");
     } finally {
       setLoading(false);
     }
@@ -187,7 +187,7 @@ const UserContextProvider = ({ children }) => {
     fetchUser();
     fetchCart();
     fetchOrder();
-    fetchFavourite();
+    fetchFavorite();
     fetchCompareList();
   }, []);
 
@@ -203,9 +203,9 @@ const UserContextProvider = ({ children }) => {
         order,
         updateOrder,
         fetchOrder,
-        favourite,
-        updateFavourite,
-        fetchFavourite,
+        favorite,
+        updateFavorite,
+        fetchFavorite,
         compareList,
         updateCompareList,
         fetchCompareList,

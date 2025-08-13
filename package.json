@@ -19,6 +19,8 @@
     "@neshan-maps-platform/mapbox-gl-react": "^1.0.2",
     "axios": "^1.6.5",
     "chart.js": "^4.4.4",
+    "dotenv": "^17.2.1",
+    "immer": "^10.1.1",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
     "lodash": "^4.17.21",
@@ -29,8 +31,10 @@
     "react-icons": "^5.2.1",
     "react-js-pagination": "^3.0.3",
     "react-leaflet": "^4.2.1",
+    "react-select": "^5.10.1",
     "react-svg": "^16.1.33",
-    "swiper": "^11.1.5"
+    "swiper": "^11.1.5",
+    "zustand": "^5.0.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

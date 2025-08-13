@@ -25,19 +25,24 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
-import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
-import { RGBtoHexConverter } from "../utils/RGBtoHexConverter";
+import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
+import { useMainStore } from "@store/useMainStore";
 
 const Product = () => {
   const { productCode } = useParams();
 
-  const { favourite, updateFavourite } = useContext(UserContext);
-  const { compareList, updateCompareList } = useContext(UserContext);
-
-  const { cart, updateCart, desktopNavbar } = useContext(UserContext);
+  const {
+    favorite,
+    updateFavorite,
+    compareList,
+    updateCompareList,
+    cart,
+    updateCart,
+    desktopNavbar,
+  } = useMainStore();
 
   const [feature, setFeature] = useState(null);
-  const [isFavourite, setIsFavourite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [isCompared, setIsCompared] = useState(false);
 
   const [loading, setLoading] = useState(false);
@@ -165,10 +170,10 @@ const Product = () => {
   };
 
   useEffect(() => {
-    setIsFavourite(
-      favourite.some((p) => Math.floor(p.Code) == Math.floor(productCode))
+    setIsFavorite(
+      favorite.some((p) => Math.floor(p.Code) == Math.floor(productCode))
     );
-  }, [favourite, productCode]);
+  }, [favorite, productCode]);
 
   useEffect(() => {
     setIsCompared(
@@ -176,12 +181,12 @@ const Product = () => {
     );
   }, [compareList, productCode]);
 
-  const toggleFavourite = (item) => {
-    if (isFavourite) {
-      updateFavourite(favourite.filter((p) => p.Code !== item?.product?.Code));
+  const toggleFavorite = (item) => {
+    if (isFavorite) {
+      updateFavorite(favorite.filter((p) => p.Code !== item?.product?.Code));
       toast.error("محصول مورد نظر از علاقه مندی ها حذف شد.");
     } else {
-      updateFavourite([...favourite, item?.product]);
+      updateFavorite([...favorite, item?.product]);
       toast.success("محصول مورد نظر به علاقه مندی ها اضافه شد.");
     }
   };
@@ -253,17 +258,15 @@ const Product = () => {
           >
             <FontAwesomeIcon
               icon={faSquareShareNodes}
-              className="text-xl text-white
-                
-                "
+              className="text-xl text-white"
             />
           </button>
-          <button onClick={() => toggleFavourite(data)}>
+          <button onClick={() => toggleFavorite(data)}>
             <FontAwesomeIcon
               icon={faBookmark}
               className={`text-2xl duration-300 ease-in-out
                     ${
-                      isFavourite
+                      isFavorite
                         ? "text-Purple-500 hover:text-gray-500 "
                         : "text-gray-500 hover:text-Purple-500"
                     }`}
@@ -392,9 +395,7 @@ const Product = () => {
                         <span
                           className="block w-5 h-5 rounded-full"
                           style={{
-                            backgroundColor: RGBtoHexConverter(
-                              item?.RGB
-                            ),
+                            backgroundColor: RGBtoHexConverter(item?.RGB),
                           }}
                         ></span>
                         <span>{item.ColorName}</span>
@@ -409,7 +410,9 @@ const Product = () => {
                         <span className="block text-sm font-EstedadMedium ">
                           مبلغ
                         </span>
-                        <span>{formatCurrencyDisplay(item?.Mablag)}</span>
+                        <span>
+                          {formatCurrencyDisplay(data?.product?.SPrice)}
+                        </span>
                         <span>تومان</span>
                       </p>
                     </button>
@@ -417,6 +420,124 @@ const Product = () => {
                 </div>
               )}
             </div>
+
+            {/* <div className="w-full flex flex-col gap-1.5 md:gap-3 flex-wrap">
+              {data?.product?.product_size_color?.length > 0 && (
+                <div className="w-full font-EstedadMedium px-2 flex flex-col gap-4 items-start justify-start leading-relaxed">
+                  <select
+                    className="w-full text-sm font-EstedadMedium text-gray-800 bg-gray-100 border-2 border-gray-200 rounded-md p-2
+                   focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
+                   hover:bg-gray-200 duration-300 ease-in-out"
+                    value={feature?.SCCode || ""}
+                    onChange={(e) => {
+                      const selectedItem =
+                        data?.product?.product_size_color.find(
+                          (item) => item.SCCode === e.target.value
+                        );
+                      if (selectedItem && selectedItem.Mande > 0) {
+                        setFeature(selectedItem);
+                      }
+                    }}
+                  >
+                    <option value="" disabled>
+                      انتخاب رنگ و سایز
+                    </option>
+                    {data?.product?.product_size_color.map((item, index) => (
+                      <option
+                        key={index}
+                        value={item.SCCode}
+                        disabled={item.Mande <= 0}
+                        className={`text-gray-800 ${
+                          item.Mande <= 0
+                            ? "text-gray-400 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
+                        رنگ:  {item.ColorName} - سایز: {item.SizeNum} - مبلغ:{" "}
+                        {formatCurrencyDisplay(data?.product?.SPrice)} تومان
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div> */}
+
+            {/* <div className="w-full flex flex-col gap-1.5 md:gap-3 flex-wrap">
+  {data?.product?.product_size_color?.length > 0 && (
+    <div className="w-full font-EstedadMedium px-2 flex flex-col gap-4 items-start justify-start leading-relaxed">
+      <Select
+        className="w-full text-sm font-EstedadMedium"
+        classNamePrefix="custom-select"
+        value={
+          feature?.SCCode
+            ? {
+                value: feature.SCCode,
+                label: `رنگ: ${feature.ColorName} - سایز: ${feature.SizeNum} - مبلغ: ${formatCurrencyDisplay(feature.Mablag)} تومان`,
+                color: RGBtoHexConverter(feature.RGB),
+              }
+            : null
+        }
+        onChange={(selectedOption) => {
+          const selectedItem = data?.product?.product_size_color.find(
+            (item) => item.SCCode === selectedOption.value
+          );
+          if (selectedItem && selectedItem.Mande > 0) {
+            setFeature(selectedItem);
+          }
+        }}
+        options={data?.product?.product_size_color.map((item) => ({
+          value: item.SCCode,
+          label: `رنگ: ${item.ColorName} - سایز: ${item.SizeNum} - مبلغ: ${formatCurrencyDisplay(item.Mablag)} تومان`,
+          color: RGBtoHexConverter(item.RGB),
+          isDisabled: item.Mande <= 0,
+        }))}
+        formatOptionLabel={({ label, color }) => (
+          <div className="flex items-center gap-2">
+            <span
+              className="block w-5 h-5 rounded-full"
+              style={{ backgroundColor: color }}
+            ></span>
+            <span>{label}</span>
+          </div>
+        )}
+        styles={{
+          control: (base) => ({
+            ...base,
+            border: '2px solid #e5e7eb',
+            borderRadius: '0.375rem',
+            padding: '0.5rem',
+            backgroundColor: '#f3f4f6',
+            boxShadow: 'none',
+            '&:hover': {
+              backgroundColor: '#e5e7eb',
+              borderColor: '#e5e7eb',
+            },
+            '&:focus': {
+              borderColor: '#22c55e',
+              boxShadow: '0 0 0 2px rgba(34, 197, 94, 0.5)',
+            },
+          }),
+          option: (base, { isDisabled, isSelected }) => ({
+            ...base,
+            backgroundColor: isSelected ? '#22c55e' : '#fff',
+            color: isSelected ? '#fff' : '#1f2937',
+            cursor: isDisabled ? 'not-allowed' : 'pointer',
+            '&:hover': {
+              backgroundColor: isDisabled ? '#fff' : '#e5e7eb',
+            },
+            padding: '0.5rem',
+          }),
+          menu: (base) => ({
+            ...base,
+            backgroundColor: '#fff',
+            borderRadius: '0.375rem',
+            border: '1px solid #e5e7eb',
+          }),
+        }}
+      />
+    </div>
+  )}
+</div> */}
 
             <div className="w-full flex flex-row justify-end items-center py-3 md:py-6">
               <button
@@ -493,7 +614,7 @@ const Product = () => {
                               onClick={() => {
                                 removeFeatureFromCart(item);
                               }}
-                              className="text-red-500 p-1.5
+                              className="text-red-500 p-1.5 bg-white border border-red-500 rounded-full
                            hover:text-red-700 duration-300 ease-in-out transition-all
                            "
                             >
@@ -507,7 +628,7 @@ const Product = () => {
                 })()}
               </div>
             ) : (
-              <div className="font-EstedadMedium lg:p-0.5 text-pretty  lg:text-xs leading-relaxed ">
+              <div className="flex w-full flex-row font-EstedadMedium justify-center items-center text-center lg:p-2.5 text-pretty lg:text-xs leading-relaxed ">
                 شما از این محصول هیچ آیتمی در سبد خرید ندارید
               </div>
             )}

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
-import SpinnerLoading from "../components/SpinnerLoading";
+import SpinnerLoading from "@components/SpinnerLoading";
 
 const WebPayment = () => {
   const location = useLocation();

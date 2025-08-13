@@ -4,9 +4,9 @@ import Footer from "@layouts/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
 import MobileNav from "@components/navbar/MobileNav";
-import { useContext, useEffect, useRef, useState } from "react";
+import {  useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UserContext from "@context/UserContext";
+// import UserContext from "@context/UserContext";
 
 import {
   faChevronUp,
@@ -15,13 +15,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MobileTopMenu from "../components/navbar/MobileTopMenu";
 import axios from "axios";
+import { useMainStore } from "@store/useMainStore";
 
 const MainLayout = () => {
   const [contactWithUsModal, setContactWithUsModal] = useState(false);
   const contactWithUsModalRef = useRef(null);
   const contactWithUsButtonRef = useRef(null);
-  const { fetchCart, fetchUser, fetchCompareList, fetchFavourite, fetchOrder } =
-    useContext(UserContext);
+
+  const { fetchCart, fetchUser, fetchCompareList, fetchFavorite, fetchOrder } =
+    useMainStore();
 
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);
@@ -38,8 +40,8 @@ const MainLayout = () => {
     if (e.key === "KidsShop_compareList") {
       fetchCompareList();
     }
-    if (e.key === "KidsShop_favourite") {
-      fetchFavourite();
+    if (e.key === "KidsShop_favorite") {
+      fetchFavorite();
     }
     if (e.key === "KidsShop_order") {
       fetchOrder();
@@ -121,8 +123,7 @@ const MainLayout = () => {
       >
         <FontAwesomeIcon
           icon={faSquarePhoneFlip}
-          className={`text-6xl opacity-90 lg:opacity-70 
-           
+          className={`text-6xl opacity-90 lg:opacity-70
           duration-300 ease-in-out transition-all
         ${
           contactWithUsModal
@@ -201,7 +202,7 @@ const MainLayout = () => {
         text-lg  px-2 py-2
         md:text-2xl md:px-5 md:py-3
          
-         bg-black/60 text-white   rounded-t-2xl hover:bg-green-700 transation-all duration-300 ease-in-out"
+         bg-black/60 text-white   rounded-t-2xl hover:bg-green-700 transaction-all duration-300 ease-in-out"
         />
       </button>
       <div

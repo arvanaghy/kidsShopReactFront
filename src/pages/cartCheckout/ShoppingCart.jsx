@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-import { userPriceSelect } from "@utils/userPriceHelper";
 import { Link, useNavigate } from "react-router-dom";
-import UserContext from "@context/UserContext";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,10 +12,12 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { confirmToast } from "@utils/confirmToast";
+import { useMainStore } from "@store/useMainStore";
+
 
 const ShoppingCart = () => {
   const navigate = useNavigate();
-  const { user, cart, updateCart, updateOrder } = useContext(UserContext);
+  const { user, cart, updateCart, updateOrder } = useMainStore();
 
   const [description, setDescription] = useState("");
   const [transferServices, setTransferServices] = useState([]);

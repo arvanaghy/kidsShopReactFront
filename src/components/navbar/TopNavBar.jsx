@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import UserContext from "@context/UserContext";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import secondLogo from "@assets/images/secondLogo.png";
@@ -21,15 +20,16 @@ import {
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+import { useMainStore } from "@store/useMainStore";
 
 const TopNavBar = () => {
   const categoryRef = useRef(null);
   const logoSearchLoginCardRef = useRef(null);
-  const [categories, setCatgeoires] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
-  const { user, cart, desktopNavbar, updateDesktopNavbar } =
-    useContext(UserContext);
+
+  const { user, cart, desktopNavbar, updateDesktopNavbar } = useMainStore();
   const [categoryImage, setCategoryImage] = useState(null);
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ const TopNavBar = () => {
       });
 
       if (status !== 200) throw new Error(data?.message);
-      setCatgeoires(data?.result?.categories);
+      setCategories(data?.result?.categories);
     } catch (error) {
       toast.error(
         "لیست دسته بندی ها :  " + error?.response?.data?.message ||
@@ -456,7 +456,7 @@ pt-8 flex items-center justify-center text-center text-green-600 hover:text-gree
             />
           </Link>
           <Link
-            to={"/my-favourite"}
+            to={"/my-favorite"}
             className="flex flex-row items-center
             hover:scale-105
             hover:text-green-600 transition-all ease-in-out duration-300"

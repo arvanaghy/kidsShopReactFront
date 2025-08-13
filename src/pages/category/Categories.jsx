@@ -4,11 +4,8 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMagnifyingGlass,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
-import Loading from "../components/Loading";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Loading from "@components/Loading";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
@@ -109,7 +106,6 @@ const Categories = () => {
             {categories &&
               categories.map((item, idx) => (
                 <Link
-                  
                   key={idx}
                   to={`/category/${Math.floor(item.Code)}`}
                   className="flex flex-col items-center justify-between

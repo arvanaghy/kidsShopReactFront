@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { userPriceSelect } from "@utils/userPriceHelper";
-import UserContext from "@context/UserContext";
 import { Link } from "react-router-dom";
 import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
+import {useMainStore} from "@store/useMainStore";
 
 const OfferProductCard = ({ item }) => {
-  const { user } = useContext(UserContext);
+  const {user} = useMainStore();
 
   const uniqueColorCodes = [
     ...new Map(
@@ -30,7 +29,6 @@ const OfferProductCard = ({ item }) => {
 
   return (
     <Link
-      
       to={`/product/${item?.Code}`}
       className="grid grid-cols-12 bg-gray-100 rounded-xl h-full items-center justify-center w-full
       px-16
@@ -52,12 +50,12 @@ const OfferProductCard = ({ item }) => {
         <p className="text-gray-700 text-center font-EstedadLight leading-relaxed ">
           {item?.Comment}
         </p>
-        <div className="flex flex-row items-center justify-center gap-2">
-          <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl ">
-            رنگ:
-          </p>
-          {uniqueColorCodes?.length > 0 &&
-            uniqueColorCodes?.map((uniqueColorCodes_item, idx) => (
+        {uniqueColorCodes?.length > 0 && (
+          <div className="flex flex-row items-center justify-center gap-2">
+            <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl ">
+              رنگ:
+            </p>
+            {uniqueColorCodes?.map((uniqueColorCodes_item, idx) => (
               <div
                 className="flex flex-row items-center justify-center gap-2 "
                 key={idx}
@@ -76,18 +74,20 @@ const OfferProductCard = ({ item }) => {
                 ></p>
               </div>
             ))}
-        </div>
-        <div className="flex flex-row items-center justify-center gap-2 ">
-          <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl">
-            سایز:
-          </p>
-          {uniqueSizeNums?.length > 0 &&
-            uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
+          </div>
+        )}
+        {uniqueSizeNums?.length > 0 && (
+          <div className="flex flex-row items-center justify-center gap-2 ">
+            <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl">
+              سایز:
+            </p>
+            {uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
               <p key={idx} className="text-gray-700 font-EstedadMedium ">
                 {uniqueSizeNums_item}
               </p>
             ))}
-        </div>
+          </div>
+        )}
       </div>
       {/* images  */}
       <div className="col-span-12 xl:col-span-6 flex flex-col items-start justify-center space-y-6">

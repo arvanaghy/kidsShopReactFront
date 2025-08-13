@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import ProductCard from "../components/ProductCard";
-import Loading from "../components/Loading";
+import ProductCard from "@components/ProductCard";
+import Loading from "@components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
-import ColorFilter from "../components/filters/ColorFilter";
-import SizeFilter from "../components/filters/SizeFilter";
-import ProductSearch from "../components/filters/ProductSearch";
-import UserContext from "@context/UserContext";
+import ColorFilter from "@components/filters/ColorFilter";
+import SizeFilter from "@components/filters/SizeFilter";
+import ProductSearch from "@components/filters/ProductSearch";
+import { useMainStore } from "@store/useMainStore";
 
 const Products = () => {
   const [searchParams] = useSearchParams();
@@ -39,7 +39,7 @@ const Products = () => {
   const [isModal, setIsModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const { desktopNavbar } = useContext(UserContext);
+  const { desktopNavbar } = useMainStore();
 
   useEffect(() => {
     const handleResize = () => {

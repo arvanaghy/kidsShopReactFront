@@ -1,14 +1,12 @@
-import React, { useContext } from "react";
-import UserContext from "@context/UserContext";
 import { Link } from "react-router-dom";
-import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
+import { DecimalToHexConverter } from "@utils/DecimalToHexConverter";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useMainStore } from "@store/useMainStore";
 
 const ComparePage = () => {
-  const { compareList, updateCompareList } = useContext(UserContext);
-
+  const { compareList, updateCompareList } = useMainStore();
   const clearCompare = () => {
     updateCompareList([]);
   };

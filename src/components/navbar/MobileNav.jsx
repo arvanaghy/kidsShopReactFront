@@ -1,8 +1,8 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 import { FaHome } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
-import UserContext from "@context/UserContext";
+// import UserContext from "@context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoxesStacked,
@@ -11,14 +11,16 @@ import {
   faIdCardClip,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { useMainStore } from "@store/useMainStore";
+
 const MobileNav = () => {
-  const { user, cart } = useContext(UserContext);
+  // const { user, cart } = useContext(UserContext);
+  const { user, cart } = useMainStore();
   return (
     <div className="w-full h-full rotate-180 shadow-black/10 shadow-xl relative">
       <div className="w-full h-full rotate-180 text-white flex flex-row justify-between items-center font-EstedadMedium">
         <div className="w-full grid grid-cols-6 justify-center items-center place-items-stretch h-full">
           <Link
-            
             to={"/products"}
             className="flex flex-col items-center space-y-1.5"
           >
@@ -34,7 +36,6 @@ const MobileNav = () => {
           </Link>
           <div className="col-span-2"></div>
           <Link
-            
             to={"/shopping-cart"}
             className="flex flex-col items-center py-2"
           >
@@ -48,20 +49,12 @@ const MobileNav = () => {
           </Link>
 
           {user?.Name !== undefined && user?.UToken !== undefined ? (
-            <Link
-              
-              to={"/profile"}
-              className="flex flex-col items-center "
-            >
+            <Link to={"/profile"} className="flex flex-col items-center ">
               <FontAwesomeIcon icon={faIdCardClip} />
               <span className="text-xs">{user?.Name.split(" ", 1)}</span>
             </Link>
           ) : (
-            <Link
-              
-              to={"/login"}
-              className="flex flex-col items-center"
-            >
+            <Link to={"/login"} className="flex flex-col items-center">
               <FontAwesomeIcon icon={faIdCardClip} />
               {/* <span className="text-xs">ورود</span> */}
             </Link>
@@ -71,7 +64,6 @@ const MobileNav = () => {
 
       <div className="bg-white w-20 h-20 rounded-full absolute -bottom-4 border-2 border-CarbonicBlue-500 shadow-xl rotate-180 left-1/2 transform -translate-x-1/2 flex justify-center items-center">
         <Link
-          
           to={"/"}
           className="text-3xl flex flex-col items-center justify-center text-CarbonicBlue-500"
         >

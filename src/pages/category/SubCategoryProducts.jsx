@@ -1,20 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import toast from "react-hot-toast";
-import ProductCard from "../components/ProductCard";
-import Loading from "../components/Loading";
+import ProductCard from "@components/ProductCard";
+import Loading from "@components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
-import ColorFilter from "../components/filters/ColorFilter";
-import SizeFilter from "../components/filters/SizeFilter";
-import ProductSearch from "../components/filters/ProductSearch";
-import { toPersianDigits } from "../utils/numeralHelpers";
-import UserContext from "@context/UserContext";
+import ColorFilter from "@components/filters/ColorFilter";
+import SizeFilter from "@components/filters/SizeFilter";
+import ProductSearch from "@components/filters/ProductSearch";
+import { useMainStore } from "@store/useMainStore";
 
-
-const OfferedProducts = () => {
+const SubCategoryProducts = () => {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || null;
   const product_page = searchParams.get("product_page") || 1;
@@ -24,8 +27,8 @@ const OfferedProducts = () => {
   const max_price = searchParams.get("max_price") || null;
   const sort_price = searchParams.get("sort_price") || null;
   const mobileFilterRef = useRef(null);
-    const { desktopNavbar } = useContext(UserContext);
-
+  const { subCategoryCode } = useParams();
+  const { desktopNavbar } = useMainStore();
 
   const navigate = useNavigate();
 
@@ -36,6 +39,7 @@ const OfferedProducts = () => {
   });
 
   const [sizes, setSizes] = useState([]);
+  const [subcategory, setSubcategory] = useState({});
   const [colors, setColors] = useState([]);
   const [price, setPrice] = useState({ max_price: 0, min_price: 0 });
   const [sizeSets, setSizeSets] = useState([]);
@@ -95,6 +99,7 @@ const OfferedProducts = () => {
         },
       });
       if (status !== 200) throw new Error(data?.message);
+      setSubcategory(data?.result?.subcategory);
       setProducts({
         data: data?.result?.products?.data,
         links: data?.result?.products?.links,
@@ -114,20 +119,29 @@ const OfferedProducts = () => {
   };
 
   useEffect(() => {
+    if (!subCategoryCode || subCategoryCode == "undefined") return;
     fetchData(
-      `https://api.kidsshop110.ir/api/v2/list-all-offers?product_page=${product_page}${
+      `https://api.kidsshop110.ir/api/v2/list-subcategory-products/${subCategoryCode}?product_page=${product_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
       }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
     );
-  }, [product_page, search, size, color, sort_price]);
+  }, [
+    product_page,
+    search,
+    size,
+    color,
+    sort_price,
+    // priceRange?.min_price,
+    // priceRange?.max_price,
+  ]);
 
   const applyFilters = () => {
     try {
       isModal && setIsModal(false);
       navigate(
-        `/offered-products?product_page=${1}${
+        `/sub-category-products/${subCategoryCode}?product_page=${1}${
           search != null ? `&search=${search}` : ""
         }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
           colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
@@ -146,7 +160,7 @@ const OfferedProducts = () => {
 
     // setPriceRange({ min_price: price?.min_price, max_price: price?.max_price });
 
-    navigate(`/offered-products`);
+    navigate(`/sub-category-products/${subCategoryCode}`);
   };
 
   if (loading) return <Loading />;
@@ -154,20 +168,48 @@ const OfferedProducts = () => {
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
       <div
-        className="col-span-12 text-center  font-EstedadExtraBold tracking-wider leading-relaxed
+        className="col-span-12 grid grid-cols-12 
+        items-center justify-center 
+        px-2
+        py-3
+        md:gap-2
+        xl:p-4
+
+
+      "
+      >
+        <img
+          src={`https://api.kidsshop110.ir/subCategory-images/webp/${subcategory?.PicName}.webp`}
+          alt={subcategory?.Name}
+          onError={(e) => {
+            e.target.src = "https://api.kidsshop110.ir/No_Image_Available.jpg";
+          }}
+          className="col-span-5 md:col-span-4 w-full object-scale-down rounded-xl shadow-sm shadow-black/60"
+        />
+        <div className="col-span-7 md:col-span-8 w-full items-center justify-center ">
+          <h1
+            className=" text-center  font-EstedadExtraBold tracking-wider leading-relaxed
       text-lg py-4
-      sm:text-xl sm:py-4
+      sm:text-4xl sm:py-4
       md:text-2xl md:py-6
       lg:text-3xl lg:py-7
       xl:text-4xl xl:py-8 
       2xl:text-5xl 2xl:py-10
-
-      text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
-      
+      text-transparent bg-clip-text bg-gradient-to-r from-Amber-500 to-CarbonicBlue-500 
       "
-      >
-        تخفیف‌های شگفت انگیز مد و پوشاک{" "}
-        {toPersianDigits(new Date().getFullYear())}
+          >
+            {subcategory?.Name}
+          </h1>
+          <p
+            className="font-EstedadMedium tracking-wide leading-loose 
+          p-1.5
+          md:text-sm md:p-2
+
+          xl:text-base xl:p-4 text-justify  "
+          >
+            {subcategory?.Comment}
+          </p>
+        </div>
       </div>
 
       {/* modal */}
@@ -220,6 +262,7 @@ const OfferedProducts = () => {
           )}
         </div>
       )}
+
       {/* modal Toggle */}
 
       {!isModal && (
@@ -295,7 +338,7 @@ const OfferedProducts = () => {
         {/* sort filters */}
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">
           <Link
-            to={`/offered-products?product_page=${1}${
+            to={`/sub-category-products/${subCategoryCode}?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${color != null ? `&color=${color}` : ""}${
               search != null ? `&search=${search}` : ""
@@ -311,7 +354,7 @@ const OfferedProducts = () => {
             جدید ترین ها
           </Link>
           <Link
-            to={`/offered-products?product_page=${1}${
+            to={`/sub-category-products/${subCategoryCode}?product_page=${1}${
               search != null ? `&search=${search}` : ""
             }${size != null ? `&size=${size}` : ""}${
               color != null ? `&color=${color}` : ""
@@ -328,7 +371,7 @@ const OfferedProducts = () => {
             ارزان ترین ها
           </Link>
           <Link
-            to={`/offered-products?product_page=${1}${
+            to={`/sub-category-products/${subCategoryCode}?product_page=${1}${
               size != null ? `&size=${size}` : ""
             }${search != null ? `&search=${search}` : ""}${
               color != null ? `&color=${color}` : ""
@@ -375,8 +418,8 @@ const OfferedProducts = () => {
                   onClick={() => {
                     navigate(
                       link?.url.replace(
-                        "https://api.kidsshop110.ir/api/v2/list-all-offers",
-                        "/offered-products"
+                        `https://api.kidsshop110.ir/api/v2/list-subcategory-products/${subCategoryCode}`,
+                        `/sub-category-products/${subCategoryCode}`
                       )
                     );
                   }}
@@ -407,4 +450,4 @@ const OfferedProducts = () => {
   );
 };
 
-export default OfferedProducts;
+export default SubCategoryProducts;

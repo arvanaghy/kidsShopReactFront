@@ -85,7 +85,7 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faRestroom} />
         </Link>
         <Link
-          to={"/my-favourite"}
+          to={"/my-favorite"}
           className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
         hover:bg-gray-900 duration-300 ease-in-out transition-all
             "

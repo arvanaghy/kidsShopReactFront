@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import ProductCard from "../components/ProductCard";
-import UserContext from "../../UserContext";
+import ProductCard from "@components/ProductCard";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useMainStore } from "@store/useMainStore";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +13,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [sortType, setSortType] = useState("UCode");
-  const { user, searchPhrase, setSearchPhrase } = useContext(UserContext);
+  const { user, searchPhrase, setSearchPhrase } = useMainStore();
   const navigation = useNavigate();
 
   const fetchProducts = async () => {
