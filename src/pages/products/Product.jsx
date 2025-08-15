@@ -26,6 +26,7 @@ import "swiper/css/free-mode";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
 import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 import { useMainStore } from "@store/useMainStore";
+import { toPersianDigits } from "@utils/numeralHelpers";
 
 const Product = () => {
   const { productCode } = useParams();
@@ -403,7 +404,7 @@ const Product = () => {
                         <span className="block text-sm font-EstedadMedium ">
                           سایز
                         </span>
-                        <span>{item.SizeNum}</span>
+                        <span>{toPersianDigits(item.SizeNum)}</span>
                       </p>
                       <p className="flex flex-row gap-2">
                         <span className="block text-sm font-EstedadMedium ">
@@ -419,125 +420,6 @@ const Product = () => {
                 </div>
               )}
             </div>
-
-            {/* <div className="w-full flex flex-col gap-1.5 md:gap-3 flex-wrap">
-              {data?.product?.product_size_color?.length > 0 && (
-                <div className="w-full font-EstedadMedium px-2 flex flex-col gap-4 items-start justify-start leading-relaxed">
-                  <select
-                    className="w-full text-sm font-EstedadMedium text-gray-800 bg-gray-100 border-2 border-gray-200 rounded-md p-2
-                   focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
-                   hover:bg-gray-200 duration-300 ease-in-out"
-                    value={feature?.SCCode || ""}
-                    onChange={(e) => {
-                      const selectedItem =
-                        data?.product?.product_size_color.find(
-                          (item) => item.SCCode === e.target.value
-                        );
-                      if (selectedItem && selectedItem.Mande > 0) {
-                        setFeature(selectedItem);
-                      }
-                    }}
-                  >
-                    <option value="" disabled>
-                      انتخاب رنگ و سایز
-                    </option>
-                    {data?.product?.product_size_color.map((item, index) => (
-                      <option
-                        key={index}
-                        value={item.SCCode}
-                        disabled={item.Mande <= 0}
-                        className={`text-gray-800 ${
-                          item.Mande <= 0
-                            ? "text-gray-400 cursor-not-allowed"
-                            : ""
-                        }`}
-                      >
-                        رنگ:  {item.ColorName} - سایز: {item.SizeNum} - مبلغ:{" "}
-                        {formatCurrencyDisplay(data?.product?.SPrice)} تومان
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
-            </div> */}
-
-            {/* <div className="w-full flex flex-col gap-1.5 md:gap-3 flex-wrap">
-  {data?.product?.product_size_color?.length > 0 && (
-    <div className="w-full font-EstedadMedium px-2 flex flex-col gap-4 items-start justify-start leading-relaxed">
-      <Select
-        className="w-full text-sm font-EstedadMedium"
-        classNamePrefix="custom-select"
-        value={
-          feature?.SCCode
-            ? {
-                value: feature.SCCode,
-                label: `رنگ: ${feature.ColorName} - سایز: ${feature.SizeNum} - مبلغ: ${formatCurrencyDisplay(feature.Mablag)} تومان`,
-                color: RGBtoHexConverter(feature.RGB),
-              }
-            : null
-        }
-        onChange={(selectedOption) => {
-          const selectedItem = data?.product?.product_size_color.find(
-            (item) => item.SCCode === selectedOption.value
-          );
-          if (selectedItem && selectedItem.Mande > 0) {
-            setFeature(selectedItem);
-          }
-        }}
-        options={data?.product?.product_size_color.map((item) => ({
-          value: item.SCCode,
-          label: `رنگ: ${item.ColorName} - سایز: ${item.SizeNum} - مبلغ: ${formatCurrencyDisplay(item.Mablag)} تومان`,
-          color: RGBtoHexConverter(item.RGB),
-          isDisabled: item.Mande <= 0,
-        }))}
-        formatOptionLabel={({ label, color }) => (
-          <div className="flex items-center gap-2">
-            <span
-              className="block w-5 h-5 rounded-full"
-              style={{ backgroundColor: color }}
-            ></span>
-            <span>{label}</span>
-          </div>
-        )}
-        styles={{
-          control: (base) => ({
-            ...base,
-            border: '2px solid #e5e7eb',
-            borderRadius: '0.375rem',
-            padding: '0.5rem',
-            backgroundColor: '#f3f4f6',
-            boxShadow: 'none',
-            '&:hover': {
-              backgroundColor: '#e5e7eb',
-              borderColor: '#e5e7eb',
-            },
-            '&:focus': {
-              borderColor: '#22c55e',
-              boxShadow: '0 0 0 2px rgba(34, 197, 94, 0.5)',
-            },
-          }),
-          option: (base, { isDisabled, isSelected }) => ({
-            ...base,
-            backgroundColor: isSelected ? '#22c55e' : '#fff',
-            color: isSelected ? '#fff' : '#1f2937',
-            cursor: isDisabled ? 'not-allowed' : 'pointer',
-            '&:hover': {
-              backgroundColor: isDisabled ? '#fff' : '#e5e7eb',
-            },
-            padding: '0.5rem',
-          }),
-          menu: (base) => ({
-            ...base,
-            backgroundColor: '#fff',
-            borderRadius: '0.375rem',
-            border: '1px solid #e5e7eb',
-          }),
-        }}
-      />
-    </div>
-  )}
-</div> */}
-
             <div className="w-full flex flex-row justify-end items-center py-3 md:py-6">
               <button
                 className="w-fit flex flex-row gap-2 items-center justify-center border-2 border-green-600 rounded-md px-4 py-2 bg-green-500 text-white hover:bg-green-600 hover:text-white space-x-1.5

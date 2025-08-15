@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { DecimalToHexConverter } from "@utils/DecimalToHexConverter";
+import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useMainStore } from "@store/useMainStore";
+import { toPersianDigits } from "@utils/numeralHelpers";
 
 const ComparePage = () => {
   const { compareList, updateCompareList } = useMainStore();
@@ -16,29 +17,31 @@ const ComparePage = () => {
       <h1 className="w-fit text-center  text-xl lg:text-3xl font-EstedadExtraBold py-4 lg:text-right leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500">
         مقایسه محصولات
       </h1>
-      {compareList.length === 0 ? (
-        <p>محصولی برای مقایسه انتخاب نشده است</p>
+      {compareList.length <= 0 ? (
+        <p className="w-full text-center
+        text-pretty font-EstedadLight
+        py-2">محصولی برای مقایسه انتخاب نشده است</p>
       ) : (
         <div className="w-full flex flex-col justify-center items-center ">
           <div
             className="w-full overflow-x-auto py-10 grid grid-cols-12
           items-start justify-center lg:gap-6 gap-1 md:gap-3 "
           >
-            {compareList.map((item, index) => (
+            {compareList.map((product, index) => (
               <div
                 key={index}
                 className="relative w-full col-span-3 flex flex-col justify-center items-start lg:space-y-6 space-y-1
                 md:space-y-3 border-x-2"
               >
-                {/* sarvsabztabriz@ */}
                 <img
-                  src={`https://api.kidsshop110.ir/products-image/webp/${item?.PicName}.webp`}
-                  alt={item?.Name}
+                  src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${
+                    product?.PicName
+                  }.webp`}
+                  alt={product?.Name}
                   loading="lazy"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src =
-                      "https://api.kidsshop110.ir/No_Image_Available.jpg";
+                    e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
                   }}
                   className="w-full rounded-t-lg object-contain aspect-square"
                 />
@@ -49,25 +52,43 @@ const ComparePage = () => {
                     onClick={() => {
                       updateCompareList(
                         compareList.filter(
-                          (p) => Math.floor(p.Code) !== Math.floor(item.Code)
+                          (p) => Math.floor(p.Code) !== Math.floor(product.Code)
                         )
                       );
                     }}
                   />
                 </button>
                 <Link
-                  to={`/product/${item?.Code}`}
+                  to={`/product/${product?.Code}`}
                   className="w-full text-center font-EstedadExtraBold
                   xl:text-lg text-sm md:text-base  text-CarbonicBlue-500 hover:text-Purple-500 leading-relaxed
                   "
                 >
-                  {item?.Name}
+                  {product?.Name}
                 </Link>
-                <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight ">
-                  {item?.Comment}
+                <p className="text-gray-700 leading-relaxed  w-full text-pretty font-EstedadLight flex flex-row text-left justify-center items-center md:space-x-2 text-xs lg:text-base">
+                  {formatCurrencyDisplay(product?.SPrice)}
+                  <span className="text-xs block ">تومان</span>
                 </p>
-                <div className="w-full flex flex-col justify-start items-center xl:gap-3 gap-0.5 ">
-                  {item?.product_size_color
+                <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight ">
+                  {product?.Comment}
+                </p>
+                <div className="w-full flex flex-col justify-start items-center xl:gap-3 gap-0.5 p-1.5">
+                  <div
+                    key={index}
+                    className="w-full flex flex-row justify-between items-center flex-wrap"
+                  >
+                    <div className=" flex flex-row justify-start items-center lg:gap-x-2 gap-x-0.5 flex-wrap">
+                      <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight text-xs lg:text-base">
+                        رنگ
+                      </p>
+                    </div>
+
+                    <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight text-xs lg:text-base">
+                      سایز
+                    </p>
+                  </div>
+                  {product?.product_size_color
                     ?.filter((item) => item.Mande > 0)
                     .map((item, index) => (
                       <div
@@ -78,9 +99,7 @@ const ComparePage = () => {
                           <p
                             className="w-1 h-1 md:w-5 md:h-5 rounded-full"
                             style={{
-                              backgroundColor: DecimalToHexConverter(
-                                item?.ColorCode
-                              ),
+                              backgroundColor: RGBtoHexConverter(item?.RGB),
                             }}
                           ></p>
                           <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight text-xs lg:text-base">
@@ -89,11 +108,7 @@ const ComparePage = () => {
                         </div>
 
                         <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight text-xs lg:text-base">
-                          {item.SizeNum}
-                        </p>
-                        <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight flex flex-row justify-center items-center md:space-x-2 text-xs lg:text-base">
-                          {formatCurrencyDisplay(item.Mablag)}
-                          <span className="text-xs block ">تومان</span>
+                          {toPersianDigits(item?.SizeNum)}
                         </p>
                       </div>
                     ))}

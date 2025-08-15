@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 import { faSquare, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DecimalToHexConverter } from "../../utils/DecimalToHexConverter";
-import { RGBtoHexConverter } from "../../utils/RGBtoHexConverter";
+import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 
 const ColorFilter = ({ colors, colorSets, setColorSets }) => {
   const addColorSet = (color) => {

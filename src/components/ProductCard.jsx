@@ -1,17 +1,18 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-import { userPriceSelect } from "@utils/userPriceHelper";
-import { RGBtoHexConverter } from "../utils/RGBtoHexConverter";
+import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { faHeart as faSolidHeart } from "@fortawesome/free-solid-svg-icons";
+import { toPersianDigits } from "@utils/numeralHelpers";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import { useMainStore } from "@store/useMainStore";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
-  const { user, favorite, updateFavorite, compareList, updateCompareList } =
+  const { favorite, updateFavorite, compareList, updateCompareList } =
     useMainStore();
 
   const isFavorite = favorite?.some(
@@ -70,12 +71,14 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full h-64 rounded-t-lg duration-300 ease-in-out transition-all">
         <img
-          src={`https://api.kidsshop110.ir/products-image/webp/${item?.PicName}.webp`}
+          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${
+            item?.PicName
+          }.webp`}
           alt={item?.Name}
           loading="lazy"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = "https://api.kidsshop110.ir/No_Image_Available.jpg";
+            e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
           }}
           className="w-full rounded-t-lg object-scale-down h-full"
         />
@@ -126,7 +129,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
           </p>
           <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
             <span className="flex text-green-700 flex-row items-center gap-1">
-              {formatCurrencyDisplay(userPriceSelect(item, user))}
+              {formatCurrencyDisplay(item?.SPrice)}
               <span className="text-xs font-EstedadExtraBold tracking-tight ">
                 تومان
               </span>
@@ -139,14 +142,6 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
                   key={idx}
                   className="flex flex-row items-center justify-center gap-2"
                 >
-                  {/* <p
-                    className="w-5 h-5 rounded-full"
-                    style={{
-                      backgroundColor: DecimalToHexConverter(
-                        uniqueColorCodes_item?.ColorCode
-                      ),
-                    }}
-                  ></p> */}
                   <p
                     className="w-5 h-5 rounded-full"
                     style={{
@@ -155,7 +150,6 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
                       ),
                     }}
                   ></p>
-                  {/* <p>{RGBtoHexConverter(uniqueColorCodes_item?.RGB)}</p> */}
                   <p className="text-xs tracking-wide text-gray-800 ">
                     {uniqueColorCodes_item?.ColorName}
                   </p>
@@ -174,7 +168,7 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
                   key={idx}
                   className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md"
                 >
-                  {uniqueSizeNums_item}
+                  {toPersianDigits(uniqueSizeNums_item)}
                 </div>
               ))
             ) : (

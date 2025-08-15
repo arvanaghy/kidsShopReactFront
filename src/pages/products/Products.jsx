@@ -127,7 +127,7 @@ const Products = () => {
     //   }`
     // );
     fetchData(
-      `https://api.kidsshop110.ir/api/v2/list-all-products?product_page=${product_page}${
+      `${import.meta.env.VITE_API_URL}/v2/list-all-products?product_page=${product_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -216,8 +216,7 @@ const Products = () => {
       xl:text-4xl xl:py-8 
       2xl:text-5xl 2xl:py-10
 
-      text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500 
-      
+      text-transparent bg-clip-text bg-gradient-to-r  from-Amber-500 to-CarbonicBlue-500
       "
       >
         لیست محصولات کیدزشاپ

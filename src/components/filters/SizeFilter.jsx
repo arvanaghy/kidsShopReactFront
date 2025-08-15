@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { faCircle, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toPersianDigits } from "@utils/numeralHelpers";
 
 const SizeFilter = ({ sizes, sizeSets, setSizeSets }) => {
   const addSizeSet = (size) => {
@@ -38,8 +39,7 @@ const SizeFilter = ({ sizes, sizeSets, setSizeSets }) => {
                 className="text-white border border-black rounded-full "
               />
             )}
-
-            {item}
+            {toPersianDigits(item)}
           </button>
         ))}
       </div>

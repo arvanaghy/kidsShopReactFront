@@ -1,20 +1,21 @@
 /* eslint-disable react/prop-types */
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-import { userPriceSelect } from "@utils/userPriceHelper";
 import { Link } from "react-router-dom";
-import { DecimalToHexConverter } from "../utils/DecimalToHexConverter";
-import {useMainStore} from "@store/useMainStore";
+import { toPersianDigits } from "@utils/numeralHelpers";
+import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 
 const OfferProductCard = ({ item }) => {
-  const {user} = useMainStore();
-
   const uniqueColorCodes = [
     ...new Map(
       item?.product_size_color
         ?.filter((item) => item.Mande > 0)
         .map((item) => [
           item.ColorCode,
-          { ColorCode: item.ColorCode, ColorName: item.ColorName },
+          {
+            ColorCode: item.ColorCode,
+            ColorName: item.ColorName,
+            RGB: item.RGB,
+          },
         ])
     ).values(),
   ];
@@ -40,7 +41,7 @@ const OfferProductCard = ({ item }) => {
       <div className="col-span-12 xl:col-span-6 flex flex-col items-start justify-center space-y-3 xl:space-y-6">
         <div className="flex flex-row items-center justify-start">
           <span className="flex text-gray-700 flex-row items-center gap-1 text-base xl:text-3xl font-EstedadExtraBold text-center">
-            {formatCurrencyDisplay(userPriceSelect(item, user))}
+            {formatCurrencyDisplay(item?.SPrice)}
             <span className="text-sm">تومان</span>
           </span>
         </div>
@@ -63,12 +64,11 @@ const OfferProductCard = ({ item }) => {
                 <p className="text-gray-700 font-EstedadMedium ">
                   {uniqueColorCodes_item?.ColorName}
                 </p>
-                <p className="text-gray-700 font-EstedadMedium "></p>
                 <p
                   className="w-5 h-5 flex flex-row items-center justify-center rounded-full "
                   style={{
-                    backgroundColor: DecimalToHexConverter(
-                      uniqueColorCodes_item?.ColorCode
+                    backgroundColor: RGBtoHexConverter(
+                      uniqueColorCodes_item?.RGB
                     ),
                   }}
                 ></p>
@@ -83,7 +83,7 @@ const OfferProductCard = ({ item }) => {
             </p>
             {uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
               <p key={idx} className="text-gray-700 font-EstedadMedium ">
-                {uniqueSizeNums_item}
+                {toPersianDigits(uniqueSizeNums_item)}
               </p>
             ))}
           </div>
@@ -100,7 +100,9 @@ const OfferProductCard = ({ item }) => {
                 .map((product_image_item, idx) => (
                   <div key={idx} className="w-full">
                     <img
-                      src={`https://api.kidsshop110.ir/products-image/webp/${Math.floor(
+                      src={`${
+                        import.meta.env.VITE_CDN_URL
+                      }/products-image/webp/${Math.floor(
                         item?.GCode
                       )}/${Math.floor(item?.SCode)}/${
                         product_image_item?.PicName
@@ -109,8 +111,7 @@ const OfferProductCard = ({ item }) => {
                       loading="lazy"
                       onError={(e) => {
                         e.target.onerror = null;
-                        e.target.src =
-                          "https://api.kidsshop110.ir/No_Image_Available.jpg";
+                        e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
                       }}
                       className="w-full rounded-lg object-scale-down h-full"
                     />
@@ -126,7 +127,9 @@ const OfferProductCard = ({ item }) => {
                   .map((product_image_item, idx) => (
                     <div className="w-full h-full" key={idx}>
                       <img
-                        src={`https://api.kidsshop110.ir/products-image/webp/${Math.floor(
+                        src={`${
+                          import.meta.env.VITE_CDN_URL
+                        }/products-image/webp/${Math.floor(
                           item?.GCode
                         )}/${Math.floor(item?.SCode)}/${
                           product_image_item?.PicName
@@ -135,8 +138,7 @@ const OfferProductCard = ({ item }) => {
                         loading="lazy"
                         onError={(e) => {
                           e.target.onerror = null;
-                          e.target.src =
-                            "https://api.kidsshop110.ir/No_Image_Available.jpg";
+                          e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
                         }}
                         className="w-full rounded-lg object-cover h-full"
                       />

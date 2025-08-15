@@ -1,9 +1,9 @@
 import toast from "react-hot-toast";
 
-export const confirmToast = (message) => {
+export const confirmToast = (message: string): Promise<boolean> => {
   return new Promise((resolve) => {
     const id = toast(
-      (t) => (
+      (t: any) => (
         <div className="">
           <p>{message}</p>
           <div className="flex gap-2 mt-2">
