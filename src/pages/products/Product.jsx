@@ -365,6 +365,10 @@ const Product = () => {
             <h1 className="lg:text-2xl  text-xl py-5 text-center lg:text-start border-b font-EstedadExtraBold tracking-wide  text-CarbonicBlue-500 drop-shadow-sm leading-relaxed text-pretty ">
               {data?.product?.Name}
             </h1>
+            <div className="w-full flex flex-row justify-end items-center font-EstedadExtraBold">
+              <p>{formatCurrencyDisplay(data?.product?.SPrice)}</p>
+              <p>تومان</p>
+            </div>
 
             <div className="w-full flex flex-col gap-1.5 md:gap-3 flex-wrap">
               {data?.product?.product_size_color?.length > 0 && (
@@ -405,15 +409,6 @@ const Product = () => {
                           سایز
                         </span>
                         <span>{toPersianDigits(item.SizeNum)}</span>
-                      </p>
-                      <p className="flex flex-row gap-2">
-                        <span className="block text-sm font-EstedadMedium ">
-                          مبلغ
-                        </span>
-                        <span>
-                          {formatCurrencyDisplay(data?.product?.SPrice)}
-                        </span>
-                        <span>تومان</span>
                       </p>
                     </button>
                   ))}
