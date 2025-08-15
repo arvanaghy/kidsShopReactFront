@@ -17,7 +17,6 @@ import OfferedProducts from "@pages/products/OfferedProducts";
 import BestSellingProducts from "@pages/products/BestSellingProducts";
 import FavoritesPage from "@pages/products/FavoritesPage";
 import ComparePage from "@pages/products/ComparePage";
-import Search from "@pages/search/Search";
 import Profile from "@pages/profile/Profile";
 import Orders from "@pages/profile/Orders";
 import Invoice from "@pages/profile/Invoice";
@@ -51,7 +50,6 @@ function App() {
         { path: "/products", element: <Products /> },
         { path: "/offered-products", element: <OfferedProducts /> },
         { path: "/shopping-cart", element: <ShoppingCart /> },
-        { path: "/search/:searchPhrase", element: <Search /> },
         { path: "/login", element: <Login /> },
         { path: "/profile", element: <Profile /> },
         { path: "/register", element: <Register /> },
