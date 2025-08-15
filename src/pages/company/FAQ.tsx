@@ -1,11 +1,33 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { IoMdArrowDropdown } from "react-icons/io";
 
-// eslint-disable-next-line react/prop-types
-const FAQ = ({ faqData }) => {
-  const [isShowFaq, setIsShowFaq] = useState([]);
+interface FaqItem {
+  Code: string;
+  Title: string;
+  Comment: string;
+}
 
-  const toggleFaq = (faqKey) => {
+const FAQ = () => {
+  const [isShowFaq, setIsShowFaq] = useState<{ [key: string]: boolean }>({});
+  const [faqdata, setFaqData] = useState<FaqItem[]>([]);
+
+  const fetchFAQ = async () => {
+    try {
+      const { data, status } = await axios.get(`${import.meta.env.VITE_API_URL}/v1/faq`);
+      if (status !== 200) throw new Error(data?.message);
+      setFaqData(data.result);
+    } catch (error: any) {
+      toast.error("درباره شرکت: " + error?.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchFAQ();
+  }, []);
+
+  const toggleFaq = (faqKey: string) => {
     setIsShowFaq((prevState) => ({
       ...prevState,
       [faqKey]: !prevState[faqKey],
@@ -13,8 +35,8 @@ const FAQ = ({ faqData }) => {
   };
 
   return (
-    <div className="space-y-4 font-EstedadMedium flex flex-col justify-evenly">
-      <div className="space-y-8">
+    <div className="space-y-4 py-6 font-EstedadMedium flex flex-col justify-evenly">
+      <div className="space-y-8 py-6">
         <h2 className="font-EstedadExtraBold drop-shadow-md text-transparent w-fit mx-auto bg-clip-text bg-gradient-to-r from-Amber-500 to-CarbonicBlue-500 py-4 text-center text-3xl px-4 lg:px-0 lg:text-3xl 2xl:text-5xl leading-relaxed">
           جواب سوالات پر تکرار مشتریان ما
         </h2>
@@ -22,7 +44,7 @@ const FAQ = ({ faqData }) => {
       <div className="bg-CarbonicBlue-500 px-6 py-8 rounded-2xl font-MontBold text-Blue-text2 space-y-4 ">
         {
           // eslint-disable-next-line react/prop-types
-          faqData?.map((item, index) => (
+          faqdata?.length > 0 && faqdata?.map((item: FaqItem, index: number) => (
             <div key={index}>
               <div
                 onClick={() => toggleFaq(item?.Code)}
@@ -30,17 +52,15 @@ const FAQ = ({ faqData }) => {
               >
                 <div className="text-base 2xl:text-2xl">{item?.Title}</div>
                 <IoMdArrowDropdown
-                  className={`text-2xl  ${
-                    isShowFaq[item?.Code] ? "rotate-180" : ""
-                  } duration-200`}
+                  className={`text-2xl  ${isShowFaq[item?.Code] ? "rotate-180" : ""
+                    } duration-200`}
                 />
               </div>
               <div
-                className={`font-MontLight bg-white rounded-3xl  text-sm overflow-hidden transition-all duration-300 leading-relaxed ${
-                  isShowFaq[item?.Code]
-                    ? "max-h-[500px] py-6 px-6"
-                    : "max-h-0 py-0 px-6"
-                }`}
+                className={`font-MontLight bg-white rounded-3xl  text-sm overflow-hidden transition-all duration-300 leading-relaxed ${isShowFaq[item?.Code]
+                  ? "max-h-[500px] py-6 px-6"
+                  : "max-h-0 py-0 px-6"
+                  }`}
                 style={{
                   transitionProperty: "max-height, padding",
                 }}

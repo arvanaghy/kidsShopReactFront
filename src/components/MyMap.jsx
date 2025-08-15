@@ -20,7 +20,7 @@ const FitMapToBounds = ({ bounds }) => {
 
 // Helper function to calculate distance between two lat/lng points
 
-const MyMap = ({ setDestinationInfo }) => {
+const MyMap = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [distanceToStore, setDistanceToStore] = useState(null);
   const [timeToStore, setTimeToStore] = useState(null);

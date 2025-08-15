@@ -1,51 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import axios from "axios";
-import toast from "react-hot-toast";
+
 import Loading from "@components/Loading";
 import CategorySquareCard from "@components/category/CategorySquareCard";
 import Pagination from "@components/Pagination";
 import CategorySearch from "@components/category/CategorySearch";
+import useCategories from "@hooks/useCategories";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
   const page = searchParams.get("page") || 1;
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [links, setLinks] = useState([]);
 
-  const fetchCategories = async (_url) => {
-    window.scrollTo(0, 0);
-    if (loading) return;
-    try {
-      setLoading(true);
-      const { data, status } = await axios.get(_url, {
-        headers: {
-          cache: "no-cache",
-        },
-      });
-      if (status !== 200) throw new Error(data?.message);
-      setCategories(data?.result?.categories?.data);
-      setLinks(data?.result?.categories?.links);
-    } catch (error) {
-      toast.error(
-        " دسته بندی :" + error?.message ||
-          error?.response?.data?.message ||
-          "خطا در اتصال"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-  useEffect(() => {
-    fetchCategories(
-      `${
-        import.meta.env.VITE_API_URL
-      }/v2/list-categories?search=${search}&page=${page}`
-    );
-  }, [page, search]);
+  const { categories, loading, links } = useCategories(search, page);
 
   if (loading) return <Loading />;
 
