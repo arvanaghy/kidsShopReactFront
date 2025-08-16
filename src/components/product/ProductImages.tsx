@@ -1,0 +1,74 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, FreeMode, Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/scrollbar";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "swiper/css/free-mode";
+import { ProductImage } from "@types/ProductType";
+
+interface ProductImagesProps {
+    images: ProductImage[];
+    productName: string;
+    setImageModal: (modal: { isOpen: boolean; image: string | null }) => void;
+}
+
+const ProductImages: React.FC<ProductImagesProps> = ({
+    images,
+    productName,
+    setImageModal,
+}) => {
+    return (
+        <div className="col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full xl:space-y-3">
+            {images.length > 0 ? (
+                <div className="flex flex-col p-6 space-y-3">
+                    <Swiper
+                        modules={[Autoplay, FreeMode, Pagination, Navigation]}
+                        className="h-full w-full"
+                        freeMode={false}
+                        navigation={true}
+                        slidesPerView={1}
+                        centeredSlides={true}
+                        spaceBetween={1}
+                        slidesPerGroup={1}
+                        loop={true}
+                        autoplay={{ delay: 4500 }}
+                    >
+                        {images.map((imageItem, index) => (
+                            <SwiperSlide key={index}>
+                                <img
+                                    src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
+                                    alt={productName}
+                                    className="p-4 w-full object-cover rounded-2xl bg-gray-100"
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+                    <div className="grid grid-cols-12 items-center justify-center gap-2">
+                        {images.map((imageItem, index) => (
+                            <img
+                                key={index}
+                                src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
+                                alt={productName}
+                                className="col-span-3 w-full object-scale-down rounded-md hover:cursor-pointer hover:scale-105 hover:grayscale transition-all duration-300 ease-in-out"
+                                onClick={() =>
+                                    setImageModal({
+                                        isOpen: true,
+                                        image: `${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`,
+                                    })
+                                }
+                            />
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <img
+                    src={import.meta.env.VITE_NO_IMAGE_URL}
+                    className="w-full object-cover rounded-2xl shadow-lg shadow-gray-300"
+                />
+            )}
+        </div>
+    );
+};
+
+export default ProductImages;

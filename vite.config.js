@@ -23,6 +23,7 @@ export default defineConfig({
       "@api": path.resolve(__dirname, "src/api"),
       "@types": path.resolve(__dirname, "src/types"),
       "@store": path.resolve(__dirname, "src/store"),
+      "@services": path.resolve(__dirname, "src/services"),
     },
   },
   build: {
