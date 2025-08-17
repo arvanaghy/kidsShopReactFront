@@ -1,4 +1,4 @@
-import BannerGroup from "@components/BannerGroup";
+import BannerGroup from "@components/home/BannerGroup";
 
 import Loading from "@components/Loading";
 import useHomePage from "@hooks/useHomePage";

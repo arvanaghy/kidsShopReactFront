@@ -1,29 +1,26 @@
-import ProductCard from "@components/ProductCard";
-import { useMainStore } from "@store/useMainStore";
+import ProductCard from "@components/product/ProductCard";
+import { useFavoriteStore } from "@store/FavoriteStore";
+import EmptyList from "@components/EmptyList";
+import CompareFavoriteListHeader from "@components/product/CompareFavoriteListHeader";
 const FavoritesPage = () => {
-  const { favorite } = useMainStore();
+  const { favorite } = useFavoriteStore();
+
+  if (favorite?.length === 0) return <EmptyList title="علاقه مندی ها" />;
 
   return (
     <div className="px-4 py-8 min-h-screen bg-white text-black">
-      <h1 className="text-center text-xl lg:text-3xl font-EstedadExtraBold py-4  lg:text-right leading-relaxed text-transparent bg-clip-text bg-gradient-to-r border-b-2 from-Amber-500 to-CarbonicBlue-500">
-        لیست علاقه مندی ها
-      </h1>
+      <CompareFavoriteListHeader title="علاقه مندی ها" type="favorite" />
+
       <div className="grid grid-cols-12 py-6 ">
-        {favorite.length === 0 ? (
-          <p className="w-full col-span-12 text-gray-600">
-            هیچ محصولی به لیست علاقه مندی ها اضافه نکرده اید!
-          </p>
-        ) : (
-          <div className="col-span-12 grid grid-cols-12 gap-4">
-            {favorite.map((item) => (
-              <ProductCard
-                key={item.Code}
-                item={item}
-                colSpan={`col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 `}
-              />
-            ))}
-          </div>
-        )}
+        <div className="col-span-12 grid grid-cols-12 gap-4">
+          {favorite.map((item) => (
+            <ProductCard
+              key={item.Code}
+              item={item}
+              colSpan={`col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 `}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

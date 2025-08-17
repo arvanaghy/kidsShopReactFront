@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import ProfileSideBar from "@components/ProfileSideBar";
+import ProfileSideBar from "@components/profile/ProfileSideBar";
 
 const ProfileLayout = ({ children }) => {
   return (

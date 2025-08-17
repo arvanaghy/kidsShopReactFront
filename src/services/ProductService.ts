@@ -29,4 +29,22 @@ export const ProductService = {
       setLoading(false);
     }
   },
+
+  handleListClear: (
+    type: "compare" | "favorite",
+    clearFavoriteList: () => void,
+    clearCompareList: () => void
+  ) => {
+    switch (type) {
+      case "compare":
+        clearCompareList();
+        break;
+      case "favorite":
+        clearFavoriteList();
+        break;
+      default:
+        toast.error("حذف لیست ناشناخته");
+        break;
+    }
+  },
 };

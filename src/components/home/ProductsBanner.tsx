@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { Link } from "react-router-dom";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
-import ProductCard from "@components/ProductCard";
+import ProductCard from "@components/product/ProductCard";
 
 
 

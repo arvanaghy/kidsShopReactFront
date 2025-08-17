@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 import "swiper/css/free-mode";
 import { Link } from "react-router-dom";
 import { Autoplay, FreeMode, Navigation, Pagination } from "swiper/modules";
-import OfferProductCard from "@components/OfferProductCard";
+import OfferProductCard from "@components/product/OfferProductCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 const OfferedProductsBanner = ({ data }: { data: any }) => {
   return (

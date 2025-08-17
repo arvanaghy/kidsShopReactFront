@@ -9,6 +9,7 @@ interface CompareStore {
   updateCompareList: (compareList: Product[]) => void;
   fetchCompareList: () => void;
   toggleCompare: (item: Product) => void;
+  clearCompareList: () => void;
 }
 
 export const useCompareStore = create<CompareStore>()(
@@ -24,23 +25,35 @@ export const useCompareStore = create<CompareStore>()(
           state.compareList = compareList;
         }),
       fetchCompareList: () => {
-        const data = JSON.parse(localStorage.getItem("KidsShop_compareList") || "[]");
-        set((state) => { state.compareList = data; });
+        const data = JSON.parse(
+          localStorage.getItem("KidsShop_compareList") || "[]"
+        );
+        set((state) => {
+          state.compareList = data;
+        });
       },
       toggleCompare: (item) =>
         set((state) => {
-          const isCompared = state.compareList.some((p) => p.Code === item.Code);
+          const isCompared = state.compareList.some(
+            (p) => p.Code === item.Code
+          );
           if (isCompared) {
-            state.compareList = state.compareList.filter((p) => p.Code !== item.Code);
-            toast.error("محصول مورد نظر از مقایسه ها حذف شد.");
+            state.compareList = state.compareList.filter(
+              (p) => p.Code !== item.Code
+            );
+            toast.success(`${item?.Name}  از مقایسه ها حذف شد.`);
           } else {
             if (state.compareList.length >= 4) {
               state.compareList.shift();
               toast.error("حداکثر 4 محصول را میتوانید مقایسه کنید.");
             }
             state.compareList.push(item);
-            toast.success("محصول مورد نظر به مقایسه ها اضافه شد.");
+            toast.success(`${item?.Name}  به مقایسه ها اضافه شد.`);
           }
+        }),
+      clearCompareList: () =>
+        set((state) => {
+          state.compareList = [];
         }),
     })),
     {
@@ -48,3 +61,5 @@ export const useCompareStore = create<CompareStore>()(
     }
   )
 );
+
+export default useCompareStore;

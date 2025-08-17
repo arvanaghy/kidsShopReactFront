@@ -8,12 +8,14 @@ import { toPersianDigits } from "@utils/numeralHelpers";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom } from "@fortawesome/free-solid-svg-icons";
-import toast from "react-hot-toast";
-import { useMainStore } from "@store/useMainStore";
+import { useFavoriteStore } from "@store/FavoriteStore";
+import { useCompareStore } from "@store/CompareStore";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
-  const { favorite, updateFavorite, compareList, updateCompareList } =
-    useMainStore();
+  const { favorite, toggleFavorite } = useFavoriteStore();
+
+  const { compareList, toggleCompare } = useCompareStore();
+
 
   const isFavorite = favorite?.some(
     (f) => Math.floor(f.Code) === Math.floor(item.Code)
@@ -43,26 +45,6 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
         .map((item) => item.SizeNum)
     ),
   ];
-
-  const toggleFavorite = (item) => {
-    if (isFavorite) {
-      updateFavorite(favorite.filter((p) => p.Code !== item.Code));
-      toast.error("محصول مورد نظر از علاقه مندی ها حذف شد.");
-    } else {
-      updateFavorite([...favorite, item]);
-      toast.success("محصول مورد نظر به علاقه مندی ها اضافه شد.");
-    }
-  };
-
-  const toggleCompare = (item) => {
-    if (isCompared) {
-      updateCompareList(compareList.filter((p) => p.Code !== item.Code));
-      toast.error("محصول مورد نظر از لیست مقایسه حذف شد.");
-    } else {
-      updateCompareList([...compareList, item]);
-      toast.success("محصول مورد نظر به لیست مقایسه اضافه شد.");
-    }
-  };
 
   return (
     <div

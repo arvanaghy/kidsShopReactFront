@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
-import SpinnerLoading from "@components/SpinnerLoading";
+import Loading from "@components/Loading";
 
 const WebPayment = () => {
   const location = useLocation();
@@ -48,7 +48,7 @@ const WebPayment = () => {
     handleResult();
   }, []);
 
-  return <SpinnerLoading />;
+  return <Loading />;
 };
 
 export default WebPayment;
