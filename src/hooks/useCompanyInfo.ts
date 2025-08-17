@@ -11,6 +11,8 @@ const useCompanyInfo = () => {
     Telegram: "",
     Whatsapp: "",
     Comment: "",
+    latitude: 0,
+    longitude: 0,
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

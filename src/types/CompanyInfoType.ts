@@ -6,6 +6,8 @@ export interface CompanyInfoType {
   Telegram: string;
   Whatsapp: string;
   Comment: string;
+  latitude: string;
+  longitude: string;
 }
 
 export interface CompanyInfoResponse {
