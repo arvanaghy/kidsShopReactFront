@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import toast from "react-hot-toast";
-import { CartItem, Product, ProductSizeColor, User, Order } from "./types";
+import { CartItem, Product, ProductSizeColor, User, Order } from "@types/StoreType";
 
 interface MainStore {
   user: User[];
@@ -127,12 +127,12 @@ export const useMainStore = create<MainStore>()(
             return;
           }
           const isProductExists = state.cart.find(
-            (cartItem) =>
+            (cartItem: CartItem) =>
               Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
           );
           if (isProductExists) {
             const isFeatureExists = isProductExists.basket.find(
-              (basketItem) => basketItem.feature.SCCode == feature.SCCode
+              (basketItem : CartItem) => basketItem.feature.SCCode == feature.SCCode
             );
             if (isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande) {
               toast.error("سفارش شما بیشتر از موجودی است.");
@@ -144,12 +144,13 @@ export const useMainStore = create<MainStore>()(
               isProductExists.basket.push({
                 feature,
                 quantity: 1,
+                SPrice : item?.SPrice || 0
               });
             }
           } else {
             state.cart.push({
               item,
-              basket: [{ feature, quantity: 1 }],
+              basket: [{ feature, quantity: 1 , SPrice : item?.SPrice || 0}],
             });
           }
           toast.success("محصول به سبد خرید اضافه شد.");
@@ -158,13 +159,13 @@ export const useMainStore = create<MainStore>()(
       removeFeatureFromCart: (item, productCode) =>
         set((state) => {
           const isProductExists = state.cart.find(
-            (cartItem) =>
+            (cartItem : CartItem) =>
               Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
           );
           if (isProductExists) {
             isProductExists.basket.splice(
               isProductExists.basket.findIndex(
-                (basketItem) => basketItem.feature.SCCode == item.feature.SCCode
+                (basketItem : CartItem) => basketItem.feature.SCCode == item.feature.SCCode
               ),
               1
             );

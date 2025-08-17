@@ -13,14 +13,16 @@ const useCompanyInfo = () => {
     Comment: "",
   });
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchCompanyInfo = async () => {
     try {
       setLoading(true);
+      setError(null);
       const data = await getCompanyInfo();
       setCompanyInfo(data);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError(error.message || "خطا در دریافت اطلاعات");
     } finally {
       setLoading(false);
     }
@@ -30,7 +32,7 @@ const useCompanyInfo = () => {
     fetchCompanyInfo();
   }, []);
 
-  return { companyInfo, loading };
+  return { companyInfo, loading, error, refetch: fetchCompanyInfo };
 };
 
 export default useCompanyInfo;

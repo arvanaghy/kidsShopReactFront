@@ -11,7 +11,7 @@ const ContactInfoLink: React.FC<ContactInfoLinkProps> = ({ companyInfo, icon, ty
     const fallback: string = type ? (import.meta.env[`VITE_${type}`] as string) || "" : "";
 
     return (
-        <>
+        <div className='flex items-center gap-2'>
             <FontAwesomeIcon
                 icon={icon}
                 className="text-lg md:text-3xl"
@@ -19,7 +19,7 @@ const ContactInfoLink: React.FC<ContactInfoLinkProps> = ({ companyInfo, icon, ty
             <p className="leading-relaxed tracking-widest text-xs lg:text-sm xl:text-base 2xl:text-lg">
                 {companyInfo || fallback}
             </p>
-        </>
+        </div>
     );
 };
 
