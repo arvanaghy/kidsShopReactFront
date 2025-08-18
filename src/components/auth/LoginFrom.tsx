@@ -41,7 +41,7 @@ const LoginFrom = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | 
                     </button>
                 </div>
             ) : (
-                <button type="submit" className="w-full text-white  px-4 py-2 border font-EstedadMedium bg-CarbonicBlue-500 border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:grayscale delay-150 duration-300  ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
+                <button className="w-full bg-CarbonicBlue-500  px-4 py-2 border font-EstedadMedium text-white border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:grayscale delay-150 duration-150 ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
                     ورود
                 </button>
             )}

@@ -24,7 +24,40 @@ export const useLogin = () => {
     redirect: string,
     navigate: (url: string) => void
   ) => {
-    await AuthService.loginSubmit(e, redirect, navigate, setIsPending , updateUser);
+    await AuthService.loginSubmit(
+      e,
+      redirect,
+      navigate,
+      setIsPending,
+      updateUser
+    );
   };
   return { loginSubmit, isPending };
+};
+
+export const useOtp = () => {
+  const [isPending, setIsPending] = useState(false);
+  const { updateUser } = useUserStore();
+  const otpVerify = async (
+    e: React.FormEvent<HTMLFormElement>,
+    redirect: string,
+    navigate: (url: string) => void
+  ) => {
+    await AuthService.otpVerify(
+      e,
+      redirect,
+      navigate,
+      setIsPending,
+      updateUser
+    );
+  };
+  return { otpVerify, isPending };
+};
+
+export const useResendSMS = () => {
+  const [isPending, setIsPending] = useState(false);
+  const resendSMS = async (phoneNumber: string) => {
+    await AuthService.resendSMS(phoneNumber, setIsPending);
+  };
+  return { resendSMS, isPending };
 };
