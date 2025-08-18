@@ -4,6 +4,7 @@ const Policy = ({ policy , title }: { title: string, policy: string[] }) => {
       <h3
         className="
             lg:text-xl
+            py-2
             xl:text-2xl
             2xl:text-3xl
             line-clamp-1 text-center leading-relaxed tracking-wider text-black font-EstedadExtraBold"
@@ -13,14 +14,14 @@ const Policy = ({ policy , title }: { title: string, policy: string[] }) => {
 
       <ul
         className="w-full leading-relaxed text-black font-EstedadMedium 
-          space-y-3 
+          space-y-3  pt-1.5
             lg:text-sm lg:space-y-2
             xl:text-base xl:space-y-3
-            2xl:text-lg 2xl:space-y-4
+            2xl:text-lg 2xl:space-y-2
             "
       >
         {policy.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index} className="text-gray-600">{item}</li>
         ))}
       </ul>
     </div>

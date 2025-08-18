@@ -5,29 +5,38 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 interface UserStore {
-  user: { Name: string; UToken: string };
-  updateUser: (user: { Name: string; UToken: string }) => void;
+  user: { Code: number | string; Name: string; UToken: string };
+  updateUser: (user: {
+    Code: number | string;
+    Name: string;
+    UToken: string;
+  }) => void;
   verifyUserToken: (
     redirect?: string,
-    navigate?: (path: string) => void
+    navigate?: (path: string | undefined) => void
   ) => Promise<void>;
 }
 
 export const useUserStore = create<UserStore>()(
   persist(
     immer((set, get) => ({
-      user: { Name: "", UToken: "" },
-      updateUser: (user: { Name: string; UToken: string }) =>
+      user: { Code: "", Name: "", UToken: "" },
+      updateUser: (user: {
+        Code: number | string;
+        Name: string;
+        UToken: string;
+      }) =>
         set((state) => {
           state.user = user;
         }),
       verifyUserToken: async (
-        navigate?: (path: string) => void
+        redirect?: string,
+        navigate?: (path: string | undefined) => void
       ) => {
         const user = get().user;
         if (!user || !user?.UToken) {
           set((state) => {
-            state.user = { Name: "", UToken: "" };
+            state.user = { Code: "", Name: "", UToken: "" };
           });
           return;
         }
@@ -46,16 +55,16 @@ export const useUserStore = create<UserStore>()(
               state.user = data?.result;
             });
             if (navigate) {
-              navigate(`/profile`);
+              navigate(redirect || "/profile"); 
             }
           } else {
             set((state) => {
-              state.user = { Name: "", UToken: "" };
+              state.user = { Code: "", Name: "", UToken: "" };
             });
           }
         } catch (error) {
           set((state) => {
-            state.user = { Name: "", UToken: "" };
+            state.user = { Code: "", Name: "", UToken: "" };
           });
           toast.error(
             "اعتبارسنجی " +

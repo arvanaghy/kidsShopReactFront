@@ -14,3 +14,20 @@ export const registerUser = async (info: any) => {
     throw new Error(data?.message);
   }
 };
+
+export const loginUser = async (info: any) => {
+  const { data, status } = await axios.post(
+    `${import.meta.env.VITE_API_URL}/v1/login`,
+    info
+  );
+  if (status == 201) {
+    toast.success(data?.message);
+  } else if (status == 202) {
+    toast.success(data?.message);
+    throw new Error(data?.message);
+  } else if (status == 404) {
+    toast.error(data?.message);
+  } else {
+    throw new Error(data?.message);
+  }
+};
