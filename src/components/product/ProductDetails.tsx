@@ -5,6 +5,7 @@ import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 import { useMainStore } from "@store/useMainStore";
 import { Product, ProductSizeColor } from "@types/ProductType";
+import ShareOnSocialMedia from "@components/product/ShareOnSocialMedia";
 
 interface ProductDetailsProps {
   product: Product;
@@ -12,6 +13,9 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode }) => {
+
+  const url = typeof window !== 'undefined' ? window.location.href : '';
+
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<ProductSizeColor | null>(null);
   const { favorite, compareList, addProductToCart, toggleFavorite, toggleCompare } = useMainStore();
@@ -22,7 +26,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
   const uniqueSizes = Array.from(new Set(product.product_size_color?.map(item => item.SizeNum)));
 
   // Get colors for selected size
-  const availableColors = selectedSize 
+  const availableColors = selectedSize
     ? product.product_size_color?.filter(item => item.SizeNum === selectedSize)
     : [];
 
@@ -33,10 +37,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
           {product.Name}
         </h1>
         <div className="flex w-fit flex-row justify-between items-center gap-6">
+          <ShareOnSocialMedia url={url} />
           <button
             className="bg-black rounded-lg px-1.5 pt-1 pb-0.5 hover:bg-purple-500 duration-300 ease-in-out"
             onClick={() => {
-              navigator.clipboard.writeText(window.location.href);
+              navigator.clipboard.writeText(url);
               toast.success("لینک کپی شد");
             }}
           >

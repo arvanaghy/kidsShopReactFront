@@ -15,7 +15,7 @@ const ResendSMS = ({ phoneNumber }: { phoneNumber: string }) => {
             <p className="">پیام کوتاه را دریافت نکرده اید ؟</p>
             {isPending ? <FontAwesomeIcon icon={faSpinner} spin /> : (
 
-                <button className="mx-2 text-Amber-500" onClick={handleSubmit}>
+                <button className="mx-2 text-amber-500 hover:text-amber-700 duration-200 delay-150 ease-in-out transition-all hover:-translate-x-1" onClick={handleSubmit}>
                     ارسال مجدد
                 </button>
             )}
