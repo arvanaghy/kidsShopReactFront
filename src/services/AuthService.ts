@@ -92,19 +92,27 @@ export const AuthService = {
     }
     setIsPending(true);
     try {
-      const { data } = await loginUser({
+      const { data, status } = await loginUser({
         phone_number: e.target.phoneNumber.value,
       });
-      updateUser(data?.result);
-      navigate(redirect ? redirect : "/profile");
-    } catch (error: any) {
-      if (error.message && error.response?.status === 202) {
+      if (status === 202) {
         navigate(
           `/SMS-validate/${e.target.phoneNumber.value}${
             redirect ? "?redirect=" + redirect : ""
           }`
         );
       }
+      if (status === 201) {
+        updateUser(data?.result);
+        navigate(redirect ? redirect : "/profile");
+      } else if (status === 202) {
+        navigate(
+          `/SMS-validate/${e.target.phoneNumber.value}${
+            redirect ? "?redirect=" + redirect : ""
+          }`
+        );
+      }
+    } catch (error: any) {
       if (error.message && error.response?.status === 404) {
         navigate(
           `/register?phoneNumber=${e.target.phoneNumber.value}${
@@ -114,6 +122,7 @@ export const AuthService = {
       }
       toast.error(error?.response?.data?.message || error?.message);
     } finally {
+      e.target.reset();
       setIsPending(false);
     }
   },
