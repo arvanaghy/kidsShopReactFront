@@ -1,7 +1,7 @@
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import {useCompanyInfo} from '@hooks/useGeneralSetting'
+import { useCompanyInfo } from '@hooks/useGeneralSetting'
 
 const InstagramBanner = (): JSX.Element => {
 
@@ -9,7 +9,7 @@ const InstagramBanner = (): JSX.Element => {
 
   return (
     <Link
-      to={companyInfo?.Instagram || import.meta.env.VITE_SOCIAL_MEDIA_INSTAGRAM}
+      to={companyInfo?.Instagram}
       target="_blank"
       className="flex flex-col xl:flex-row items-center justify-center gap-8 bg-gray-900 max-w-4xl mx-auto py-4 rounded-2xl
         hover:shadow-md shadow-black

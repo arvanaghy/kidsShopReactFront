@@ -1,10 +1,36 @@
 import { useState, useEffect } from "react";
-import { getCompanyInfo } from "@api/companyInfo";
-import { CompanyInfoType } from "@types/CompanyInfoType";
+import { fetchCompanyInfo } from "@api/generalApi";
+import { CompanyProps } from "@types/CompanyType";
 import { GeneralSettingService } from "@services/GeneralSettingService";
 
+import { fetchAboutUsInfo } from "@api/generalApi";
+import { AboutProps } from "@types/CompanyType";
+
+export const useAboutUsInfo = () => {
+  const [aboutUsInfo, setAboutUsInfo] = useState<AboutProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const getAboutUsInfo = async () => {
+    try {
+      setLoading(true);
+      const data = await fetchAboutUsInfo();
+      setAboutUsInfo(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAboutUsInfo();
+  }, []);
+
+  return { aboutUsInfo, loading };
+};
+
 export const useCompanyInfo = () => {
-  const [companyInfo, setCompanyInfo] = useState<CompanyInfoType>({
+  const [companyInfo, setCompanyInfo] = useState<CompanyProps>({
     Address: "",
     Phone: "",
     Email: "",
@@ -18,11 +44,11 @@ export const useCompanyInfo = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchCompanyInfo = async () => {
+  const getCompanyInfo = async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await getCompanyInfo();
+      const data = await fetchCompanyInfo();
       setCompanyInfo(data);
     } catch (error: any) {
       setError(error.message || "خطا در دریافت اطلاعات");
@@ -32,10 +58,10 @@ export const useCompanyInfo = () => {
   };
 
   useEffect(() => {
-    fetchCompanyInfo();
+    getCompanyInfo();
   }, []);
 
-  return { companyInfo, loading, error, refetch: fetchCompanyInfo };
+  return { companyInfo, loading, error, refetch: getCompanyInfo };
 };
 
 export const useUnit = () => {

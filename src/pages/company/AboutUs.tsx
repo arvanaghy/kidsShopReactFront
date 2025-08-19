@@ -1,6 +1,6 @@
 
-import useAboutUsInfo from "@hooks/useAboutUsInfo";
-import { AboutInfoType } from "@types/AboutInfoType";
+import { useAboutUsInfo } from "@hooks/useGeneralSetting";
+import { AboutProps } from "@types/CompanyType";
 import AboutUsInfoCard from "@components/aboutUs/AboutUsInfoCard";
 
 const AboutUs: React.FC = () => {
@@ -27,7 +27,7 @@ const AboutUs: React.FC = () => {
       xl:gap-6 xl:px-6
       min-h-[40vh] ">
         {aboutUsInfo?.length > 0 &&
-          aboutUsInfo?.map((item: AboutInfoType) => (
+          aboutUsInfo?.map((item: AboutProps) => (
             <AboutUsInfoCard
               key={item?.Code}
               Title={item?.Title}

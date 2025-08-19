@@ -1,10 +1,28 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { CompanyInfoType, CompanyInfoResponse } from "@types/CompanyType";
+import {
+  CompanyProps,
+  CompanyPropsResponse,
+  AboutProps,
+  AboutPropsResponse,
+} from "@types/CompanyType";
 
-export const getCompanyInfo = async (): Promise<CompanyInfoType> => {
+export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
   try {
-    const { data, status } = await axios.get<CompanyInfoResponse>(
+    const { data, status } = await axios.get<AboutPropsResponse>(
+      `${import.meta.env.VITE_API_URL}/v1/about-us`
+    );
+    if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
+    return data.result;
+  } catch (error: any) {
+    toast.error("درباره شرکت: " + error?.message);
+    throw error;
+  }
+};
+
+export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
+  try {
+    const { data, status } = await axios.get<CompanyPropsResponse>(
       `${import.meta.env.VITE_API_URL}/v2/company-info`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");

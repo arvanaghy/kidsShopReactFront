@@ -1,4 +1,4 @@
-import {useCompanyInfo} from "@hooks/useGeneralSetting";
+import { useCompanyInfo } from "@hooks/useGeneralSetting";
 interface ContactInfoType {
     title: string;
     value: string;
@@ -31,7 +31,7 @@ const ContactInfo = () => {
 
     return (
         <ul className="flex flex-col p-4 space-y-2 font-EstedadMedium bg-gray-50/80 rounded-xl  ">
-            {contactsInfoArray.map((item : ContactInfoType, index : number) => (
+            {contactsInfoArray.map((item: ContactInfoType, index: number) => (
                 <li key={index} className="text-sm xl:text-xl leading-relaxed text-CarbonicBlue-500">
                     <span className="font-bold">{item.title}:</span>
                     <span className="text-black text-sm xl:text-lg px-1.5">

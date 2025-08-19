@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { fetchUnit } from "@api/companyInfo";
+import { fetchUnit } from "@api/generalApi";
 
 export const GeneralSettingService = {
   getUnit: async (setUnit : any, setIsPending: any) => {
