@@ -1,6 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
-import { CompanyInfoType, CompanyInfoResponse } from "@types/CompanyInfoType";
+import { CompanyInfoType, CompanyInfoResponse } from "@types/CompanyType";
 
 export const getCompanyInfo = async (): Promise<CompanyInfoType> => {
   try {

@@ -7,13 +7,7 @@ const Unit = () => {
 
     return (
         <>
-            {isPending ? (
-                <>...</>
-            ) : (
-                <>
-                    {unit}
-                </>
-            )}
+            {!isPending && unit}
         </>
     )
 }
