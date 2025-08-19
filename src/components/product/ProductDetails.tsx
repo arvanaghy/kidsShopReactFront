@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus, faBookmark, faRestroom, faSquareShareNodes } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faBookmark, faRestroom } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 import { useMainStore } from "@store/useMainStore";
@@ -38,15 +38,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
         </h1>
         <div className="flex w-fit flex-row justify-between items-center gap-6">
           <ShareOnSocialMedia url={url} />
-          <button
-            className="bg-black rounded-lg px-1.5 pt-1 pb-0.5 hover:bg-purple-500 duration-300 ease-in-out"
-            onClick={() => {
-              navigator.clipboard.writeText(url);
-              toast.success("لینک کپی شد");
-            }}
-          >
-            <FontAwesomeIcon icon={faSquareShareNodes} className="text-xl text-white" />
-          </button>
           <button onClick={() => toggleFavorite(product)}>
             <FontAwesomeIcon
               icon={faBookmark}
