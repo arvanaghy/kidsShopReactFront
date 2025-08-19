@@ -1,32 +1,21 @@
 import { useState, useEffect } from "react";
-import { fetchCompanyInfo } from "@api/generalApi";
 import { CompanyProps } from "@types/CompanyType";
 import { GeneralSettingService } from "@services/GeneralSettingService";
-
-import { fetchAboutUsInfo } from "@api/generalApi";
 import { AboutProps } from "@types/CompanyType";
 
 export const useAboutUsInfo = () => {
   const [aboutUsInfo, setAboutUsInfo] = useState<AboutProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const getAboutUsInfo = async () => {
-    try {
-      setLoading(true);
-      const data = await fetchAboutUsInfo();
-      setAboutUsInfo(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    await GeneralSettingService.aboutUs(setAboutUsInfo, setIsPending);
   };
 
   useEffect(() => {
     getAboutUsInfo();
   }, []);
 
-  return { aboutUsInfo, loading };
+  return { aboutUsInfo, isPending, refetch: getAboutUsInfo };
 };
 
 export const useCompanyInfo = () => {
@@ -41,27 +30,17 @@ export const useCompanyInfo = () => {
     latitude: 0,
     longitude: 0,
   });
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isPending, setIsPending] = useState<boolean>(true);
 
   const getCompanyInfo = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await fetchCompanyInfo();
-      setCompanyInfo(data);
-    } catch (error: any) {
-      setError(error.message || "خطا در دریافت اطلاعات");
-    } finally {
-      setLoading(false);
-    }
+    await GeneralSettingService.companyInfo(setCompanyInfo, setIsPending);
   };
 
   useEffect(() => {
     getCompanyInfo();
   }, []);
 
-  return { companyInfo, loading, error, refetch: getCompanyInfo };
+  return { companyInfo, isPending, refetch: getCompanyInfo };
 };
 
 export const useUnit = () => {
@@ -75,4 +54,13 @@ export const useUnit = () => {
   }, []);
 
   return { unit, isPending };
+};
+
+export const useContactForm = () => {
+  const [isPending, setIsPending] = useState(false);
+
+  const submitContactForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    await GeneralSettingService.submitContactForm(e, setIsPending);
+  };
+  return { isPending, submitContactForm };
 };

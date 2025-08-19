@@ -16,7 +16,6 @@ import SocialMediaLink from "@components/footer/SocialMediaLink";
 import Copyright from "@components/footer/Copyright";
 import QuickAccessMenusLink from "@components/footer/QuickAccessMenusLink";
 import ScrollToTop from "@components/footer/ScrollToTop";
-import Loading from "@components/Loading";
 
 const quickAccessLinks = [
   { icon: faCertificate, title: "محصولات ویژه کیدزشاپ", link: "/offered-products" },
@@ -28,10 +27,9 @@ const quickAccessLinks = [
 ];
 
 const Footer: React.FC = () => {
-  const { companyInfo, loading, error } = useCompanyInfo();
+  const { companyInfo, isPending } = useCompanyInfo();
   window.scrollTo(0, 0);
-  if (loading) return <Loading />;
-  if (error) return <div className="text-center text-red-500">خطا: {error}</div>;
+  if (isPending) return <>در حال بارگذاری</>;
 
   return (
     <footer className="w-full bg-gray-100 text-gray-700">

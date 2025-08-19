@@ -5,7 +5,8 @@ import { useCompanyInfo } from '@hooks/useGeneralSetting'
 
 const InstagramBanner = (): JSX.Element => {
 
-  const { companyInfo } = useCompanyInfo();
+  const { companyInfo, isPending } = useCompanyInfo();
+  if (isPending) return <>درحال بارگذاری...</>;
 
   return (
     <Link

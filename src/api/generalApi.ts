@@ -1,5 +1,4 @@
 import axios from "axios";
-import toast from "react-hot-toast";
 import {
   CompanyProps,
   CompanyPropsResponse,
@@ -15,8 +14,7 @@ export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
   } catch (error: any) {
-    toast.error("درباره شرکت: " + error?.message);
-    throw error;
+    throw new Error("درباره شرکت: " + error?.message);
   }
 };
 
@@ -49,8 +47,7 @@ export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
         import.meta.env.VITE_CONTACT_INFO_LONGITUDE,
     };
   } catch (error: any) {
-    toast.error("اطلاعات شرکت: " + error?.message);
-    throw error;
+    throw new Error("اطلاعات شرکت: " + error?.message);
   }
 };
 
@@ -62,7 +59,23 @@ export const fetchUnit = async () => {
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data?.result || import.meta.env.VITE_UNIT;
   } catch (error: any) {
-    toast.error("واحد پولی: " + error?.message);
-    throw error;
+    throw new Error("واحد پولی" + error?.message || "خطا در اتصال");
+  }
+};
+
+export const sendContactForm = async (info) => {
+  try {
+    const { data, status } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/v1/contact-us`,
+      info,
+      {
+        headers: {
+          cache: "no-cache",
+        },
+      }
+    );
+    if (status !== 200) throw new Error(data?.message);
+  } catch (error: any) {
+    throw new Error("ارسال پیام" + error?.message);
   }
 };

@@ -5,8 +5,8 @@ import AboutUsInfoCard from "@components/aboutUs/AboutUsInfoCard";
 
 const AboutUs: React.FC = () => {
 
-  const { aboutUsInfo, loading } = useAboutUsInfo();
-  if (loading) return null;
+  const { aboutUsInfo, isPending } = useAboutUsInfo();
+  if (isPending) return null;
 
   return (
     <div className="w-full flex flex-col justify-around items-center min-h-[90vh] h-full space-y-5 py-8 ">

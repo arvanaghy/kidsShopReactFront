@@ -14,9 +14,8 @@ interface CompanyInfoType {
 }
 
 const ContactInfo = () => {
-    const { companyInfo, loading, error } = useCompanyInfo<CompanyInfoType>();
-    if (loading) return <>درحال بارگذاری...</>;
-    if (error) return <div className="text-center text-red-500">خطا: {error}</div>;
+    const { companyInfo, isPending } = useCompanyInfo<CompanyInfoType>();
+    if (isPending) return <>درحال بارگذاری...</>;
 
     const contactsInfoArray = [
         {

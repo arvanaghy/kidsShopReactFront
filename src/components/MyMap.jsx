@@ -9,9 +9,9 @@ delete L.Icon.Default.prototype._getIconUrl;
 // Helper function to calculate distance between two lat/lng points
 
 const MyMap = () => {
-  const { companyInfo, loading, error } = useCompanyInfo();
-  if (loading) return <>درحال بارگذاری</>;
-  if (error) return <>خطا : {error}</>;
+  const { companyInfo, isPending } = useCompanyInfo();
+  if (isPending) return <>درحال بارگذاری</>;
+
   const storeLocation = {
     lat: companyInfo?.latitude,
     lng: companyInfo?.longitude,
