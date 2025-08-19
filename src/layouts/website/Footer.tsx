@@ -10,7 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram, faTelegram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import { toPersianDigits } from "@utils/numeralHelpers";
-import useCompanyInfo from "@hooks/useCompanyInfo";
+import {useCompanyInfo} from "@hooks/useGeneralSetting";
 import ContactInfoLink from "@components/footer/ContactInfoLink";
 import SocialMediaLink from "@components/footer/SocialMediaLink";
 import Copyright from "@components/footer/Copyright";

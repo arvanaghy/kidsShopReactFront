@@ -6,6 +6,7 @@ import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
 import { useMainStore } from "@store/useMainStore";
 import { Product, ProductSizeColor } from "@types/ProductType";
 import ShareOnSocialMedia from "@components/product/ShareOnSocialMedia";
+import Unit from "@components/Unit";
 
 interface ProductDetailsProps {
   product: Product;
@@ -54,7 +55,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
       </div>
       <div className="w-full flex flex-row justify-end items-center font-EstedadExtraBold">
         <p>{formatCurrencyDisplay(product.SPrice)}</p>
-        <p>تومان</p>
+        <Unit />
       </div>
       <div className="w-full flex flex-col gap-3 md:gap-4 flex-wrap">
         {product.product_size_color?.length > 0 && (

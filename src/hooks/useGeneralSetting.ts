@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { getCompanyInfo } from "@api/companyInfo";
 import { CompanyInfoType } from "@types/CompanyInfoType";
+import { GeneralSettingService } from "@services/GeneralSettingService";
 
-const useCompanyInfo = () => {
+export const useCompanyInfo = () => {
   const [companyInfo, setCompanyInfo] = useState<CompanyInfoType>({
     Address: "",
     Phone: "",
@@ -37,4 +38,15 @@ const useCompanyInfo = () => {
   return { companyInfo, loading, error, refetch: fetchCompanyInfo };
 };
 
-export default useCompanyInfo;
+export const useUnit = () => {
+  const [isPending, setIsPending] = useState(false);
+  const [unit, setUnit] = useState("");
+  const getUnit = async () => {
+    await GeneralSettingService.getUnit(setUnit, setIsPending);
+  };
+  useEffect(() => {
+    getUnit();
+  }, []);
+
+  return { unit, isPending };
+};

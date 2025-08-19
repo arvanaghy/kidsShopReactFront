@@ -35,3 +35,16 @@ export const getCompanyInfo = async (): Promise<CompanyInfoType> => {
     throw error;
   }
 };
+
+export const fetchUnit = async () => {
+  try {
+    const { data, status } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/v2/unit`
+    );
+    if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
+    return data?.result || import.meta.env.VITE_UNIT;
+  } catch (error: any) {
+    toast.error("واحد پولی: " + error?.message);
+    throw error;
+  }
+};

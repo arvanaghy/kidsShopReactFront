@@ -1,4 +1,4 @@
-import useCompanyInfo from "@hooks/useCompanyInfo";
+import {useCompanyInfo} from "@hooks/useGeneralSetting";
 interface ContactInfoType {
     title: string;
     value: string;

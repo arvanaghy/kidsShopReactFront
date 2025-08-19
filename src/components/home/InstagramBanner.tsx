@@ -1,7 +1,7 @@
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Link } from 'react-router-dom'
-import useCompanyInfo from '@hooks/useCompanyInfo'
+import {useCompanyInfo} from '@hooks/useGeneralSetting'
 
 const InstagramBanner = (): JSX.Element => {
 

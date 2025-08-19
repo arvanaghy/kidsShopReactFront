@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet-routing-machine";
 import L from "leaflet";
-import useCompanyInfo from "@hooks/useCompanyInfo";
+import { useCompanyInfo } from "@hooks/useGeneralSetting";
 
 // Default icon workaround for Leaflet with Webpack
 delete L.Icon.Default.prototype._getIconUrl;
