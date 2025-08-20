@@ -43,7 +43,7 @@ export const useUserStore = create<UserStore>()(
 
         try {
           const { data, status } = await axios.post(
-            `${import.meta.env.VITE_API_URL}/api/v1/verify-token`,
+            `${import.meta.env.VITE_API_URL}/v1/verify-token`,
             {
               UToken: user.UToken,
             }

@@ -122,7 +122,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
           <div className="font-EstedadExtraBold text-start text-Purple-500 text-base lg:text-xl py-4">
             توضیحات :
           </div>
-          <ul className="list-disc marker:text-CarbonicBlue-500 md:pr-2 lg:pr-6 space-y-2 text-start font-EstedadLight">
+          <ul className="md:pr-2 lg:pr-6 space-y-2 text-start font-EstedadLight">
             {product.Comment.split("\r\n").map((item, index) => (
               <li key={index}>{item}</li>
             ))}

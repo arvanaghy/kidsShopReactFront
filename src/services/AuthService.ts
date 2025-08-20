@@ -101,6 +101,7 @@ export const AuthService = {
       const { data, status } = await loginUser({
         phone_number: e.target.phoneNumber.value,
       });
+      console.log('sms', data);
       if (status === 201) {
         updateUser(data?.result);
         navigate(redirect ? redirect : "/profile");

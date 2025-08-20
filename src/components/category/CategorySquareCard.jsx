@@ -31,14 +31,11 @@ const CategorySquareCard = ({ item = { Code: 0, Name: "", PicName: "" } }) => {
         <h4
           className="
                           text-sm
-                          leading-relaxed
-                          2xl:text-3xl 2xl:pt-2 text-center text-gray-500 font-EstedadMedium"
+                          sm:leading-relaxed 2xl:leading-relaxed
+                          2xl:text-xl 2xl:pt-2 text-center text-gray-500 font-EstedadExtraBold tracking-wider"
         >
           {item?.Name}
         </h4>
-        <p className="text-gray-300 font-EstedadLight text-xs 2xl:text-sm ">
-          {item?.Comment}
-        </p>
       </div>
     </Link>
   );

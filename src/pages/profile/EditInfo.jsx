@@ -1,14 +1,14 @@
 import {  useEffect, useState } from "react";
-import { useMainStore } from "@store/useMainStore";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { useUserStore } from "@store/UserStore";
 
 const EditInfo = () => {
-  const { user, updateUser } = useMainStore();
+  const { user, updateUser } = useUserStore();
   const [name, setName] = useState(user?.Name || "");
   const [tell, setTell] = useState(user?.Tel || "");
   const [address, setAddress] = useState(user?.Address || "");

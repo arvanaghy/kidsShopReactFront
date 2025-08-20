@@ -18,7 +18,7 @@ const CategorySearch = ({ searchParam = "" }: { searchParam?: string }) => {
         name="search"
         defaultValue={searchParam}
         placeholder="جستجو در دسته بندی ها"
-        className="w-full font-EstedadMedium p-2 md:p-3 2xl:p-5 text-sm text-gray-600 border border-gray-300 2xl:text-2xl rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        className="w-full font-EstedadMedium p-2  text-sm text-gray-600 border border-gray-300  rounded-lg focus:ring-blue-500 focus:border-blue-500"
       />
       <button
         type="submit"
@@ -26,9 +26,9 @@ const CategorySearch = ({ searchParam = "" }: { searchParam?: string }) => {
         className="text-gray-600 hover:text-gray-700 absolute left-2.5"
       >
         {isPending ? (
-          <FontAwesomeIcon icon={faSpinner} spin className="2xl:text-3xl" />
+          <FontAwesomeIcon icon={faSpinner} spin className="" />
         ) : (
-          <FontAwesomeIcon icon={faMagnifyingGlass} className="2xl:text-3xl" />
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="" />
         )}
       </button>
     </form>

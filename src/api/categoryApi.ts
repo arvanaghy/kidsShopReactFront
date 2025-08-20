@@ -11,7 +11,7 @@ export const fetchCategory = async ({
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v1/list-categories?search=${search}&page=${page}`
+      }/v2/list-categories?search=${search}&page=${page}`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;

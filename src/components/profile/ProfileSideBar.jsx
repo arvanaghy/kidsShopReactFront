@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import UserContext from "@context/UserContext";
-import { useContext, useState } from "react";
+import { useUserStore } from "@store/UserStore";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { RxDashboard, RxCross2 } from "react-icons/rx";
@@ -16,7 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const ProfileSideBar = () => {
-  const { user, updateUser, updateCart } = useContext(UserContext);
+  const { user, updateUser, updateCart } = useUserStore();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [isPending, setIsPending] = useState(false);

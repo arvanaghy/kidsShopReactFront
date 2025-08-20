@@ -8,8 +8,8 @@ interface Link {
 }
 
 interface Replace {
-  url: string;
-  phrase: string;
+  url?: string;
+  phrase?: string;
 }
 
 interface Props {
@@ -20,6 +20,8 @@ interface Props {
 const Pagination = ({ links, replace }: Props) => {
   const navigate = useNavigate();
 
+  console.log('links', links);
+  console.log('replace', replace);
   return (
     <div className="flex flex-row gap-y-2 flex-wrap items-center justify-center my-2 md:my-8 2xl:my-16 ">
       {links?.length > 3 &&

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ProfileLayout from "@layouts/user/ProfileLayout";
-import { useMainStore } from "@store/useMainStore";
+import { useUserStore } from "@store/UserStore";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { LuShieldCheck, LuShieldClose } from "react-icons/lu";
@@ -14,7 +14,8 @@ const Profile = () => {
   const [confirmedOrderList, setConfirmedOrderList] = useState(0);
   const [unConfirmedOrderList, setUnConfirmedOrderList] = useState(0);
 
-  const { user } = useMainStore();
+  const { user } = useUserStore();
+
 
   const fetchConfirmedOrders = async (confirmedOrderUrl) => {
     try {

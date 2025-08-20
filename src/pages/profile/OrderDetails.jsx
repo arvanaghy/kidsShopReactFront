@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProfileLayout from "@layouts/user/ProfileLayout";
-import { useMainStore } from "@store/useMainStore";
+import { useUserStore } from "@store/UserStore";
 import axios from "axios";
 import Loading from "@components/Loading";
 import toast from "react-hot-toast";
@@ -12,7 +12,7 @@ import {
 
 const OrderDetails = () => {
   const { orderCode } = useParams();
-  const { user } = useMainStore();
+  const { user } = useUserStore();
   const [isloading, setIsloading] = useState(false);
   const [orderDetail, setOrderDetail] = useState([]);
   const [detailsLink, setDetailsLink] = useState([]);

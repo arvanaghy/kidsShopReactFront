@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useMainStore } from "@store/useMainStore";
+import { useUserStore } from "@store/UserStore";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "@components/Loading";
 
 const UnconfirmedOrders = () => {
-  const { user } = useMainStore();
+  const { user } = useUserStore();
   const [orderList, setOrderList] = useState([]);
   const [isOrderloading, setIsOrderloading] = useState(false);
   const [links, setLinks] = useState([]);
