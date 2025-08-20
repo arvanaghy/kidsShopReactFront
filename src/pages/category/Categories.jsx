@@ -5,16 +5,16 @@ import Loading from "@components/Loading";
 import CategorySquareCard from "@components/category/CategorySquareCard";
 import Pagination from "@components/Pagination";
 import CategorySearch from "@components/category/CategorySearch";
-import useCategories from "@hooks/useCategories";
+import { listCategory } from "@hooks/useCategories";
 
 const Categories = () => {
   const [searchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
   const page = searchParams.get("page") || 1;
 
-  const { categories, loading, links } = useCategories(search, page);
+  const { categories, isPending, links } = listCategory(search, page);
 
-  if (loading) return <Loading />;
+  if (isPending) return <Loading />;
 
   return (
     <div className="w-full h-full flex inset-0 flex-col justify-center items-center">
@@ -29,7 +29,7 @@ const Categories = () => {
               <span>دسته بندی های محصولات کیدزشاپ </span>
               {search?.length > 0 && <span>جستجو شده : {search}</span>}
             </h3>
-            <CategorySearch />
+            <CategorySearch searchParam={search} />
           </div>
           <div
             className="

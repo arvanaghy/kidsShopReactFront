@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { CategoryService } from "@services/CategoryService";
+import { useNavigate } from "react-router-dom";
 
 interface Categories {
   categories: any;
-  loading: boolean;
+  isPending: boolean;
   links: any;
 }
 
@@ -25,43 +25,38 @@ export interface Category {
   children: any;
 }
 
-const useCategories = (search: string, page: number): Categories => {
+export const listCategory = (search: string, page: number): Categories => {
   const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [links, setLinks] = useState([]);
 
-  const fetchCategories = async (_url: string): Promise<void> => {
-    window.scrollTo(0, 0);
-    if (loading) return;
-    try {
-      setLoading(true);
-      const { data, status } = await axios.get(_url, {
-        headers: {
-          cache: "no-cache",
-        },
-      });
-      if (status !== 200) throw new Error(data?.message);
-      setCategories(data?.result?.categories?.data);
-      setLinks(data?.result?.categories?.links);
-    } catch (error) {
-      toast.error(
-        "دسته بندی: " +
-          (error?.message || error?.response?.data?.message || "خطا در اتصال")
-      );
-    } finally {
-      setLoading(false);
-    }
+  const getCategories = async (
+    search: string | undefined | null,
+    page: number | string | undefined | null
+  ): Promise<void> => {
+    await CategoryService.getCategories({
+      setIsPending,
+      setCategories,
+      setLinks,
+      search,
+      page,
+    });
   };
 
   useEffect(() => {
-    fetchCategories(
-      `${
-        import.meta.env.VITE_API_URL
-      }/v2/list-categories?search=${search}&page=${page}`
-    );
-  }, [page, search]);
+    getCategories(search, page);
+  }, [search, page]);
 
-  return { categories, loading, links };
+  return { categories, isPending, links };
 };
 
-export default useCategories;
+export const searchCategory = (e: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+  const [isPending, setIsPending] = useState(false);
+
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
+    await CategoryService.handleSearch(e, setIsPending, navigate);
+  };
+
+  return { handleSearch, isPending };
+};

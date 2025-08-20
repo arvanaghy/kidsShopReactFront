@@ -33,6 +33,8 @@ const Product = () => {
     ProductService.fetchProductData(productCode!, setData, setLoading);
   }, [productCode]);
 
+  console.log('product' , data?.product);
+
   if (loading) return <Loading />;
 
   return (
@@ -58,12 +60,13 @@ const Product = () => {
         {imageModal.isOpen && (
           <div
             onClick={() => setImageModal({ isOpen: false, image: null })}
-            className="absolute inset-0 bg-black/50 w-full h-full flex justify-center items-center z-50"
+            className="fixed top-0 right-0 bottom-0 left-0 inset-0 bg-black/50 w-screen h-screen flex justify-center items-center z-50"
+            style={{ backdropFilter: "blur(2px)" , zIndex: 9999 }}
           >
             <img
               src={imageModal.image || ""}
               alt="product"
-              className="w-128 h-128 object-cover"
+              className="h:[80vh] w-[90vw] md:w-unset md:h-[90vh] object-contain z-50"
             />
           </div>
         )}

@@ -19,32 +19,10 @@ const ProductImages: React.FC<ProductImagesProps> = ({
     setImageModal,
 }) => {
     return (
-        <div className="col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full xl:space-y-3">
+        <div className="col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full">
             {images.length > 0 ? (
-                <div className="flex flex-col p-6 space-y-3">
-                    <Swiper
-                        modules={[Autoplay, FreeMode, Pagination, Navigation]}
-                        className="h-full w-full"
-                        freeMode={false}
-                        navigation={true}
-                        slidesPerView={1}
-                        centeredSlides={true}
-                        spaceBetween={1}
-                        slidesPerGroup={1}
-                        loop={true}
-                        autoplay={{ delay: 4500 }}
-                    >
-                        {images.map((imageItem, index) => (
-                            <SwiperSlide key={index}>
-                                <img
-                                    src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
-                                    alt={productName}
-                                    className="p-4 w-full object-cover rounded-2xl bg-gray-100"
-                                />
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                    <div className="grid grid-cols-12 items-center justify-center gap-2">
+                <div className="grid grid-cols-12 items-start justify-between gap-2 ">
+                    <div className="col-span-2 flex flex-col items-center justify-center gap-2">
                         {images.map((imageItem, index) => (
                             <img
                                 key={index}
@@ -60,6 +38,29 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                             />
                         ))}
                     </div>
+                    <Swiper
+                        modules={[Autoplay, FreeMode, Pagination, Navigation]}
+                        className="h-full w-full col-span-10"
+                        freeMode={false}
+                        navigation={true}
+                        slidesPerView={1}
+                        centeredSlides={true}
+                        spaceBetween={1}
+                        slidesPerGroup={1}
+                        loop={true}
+                        autoplay={{ delay: 4500 }}
+                    >
+                        {images.map((imageItem, index) => (
+                            <SwiperSlide key={index}>
+                                <img
+                                    src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
+                                    alt={productName}
+                                    className=" w-full object-cover rounded-2xl bg-gray-100"
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+
                 </div>
             ) : (
                 <img

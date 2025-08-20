@@ -1,6 +1,23 @@
 import { useNavigate } from "react-router-dom";
+import { toPersianDigits } from "@utils/numeralHelpers";
 
-const Pagination = ({ links, replace }) => {
+interface Link {
+  url: string;
+  label: string;
+  active: boolean;
+}
+
+interface Replace {
+  url: string;
+  phrase: string;
+}
+
+interface Props {
+  links: Link[];
+  replace?: Replace;
+}
+
+const Pagination = ({ links, replace }: Props) => {
   const navigate = useNavigate();
 
   return (
@@ -24,17 +41,18 @@ const Pagination = ({ links, replace }) => {
                 disabled:cursor-not-allowed
                 transition-all duration-300 ease-in-out
                 hover:bg-CarbonicBlue-500/80 hover:text-white
-                ${
-                  link.active
-                    ? "bg-CarbonicBlue-500 text-white"
-                    : "bg-gray-300 text-black"
-                }`}
+                ${link.active
+                ? "bg-CarbonicBlue-500 text-white"
+                : "bg-gray-300 text-black"
+              }`}
           >
-            {link.label === "&laquo; Previous"
-              ? "قبلی"
-              : link.label === "Next &raquo;"
-              ? " بعدی"
-              : link.label}
+            {toPersianDigits(
+              link.label === "&laquo; Previous"
+                ? "قبلی"
+                : link.label === "Next &raquo;"
+                  ? " بعدی"
+                  : link.label
+            )}
           </button>
         ))}
     </div>
