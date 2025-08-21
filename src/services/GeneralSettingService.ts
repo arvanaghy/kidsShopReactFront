@@ -3,6 +3,7 @@ import { fetchUnit } from "@api/generalApi";
 import { fetchAboutUsInfo } from "@api/generalApi";
 import { fetchCompanyInfo } from "@api/generalApi";
 import { sendContactForm } from "@api/GeneralApi";
+import { ReactComponentElement } from "react";
 
 export const GeneralSettingService = {
   mobilePattern: /^09[0-9]{9}$/,
@@ -64,7 +65,10 @@ export const GeneralSettingService = {
     }
   },
 
-  submitContactForm: async (e: any, setIsPending: any) => {
+  submitContactForm: async (
+    e: React.FormEvent<HTMLFormElement>,
+    setIsPending: (pending: boolean) => void
+  ) => {
     e.preventDefault();
     if (!GeneralSettingService.infoValidation(e.target.info.value)) {
       e.target.info.focus();

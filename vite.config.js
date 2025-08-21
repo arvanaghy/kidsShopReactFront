@@ -24,6 +24,7 @@ export default defineConfig({
       "@types": path.resolve(__dirname, "src/types"),
       "@store": path.resolve(__dirname, "src/store"),
       "@services": path.resolve(__dirname, "src/services"),
+      "@entity": path.resolve(__dirname, "src/entity"),
     },
   },
   build: {

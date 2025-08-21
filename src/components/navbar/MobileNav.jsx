@@ -1,8 +1,5 @@
-// import { useContext } from "react";
 import { FaHome } from "react-icons/fa";
-
 import { Link } from "react-router-dom";
-// import UserContext from "@context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoxesStacked,
@@ -11,11 +8,12 @@ import {
   faIdCardClip,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { useMainStore } from "@store/useMainStore";
+import { useUserStore } from "@store/UserStore";
+import { useCartStore } from "@store/CartStore";
 
 const MobileNav = () => {
-  // const { user, cart } = useContext(UserContext);
-  const { user, cart } = useMainStore();
+  const { user } = useUserStore();
+  const { cart } = useCartStore();
   return (
     <div className="w-full h-full rotate-180 shadow-black/10 shadow-xl relative">
       <div className="w-full h-full rotate-180 text-white flex flex-row justify-between items-center font-EstedadMedium">
@@ -25,14 +23,12 @@ const MobileNav = () => {
             className="flex flex-col items-center space-y-1.5"
           >
             <FontAwesomeIcon icon={faGift} />
-            {/* <span className="text-xs">فروشگاه</span> */}
           </Link>
           <Link
             to={"/categories"}
             className="flex flex-col items-center space-y-1 col-span-1 justify-self-center text-center"
           >
             <FontAwesomeIcon icon={faBoxesStacked} />
-            {/* <span className="text-xs">دسته بندی</span> */}
           </Link>
           <div className="col-span-2"></div>
           <Link
@@ -45,7 +41,6 @@ const MobileNav = () => {
                 {cart?.length}
               </span>
             )}
-            {/* <span className="text-xs">سبد خرید</span> */}
           </Link>
 
           {user?.Name !== undefined && user?.UToken !== undefined ? (
@@ -56,7 +51,6 @@ const MobileNav = () => {
           ) : (
             <Link to={"/login"} className="flex flex-col items-center">
               <FontAwesomeIcon icon={faIdCardClip} />
-              {/* <span className="text-xs">ورود</span> */}
             </Link>
           )}
         </div>

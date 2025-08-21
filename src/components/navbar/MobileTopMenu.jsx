@@ -6,17 +6,15 @@ import {
   faRestroom,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef, useState } from "react";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { throttle } from "lodash";
 import secondLogo from "@assets/images/secondLogo.png";
+import MobileNavbarSearch from "@components/navbar/MobileNavbarSearch";
 
 const MobileTopMenu = () => {
   const [searchModal, setSearchModal] = useState(false);
   const [hideMenu, setHideMenu] = useState(false);
-  const mobileTopMenuRef = useRef(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -38,24 +36,8 @@ const MobileTopMenu = () => {
     };
   }, []);
 
-  const letsSearch = (e) => {
-    e.preventDefault();
-    try {
-      const searchPhrase = e.target.search.value;
-      if (searchPhrase?.length <= 0)
-        throw new Error("نام کالای مورد نظر را وارد کنید");
-      e.target.search.value = "";
-      navigate(`/products?search=${searchPhrase}`);
-    } catch (error) {
-      toast.error(error?.message);
-    } finally {
-      setSearchModal(false);
-    }
-  };
-
   return (
     <div
-      ref={mobileTopMenuRef}
       className={`md:hidden ${
         hideMenu
           ? "-translate-y-full duration-300 ease-in-out transition-all"
@@ -121,31 +103,7 @@ const MobileTopMenu = () => {
           <FontAwesomeIcon icon={faMagnifyingGlass} />
         </button>
       </div>
-      {searchModal && (
-        <form
-          onSubmit={letsSearch}
-          className="w-full flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50 gap-1
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
-        z-50"
-        >
-          <input
-            type="text"
-            name="search"
-            placeholder="عنوان محصول ..."
-            className="w-full bg-gray-100 text-gray-700 rounded-md p-1.5 text-xs"
-          />
-          <button
-            type="submit"
-            className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
-            font-EstedadLight
-            text-xs
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
-        "
-          >
-            جستجو
-          </button>
-        </form>
-      )}
+      {searchModal && <MobileNavbarSearch />}
     </div>
   );
 };
