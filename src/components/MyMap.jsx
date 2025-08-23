@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet-routing-machine";
 import L from "leaflet";
 import { useCompanyInfo } from "@hooks/useGeneralSetting";
+import JumpingDots from "@components/JumpingDots";
 
 // Default icon workaround for Leaflet with Webpack
 delete L.Icon.Default.prototype._getIconUrl;
@@ -10,7 +11,7 @@ delete L.Icon.Default.prototype._getIconUrl;
 
 const MyMap = () => {
   const { companyInfo, isPending } = useCompanyInfo();
-  if (isPending) return <>درحال بارگذاری</>;
+  if (isPending) return <JumpingDots />;
 
   const storeLocation = {
     lat: companyInfo?.latitude,

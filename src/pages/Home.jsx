@@ -10,14 +10,13 @@ import InstagramBanner from "@components/home/InstagramBanner";
 const Home = () => {
   const { result, loading } = useHomePage();
   if (loading) return <Loading />;
-
   return (
     <>
       {/* categories */}
       <Category result={result} />
       {/* categories */}
       {/* first two banners */}
-      {result?.banners?.length == 2 && (
+      {result?.banners?.length > 0 && (
         <BannerGroup banners={result?.banners?.slice(0, 2)} />
       )}
       {/* newest products */}

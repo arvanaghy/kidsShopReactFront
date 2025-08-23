@@ -96,7 +96,6 @@ const SubCategories = () => {
   }, []);
 
   const fetchData = async (_url) => {
-    window.scrollTo(0, 0);
     if (loading) return;
     try {
       setLoading(true);
@@ -131,7 +130,7 @@ const SubCategories = () => {
 
   useEffect(() => {
     fetchData(
-      `https://api.kidsshop110.ir/api/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+      `${import.meta.env.VITE_API_URL}/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -175,10 +174,12 @@ const SubCategories = () => {
         xl:p-4"
       >
         <img
-          src={`https://api.kidsshop110.ir/category-images/webp/${category?.PicName}.webp`}
+          src={`${import.meta.env.VITE_CDN_URL}/category-images/webp/${
+            category?.PicName
+          }.webp`}
           alt={category?.Name}
           onError={(e) => {
-            e.target.src = "https://api.kidsshop110.ir/No_Image_Available.jpg";
+            e.target.src = import.meta.env.VITE_NO_IMAGE;
           }}
           className="col-span-5 md:col-span-4 w-full object-scale-down rounded-xl shadow-sm shadow-black/60"
         />
@@ -189,7 +190,7 @@ const SubCategories = () => {
       sm:text-4xl sm:py-4
       md:text-2xl md:py-6
       lg:text-3xl lg:py-7
-      xl:text-4xl xl:py-8 
+      xl:text-4xl xl:py-8
       2xl:text-5xl 2xl:py-10
       text-transparent bg-clip-text bg-gradient-to-r from-Amber-500 to-CarbonicBlue-500 
       "
@@ -220,15 +221,12 @@ const SubCategories = () => {
                                     md:hover:scale-105  duration-300  ease-in-out transition-all `}
             >
               <img
-                src={
-                  "https://api.kidsshop110.ir/category-images/webp/" +
-                  `${item?.PicName}.webp`
-                }
+                src={`${import.meta.env.VITE_CDN_URL}/subCategory-images/webp/${
+                  item?.PicName
+                }.webp`}
                 alt={item?.Name}
                 onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://api.kidsshop110.ir/No_Image_Available.jpg";
+                  e.target.src = import.meta.env.VITE_NO_IMAGE_AVAILABLE;
                 }}
                 className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-xl shadow-md shadow-gray-300 object-scale-down"
               />
@@ -248,7 +246,9 @@ const SubCategories = () => {
               onClick={() => {
                 navigate(
                   link?.url.replace(
-                    `https://api.kidsshop110.ir/api/v2/list-subcategories/${categoryCode}`,
+                    `${
+                      import.meta.env.VITE_API_URL
+                    }/v2/list-subcategories/${categoryCode}`,
                     `/category/${categoryCode}`
                   )
                 );

@@ -29,7 +29,6 @@ const Product = () => {
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     ProductService.fetchProductData(productCode!, setData, setLoading);
   }, [productCode]);
 

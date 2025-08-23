@@ -28,7 +28,6 @@ const quickAccessLinks = [
 
 const Footer: React.FC = () => {
   const { companyInfo, isPending } = useCompanyInfo();
-  window.scrollTo(0, 0);
   if (isPending) return <>در حال بارگذاری</>;
 
   return (

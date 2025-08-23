@@ -23,7 +23,6 @@ const UnconfirmedOrders = () => {
 
     try {
       setIsOrderloading(true);
-      window.scrollTo(0, 0);
 
       const { data, status } = await axios.get(orderUrl, {
         headers: { Authorization: `Bearer ${user?.UToken}`, cache: "no-cache" },

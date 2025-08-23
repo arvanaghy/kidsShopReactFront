@@ -83,7 +83,6 @@ const OfferedProducts = () => {
   }, []);
 
   const fetchData = async (_url) => {
-    window.scrollTo(0, 0);
     if (loading) return;
     try {
       setLoading(true);

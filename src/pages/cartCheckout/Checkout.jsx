@@ -56,7 +56,6 @@ const Checkout = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (!order || !user) {
       toast.error("شما اجازه دسترسی به این صفحه را ندارید.");
       navigate("/");

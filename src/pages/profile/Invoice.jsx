@@ -80,7 +80,6 @@ const Invoice = () => {
   }, [user]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     fetchInvoice("https://api.kidsshop110.ir/api/v1/list-past-invoice?page=1");
     fetchBalance("https://api.kidsshop110.ir/api/v1/account-balance");
   }, []);

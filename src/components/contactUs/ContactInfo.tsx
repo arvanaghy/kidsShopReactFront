@@ -1,4 +1,5 @@
 import { useCompanyInfo } from "@hooks/useGeneralSetting";
+import JumpingDots from "@components/JumpingDots";
 interface ContactInfoType {
     title: string;
     value: string;
@@ -15,7 +16,7 @@ interface CompanyInfoType {
 
 const ContactInfo = () => {
     const { companyInfo, isPending } = useCompanyInfo<CompanyInfoType>();
-    if (isPending) return <>درحال بارگذاری...</>;
+    if (isPending) return <JumpingDots />;
 
     const contactsInfoArray = [
         {

@@ -19,7 +19,6 @@ const Orders = () => {
   }, [user]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
   }, []);
   return (
     <div className="flex flex-col lg:flex-row min-h-[90vh]">

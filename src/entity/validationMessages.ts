@@ -1,5 +1,5 @@
 export const searchValidationMessage: string =
-  "عبارت جستجو بسیار کوتاه است;
+  "عبارت جستجو بسیار کوتاه است";
 
 export const phoneNumberValidationMessage: string =
   "شماره موبایل بدرستی وارد نشده است";

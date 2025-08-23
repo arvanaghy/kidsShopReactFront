@@ -72,3 +72,15 @@ input::-webkit-inner-spin-button {
 .product-card > div {
   flex: 1; /* Distribute space evenly */
 }
+
+@keyframes jump {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.animate-jump {
+  animation: jump 0.5s ease-in-out infinite;
+}

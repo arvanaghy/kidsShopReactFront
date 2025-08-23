@@ -2,11 +2,12 @@
 import { useAboutUsInfo } from "@hooks/useGeneralSetting";
 import { AboutProps } from "@types/CompanyType";
 import AboutUsInfoCard from "@components/aboutUs/AboutUsInfoCard";
+import JumpingDots from "@components/JumpingDots";
 
 const AboutUs: React.FC = () => {
 
   const { aboutUsInfo, isPending } = useAboutUsInfo();
-  if (isPending) return null;
+  if (isPending) return <JumpingDots />;
 
   return (
     <div className="w-full flex flex-col justify-around items-center min-h-[90vh] h-full space-y-5 py-8 ">

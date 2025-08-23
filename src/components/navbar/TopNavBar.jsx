@@ -21,6 +21,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
 import { useMainStore } from "@store/useMainStore";
+import CallButton from "./CallButton";
 
 const TopNavBar = () => {
   const categoryRef = useRef(null);
@@ -189,11 +190,7 @@ const TopNavBar = () => {
         </form>
         <div className="md:col-span-5 xl:col-span-4 w-full flex flex-row items-center justify-end md:gap-x-5 xl:gap-x-4">
           <div className="flex flex-row items-center justify-center gap-x-2">
-            <FontAwesomeIcon
-              icon={faHeadphones}
-              className="block md:text-base xl:text-lg font-bold 2xl:text-2xl "
-            />
-            <span>{toPersianDigits("۰۹۱۴۹۲۷۶۵۹۰")}</span>
+            <CallButton />
           </div>
 
           {user?.Name !== undefined && user?.UToken !== undefined ? (

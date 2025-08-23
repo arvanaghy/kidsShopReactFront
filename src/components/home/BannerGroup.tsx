@@ -10,17 +10,18 @@ const BannerGroup = ({ banners = [] }: any) => {
         {items.slice(0, 2).map((item: any, idx: number) => (
           <Link
             to={`${item?.CodeKalaSubGroup
-                ? `/sub-category-products/${item?.CodeKalaSubGroup}`
-                : "/"
+              ? `/sub-category-products/${item?.CodeKalaSubGroup}`
+              : "/"
               }`}
             key={idx}
-            className="w-full col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
+            className="relative w-full col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6"
           >
             <img
-              src={item?.image || fallbackImage}
+              src={`${import.meta.env.VITE_CDN_URL}/banner-images/webp/${item?.PicName}_desktop.webp` || fallbackImage}
               alt={item?.title || "no-image"}
               className="w-full object-fill shadow-sm shadow-black/60 rounded-xl  aspect-video"
             />
+            <p className="absolute bottom-0 left-0 text-lg font-EstedadExtraBold text-white w-full tracking-wide text-center bg-black/60 py-2 rounded-t-xl">{item?.Comment}</p>
           </Link>
         ))}
       </div>
