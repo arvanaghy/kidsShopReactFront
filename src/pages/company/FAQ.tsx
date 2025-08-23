@@ -1,31 +1,13 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
-
-interface FaqItem {
-  Code: string;
-  Title: string;
-  Comment: string;
-}
+import { useFAQ } from "@hooks/useGeneralSetting";
+import JumpingDots from "@components/JumpingDots";
 
 const FAQ = () => {
-  const [isShowFaq, setIsShowFaq] = useState<{ [key: string]: boolean }>({});
-  const [faqdata, setFaqData] = useState<FaqItem[]>([]);
+  const [isShowFaq, setIsShowFaq] = useState(false);
 
-  const fetchFAQ = async () => {
-    try {
-      const { data, status } = await axios.get(`${import.meta.env.VITE_API_URL}/v1/faq`);
-      if (status !== 200) throw new Error(data?.message);
-      setFaqData(data.result);
-    } catch (error: any) {
-      toast.error("درباره شرکت: " + error?.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchFAQ();
-  }, []);
+  const { faqInfo, isPending } = useFAQ();
+  if (isPending) return <JumpingDots />
 
   const toggleFaq = (faqKey: string) => {
     setIsShowFaq((prevState) => ({
@@ -43,8 +25,7 @@ const FAQ = () => {
       </div>
       <div className="bg-CarbonicBlue-500 px-6 py-8 rounded-2xl font-MontBold text-Blue-text2 space-y-4 ">
         {
-          // eslint-disable-next-line react/prop-types
-          faqdata?.length > 0 && faqdata?.map((item: FaqItem, index: number) => (
+          faqInfo?.length > 0 && faqInfo?.map((item: any, index: number) => (
             <div key={index}>
               <div
                 onClick={() => toggleFaq(item?.Code)}

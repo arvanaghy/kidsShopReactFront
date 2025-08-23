@@ -17,6 +17,17 @@ export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
     throw new Error("درباره شرکت: " + error?.message);
   }
 };
+export const fetchFAQ = async () => {
+  try {
+    const { data, status } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/v1/faq`
+    );
+    if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
+    return data.result;
+  } catch (error: any) {
+    throw new Error("فاک: " + error?.message);
+  }
+};
 
 export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
   try {

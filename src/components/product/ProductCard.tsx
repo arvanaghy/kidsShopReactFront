@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom } from "@fortawesome/free-solid-svg-icons";
 import { useFavoriteStore } from "@store/FavoriteStore";
 import { useCompareStore } from "@store/CompareStore";
+import Unit from "@components/Unit";
 
 const ProductCard = ({ item, colSpan = "col-span-4" }) => {
   const { favorite, toggleFavorite } = useFavoriteStore();
@@ -112,9 +113,8 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
           <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
             <span className="flex text-green-700 flex-row items-center gap-1">
               {formatCurrencyDisplay(item?.SPrice)}
-              <span className="text-xs font-EstedadExtraBold tracking-tight ">
-                تومان
-              </span>
+              <Unit />
+  
             </span>
           </div>
           <div className="w-full flex flex-row flex-wrap justify-between items-center gap-2">

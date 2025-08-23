@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
-import { formatCurrencyDisplay , toPersianDigits } from "@utils/numeralHelpers";
+import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,6 +13,10 @@ import { confirmToast } from "@utils/confirmToast";
 import { useMainStore } from "@store/useMainStore";
 import { OrderService } from "@services/OrderService";
 import toast from "react-hot-toast";
+import CartItem from "@components/cart/CartItem";
+import EmptyList from "../../components/EmptyList";
+import ClearCart from "../../components/cart/ClearCart";
+import Unit from "@components/Unit";
 
 interface TransferService {
   Code: string;
@@ -23,86 +27,6 @@ interface TransferService {
 
 const apiService = new OrderService();
 
-const CartItem = ({ item, onRemove }: { item: any; onRemove: (item: any) => void }) => (
-  <div className="grid grid-cols-12 w-full p-4 place-items-center border-b gap-2">
-    <div className="col-span-12 flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full order-last text-center bg-gray-200 rounded-sm py-3">
-      <div className="border-b py-1 md:py-0">جمع مبلغ این کالا</div>
-      <div className="text-sm text-CarbonicBlue-500 font-EstedadExtraBold">
-        {item?.basket?.length > 0 &&
-          formatCurrencyDisplay(
-            item.basket.reduce(
-              (total: number, basketItem: any) =>
-                total + (basketItem?.SPrice * basketItem?.quantity || 0),
-              0
-            )
-          )}
-        <span className="text-xs px-1">تومان</span>
-      </div>
-    </div>
-    <div className="col-span-12 md:col-span-3 flex flex-col justify-around gap-2">
-      {item?.item?.product_images?.length > 0 ? (
-        item.item.product_images
-          .filter((img: any) => img?.Def == 1)
-          .map((img: any, idx: number) => (
-            <img
-              key={idx}
-              src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${img?.PicName}.webp`}
-              alt={item?.item?.Name}
-              className="w-full object-cover rounded-xl"
-            />
-          ))
-      ) : (
-        <img
-          src={import.meta.env.VITE_NO_IMAGE_URL}
-          className="w-full object-cover rounded-2xl shadow-lg shadow-gray-300"
-        />
-      )}
-    </div>
-    <div className="col-span-12 md:col-span-9 flex flex-col place-self-start w-full text-black space-y-3 p-1 lg:p-3">
-      <Link
-        to={`/product/${item?.item?.Code}`}
-        className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
-      >
-        {item?.item?.Name}
-      </Link>
-      <div className="w-full flex flex-row items-center gap-3 text-sm text-center">
-        <Link
-          className="block text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
-          to={`/category/${Math.floor(item?.item?.GCode)}`}
-        >
-          {item?.item?.GName}
-        </Link>
-        <Link
-          className="block text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
-          to={`/sub-category-products/${Math.floor(item?.item?.SCode)}`}
-        >
-          {item?.item?.SName}
-        </Link>
-      </div>
-      <div className="flex flex-col text-xs lg:text-sm">
-        {item?.item?.Comment && (
-          <div className="text-justify line-clamp-4 px-4 leading-loose">
-            {item?.item?.Comment}
-          </div>
-        )}
-      </div>
-      {item?.basket?.length > 0 &&
-        item.basket.map((basketItem: any, idx: number) => (
-          <div
-            key={idx}
-            className="px-1.5 flex flex-row gap-2 text-gray-500 text-sm leading-loose"
-          >
-            <FontAwesomeIcon icon={faSquareCheck} className="text-green-600" />
-            {formatCurrencyDisplay(basketItem?.quantity)} {item?.item?.Vahed}{" "}
-            {item?.item?.Name} <b>{basketItem?.feature?.ColorName} </b> رنگ به سایز{" "}
-            <b>{toPersianDigits(basketItem?.feature?.SizeNum)}</b> و جمع مبلغ{" "}
-            {formatCurrencyDisplay(basketItem?.SPrice * basketItem?.quantity)}{" "}
-            تومان
-          </div>
-        ))}
-    </div>
-  </div>
-);
 
 const PaymentDetails = ({
   cart,
@@ -177,7 +101,7 @@ const PaymentDetails = ({
       </option>
       {transferServices.map((service, idx) => (
         <option key={idx} value={service.Code}>
-          {service.Name} - {formatCurrencyDisplay(service.Mablag)} تومان
+          {service.Name} - {formatCurrencyDisplay(service.Mablag)} <Unit />
         </option>
       ))}
     </select>
@@ -198,7 +122,7 @@ const PaymentDetails = ({
             ) + (selectedTransferService?.Mablag || 0)
           )}
       </span>
-      <span className="mx-1 text-sm">تومان</span>
+      <Unit />
     </p>
     {isPending ? (
       <div className="flex items-center justify-center font-EstedadMedium">
@@ -368,37 +292,23 @@ const ShoppingCart = () => {
     updateCart(newCart);
   };
 
+  if (cart.length === 0) return <EmptyList title="سبد خرید شما خالی است" />;
+
   return (
     <div className="grid grid-cols-12 w-full p-3 gap-2 font-EstedadMedium">
       <div className="col-span-12 lg:col-span-9 border rounded-xl relative w-full bg-white/50">
-        <div
-          className={`${cart?.length === 0 ? "opacity-60 cursor-not-allowed" : ""
-            } absolute left-4 top-4 w-14 flex flex-col justify-center items-center text-center space-y-2 text-red-500 hover:text-red-700 duration-300 cursor-pointer transition-all ease-in-out`}
-        >
-          <FontAwesomeIcon
-            icon={faTrashCan}
-            className={`text-lg lg:text-2xl ${cart?.length === 0 ? "" : "cursor-pointer"}`}
-            onClick={async () => {
-              const isConfirmed = await confirmToast("آیا از حذف همه آیتم ها مطمئن هستید؟");
-              if (!isConfirmed) return;
-              updateCart([]);
-            }}
-          />
-          <p className="text-xs w-full cursor-pointer">حذف همه</p>
-        </div>
+        <ClearCart />
         <h1 className="w-full font-EstedadExtraBold lg:text-start text-center lg:indent-6 text-base lg:text-2xl text-CarbonicBlue-500 py-5">
           سبد خرید شما
         </h1>
         <hr className="mx-auto w-full" />
-        {cart?.length === 0 ? (
-          <p className="text-center">سبد خرید شما خالی است.</p>
-        ) : (
-          <div className="flex flex-col gap-2 w-full">
-            {cart?.map((item: any, idx: number) => (
-              <CartItem key={idx} item={item} onRemove={removeProductFromCart} />
-            ))}
-          </div>
-        )}
+
+        <div className="flex flex-col gap-2 w-full">
+          {cart?.map((item: any, idx: number) => (
+            <CartItem key={idx} item={item} onRemove={removeProductFromCart} />
+          ))}
+        </div>
+
       </div>
       <PaymentDetails
         cart={cart}

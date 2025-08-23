@@ -3,6 +3,7 @@ import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { Link } from "react-router-dom";
 import { toPersianDigits } from "@utils/numeralHelpers";
 import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
+import Unit from "@components/Unit";
 
 const OfferProductCard = ({ item }) => {
   const uniqueColorCodes = [
@@ -42,7 +43,7 @@ const OfferProductCard = ({ item }) => {
         <div className="flex flex-row items-center justify-start">
           <span className="flex text-gray-700 flex-row items-center gap-1 text-base xl:text-3xl font-EstedadExtraBold text-center">
             {formatCurrencyDisplay(item?.SPrice)}
-            <span className="text-sm">تومان</span>
+            <Unit />
           </span>
         </div>
         <h3 className="text-gray-700 font-EstedadExtraBold text-base xl:text-3xl text-center ">

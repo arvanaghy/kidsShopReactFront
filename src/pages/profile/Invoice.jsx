@@ -8,6 +8,7 @@ import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loading from "@components/Loading";
+import Unit from "@components/Unit";
 
 const Invoice = () => {
   const { user } = useUserStore();
@@ -91,11 +92,12 @@ const Invoice = () => {
       <div className="w-full bg-CarbonicBlue-500 p-4 rounded-xl text-white flex flex-col items-center justify-between md:flex-row">
         <p className="text-lg xl:text-xl font-EstedadExtraBold">مانده حساب </p>
         <p className="text-lg xl:text-xl font-EstedadExtraBold text-Amber-500 ">
-          <span className="underline underline-offset-8">
-            {Math.abs(balance) > 0
-              ? formatCurrencyDisplay(Math.abs(balance)) + " تومان "
-              : ""}
-          </span>
+          {balance > 0 && (
+            <span className="underline underline-offset-8">
+              {formatCurrencyDisplay(Math.abs(balance))}
+              <Unit />
+            </span>
+          )}
 
           <span className="px-1 text-Amber-500 text-base no-underline ">
             {balance > 0 && "بدهکار"}
@@ -142,16 +144,13 @@ const Invoice = () => {
                       </span>
                     </td>
                     <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                      {formatCurrencyDisplay(invoice?.Bestankar)}{" "}
-                      <span className="text-xs">تومان</span>
+                      {formatCurrencyDisplay(invoice?.Bestankar)} <Unit />
                     </td>
                     <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                      {formatCurrencyDisplay(invoice?.Bedehkar)}{" "}
-                      <span className="text-xs">تومان</span>
+                      {formatCurrencyDisplay(invoice?.Bedehkar)} <Unit />
                     </td>
                     <td className="p-1.5 lg:p-4 text-center bg-stone-200 font-EstedadMedium leading-relaxed text-nowrap whitespace-nowrap">
-                      {formatCurrencyDisplay(invoice?.Mande)}{" "}
-                      <span className="text-xs">تومان</span>
+                      {formatCurrencyDisplay(invoice?.Mande)} <Unit />
                     </td>
                     <td
                       className="p-1.5 lg:p-4 text-center  leading-relaxed text-nowrap whitespace-nowrap

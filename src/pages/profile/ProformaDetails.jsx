@@ -7,6 +7,8 @@ import axios from "axios";
 import Loading from "@components/Loading";
 import toast from "react-hot-toast";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import { toPersianDigits } from "@utils/numeralHelpers";
+import Unit from "@components/Unit";
 
 const ProformaDetails = () => {
   const { orderCode } = useParams();
@@ -90,12 +92,10 @@ const ProformaDetails = () => {
                     {Math.floor(orderDetail?.KTedad)} {orderDetail?.KVahed}
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {formatCurrencyDisplay(orderDetail?.Fee)}{" "}
-                    <span className="text-xs">تومان</span>
+                    {formatCurrencyDisplay(orderDetail?.Fee)} <Unit />
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {formatCurrencyDisplay(orderDetail?.JamKol)}{" "}
-                    <span className="text-xs">تومان</span>
+                    {formatCurrencyDisplay(orderDetail?.JamKol)} <Unit />
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {orderDetail?.Comment ? orderDetail?.Comment : "-"}

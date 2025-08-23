@@ -8,18 +8,30 @@ interface CartStore {
   cart: CartItem[];
   updateCart: (cart: CartItem[]) => void;
   fetchCart: () => void;
-  addProductToCart: (item: Product, productCode: string, feature: ProductSizeColor | null) => void;
-  removeFeatureFromCart: (item: { feature: ProductSizeColor }, productCode: string) => void;
+  addProductToCart: (
+    item: Product,
+    productCode: string,
+    feature: ProductSizeColor | null
+  ) => void;
+  removeFeatureFromCart: (
+    item: { feature: ProductSizeColor },
+    productCode: string
+  ) => void;
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
     immer((set) => ({
       cart: [],
-      updateCart: (cart) => set((state) => { state.cart = cart; }),
+      updateCart: (cart) =>
+        set((state) => {
+          state.cart = cart;
+        }),
       fetchCart: () => {
         const data = JSON.parse(localStorage.getItem("KidsShop_cart") || "[]");
-        set((state) => { state.cart = data; });
+        set((state) => {
+          state.cart = data;
+        });
       },
       addProductToCart: (item, productCode, feature) =>
         set((state) => {
@@ -28,7 +40,8 @@ export const useCartStore = create<CartStore>()(
             return;
           }
           const isProductExists = state.cart.find(
-            (cartItem) => Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+            (cartItem) =>
+              Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
           );
           if (isProductExists) {
             const isFeatureExists = isProductExists.basket.find(
@@ -57,7 +70,8 @@ export const useCartStore = create<CartStore>()(
       removeFeatureFromCart: (item, productCode) =>
         set((state) => {
           const isProductExists = state.cart.find(
-            (cartItem) => Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+            (cartItem) =>
+              Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
           );
           if (isProductExists) {
             isProductExists.basket.splice(
@@ -69,12 +83,17 @@ export const useCartStore = create<CartStore>()(
             if (isProductExists.basket.length === 0) {
               state.cart.splice(
                 state.cart.findIndex(
-                  (cartItem) => Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+                  (cartItem) =>
+                    Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
                 ),
                 1
               );
             }
           }
+        }),
+      clearCart: () =>
+        set((state) => {
+          state.cart = [];
         }),
     })),
     {

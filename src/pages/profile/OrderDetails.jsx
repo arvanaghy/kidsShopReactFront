@@ -6,9 +6,9 @@ import { useUserStore } from "@store/UserStore";
 import axios from "axios";
 import Loading from "@components/Loading";
 import toast from "react-hot-toast";
-import {
-  formatCurrencyDisplay,
-} from "@utils/numeralHelpers";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
+import { toPersianDigits } from "@utils/numeralHelpers";
+import Unit from "@components/Unit";
 
 const OrderDetails = () => {
   const { orderCode } = useParams();
@@ -56,9 +56,9 @@ const OrderDetails = () => {
 
   return (
     <ProfileLayout>
-      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start" >
+      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start">
         <p className="text-lg md:text-xl font-EstedadExtraBold">
-         جزییات فاکتور 
+          جزییات فاکتور
         </p>
         <p className="text-lg md:text-xl font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
           {orderCode && formatCurrencyDisplay(orderCode)}
@@ -100,12 +100,10 @@ const OrderDetails = () => {
                     {Math.floor(orderDetail.KTedad)} {orderDetail.KVahed}
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {formatCurrencyDisplay(orderDetail.Fee)}{" "}
-                    <span className="text-xs">تومان</span>
+                    {formatCurrencyDisplay(orderDetail.Fee)} <Unit />
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {formatCurrencyDisplay(orderDetail.AllSum)}{" "}
-                    <span className="text-xs">تومان</span>
+                    {formatCurrencyDisplay(orderDetail.AllSum)} <Unit />
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {orderDetail.Comment ? orderDetail.Comment : "-"}

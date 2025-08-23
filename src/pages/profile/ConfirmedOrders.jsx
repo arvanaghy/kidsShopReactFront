@@ -8,6 +8,7 @@ import ProfileLayout from "@layouts/user/ProfileLayout";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Loading from "@components/Loading";
+import Unit from "@components/Unit";
 
 const ConfirmedOrders = () => {
   const { user } = useUserStore();
@@ -118,8 +119,7 @@ const ConfirmedOrders = () => {
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
-                      {formatCurrencyDisplay(orderItem?.SumKala)}{" "}
-                      <span className="text-xs">تومان</span>
+                      {formatCurrencyDisplay(orderItem?.SumKala)} <Unit />
                     </span>
                   </td>
                 </tr>

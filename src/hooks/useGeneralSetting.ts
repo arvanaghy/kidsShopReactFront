@@ -64,3 +64,18 @@ export const useContactForm = () => {
   };
   return { isPending, submitContactForm };
 };
+
+export const useFAQ = () => {
+  const [faqInfo, setFaqInfo] = useState();
+  const [isPending, setIsPending] = useState<boolean>(false);
+
+  const getFAQ = async () => {
+    await GeneralSettingService.getFAQ(setFaqInfo, setIsPending);
+  };
+
+  useEffect(() => {
+    getFAQ();
+  }, []);
+
+  return { faqInfo, isPending };
+};

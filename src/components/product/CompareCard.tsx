@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useCompareStore } from "@store/CompareStore";
 import { toPersianDigits } from "@utils/numeralHelpers";
+import Unit from "@components/Unit";
 
 const CompareCard = ({ product }) => {
     const { toggleCompare } = useCompareStore();
@@ -43,7 +44,7 @@ const CompareCard = ({ product }) => {
             </Link>
             <p className="text-gray-700 leading-relaxed  w-full text-pretty font-EstedadLight flex flex-row text-left justify-center items-center md:space-x-2 text-xs lg:text-base">
                 {formatCurrencyDisplay(product?.SPrice)}
-                <span className="text-xs block ">تومان</span>
+                <Unit />
             </p>
             <p className="text-gray-700 leading-relaxed text-pretty font-EstedadLight ">
                 {product?.Comment}

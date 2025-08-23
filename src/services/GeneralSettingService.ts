@@ -3,6 +3,7 @@ import { fetchUnit } from "@api/generalApi";
 import { fetchAboutUsInfo } from "@api/generalApi";
 import { fetchCompanyInfo } from "@api/generalApi";
 import { sendContactForm } from "@api/GeneralApi";
+import { fetchFAQ } from "@api/GeneralApi";
 import {
   contactValidationMessage,
   messageValidationMessage,
@@ -82,6 +83,18 @@ export const GeneralSettingService = {
       toast.error(error?.response?.data?.message || error?.message);
     } finally {
       e.target.reset();
+      setIsPending(false);
+    }
+  },
+
+  getFAQ: async (setFaqInfo: any, setIsPending: any) => {
+    setIsPending(true);
+    try {
+      const data = await fetchFAQ();
+      setFaqInfo(data);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.message);
+    } finally {
       setIsPending(false);
     }
   },
