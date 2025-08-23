@@ -3,33 +3,18 @@ import { fetchUnit } from "@api/generalApi";
 import { fetchAboutUsInfo } from "@api/generalApi";
 import { fetchCompanyInfo } from "@api/generalApi";
 import { sendContactForm } from "@api/GeneralApi";
-import { ReactComponentElement } from "react";
+import {
+  contactValidationMessage,
+  messageValidationMessage,
+  nameValidationMessage,
+} from "@entity/validationMessages";
+import {
+  contactValidation,
+  messageValidation,
+  validateUsername,
+} from "@entity/validations";
 
 export const GeneralSettingService = {
-  mobilePattern: /^09[0-9]{9}$/,
-  infoPattern: /^.{2,}\s.{2,}$/,
-  emailPattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-  messagePattern: /^.{5,}$/,
-
-  mobileValidationMessage: "شماره موبایل بدرستی وارد نشده است",
-  infoValidationMessage:
-    "نام و نام خانوادگی خود را بطور کامل وارد کنید  بین نام و نام خانوادگی باید فاصله باشد",
-  emailValidationMessage: "ایمیل را بطور کامل وارد نمایید",
-  messageValidationMessage: "پیام را بطور کامل وارد نمایید",
-  contactValidationMessage: " شماره موبایل یا ایمیل باید به درستی وارد شود",
-
-  mobileValidation: (value: any) =>
-    GeneralSettingService.mobilePattern.test(value),
-  infoValidation: (value: any) => GeneralSettingService.infoPattern.test(value),
-  emailValidation: (value: any) =>
-    GeneralSettingService.emailPattern.test(value),
-  messageValidation: (value: any) =>
-    GeneralSettingService.messagePattern.test(value),
-
-  contactValidation: (value: any) =>
-    GeneralSettingService.mobileValidation(value) ||
-    GeneralSettingService.emailValidation(value),
-
   getUnit: async (setUnit: any, setIsPending: any) => {
     setIsPending(true);
     try {
@@ -70,19 +55,19 @@ export const GeneralSettingService = {
     setIsPending: (pending: boolean) => void
   ) => {
     e.preventDefault();
-    if (!GeneralSettingService.infoValidation(e.target.info.value)) {
+    if (!validateUsername(e.target.info.value)) {
       e.target.info.focus();
-      toast.error(GeneralSettingService.infoValidationMessage);
+      toast.error(nameValidationMessage);
       return;
     }
-    if (!GeneralSettingService.contactValidation(e.target.contact.value)) {
+    if (!contactValidation(e.target.contact.value)) {
       e.target.contact.focus();
-      toast.error(GeneralSettingService.contactValidationMessage);
+      toast.error(contactValidationMessage);
       return;
     }
-    if (!GeneralSettingService.messageValidation(e.target.message.value)) {
+    if (!messageValidation(e.target.message.value)) {
       e.target.message.focus();
-      toast.error(GeneralSettingService.messageValidationMessage);
+      toast.error(messageValidationMessage);
       return;
     }
     setIsPending(true);

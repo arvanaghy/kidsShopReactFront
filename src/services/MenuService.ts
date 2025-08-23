@@ -3,7 +3,6 @@ import { searchValidationMessage } from "@entity/validationMessages";
 import { validateSearch } from "@entity/validations";
 
 export const MenuService = {
-  validateSearch: (search: string) => validateSearch(search),
 
   handleSearch: async (
     e: React.FormEvent<HTMLFormElement>,
@@ -12,7 +11,7 @@ export const MenuService = {
   ) => {
     e.preventDefault();
     const searchPhrase = e.target.search.value;
-    if (!MenuService.validateSearch(searchPhrase)) {
+    if (!validateSearch(searchPhrase)) {
       toast.error(searchValidationMessage);
       e.target.search.focus();
       return;

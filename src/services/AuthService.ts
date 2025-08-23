@@ -1,33 +1,20 @@
 import { registerUser, loginUser, otpApi, resendMSApi } from "@api/authApi";
 import toast from "react-hot-toast";
+import { validateUsername } from "@entity/validations";
+import { nameValidationMessage } from "@entity/validationMessages";
+import {
+  validateAddress,
+  validateOtp,
+  validatePhoneNumber,
+} from "@entity/validations";
+import {
+  addressValidationMessage,
+  otpValidationMessage,
+  phoneNumberValidationMessage,
+} from "@entity/validationMessages";
 
 export const AuthService = {
-  mobilePattern: /^09[0-9]{9}$/,
-  namePattern: /^.{2,}\s.{2,}$/,
-  addressPattern: /^.{10,}$/,
-  otpPattern: /^.{4}$/,
 
-  phoneNumberValidationMessage: "شماره موبایل بدرستی وارد نشده است",
-  nameValidationMessage:
-    "نام و نام خانوادگی خود را بطور کامل وارد کنید  بین نام و نام خانوادگی باید فاصله باشد",
-  addressValidationMessage: "آدرس را بطور کامل وارد نمایید",
-  otpValidationMessage: "کد وارد شده صحیح نمی باشد",
-
-  validatePhoneNumber: (phoneNumber: string) => {
-    return AuthService.mobilePattern.test(phoneNumber);
-  },
-
-  validateUsername: (username: string) => {
-    return AuthService.namePattern.test(username);
-  },
-
-  validateAddress: (address: string) => {
-    return AuthService.addressPattern.test(address);
-  },
-
-  validateOtp: (otp: string) => {
-    return AuthService.otpPattern.test(otp);
-  },
 
   submitRegister: async (
     e: React.FormEvent<HTMLFormElement>,
@@ -37,18 +24,18 @@ export const AuthService = {
   ) => {
     e.preventDefault();
 
-    if (!AuthService.validateUsername(e.target.name.value)) {
-      toast.error(AuthService.nameValidationMessage);
+    if (!validateUsername(e.target.name.value)) {
+      toast.error(nameValidationMessage);
       e.target.name.focus();
       return;
     }
-    if (!AuthService.validatePhoneNumber(e.target.phoneNumber.value)) {
-      toast.error(AuthService.phoneNumberValidationMessage);
+    if (!validatePhoneNumber(e.target.phoneNumber.value)) {
+      toast.error(phoneNumberValidationMessage);
       e.target.phoneNumber.focus();
       return;
     }
-    if (!AuthService.validateAddress(e.target.address.value)) {
-      toast.error(AuthService.addressValidationMessage);
+    if (!validateAddress(e.target.address.value)) {
+      toast.error(addressValidationMessage);
       e.target.address.focus();
       return;
     }
@@ -91,8 +78,8 @@ export const AuthService = {
     }) => void
   ) => {
     e.preventDefault();
-    if (!AuthService.validatePhoneNumber(e.target.phoneNumber.value)) {
-      toast.error(AuthService.phoneNumberValidationMessage);
+    if (!validatePhoneNumber(e.target.phoneNumber.value)) {
+      toast.error(phoneNumberValidationMessage);
       e.target.phoneNumber.focus();
       return;
     }
@@ -101,7 +88,7 @@ export const AuthService = {
       const { data, status } = await loginUser({
         phone_number: e.target.phoneNumber.value,
       });
-      console.log('sms', data);
+      console.log("sms", data);
       if (status === 201) {
         updateUser(data?.result);
         navigate(redirect ? redirect : "/profile");
@@ -139,8 +126,8 @@ export const AuthService = {
     }) => void
   ) => {
     e.preventDefault();
-    if (!AuthService.validateOtp(e.target.otp.value)) {
-      toast.error(AuthService.otpValidationMessage);
+    if (!validateOtp(e.target.otp.value)) {
+      toast.error(otpValidationMessage);
       e.target.otp.focus();
       return;
     }
@@ -165,8 +152,8 @@ export const AuthService = {
     phoneNumber: string,
     setIsPending: (pending: boolean) => void
   ) => {
-    if (!AuthService.validatePhoneNumber(phoneNumber)) {
-      toast.error(AuthService.otpValidationMessage);
+    if (!validatePhoneNumber(phoneNumber)) {
+      toast.error(phoneNumberValidationMessage);
       return;
     }
     setIsPending(true);

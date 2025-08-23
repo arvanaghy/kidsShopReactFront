@@ -1,13 +1,9 @@
 import toast from "react-hot-toast";
 import { fetchCategory } from "@api/categoryApi";
+import { validateSearch } from "@entity/validations";
+import { searchValidationMessage } from "@entity/validationMessages";
 
 export const CategoryService = {
-  searchPattern: /^.{2,}$/,
-
-  searchValidationMessage: "نام دسته بندی را بطور کامل وارد نمایید",
-
-  validateSearch: (search: string) =>
-    search?.match(CategoryService.searchPattern),
 
   getCategories: async ({
     setIsPending,
@@ -37,8 +33,8 @@ export const CategoryService = {
     setIsPending(true);
     try {
       const search = e.target.search.value;
-      if (!CategoryService.validateSearch(search)) {
-        throw new Error(CategoryService.searchValidationMessage);
+      if (!validateSearch(search)) {
+        throw new Error(searchValidationMessage);
       }
       navigate(`/categories?search=${search}`);
     } catch (error) {
