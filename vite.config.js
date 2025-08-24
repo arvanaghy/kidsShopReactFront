@@ -27,6 +27,7 @@ export default defineConfig({
       "@entity": path.resolve(__dirname, "src/entity"),
     },
   },
+  extensions: [".js", ".jsx", ".ts", ".tsx"],
   build: {
     rollupOptions: {
       output: {

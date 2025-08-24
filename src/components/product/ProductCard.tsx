@@ -12,7 +12,7 @@ import { useFavoriteStore } from "@store/FavoriteStore";
 import { useCompareStore } from "@store/CompareStore";
 import Unit from "@components/Unit";
 
-const ProductCard = ({ item, colSpan = "col-span-4" }) => {
+const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
   const { favorite, toggleFavorite } = useFavoriteStore();
 
   const { compareList, toggleCompare } = useCompareStore();
@@ -114,7 +114,6 @@ const ProductCard = ({ item, colSpan = "col-span-4" }) => {
             <span className="flex text-green-700 flex-row items-center gap-1">
               {formatCurrencyDisplay(item?.SPrice)}
               <Unit />
-  
             </span>
           </div>
           <div className="w-full flex flex-row flex-wrap justify-between items-center gap-2">

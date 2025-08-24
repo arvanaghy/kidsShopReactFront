@@ -4,7 +4,7 @@ import { namePattern } from "@entity/pattern";
 import { addressPattern } from "@entity/pattern";
 import { otpPattern } from "@entity/pattern";
 import { emailPattern } from "@entity/pattern";
-import { messagePattern } from "./pattern";
+import { messagePattern } from "@entity/pattern";
 
 export const validateSearch = (search: string) => search?.match(searchPattern);
 

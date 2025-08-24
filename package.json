@@ -1,9 +1,9 @@
 {
-  "name": "TanloElectroShop",
+  "name": "kids-shop-110",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://electroshop24.ir",
+  "homepage": "https://kidsshop110.ir",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

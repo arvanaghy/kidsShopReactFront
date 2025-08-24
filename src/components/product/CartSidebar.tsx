@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
-import { Product, CartItem } from "@types/ProductType";
 import Unit from "@components/Unit";
-import { useCartStore } from "../../store/CartStore";
+import { useCartStore } from "@store/CartStore";
 
 interface CartSidebarProps {
   productCode: string;
-  product: Product;
+  product: any;
   desktopNavbar: boolean;
 }
 
@@ -37,7 +36,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
             );
             return (
               <div className="font-EstedadMedium p-2 w-full space-y-3 text-pretty">
-                {foundItem?.basket?.map((item: CartItem, index: number) => (
+                {foundItem?.basket?.map((item: any, index: number) => (
                   <div
                     key={index}
                     className="flex flex-row w-full text-pretty leading-loose text-sm text-gray-700 gap-1 items-center justify-between"

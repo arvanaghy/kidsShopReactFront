@@ -3,15 +3,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faBookmark, faRestroom } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
-import { useMainStore } from "@store/useMainStore";
-import { Product, ProductSizeColor } from "@types/ProductType";
 import ShareOnSocialMedia from "@components/product/ShareOnSocialMedia";
 import Unit from "@components/Unit";
-import { useCartStore } from "../../store/CartStore";
+import { useCartStore } from "@store/CartStore";
+import useCompareStore from "@store/CompareStore";
+import { useFavoriteStore } from "@store/FavoriteStore";
 
 
 interface ProductDetailsProps {
-  product: Product;
+  product: any;
   productCode: string;
 }
 
@@ -20,8 +20,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
   const url = typeof window !== 'undefined' ? window.location.href : '';
 
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState<ProductSizeColor | null>(null);
-  const { favorite, compareList, toggleFavorite, toggleCompare } = useMainStore();
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const { favorite, toggleFavorite } = useFavoriteStore();
+  const { compareList, toggleCompare } = useCompareStore();
   const { addProductToCart } = useCartStore();
   const isFavorite = favorite.some((p) => Math.floor(p.Code!) == Math.floor(productCode));
   const isCompared = compareList.some((p) => Math.floor(p.Code!) == Math.floor(productCode));
