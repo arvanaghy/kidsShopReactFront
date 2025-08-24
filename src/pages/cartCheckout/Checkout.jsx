@@ -51,7 +51,7 @@ const Checkout = () => {
       setIsPending(false);
     } catch (error) {
       setIsPending(false);
-      toast.error(" ]vnhoj krnd : " + error?.message || "خطا در اتصال");
+      toast.error(" : " + error?.message || "خطا در اتصال");
     }
   };
 
