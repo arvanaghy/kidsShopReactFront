@@ -32,7 +32,6 @@ const Product = () => {
     ProductService.fetchProductData(productCode!, setData, setLoading);
   }, [productCode]);
 
-  console.log('product' , data?.product);
 
   if (loading) return <Loading />;
 

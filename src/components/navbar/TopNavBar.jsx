@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
+import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import secondLogo from "@assets/images/secondLogo.png";
 import { throttle } from "lodash";
@@ -13,7 +13,6 @@ import {
   faBoxesPacking,
   faCertificate,
   faChevronUp,
-  faHeadphones,
   faMagnifyingGlass,
   faRestroom,
   faSpinner,
@@ -22,6 +21,8 @@ import {
 import toast from "react-hot-toast";
 import { useMainStore } from "@store/useMainStore";
 import CallButton from "./CallButton";
+import { useCartStore } from "../../store/CartStore";
+import { useUserStore } from "../../store/UserStore";
 
 const TopNavBar = () => {
   const categoryRef = useRef(null);
@@ -30,7 +31,9 @@ const TopNavBar = () => {
   const [categoryLoading, setCategoryLoading] = useState(false);
   const [dropDown, setDropDown] = useState(false);
 
-  const { user, cart, desktopNavbar, updateDesktopNavbar } = useMainStore();
+  const { desktopNavbar, updateDesktopNavbar } = useMainStore();
+  const { cart } = useCartStore();
+  const { user } = useUserStore();
   const [categoryImage, setCategoryImage] = useState(null);
   const navigate = useNavigate();
 
@@ -193,7 +196,7 @@ const TopNavBar = () => {
             <CallButton />
           </div>
 
-          {user?.Name !== undefined && user?.UToken !== undefined ? (
+          {user?.Name !== "" && user?.UToken !== "" ? (
             <div>
               <Link
                 to="/profile"

@@ -1,9 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
-import { useMainStore } from "@store/useMainStore";
 import { Product, CartItem } from "@types/ProductType";
 import Unit from "@components/Unit";
+import { useCartStore } from "../../store/CartStore";
 
 interface CartSidebarProps {
   productCode: string;
@@ -16,7 +16,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
   product,
   desktopNavbar,
 }) => {
-  const { cart, removeFeatureFromCart } = useMainStore();
+  const { cart, removeFeatureFromCart } = useCartStore();
 
   return (
     <div

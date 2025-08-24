@@ -7,6 +7,8 @@ import { useMainStore } from "@store/useMainStore";
 import { Product, ProductSizeColor } from "@types/ProductType";
 import ShareOnSocialMedia from "@components/product/ShareOnSocialMedia";
 import Unit from "@components/Unit";
+import { useCartStore } from "../../store/CartStore";
+
 
 interface ProductDetailsProps {
   product: Product;
@@ -19,7 +21,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
 
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<ProductSizeColor | null>(null);
-  const { favorite, compareList, addProductToCart, toggleFavorite, toggleCompare } = useMainStore();
+  const { favorite, compareList, toggleFavorite, toggleCompare } = useMainStore();
+  const { addProductToCart } = useCartStore();
   const isFavorite = favorite.some((p) => Math.floor(p.Code!) == Math.floor(productCode));
   const isCompared = compareList.some((p) => Math.floor(p.Code!) == Math.floor(productCode));
 

@@ -7,7 +7,6 @@ import { CartItem, Product, ProductSizeColor } from "@types/StoreType";
 interface CartStore {
   cart: CartItem[];
   updateCart: (cart: CartItem[]) => void;
-  fetchCart: () => void;
   addProductToCart: (
     item: Product,
     productCode: string,
@@ -17,6 +16,7 @@ interface CartStore {
     item: { feature: ProductSizeColor },
     productCode: string
   ) => void;
+  clearCart: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -27,45 +27,53 @@ export const useCartStore = create<CartStore>()(
         set((state) => {
           state.cart = cart;
         }),
-      fetchCart: () => {
-        const data = JSON.parse(localStorage.getItem("KidsShop_cart") || "[]");
+      clearCart: () =>
         set((state) => {
-          state.cart = data;
-        });
-      },
+          console.log("Before clearing cart:", state.cart);
+          localStorage.removeItem("KidsShop_cart");
+          state.cart = [];
+          console.log("After clearing cart:", state.cart);
+        }),
       addProductToCart: (item, productCode, feature) =>
         set((state) => {
-          if (!item || !feature || !feature.SCCode) {
-            toast.error("هیچ سایز و رنگ بندی انتخاب نشده است.");
-            return;
-          }
-          const isProductExists = state.cart.find(
-            (cartItem) =>
-              Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
-          );
-          if (isProductExists) {
-            const isFeatureExists = isProductExists.basket.find(
-              (basketItem) => basketItem.feature.SCCode == feature.SCCode
-            );
-            if (isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande) {
-              toast.error("سفارش شما بیشتر از موجودی است.");
-              return;
+          try {
+            if (!item || !feature || !feature.SCCode) {
+              throw new Error("هیچ سایز و رنگ بندی انتخاب نشده است.");
             }
-            if (isFeatureExists) {
-              isFeatureExists.quantity += 1;
+            const isProductExists = state.cart.find(
+              (cartItem: CartItem) =>
+                Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+            );
+            if (isProductExists) {
+              const isFeatureExists = isProductExists.basket.find(
+                (basketItem: CartItem) =>
+                  basketItem.feature.SCCode == feature.SCCode
+              );
+              if (
+                isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande
+              ) {
+                toast.error("سفارش شما بیشتر از موجودی است.");
+                return;
+              }
+              if (isFeatureExists) {
+                isFeatureExists.quantity += 1;
+              } else {
+                isProductExists.basket.push({
+                  feature,
+                  quantity: 1,
+                  SPrice: item?.SPrice || 0,
+                });
+              }
             } else {
-              isProductExists.basket.push({
-                feature,
-                quantity: 1,
+              state.cart.push({
+                item,
+                basket: [{ feature, quantity: 1, SPrice: item?.SPrice || 0 }],
               });
             }
-          } else {
-            state.cart.push({
-              item,
-              basket: [{ feature, quantity: 1 }],
-            });
+            toast.success(`${item?.Name } , ${feature?.ColorName} , ${feature?.SizeNum} به سبد خرید اضافه شد.`);
+          } catch (error) {
+            toast.error(error?.response?.data?.message || error?.message);
           }
-          toast.success("محصول به سبد خرید اضافه شد.");
         }),
       removeFeatureFromCart: (item, productCode) =>
         set((state) => {
@@ -90,10 +98,6 @@ export const useCartStore = create<CartStore>()(
               );
             }
           }
-        }),
-      clearCart: () =>
-        set((state) => {
-          state.cart = [];
         }),
     })),
     {
