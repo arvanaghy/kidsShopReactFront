@@ -12,17 +12,15 @@ const persistOptions: PersistOptions<OrderState> = {
 export const useOrderStore = create<OrderState>()(
   persist(
     immer((set) => ({
-      orders: [],
-      updateOrders: (orders: Order[]) =>
+      order: {},
+      updateOrder: (order) =>
         set((state) => {
-          state.orders = orders;
+          state.order = order;
         }),
-      fetchOrders: () => {
-        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      clearOrder: () =>
         set((state) => {
-          state.orders = data;
-        });
-      },
+          state.orders = [];
+        }),
     })),
     persistOptions
   )

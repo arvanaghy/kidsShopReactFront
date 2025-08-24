@@ -78,3 +78,16 @@ export const resendMSApi = async (info: any) => {
     throw new Error(data?.message);
   }
 };
+
+export const isUserValidApi = async (info: any) => {
+  const { data, status } = await axios.post(
+    `${import.meta.env.VITE_API_URL}/v1/verify-user`,
+    info,
+    {
+      headers: {
+        cache: "no-cache",
+      },
+    }
+  );
+  return { data, status };
+};

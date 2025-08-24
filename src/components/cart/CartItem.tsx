@@ -42,33 +42,30 @@ const CartItem = ({ item }: { item: any }) => {
                 )}
             </div>
             <div className="col-span-12 md:col-span-9 flex flex-col place-self-start w-full text-black space-y-3 p-1 lg:p-3">
-                <Link
-                    to={`/product/${item?.item?.Code}`}
-                    className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
-                >
-                    {item?.item?.Name}
-                </Link>
-                <div className="w-full flex flex-row items-center gap-3 text-sm text-center">
+                <div className="w-full flex flex-row justify-between items-center">
                     <Link
-                        className="block text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
-                        to={`/category/${Math.floor(item?.item?.GCode)}`}
+                        to={`/product/${item?.item?.Code}`}
+                        className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
                     >
-                        {item?.item?.GName}
+                        {item?.item?.Name}
                     </Link>
-                    <Link
-                        className="block text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
-                        to={`/sub-category-products/${Math.floor(item?.item?.SCode)}`}
-                    >
-                        {item?.item?.SName}
-                    </Link>
+                    <div className="max-w-fit flex flex-row items-center gap-3 text-sm text-center">
+                        <Link
+                            className="whitespace-nowrap text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
+                            to={`/category/${Math.floor(item?.item?.GCode)}`}
+                        >
+                            {item?.item?.GName}
+                        </Link>
+                        <span>/</span>
+                        <Link
+                            className="whitespace-nowrap text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
+                            to={`/sub-category-products/${Math.floor(item?.item?.SCode)}`}
+                        >
+                            {item?.item?.SName}
+                        </Link>
+                    </div>
                 </div>
-                <div className="flex flex-col text-xs lg:text-sm">
-                    {item?.item?.Comment && (
-                        <div className="text-justify line-clamp-4 px-4 leading-loose">
-                            {item?.item?.Comment}
-                        </div>
-                    )}
-                </div>
+
                 {item?.basket?.length > 0 &&
                     item.basket.map((basketItem: any, idx: number) => (
                         <div
@@ -77,8 +74,8 @@ const CartItem = ({ item }: { item: any }) => {
                         >
                             <FontAwesomeIcon icon={faSquareCheck} className="text-green-600" />
                             {formatCurrencyDisplay(basketItem?.quantity)} {item?.item?.Vahed}{" "}
-                            {item?.item?.Name} <b>{basketItem?.feature?.ColorName} </b> رنگ به سایز{" "}
-                            <b>{toPersianDigits(basketItem?.feature?.SizeNum)}</b> و جمع مبلغ{" "}
+                            {item?.item?.Name} <b>{basketItem?.feature?.ColorName} </b>  به سایز{" "}
+                            <b>{toPersianDigits(basketItem?.feature?.SizeNum)}</b> و جمع مبلغ { " "}
                             {formatCurrencyDisplay(basketItem?.SPrice * basketItem?.quantity)}{" "}
                             <Unit />
                         </div>

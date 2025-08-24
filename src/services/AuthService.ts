@@ -1,4 +1,10 @@
-import { registerUser, loginUser, otpApi, resendMSApi } from "@api/authApi";
+import {
+  registerUser,
+  loginUser,
+  otpApi,
+  resendMSApi,
+  isUserValidApi,
+} from "@api/authApi";
 import toast from "react-hot-toast";
 import { validateUsername } from "@entity/validations";
 import { nameValidationMessage } from "@entity/validationMessages";
@@ -14,8 +20,6 @@ import {
 } from "@entity/validationMessages";
 
 export const AuthService = {
-
-
   submitRegister: async (
     e: React.FormEvent<HTMLFormElement>,
     redirect: string,
@@ -148,6 +152,7 @@ export const AuthService = {
       setIsPending(false);
     }
   },
+
   resendSMS: async (
     phoneNumber: string,
     setIsPending: (pending: boolean) => void
@@ -165,6 +170,25 @@ export const AuthService = {
       toast.error(error?.response?.data?.message || error?.message);
     } finally {
       setIsPending(false);
+    }
+  },
+
+  isUserValid: async (phoneNumber: string, token: string) => {
+    try {
+      if (!validatePhoneNumber(phoneNumber)) {
+        throw new Error(phoneNumberValidationMessage);
+      }
+      if (!token) {
+        throw new Error("توکن وارد نشده است");
+      }
+      const { data, status } = await isUserValidApi({
+        phone_number: phoneNumber,
+        token: token,
+      });
+      if (status != 201) throw new Error(data?.message);
+      return true;
+    } catch (error: any) {
+      return false;
     }
   },
 };

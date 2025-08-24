@@ -17,7 +17,7 @@ const WebPayment = () => {
     document.body.style.overflow = "hidden";
     try {
       const { data, status } = await axios.post(
-        "https://api.kidsshop110.ir/api/v1/zarinpal-payment-callback",
+        `${import.meta.env.VITE_API_URL}/v1/zarinpal-payment-callback`,
         {
           Authority: authority,
         }

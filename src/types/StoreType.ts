@@ -42,11 +42,16 @@ export interface User {
 }
 
 export interface Order {
-  [key: string]: any; // Placeholder for order properties; should be typed based on actual structure
+  CodeDoreMali: number;
+  CCode: number;
+  Signature: string;
+  CodeKhadamat: number;
+  MKhadamat: string;
+  Comment: string;
 }
 
 interface OrderState {
-  orders: Order[];
-  updateOrders: (orders: Order[]) => void;
-  fetchOrders: () => void;
+  order: Order;
+  updateOrder: (order: Order) => void;
+  clearOrder: () => void;
 }

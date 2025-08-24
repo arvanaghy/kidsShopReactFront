@@ -17,6 +17,7 @@ interface CartStore {
     productCode: string
   ) => void;
   clearCart: () => void;
+  removeProductFromCart: (productCode: string) => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -70,7 +71,9 @@ export const useCartStore = create<CartStore>()(
                 basket: [{ feature, quantity: 1, SPrice: item?.SPrice || 0 }],
               });
             }
-            toast.success(`${item?.Name } , ${feature?.ColorName} , ${feature?.SizeNum} به سبد خرید اضافه شد.`);
+            toast.success(
+              `${item?.Name} , ${feature?.ColorName} , ${feature?.SizeNum} به سبد خرید اضافه شد.`
+            );
           } catch (error) {
             toast.error(error?.response?.data?.message || error?.message);
           }
@@ -98,6 +101,13 @@ export const useCartStore = create<CartStore>()(
               );
             }
           }
+        }),
+      removeProductFromCart: (productCode) =>
+        set((state) => {
+          const newCart = state.cart.filter(
+            (item) => item.item.Code !== productCode
+          );
+          state.cart = newCart;
         }),
     })),
     {
