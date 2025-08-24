@@ -1,3 +1,4 @@
+import JumpingDots from "@components/JumpingDots";
 import { searchProduct } from "@hooks/useMenu";
 
 const MobileNavbarSearch = () => {
@@ -24,7 +25,7 @@ const MobileNavbarSearch = () => {
         hover:bg-gray-900 duration-300 ease-in-out transition-all
         "
             >
-                {isPending ? <>....</> : <>جستجو</>}
+                {isPending ? <JumpingDots /> : <>جستجو</>}
 
             </button>
         </form>

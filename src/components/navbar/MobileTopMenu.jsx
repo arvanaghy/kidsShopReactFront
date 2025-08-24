@@ -6,40 +6,20 @@ import {
   faRestroom,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { throttle } from "lodash";
 import secondLogo from "@assets/images/secondLogo.png";
 import MobileNavbarSearch from "@components/navbar/MobileNavbarSearch";
+import { useNavbarVisibility } from "@hooks/useMenu";
 
 const MobileTopMenu = () => {
+  const isNavbarVisible = useNavbarVisibility(false, 600);
   const [searchModal, setSearchModal] = useState(false);
-  const [hideMenu, setHideMenu] = useState(false);
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = throttle(() => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY) {
-        setHideMenu(true);
-      } else {
-        setHideMenu(false);
-      }
-      lastScrollY = currentScrollY;
-    }, 100);
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      handleScroll.cancel();
-    };
-  }, []);
 
   return (
     <div
       className={`md:hidden ${
-        hideMenu
+        !isNavbarVisible
           ? "-translate-y-full duration-300 ease-in-out transition-all"
           : "translate-y-0 duration-300 ease-in-out transition-all "
       }  flex flex-col justify-center items-center sticky top-0 
@@ -48,7 +28,7 @@ const MobileTopMenu = () => {
       <Link to="/">
         <img
           src={secondLogo}
-          alt="Logo"
+          alt="لوگو کیدزشاپ"
           className="h-16 w-full object-scale-down
         py-1.5"
         />
