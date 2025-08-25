@@ -30,12 +30,12 @@ const WebPayment = () => {
         }, 3000);
       } else if (status === 403) {
         toast.error(data?.message);
-        navigate("/shopping-cart", { replace: true });
+        navigate("/payment-failed", { replace: true });
       } else {
         toast.error(data?.message);
         setTimeout(() => {
           document.body.style.overflow = "auto";
-          // navigate("/payment-failed", { replace: true });
+          navigate("/payment-failed", { replace: true });
         }, 3000);
       }
     } catch (error) {

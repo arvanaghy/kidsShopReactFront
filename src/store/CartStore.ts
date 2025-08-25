@@ -20,6 +20,7 @@ interface CartStore {
   removeProductFromCart: (productCode: string) => void;
   description: string;
   setDescription: (description: string) => void;
+  clearDescription: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -115,6 +116,10 @@ export const useCartStore = create<CartStore>()(
       setDescription: (description) =>
         set((state) => {
           state.description = description;
+        }),
+      clearDescription: () =>
+        set((state) => {
+          state.description = "";
         }),
     })),
     {

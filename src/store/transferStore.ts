@@ -25,14 +25,24 @@ const persistOptions: any = {
 export const useTransferStore = create<TransferState>()(
   persist(
     immer((set) => ({
-      transfer: {},
+      transfer: {
+        Code: "",
+        Name: "",
+        Mablag: 0,
+        CodeKhadamat: 0,
+      },
       setTransfer: (transfer: TransferService) =>
         set((state) => {
           state.transfer = transfer;
         }),
       clearTransfer: () =>
         set((state) => {
-          state.transfer = {};
+          state.transfer = {
+            Code: "",
+            Name: "",
+            Mablag: 0,
+            CodeKhadamat: 0,
+          };
         }),
     })),
     persistOptions

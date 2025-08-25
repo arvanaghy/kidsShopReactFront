@@ -13,7 +13,7 @@ const NavBarItems = () => {
     const { categoryList, isPending } = getCategoryList();
     const categoryRef = useRef(null);
     const navigation = [
-        { title: "برگه نخست", path: "/" },
+        { title: "برگه نخست", path: "/" , subItems: null },
         {
             title: "دسته بندی ها",
             path: "#",

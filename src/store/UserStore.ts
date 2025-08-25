@@ -55,7 +55,7 @@ export const useUserStore = create<UserStore>()(
               state.user = data?.result;
             });
             if (navigate) {
-              navigate(redirect || "/profile"); 
+              navigate(redirect || "/profile");
             }
           } else {
             set((state) => {
@@ -73,6 +73,8 @@ export const useUserStore = create<UserStore>()(
           );
         }
       },
+      clearUser: () =>
+        set(() => ({ user: { Code: "", Name: "", UToken: "" } })),
     })),
     {
       name: "KidsShop_user",

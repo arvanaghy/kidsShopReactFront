@@ -59,39 +59,7 @@ export class OrderService {
     }
   }
 
-  async submitOrder(
-    orderData: any,
-    token: string,
-    description: string,
-    transferService: TransferService | null
-  ): Promise<OrderResponse> {
-    try {
-      const { data, status }: AxiosResponse<OrderResponse> = await axios.post(
-        `${import.meta.env.VITE_API_URL}/v2/submit-order`,
-        {
-          products: orderData,
-          signature: null,
-          description,
-          CodeKhadamat: transferService?.CodeKhadamat || 0,
-          MKhadamat: transferService?.Mablag || 0,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (status !== 201) throw new Error(data?.message);
-      return data;
-    } catch (error: any) {
-      toast.error(
-        `ثبت سفارش: ${
-          error?.response?.data?.message || error?.message || "خطا در اتصال"
-        }`
-      );
-      throw error;
-    }
-  }
+
 
   async checkOnlinePaymentAvailability(): Promise<OrderResponse> {
     try {

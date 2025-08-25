@@ -80,14 +80,21 @@ export const resendMSApi = async (info: any) => {
 };
 
 export const isUserValidApi = async (info: any) => {
-  const { data, status } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/v1/verify-user`,
-    info,
-    {
-      headers: {
-        cache: "no-cache",
-      },
+  try {
+    const { data, status } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/v1/verify-token`,
+      info,
+      {
+        headers: {
+          cache: "no-cache",
+        },
+      }
+    );
+    if (status != 202) {
+      throw new Error(data?.message);
     }
-  );
-  return { data, status };
+    return true;
+  } catch (error) {
+    return false;
+  }
 };

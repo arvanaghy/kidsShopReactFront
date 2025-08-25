@@ -5,27 +5,41 @@ import { useTransferStore } from "@store/transferStore";
 import { useUserStore } from "@store/UserStore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { isOnlinePaymentAvailable as isOnlinePaymentAvailableFunction } from "@hooks/useCart";
+
 
 const OnlinePaymentButton = () => {
     const { user } = useUserStore();
-    const { cart } = useCartStore();
-    const { transfer } = useTransferStore();
+    const { cart, clearCart } = useCartStore();
+    const { transfer, clearTransfer } = useTransferStore();
     const [isPending, setIsPending] = useState(false);
     const navigate = useNavigate();
+    const { description, clearDescription } = useCartStore();
+
+    const { isOnlinePaymentAvailable, isPending: isOnlinePaymentPending } = isOnlinePaymentAvailableFunction();
+
     const handlePayment = () => {
-        console.log('transfer', transfer);
-        console.log('user', user);
-        console.log('cart', cart);
-        CartService.payBill(isPending, setIsPending, user, cart, transfer, navigate);
+        CartService.payBill(isPending, setIsPending, user, cart, clearCart, transfer, clearTransfer, navigate, description, clearDescription);
     }
 
     return (
-        <button
-            className="px-6 py-4 text-white duration-150 border rounded-md bg-CarbonicBlue-500 hover:bg-CarbonicBlue-500/80 hover:text-stone-200 hover:scale-105"
-            onClick={handlePayment}
-        >
-            {isPending ? <JumpingDots /> : 'پرداخت آنلاین'}
-        </button>
+        <>
+            {isOnlinePaymentPending ? <JumpingDots /> : (
+                isOnlinePaymentAvailable ? (
+                    <button
+                        className="px-6 py-4 text-white duration-150 border rounded-md bg-CarbonicBlue-500 hover:bg-CarbonicBlue-500/80 hover:text-stone-200 hover:scale-105"
+                        onClick={handlePayment}
+                        disabled={isPending}
+                    >
+                        {isPending ? <JumpingDots /> : 'پرداخت آنلاین'}
+                    </button>
+                ) : (
+                    <p className="px-6 py-4 text-white duration-150 border rounded-md bg-red-500 hover:bg-red-500/80 cursor-not-allowed">درگاه پرداخت آنلاین موجود نیست</p>
+                )
+            )
+            }
+
+        </>
     )
 }
 

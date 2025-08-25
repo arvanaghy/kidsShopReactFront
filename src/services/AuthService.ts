@@ -181,13 +181,29 @@ export const AuthService = {
       if (!token) {
         throw new Error("توکن وارد نشده است");
       }
-      const { data, status } = await isUserValidApi({
+      const result = await isUserValidApi({
         phone_number: phoneNumber,
-        token: token,
+        UToken: token,
       });
-      if (status != 201) throw new Error(data?.message);
-      return true;
+      return result;
     } catch (error: any) {
+      return false;
+    }
+  },
+
+  isUserInfoCompleted: (user: any) => {
+    try {
+      if (
+        validateUsername(user.Name) &&
+        validatePhoneNumber(user.Phone_number) &&
+        validateAddress(user.Address)
+      ) {
+        return true;
+      } else {
+        throw new Error("اطلاعات کاربری کامل نیست");
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || error?.message);
       return false;
     }
   },
