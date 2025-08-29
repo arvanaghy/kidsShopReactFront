@@ -1,58 +1,23 @@
-/* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import { useUserStore } from "@store/UserStore";
-import axios from "axios";
 import Loading from "@components/Loading";
-import toast from "react-hot-toast";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-import { toPersianDigits } from "@utils/numeralHelpers";
 import Unit from "@components/Unit";
+import { useConfirmedOrderDetails } from "@hooks/useProfile";
+import ProfilePagination from "@components/profile/ProfilePagination";
 
-const OrderDetails = () => {
-  const { orderCode } = useParams();
+const ConfirmedOrderDetails = () => {
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+  const { orderCode } = useParams() || 0;
   const { user } = useUserStore();
-  const [isloading, setIsloading] = useState(false);
-  const [orderDetail, setOrderDetail] = useState([]);
-  const [detailsLink, setDetailsLink] = useState([]);
+  const replacement = { path: "/confirmed-order-details", url: `${import.meta.env.VITE_API_URL}/v1/list-past-orders-products` };
 
-  const getOrderDetails = async (url) => {
-    if (!user?.UToken) return;
-    if (isloading) return;
-    try {
-      setIsloading(true);
-      const { data, status } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${user.UToken}`,
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/json",
-        },
-      });
-      if (status !== 201) throw new Error(data?.message);
-      setOrderDetail(data?.result?.data);
-      setDetailsLink(data?.result?.links);
-    } catch (error) {
-      toast.error(
-        "جزییات سفارش " + (error?.response?.data?.message || error?.message) ||
-          "خطا در اتصال"
-      );
-    } finally {
-      setIsloading(false);
-    }
-  };
+  const { confirmedOrderDetailsList, confirmedOrderDetailsLinks, isPending } =
+    useConfirmedOrderDetails(user, orderCode, page);
 
-  useEffect(() => {
-    if (!orderCode) return;
-    if (!user?.UToken) return;
-    getOrderDetails(
-      `https://api.kidsshop110.ir/api/v1/list-past-orders-products/${Math.floor(
-        orderCode
-      )}?page=1`
-    );
-  }, [orderCode]);
-
-  if (isloading) return <Loading />;
+  if (isPending) return <Loading />;
 
   return (
     <ProfileLayout>
@@ -79,9 +44,8 @@ const OrderDetails = () => {
             </tr>
           </thead>
           <tbody>
-            {orderDetail &&
-              orderDetail?.length > 0 &&
-              orderDetail.map((orderDetail, idx) => (
+            {confirmedOrderDetailsList?.length > 0 &&
+              confirmedOrderDetailsList.map((orderDetail, idx) => (
                 <tr
                   key={idx}
                   className="border-b cursor-pointer hover:bg-stone-200 transition duration-300 ease-in-out"
@@ -115,34 +79,9 @@ const OrderDetails = () => {
       </div>
 
       {/* pagination */}
-      <div className="flex flex-row items-center justify-center mx-auto flex-warp py-5">
-        {detailsLink?.length > 0 &&
-          detailsLink.map((link, idx) => (
-            <button
-              key={idx}
-              disabled={link.active}
-              onClick={() => {
-                link?.url ? getOrderDetails(link?.url) : null;
-              }}
-              className={`
-                  rounded-md cursor-pointer
-                  m-1 text-xs p-1.5
-                  lg:px-4 lg:py-2 md:m-2 ${
-                    link.active
-                      ? "bg-CarbonicBlue-500 text-white"
-                      : "bg-gray-300 text-black"
-                  }`}
-            >
-              {link.label === "&laquo; Previous"
-                ? "قبلی"
-                : link.label === "Next &raquo;"
-                ? " بعدی"
-                : link.label}
-            </button>
-          ))}
-      </div>
+      <ProfilePagination links={confirmedOrderDetailsLinks} replace={replacement} />
     </ProfileLayout>
   );
 };
 
-export default OrderDetails;
+export default ConfirmedOrderDetails;

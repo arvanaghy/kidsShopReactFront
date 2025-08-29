@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthService } from "@services/AuthService";
 import { useUserStore } from "@store/UserStore";
 
@@ -60,4 +60,51 @@ export const useResendSMS = () => {
     await AuthService.resendSMS(phoneNumber, setIsPending);
   };
   return { resendSMS, isPending };
+};
+
+export const useLogout = () => {
+  const [isPending, setIsPending] = useState(false);
+  const logout = async (
+    user: any,
+    clearUser: () => void,
+    clearCart: () => void,
+    clearTransfer: () => void,
+    clearDescription: () => void,
+    clearCompare: () => void,
+    clearFavorite: () => void,
+    navigate: (url: string) => void
+  ) => {
+    await AuthService.logoutSubmit(
+      user,
+      isPending,
+      clearUser,
+      clearCart,
+      clearTransfer,
+      clearDescription,
+      clearCompare,
+      clearFavorite,
+      setIsPending,
+      navigate
+    );
+  };
+  return { logout, isPending };
+};
+
+export const useUserValidation = (user: any) => {
+  const [isPending, setIsPending] = useState(false);
+  const [isUserValidated, setIsUserValidated] = useState(false);
+
+  const validateUser = async () => {
+    await AuthService.validateUser(
+      user,
+      isPending,
+      setIsPending,
+      setIsUserValidated
+    );
+  };
+  useEffect(() => {
+    validateUser();
+  }, []);
+
+  return { isPending, isUserValidated };
 };

@@ -157,7 +157,7 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
-  const updateCompareList = (__compareList) => {
+  const updateCompare = (__compareList) => {
     if (loading) return;
     try {
       setLoading(true);
@@ -172,7 +172,7 @@ const UserContextProvider = ({ children }) => {
       );
     } catch (err) {
       setCompareList([]);
-      toast.error("updateCompareList Error:" + err.message);
+      toast.error("updateCompare Error:" + err.message);
       window.localStorage.removeItem("KidsShop_compareList");
     } finally {
       setLoading(false);
@@ -207,7 +207,7 @@ const UserContextProvider = ({ children }) => {
         updateFavorite,
         fetchFavorite,
         compareList,
-        updateCompareList,
+        updateCompare,
         fetchCompareList,
         desktopNavbar,
         updateDesktopNavbar,

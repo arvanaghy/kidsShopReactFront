@@ -15,6 +15,8 @@ interface UserStore {
     redirect?: string,
     navigate?: (path: string | undefined) => void
   ) => Promise<void>;
+  clearUser: () => void;
+  refreshUser: () => void;
 }
 
 export const useUserStore = create<UserStore>()(
@@ -33,15 +35,14 @@ export const useUserStore = create<UserStore>()(
         redirect?: string,
         navigate?: (path: string | undefined) => void
       ) => {
-        const user = get().user;
-        if (!user || !user?.UToken) {
-          set((state) => {
-            state.user = { Code: "", Name: "", UToken: "" };
-          });
-          return;
-        }
-
         try {
+          const user = get().user;
+          if (!user || !user?.UToken) {
+            set((state) => {
+              state.user = { Code: "", Name: "", UToken: "" };
+            });
+            throw new Error("کاربر ذخیره شده وجود ندارد");
+          }
           const { data, status } = await axios.post(
             `${import.meta.env.VITE_API_URL}/v1/verify-token`,
             {
@@ -61,6 +62,10 @@ export const useUserStore = create<UserStore>()(
             set((state) => {
               state.user = { Code: "", Name: "", UToken: "" };
             });
+            toast.error(data?.message);
+            if (navigate) {
+              navigate("/login");
+            }
           }
         } catch (error) {
           set((state) => {
@@ -71,10 +76,19 @@ export const useUserStore = create<UserStore>()(
               (error?.response?.data?.message || error?.message) ||
               "خطا در اتصال"
           );
+          if (navigate) {
+            navigate("/login");
+          }
         }
       },
       clearUser: () =>
         set(() => ({ user: { Code: "", Name: "", UToken: "" } })),
+      refreshUser: () => {
+        const user = get().user;
+        set((state) => {
+          state.user = user;
+        });
+      },
     })),
     {
       name: "KidsShop_user",

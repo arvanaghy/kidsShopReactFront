@@ -8,9 +8,9 @@ import Unit from '@components/Unit';
 const CartItem = ({ item }: { item: any }) => {
     return (
         <div className="grid grid-cols-12 w-full p-4 place-items-center border-b gap-2">
-            <div className="col-span-12 flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full order-last text-center bg-gray-200 rounded-sm py-3">
-                <div className="border-b py-1 md:py-0">جمع مبلغ این کالا</div>
-                <div className="text-sm text-CarbonicBlue-500 font-EstedadExtraBold">
+            <div className="col-span-12 flex flex-col md:flex-row gap-3 md:gap-5 justify-center items-center w-full order-last text-center bg-gray-200 rounded-sm py-2">
+                <div className="border-b py-1 md:py-0">جمع مبلغ</div>
+                <div className="flex flex-row text-sm text-CarbonicBlue-500 font-EstedadExtraBold">
                     {item?.basket?.length > 0 &&
                         formatCurrencyDisplay(
                             item.basket.reduce(
@@ -70,13 +70,15 @@ const CartItem = ({ item }: { item: any }) => {
                     item.basket.map((basketItem: any, idx: number) => (
                         <div
                             key={idx}
-                            className="px-1.5 flex flex-row gap-2 text-gray-500 text-sm leading-loose"
+                            className="w-fit px-1.5 flex flex-row gap-2 text-gray-500 text-sm leading-loose"
                         >
-                            <FontAwesomeIcon icon={faSquareCheck} className="text-green-600" />
-                            {formatCurrencyDisplay(basketItem?.quantity)} {item?.item?.Vahed}{" "}
-                            {item?.item?.Name} <b>{basketItem?.feature?.ColorName} </b>  به سایز{" "}
-                            <b>{toPersianDigits(basketItem?.feature?.SizeNum)}</b> و جمع مبلغ { " "}
-                            {formatCurrencyDisplay(basketItem?.SPrice * basketItem?.quantity)}{" "}
+                            <p className='w-fil'>
+                                <FontAwesomeIcon icon={faSquareCheck} className="text-green-600" />
+                                {formatCurrencyDisplay(basketItem?.quantity)} {item?.item?.Vahed}{" "}
+                                {item?.item?.Name} <b>{basketItem?.feature?.ColorName} </b>  به سایز{" "}
+                                <b>{toPersianDigits(basketItem?.feature?.SizeNum)}</b> و جمع مبلغ {" "}
+                                {formatCurrencyDisplay(basketItem?.SPrice * basketItem?.quantity)}{" "}
+                            </p>
                             <Unit />
                         </div>
                     ))}

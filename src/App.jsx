@@ -18,13 +18,10 @@ import BestSellingProducts from "@pages/products/BestSellingProducts";
 import FavoritesPage from "@pages/products/FavoritesPage";
 import ComparePage from "@pages/products/ComparePage";
 import Profile from "@pages/profile/Profile";
-import Orders from "@pages/profile/Orders";
 import Invoice from "@pages/profile/Invoice";
 import EditInfo from "@pages/profile/EditInfo";
 import ConfirmedOrders from "@pages/profile/ConfirmedOrders";
-import UnconfirmedOrders from "@pages/profile/UnconfirmedOrders";
 import ShoppingCart from "@pages/cartCheckout/ShoppingCart";
-import Checkout from "@pages/cartCheckout/Checkout";
 import WebPayment from "@pages/cartCheckout/WebPayment";
 import Success from "@pages/paymentResults/Success";
 import Failed from "@pages/paymentResults/Failed";
@@ -55,11 +52,8 @@ function App() {
         { path: "/register", element: <Register /> },
         { path: "/SMS-validate/:phoneNumber", element: <SMSValidate /> },
         { path: "/edit-info", element: <EditInfo /> },
-        { path: "/orders", element: <Orders /> },
         { path: "/invoice", element: <Invoice /> },
-        { path: "/unconfirmed-orders", element: <UnconfirmedOrders /> },
         { path: "/confirmed-orders", element: <ConfirmedOrders /> },
-        { path: "/checkout", element: <Checkout /> },
         { path: "/faq", element: <FAQ /> },
         { path: "/web-payment", element: <WebPayment /> },
         { path: "/payment-success/:transID", element: <Success /> },

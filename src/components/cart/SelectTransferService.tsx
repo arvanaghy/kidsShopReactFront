@@ -10,7 +10,7 @@ const SelectTransferService = () => {
         <>
             {transfer && transfer?.Name ?
 
-                (<div className="w-full text-sm text-CarbonicBlue-500 flex flex-row items-center justify-between">
+                (<div className="w-full text-sm text-CarbonicBlue-500 flex flex-row items-center justify-between ">
                     <div className="w-fit flex flex-row items-center justify-center">
                         {transfer?.Name} : {formatCurrencyDisplay(transfer?.Mablag)} <Unit />
                     </div>
@@ -24,14 +24,14 @@ const SelectTransferService = () => {
                 </div>) :
                 (
                     <select
-                        className="ring-CarbonicBlue-500"
+                        className="ring-CarbonicBlue-500 font-EstedadLight rounded-md py-2 px-4 text-sm"
                         onChange={(e) =>
                             setTransfer(
                                 transferServices.find((s) => s.Code === e.target.value)
                             )
                         }
                     >
-                        <option value="" className="rounded-md">
+                        <option value="" className="rounded-md font-EstedadLight ">
                             انتخاب نحوه ارسال
                         </option>
                         {transferServices.map((service: any, idx: number) => (

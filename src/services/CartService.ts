@@ -110,10 +110,10 @@ export const CartService = {
       if (!transfer) {
         throw new Error("خدمات حمل و نقل انتخاب نشده است");
       }
-      if (!(await AuthService.isUserValid(user.Mobile, user.UToken))) {
-        navigate("/login?redirect=/shopping-cart");
-        throw new Error("باید ابتدا وارد شوید");
-      }
+      // if (!(await AuthService.validateUser(user.Mobile, user.UToken))) {
+      //   navigate("/login?redirect=/shopping-cart");
+      //   throw new Error("باید ابتدا وارد شوید");
+      // }
       if (!AuthService.isUserInfoCompleted(user)) {
         navigate("/edit-info?redirect=/shopping-cart");
         throw new Error("اطلاعات کاربری کامل نیست");

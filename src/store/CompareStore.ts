@@ -6,17 +6,17 @@ import { Product } from "@types/StoreType";
 
 interface CompareStore {
   compareList: Product[];
-  updateCompareList: (compareList: Product[]) => void;
-  fetchCompareList: () => void;
+  updateCompare: (compareList: Product[]) => void;
   toggleCompare: (item: Product) => void;
-  clearCompareList: () => void;
+  clearCompare: () => void;
+  refreshCompare: () => void;
 }
 
 export const useCompareStore = create<CompareStore>()(
   persist(
-    immer((set) => ({
+    immer((set, get) => ({
       compareList: [],
-      updateCompareList: (compareList) =>
+      updateCompare: (compareList) =>
         set((state) => {
           if (compareList.length > 4) {
             compareList.shift();
@@ -24,14 +24,6 @@ export const useCompareStore = create<CompareStore>()(
           }
           state.compareList = compareList;
         }),
-      fetchCompareList: () => {
-        const data = JSON.parse(
-          localStorage.getItem("KidsShop_compareList") || "[]"
-        );
-        set((state) => {
-          state.compareList = data;
-        });
-      },
       toggleCompare: (item) =>
         set((state) => {
           const isCompared = state.compareList.some(
@@ -51,13 +43,17 @@ export const useCompareStore = create<CompareStore>()(
             toast.success(`${item?.Name}  به مقایسه ها اضافه شد.`);
           }
         }),
-      clearCompareList: () =>
+      clearCompare: () =>
         set((state) => {
           state.compareList = [];
         }),
+      refreshCompare: () =>
+        set((state) => {
+          state.compareList = get().compareList;
+        }),
     })),
     {
-      name: "KidsShop_compareList",
+      name: "KidsShop_compare",
     }
   )
 );

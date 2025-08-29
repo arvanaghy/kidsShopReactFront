@@ -4,7 +4,7 @@ import Footer from "@layouts/website/Footer";
 import toast, { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
 import MobileNav from "@components/navbar/MobileNav";
-import {  useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronUp,
@@ -13,36 +13,39 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import MobileTopMenu from "@components/navbar/MobileTopMenu";
 import axios from "axios";
-import { useMainStore } from "@store/useMainStore";
+import ScrollToTop from "@components/ScrollToTop";
+import { useCartStore } from "@store/CartStore";
+import { useUserStore } from "@store/UserStore";
+import useCompareStore from "@store/CompareStore";
+import { useFavoriteStore } from "@store/FavoriteStore";
 
 const MainLayout = () => {
   const [contactWithUsModal, setContactWithUsModal] = useState(false);
   const contactWithUsModalRef = useRef(null);
   const contactWithUsButtonRef = useRef(null);
 
-  const { fetchCart, fetchUser, fetchCompareList, fetchFavorite, fetchOrder } =
-    useMainStore();
+  const { refreshCart } = useCartStore();
+  const { refreshUser } = useUserStore();
+  const { refreshCompare } = useCompareStore();
+  const { refreshFavorite } = useFavoriteStore();
 
   useEffect(() => {
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-  function handleStorageChange(e) {
+  function handleStorageChange(e : any) {
     if (e.key === "KidsShop_cart") {
-      fetchCart();
+      refreshCart();
     }
-    if (e.key === "KidsShop_user") {
-      fetchUser();
+    if (e.key === "KidsShop_user") { 
+      refreshUser();
     }
-    if (e.key === "KidsShop_compareList") {
-      fetchCompareList();
+    if (e.key === "KidsShop_compare") {
+      refreshCompare();
     }
     if (e.key === "KidsShop_favorite") {
-      fetchFavorite();
-    }
-    if (e.key === "KidsShop_order") {
-      fetchOrder();
+      refreshFavorite();
     }
   }
 
@@ -97,6 +100,7 @@ const MainLayout = () => {
 
   return (
     <div className="min-h-screen w-full bg-gray-50">
+      <ScrollToTop />
       <TopMenu />
       <MobileTopMenu />
       <div className="min-h-[90vh]">
@@ -123,11 +127,10 @@ const MainLayout = () => {
           icon={faSquarePhoneFlip}
           className={`text-6xl opacity-90 lg:opacity-70
           duration-300 ease-in-out transition-all
-        ${
-          contactWithUsModal
-            ? "text-green-800 hover:text-green-500"
-            : "text-green-500 hover:text-green-700"
-        }
+        ${contactWithUsModal
+              ? "text-green-800 hover:text-green-500"
+              : "text-green-500 hover:text-green-700"
+            }
           `}
         />
       </button>

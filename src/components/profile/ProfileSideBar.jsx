@@ -1,59 +1,20 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useUserStore } from "@store/UserStore";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios";
-import toast from "react-hot-toast";
+
 import { RxDashboard, RxCross2 } from "react-icons/rx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faFileInvoice,
   faGaugeHigh,
   faMoneyCheckDollar,
   faReceipt,
-  faRightFromBracket,
-  faSpinner,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ProfileSideBar = () => {
-  const { user, updateUser, updateCart } = useUserStore();
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [isPending, setIsPending] = useState(false);
-  const [isNavOpen, setIsNavOpen] = useState(false);
+import LogoutButton from "@components/profile/LogoutButton";
 
-  const logOut = async () => {
-    setIsPending(true);
-    try {
-      const { data, status } = await axios.post(
-        "https://api.kidsshop110.ir/api/v1/log-out",
-        {
-          UToken: user?.UToken,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user?.UToken}`,
-            cache: "no-cache",
-          },
-        }
-      );
-      if (status !== 202) throw new Error(data?.message);
-      setIsPending(false);
-      updateUser([]);
-      updateCart([]);
-      toast.success(data.message);
-      navigate("/");
-    } catch (error) {
-      setIsPending(false);
-      toast.error(
-        "خروج : " + error?.message ||
-          error?.response?.data?.message ||
-          "خطا در اتصال"
-      );
-    } finally {
-      setIsPending(false);
-    }
-  };
+const ProfileSideBar = () => {
+  const { pathname } = useLocation();
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -82,7 +43,6 @@ const ProfileSideBar = () => {
                 <Link
                   to="/profile"
                   className={`w-full flex flex-row items-center 
-                   
                     justify-around gap-2 text-lg md:text-sm lg:text-base border py-4 px-6 md:px-2 lg:px-4 rounded-2xl shadow-xl ${
                       pathname === "/profile"
                         ? "bg-blue-800 border-blue-800 text-white scale-95"
@@ -95,24 +55,8 @@ const ProfileSideBar = () => {
               </li>
               <li className="w-full">
                 <Link
-                  to="/unconfirmed-orders"
-                  className={`w-full flex flex-row items-center 
-                   
-                    justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6 md:px-2 lg:px-4 rounded-2xl shadow-xl ${
-                      pathname === "/unconfirmed-orders"
-                        ? "bg-blue-800 border-blue-800 text-white scale-95"
-                        : "bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
-                    }`}
-                >
-                  <FontAwesomeIcon icon={faFileInvoice} />
-                  سفارشات تایید نشده
-                </Link>
-              </li>
-              <li className="w-full">
-                <Link
                   to="/confirmed-orders"
                   className={`w-full flex flex-row items-center 
-                   
                     justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6  md:px-2 lg:px-4 rounded-2xl shadow-xl ${
                       pathname === "/confirmed-orders"
                         ? "bg-blue-800 border-blue-800 text-white scale-95"
@@ -132,7 +76,7 @@ const ProfileSideBar = () => {
                       : "bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
                   }`}
                 >
-                  <FontAwesomeIcon icon={faMoneyCheckDollar} />{" "}
+                  <FontAwesomeIcon icon={faMoneyCheckDollar} />
                   <span>گردش حساب</span>
                 </Link>
               </li>
@@ -150,26 +94,7 @@ const ProfileSideBar = () => {
                 </Link>
               </li>
               <li className="w-full">
-                <button
-                  onClick={logOut}
-                  disabled={isPending}
-                  className={`w-full flex flex-row items-center 
-                   
-                    justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6 md:px-2 lg:px-4 rounded-2xl shadow-xl bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out
-                    }`}
-                >
-                  {isPending ? (
-                    <FontAwesomeIcon icon={faSpinner} spin />
-                  ) : (
-                    <>
-                      <FontAwesomeIcon
-                        icon={faRightFromBracket}
-                        className="-scale-x-100"
-                      />
-                      <span>خروج</span>
-                    </>
-                  )}
-                </button>
+                <LogoutButton />
               </li>
             </ul>
           </div>

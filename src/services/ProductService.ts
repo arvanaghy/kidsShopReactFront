@@ -32,15 +32,15 @@ export const ProductService = {
 
   handleListClear: (
     type: "compare" | "favorite",
-    clearFavoriteList: () => void,
-    clearCompareList: () => void
+    clearFavorite: () => void,
+    clearCompare: () => void
   ) => {
     switch (type) {
       case "compare":
-        clearCompareList();
+        clearCompare();
         break;
       case "favorite":
-        clearFavoriteList();
+        clearFavorite();
         break;
       default:
         toast.error("حذف لیست ناشناخته");

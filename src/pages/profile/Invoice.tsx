@@ -1,91 +1,29 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useUserStore } from "@store/UserStore";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import ProfileLayout from "@layouts/user/ProfileLayout";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Loading from "@components/Loading";
 import Unit from "@components/Unit";
+import { useBalance, useInvoice } from "@hooks/useProfile";
+import ProfilePagination from "@components/profile/ProfilePagination";
 
 const Invoice = () => {
   const { user } = useUserStore();
-  const [invoiceList, setInvoiceList] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [balance, setBalance] = useState(0);
-  const [links, setLinks] = useState([]);
-
-  const navigateTo = useNavigate();
-
-  const fetchInvoice = async (url) => {
-    if (loading) return;
-    try {
-      setLoading(true);
-      const { data, status } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${user?.UToken}`,
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/json",
-        },
-      });
-      if (status !== 201) throw new Error(data?.message);
-      setInvoiceList(data?.result?.data);
-      setLinks(data?.result?.links);
-    } catch (error) {
-      toast.error(
-        " دریافت گردش حساب " +
-          (error?.response?.data?.message || error?.message) || "خطا در اتصال"
-      );
-      setInvoiceList([]);
-      setLinks([]);
-    } finally {
-      setLoading(false);
-    }
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+  const replacement = {
+    path: "/invoice",
+    url: `${import.meta.env.VITE_API_URL}/v1/list-past-invoice`,
   };
 
-  const fetchBalance = async (url) => {
-    if (loading) return;
-    try {
-      setLoading(true);
-      const { data, status } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${user?.UToken}`,
-          "Cache-Control": "no-cache",
-        },
-      });
-      if (status !== 201) throw new Error(data?.message);
-      setBalance(data?.result);
-    } catch (error) {
-      toast.error(
-        " دریافت موجودی " +
-          (error?.response?.data?.message || error?.message) || "خطا در اتصال"
-      );
-      setBalance(0);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { balance, isPending: balanceIsPending } = useBalance(user);
+  const {
+    invoiceList,
+    invoiceLinks,
+    isPending: invoiceIsPending,
+  } = useInvoice(user, page);
 
-  useEffect(() => {
-    if (
-      !user ||
-      !user?.UToken ||
-      user?.UToken === null ||
-      user?.UToken === ""
-    ) {
-      toast.error("برای مشاهده این صفحه باید وارد شوید");
-      navigateTo("/Login");
-    }
-  }, [user]);
-
-  useEffect(() => {
-    fetchInvoice("https://api.kidsshop110.ir/api/v1/list-past-invoice?page=1");
-    fetchBalance("https://api.kidsshop110.ir/api/v1/account-balance");
-  }, []);
-
-  if (loading) return <Loading />;
+  if (balanceIsPending || invoiceIsPending) return <Loading />;
 
   return (
     <ProfileLayout>
@@ -165,32 +103,7 @@ const Invoice = () => {
             </table>
           </div>
         </div>
-        <div className="flex flex-row items-center justify-center mx-auto flex-warp py-5">
-          {links?.length > 0 &&
-            links.map((link, idx) => (
-              <button
-                key={idx}
-                disabled={link.active}
-                onClick={() => {
-                  link?.url ? fetchInvoice(link?.url) : null;
-                }}
-                className={`
-                  rounded-md cursor-pointer
-                  m-1 text-xs p-1.5
-                  lg:px-4 lg:py-2 md:m-2 ${
-                    link.active
-                      ? "bg-CarbonicBlue-500 text-white"
-                      : "bg-gray-300 text-black"
-                  }`}
-              >
-                {link.label === "&laquo; Previous"
-                  ? "قبلی"
-                  : link.label === "Next &raquo;"
-                  ? " بعدی"
-                  : link.label}
-              </button>
-            ))}
-        </div>
+        <ProfilePagination links={invoiceLinks} replacement={replacement} />
       </div>
     </ProfileLayout>
   );

@@ -21,11 +21,12 @@ interface CartStore {
   description: string;
   setDescription: (description: string) => void;
   clearDescription: () => void;
+  refreshCart: () => void;
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
-    immer((set) => ({
+    immer((set, get) => ({
       cart: [],
       updateCart: (cart) =>
         set((state) => {
@@ -33,10 +34,8 @@ export const useCartStore = create<CartStore>()(
         }),
       clearCart: () =>
         set((state) => {
-          console.log("Before clearing cart:", state.cart);
           localStorage.removeItem("KidsShop_cart");
           state.cart = [];
-          console.log("After clearing cart:", state.cart);
         }),
       addProductToCart: (item, productCode, feature) =>
         set((state) => {
@@ -120,6 +119,10 @@ export const useCartStore = create<CartStore>()(
       clearDescription: () =>
         set((state) => {
           state.description = "";
+        }),
+      refreshCart: () =>
+        set((state) => {
+          state.cart = get().cart;
         }),
     })),
     {

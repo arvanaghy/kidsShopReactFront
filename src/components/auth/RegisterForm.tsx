@@ -3,7 +3,7 @@ import { useRegister } from "@hooks/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-const RegisterForm = ({ phoneNumberParam, redirect }: { phoneNumberParam: string, redirect: string }) => {
+const RegisterForm = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | null, redirect: string | null }) => {
     const { submitRegister, isPending } = useRegister();
     const navigate = useNavigate();
 

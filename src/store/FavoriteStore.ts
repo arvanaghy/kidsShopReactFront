@@ -7,27 +7,19 @@ import { Product } from "@types/StoreType";
 interface FavoriteStore {
   favorite: Product[];
   updateFavorite: (favorite: Product[]) => void;
-  fetchFavorite: () => void;
   toggleFavorite: (item: Product) => void;
-  clearFavoriteList: () => void;
+  clearFavorite: () => void;
+  refreshFavorite: () => void;
 }
 
 export const useFavoriteStore = create<FavoriteStore>()(
   persist(
-    immer((set) => ({
+    immer((set, get) => ({
       favorite: [],
       updateFavorite: (favorite) =>
         set((state) => {
           state.favorite = favorite;
         }),
-      fetchFavorite: () => {
-        const data = JSON.parse(
-          localStorage.getItem("KidsShop_favorite") || "[]"
-        );
-        set((state) => {
-          state.favorite = data;
-        });
-      },
       toggleFavorite: (item) =>
         set((state) => {
           const isFavorite = state.favorite.some((p) => p.Code === item.Code);
@@ -39,9 +31,13 @@ export const useFavoriteStore = create<FavoriteStore>()(
             toast.success(`${item?.Name} به علاقه مندی ها اضافه شد.`);
           }
         }),
-      clearFavoriteList: () =>
+      clearFavorite: () =>
         set((state) => {
           state.favorite = [];
+        }),
+      refreshFavorite: () =>
+        set((state) => {
+          state.favorite = get().favorite;
         }),
     })),
     {

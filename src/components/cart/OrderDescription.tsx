@@ -4,10 +4,11 @@ const OrderDescription = () => {
 
     return (
         <div className="space-y-2">
-            <p>توضیحات سفارش</p>
             <textarea
-                className="w-full p-2 border-2 rounded-lg border-CarbonicBlue-500"
+                className="w-full p-2 border placeholder:text-sm placeholder:font-EstedadLight rounded-lg text-sm  font-EstedadLight border-CarbonicBlue-500"
+                placeholder="توضیحات سفارش (اختیاری)"
                 value={description}
+                rows={5}
                 onChange={(e) => setDescription(e.target.value)}
             />
         </div>

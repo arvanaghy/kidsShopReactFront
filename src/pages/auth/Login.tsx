@@ -1,20 +1,20 @@
-import { useEffect } from "react";
-import { useNavigate, Link, useSearchParams } from "react-router-dom";
-import { useUserStore } from "@store/UserStore";
-
+import { Link, useSearchParams } from "react-router-dom";
 import Policy from "@components/auth/Policy";
 import LoginFrom from "@components/auth/LoginFrom";
+import { useUserStore } from "@store/UserStore";
+import { useUserValidation } from "@hooks/useAuth";
+import Loading from "@components/Loading";
+import LoggedUser from "@components/auth/LoggedUser";
 
 const Login = () => {
   const [searchParams] = useSearchParams();
   const phoneNumberParam: string | null = searchParams.get("phoneNumber");
   const redirect: string | null = searchParams.get("redirect");
-  const navigate = useNavigate();
-  const { verifyUserToken } = useUserStore();
+  const { user } = useUserStore();
+  const { isPending, isUserValidated } = useUserValidation(user);
 
-  useEffect(() => {
-    verifyUserToken(redirect, navigate);
-  }, [verifyUserToken, redirect, navigate]);
+  if (isPending) return <Loading />;
+
 
   const policy = [
     "1 . لطفا شماره موبایل خود را وارد کنید",
@@ -26,7 +26,7 @@ const Login = () => {
     <main className="w-full grid grid-cols-12 items-center justify-center bg-gray-300/60 min-h-[90vh] gap-3 p-4">
       <Policy title="قوانین ورود" policy={policy} />
       <div className="col-span-12 md:col-span-6 w-full grid grid-cols-1 items-center text-gray-900 justify-center  ">
-        <div
+        {isUserValidated ? <LoggedUser /> : (<div
           className="w-fit mx-auto rounded-md p-4 md:p-12 bg-gray-100 grid grid-cols-1 items-center justify-center text-center space-y-8 
           shadow-md shadow-black/60
           "
@@ -47,7 +47,8 @@ const Login = () => {
               هم اکنون عضو شوید .
             </Link>
           </div>
-        </div>
+        </div>)}
+
       </div>
     </main>
   );

@@ -19,8 +19,8 @@ interface MainStore {
   fetchOrder: () => void;
   updateFavorite: (favorite: Product[]) => void;
   fetchFavorite: () => void;
-  updateCompareList: (compareList: Product[]) => void;
-  fetchCompareList: () => void;
+  updateCompare: (compareList: Product[]) => void;
+  fetchCompare: () => void;
   updateDesktopNavbar: (value: boolean) => void;
   addProductToCart: (
     item: Product,
@@ -96,7 +96,7 @@ export const useMainStore = create<MainStore>()(
       },
 
       // --- Compare List ---
-      updateCompareList: (compareList) =>
+      updateCompare: (compareList) =>
         set((state) => {
           if (compareList.length > 4) {
             compareList.shift();
@@ -104,7 +104,7 @@ export const useMainStore = create<MainStore>()(
           }
           state.compareList = compareList;
         }),
-      fetchCompareList: () => {
+      fetchCompare: () => {
         const data = JSON.parse(
           localStorage.getItem("KidsShop_compareList") || "[]"
         );

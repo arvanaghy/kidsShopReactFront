@@ -1,13 +1,23 @@
-/* eslint-disable react/prop-types */
+import Loading from "@components/Loading";
 import ProfileSideBar from "@components/profile/ProfileSideBar";
+import { useUserValidation } from "@hooks/useAuth";
+import { useUserStore } from "@store/UserStore";
 
-const ProfileLayout = ({ children }) => {
+import { useNavigate } from "react-router-dom";
+const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
+  const { user } = useUserStore();
+  const { isPending, isUserValidated } = useUserValidation(user);
+
+  if (isPending) return <Loading />;
+
+  if (!isUserValidated) navigate("/login");
+
   return (
     <div className="w-full h-full grid grid-cols-12 min-h-[90vh] items-start justify-start ">
       <div className="w-full h-full col-span-12 md:col-span-3 xl:col-span-2 items-start justify-start ">
         <ProfileSideBar />
       </div>
-
       <div
         className="w-full h-full col-span-12
     md:col-span-9

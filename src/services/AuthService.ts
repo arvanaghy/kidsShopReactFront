@@ -4,6 +4,7 @@ import {
   otpApi,
   resendMSApi,
   isUserValidApi,
+  logOutApi,
 } from "@api/authApi";
 import toast from "react-hot-toast";
 import { validateUsername } from "@entity/validations";
@@ -18,6 +19,7 @@ import {
   otpValidationMessage,
   phoneNumberValidationMessage,
 } from "@entity/validationMessages";
+import { getErrorMessage } from "@utils/getErrorMessage";
 
 export const AuthService = {
   submitRegister: async (
@@ -64,7 +66,7 @@ export const AuthService = {
           }`
         );
       }
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
     }
@@ -111,7 +113,7 @@ export const AuthService = {
           }`
         );
       }
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
     } finally {
       e.target.reset();
       setIsPending(false);
@@ -146,7 +148,7 @@ export const AuthService = {
         navigate(redirect ? redirect : "/profile");
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
     } finally {
       e.target.reset();
       setIsPending(false);
@@ -167,27 +169,38 @@ export const AuthService = {
         phone_number: phoneNumber,
       });
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
     }
   },
 
-  isUserValid: async (phoneNumber: string, token: string) => {
+  validateUser: async (
+    user: any,
+    isPending: boolean,
+    setIsPending: (pending: boolean) => void,
+    setIsUserValidated: (userValidated: boolean) => void
+  ) => {
+    if (isPending) return;
+    setIsPending(true);
+    const phoneNumber = user?.Mobile;
+    const token = user?.UToken;
     try {
-      if (!validatePhoneNumber(phoneNumber)) {
-        throw new Error(phoneNumberValidationMessage);
+      if (!phoneNumber) {
+        throw new Error("شماره موبایل وارد نشده است");
       }
       if (!token) {
         throw new Error("توکن وارد نشده است");
       }
-      const result = await isUserValidApi({
+      await isUserValidApi({
         phone_number: phoneNumber,
         UToken: token,
       });
-      return result;
+      setIsUserValidated(true);
     } catch (error: any) {
-      return false;
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
     }
   },
 
@@ -203,8 +216,40 @@ export const AuthService = {
         throw new Error("اطلاعات کاربری کامل نیست");
       }
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
       return false;
+    }
+  },
+
+  logoutSubmit: async (
+    user: any,
+    isPending: boolean,
+    clearUser: () => void,
+    clearCart: () => void,
+    clearTransfer: () => void,
+    clearDescription: () => void,
+    clearCompare: () => void,
+    clearFavorite: () => void,
+    setIsPending: (pending: boolean) => void,
+    navigate: (url: string) => void
+  ) => {
+    if (isPending) return;
+    setIsPending(true);
+    try {
+      const result = await logOutApi(user.UToken);
+      if (result) {
+        clearUser();
+        clearCart();
+        clearTransfer();
+        clearDescription();
+        clearCompare();
+        clearFavorite();
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
     }
   },
 };

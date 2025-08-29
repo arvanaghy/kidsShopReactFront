@@ -5,9 +5,10 @@ import OnlinePaymentButton from "@components/cart/OnlinePaymentButton";
 import SelectTransferService from "@components/cart/SelectTransferService";
 import FactorSum from "@components/cart/FactorSum";
 import { useCartStore } from "@store/CartStore";
+import UserRegistrationOnShoppingCart from "./UserRegistrationOnShoppingCart";
 
 const PaymentDetails = () => {
-    const { cart = [] } = useCartStore();
+    const { cart } = useCartStore();
 
     return (
         <div className="col-span-12 flex flex-col lg:col-span-3 text-center lg:sticky lg:top-[20vh] h-fit w-full space-y-5 border border-CarbonicBlue-500/20 p-4 rounded-xl bg-stone-100 shadow-xl justify-around">
@@ -31,6 +32,7 @@ const PaymentDetails = () => {
 
                 </ul>
             </div>
+            <UserRegistrationOnShoppingCart />
             <OrderDescription />
             <SelectTransferService />
             <FactorSum />
