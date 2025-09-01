@@ -74,8 +74,8 @@ const ProductsBanner = ({ data, link, title, seeMore }: { data: any, link: strin
                     {data?.map((product: any, index: number) => (
 
                         <SwiperSlide key={index}>
-                            <div className="flex flex-row gap-2 justify-center  px-4">
-                                <div key={index} className="">
+                            <div className="flex flex-row gap-2 justify-center items-stretch ">
+                                <div className="w-full gap-2" >
                                     <ProductCard item={product} />
                                 </div>
                             </div>

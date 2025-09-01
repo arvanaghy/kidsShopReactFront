@@ -14,7 +14,7 @@ interface FavoriteStore {
 
 export const useFavoriteStore = create<FavoriteStore>()(
   persist(
-    immer((set, get) => ({
+    immer((set) => ({
       favorite: [],
       updateFavorite: (favorite) =>
         set((state) => {
@@ -37,7 +37,17 @@ export const useFavoriteStore = create<FavoriteStore>()(
         }),
       refreshFavorite: () =>
         set((state) => {
-          state.favorite = get().favorite;
+          const updatedCart = localStorage.getItem("KidsShop_favorite");
+          if (updatedCart) {
+            try {
+              state.favorite = JSON.parse(updatedCart).state.favorite || [];
+            } catch (error) {
+              console.error("Error parsing cart from localStorage:", error);
+              state.favorite = [];
+            }
+          } else {
+            state.favorite = [];
+          }
         }),
     })),
     {

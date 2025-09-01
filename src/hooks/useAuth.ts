@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { AuthService } from "@services/AuthService";
-import { useUserStore } from "@store/UserStore";
 
 export const useRegister = () => {
   const [isPending, setIsPending] = useState(false);
@@ -18,7 +17,6 @@ export const useRegister = () => {
 
 export const useLogin = () => {
   const [isPending, setIsPending] = useState(false);
-  const { updateUser } = useUserStore();
   const loginSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     redirect: string,

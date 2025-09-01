@@ -5,11 +5,17 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 
 interface UserStore {
-  user: { Code: number | string; Name: string; UToken: string };
+  user: {
+    Code: number | string;
+    Name: string;
+    UToken: string;
+    Address: string;
+  };
   updateUser: (user: {
     Code: number | string;
     Name: string;
     UToken: string;
+    Address: string;
   }) => void;
   verifyUserToken: (
     redirect?: string,
@@ -21,12 +27,13 @@ interface UserStore {
 
 export const useUserStore = create<UserStore>()(
   persist(
-    immer((set, get) => ({
-      user: { Code: "", Name: "", UToken: "" },
+    immer((set) => ({
+      user: { Code: "", Name: "", UToken: "", Address: "" },
       updateUser: (user: {
         Code: number | string;
         Name: string;
         UToken: string;
+        Address: string;
       }) =>
         set((state) => {
           state.user = user;
@@ -39,7 +46,7 @@ export const useUserStore = create<UserStore>()(
           const user = get().user;
           if (!user || !user?.UToken) {
             set((state) => {
-              state.user = { Code: "", Name: "", UToken: "" };
+              state.user = { Code: "", Name: "", UToken: "", Address: "" };
             });
             throw new Error("کاربر ذخیره شده وجود ندارد");
           }
@@ -60,7 +67,7 @@ export const useUserStore = create<UserStore>()(
             }
           } else {
             set((state) => {
-              state.user = { Code: "", Name: "", UToken: "" };
+              state.user = { Code: "", Name: "", UToken: "", Address: "" };
             });
             toast.error(data?.message);
             if (navigate) {
@@ -69,7 +76,7 @@ export const useUserStore = create<UserStore>()(
           }
         } catch (error) {
           set((state) => {
-            state.user = { Code: "", Name: "", UToken: "" };
+            state.user = { Code: "", Name: "", UToken: "", Address: "" };
           });
           toast.error(
             "اعتبارسنجی " +
@@ -82,13 +89,26 @@ export const useUserStore = create<UserStore>()(
         }
       },
       clearUser: () =>
-        set(() => ({ user: { Code: "", Name: "", UToken: "" } })),
-      refreshUser: () => {
-        const user = get().user;
+        set(() => ({ user: { Code: "", Name: "", UToken: "", Address: "" } })),
+      refreshUser: () =>
         set((state) => {
-          state.user = user;
-        });
-      },
+          const updatedUser = localStorage.getItem("KidsShop_user");
+          if (updatedUser) {
+            try {
+              state.user = JSON.parse(updatedUser).state.user || {
+                Code: "",
+                Name: "",
+                UToken: "",
+                Address: "",
+              };
+            } catch (error) {
+              console.error("Error parsing user from localStorage:", error);
+              state.user = { Code: "", Name: "", UToken: "", Address: "" };
+            }
+          } else {
+            state.user = { Code: "", Name: "", UToken: "", Address: "" };
+          }
+        }),
     })),
     {
       name: "KidsShop_user",

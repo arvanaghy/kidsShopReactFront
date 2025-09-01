@@ -26,7 +26,7 @@ interface CartStore {
 
 export const useCartStore = create<CartStore>()(
   persist(
-    immer((set, get) => ({
+    immer((set) => ({
       cart: [],
       updateCart: (cart) =>
         set((state) => {
@@ -122,7 +122,17 @@ export const useCartStore = create<CartStore>()(
         }),
       refreshCart: () =>
         set((state) => {
-          state.cart = get().cart;
+          const updatedCart = localStorage.getItem("KidsShop_cart");
+          if (updatedCart) {
+            try {
+              state.cart = JSON.parse(updatedCart).state.cart || [];
+            } catch (error) {
+              console.error("Error parsing cart from localStorage:", error);
+              state.cart = [];
+            }
+          } else {
+            state.cart = [];
+          }
         }),
     })),
     {

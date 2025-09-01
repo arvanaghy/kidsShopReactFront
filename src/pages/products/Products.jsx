@@ -10,7 +10,7 @@ import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
 import ColorFilter from "@components/filters/ColorFilter";
 import SizeFilter from "@components/filters/SizeFilter";
 import ProductSearch from "@components/filters/ProductSearch";
-import { useMainStore } from "@store/useMainStore";
+import { useNavbarVisibility } from "@hooks/useMenu";
 
 const Products = () => {
   const [searchParams] = useSearchParams();
@@ -39,7 +39,7 @@ const Products = () => {
   const [isModal, setIsModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  const { desktopNavbar } = useMainStore();
+  const  isNavbarVisible  = useNavbarVisibility();
 
   useEffect(() => {
     const handleResize = () => {
@@ -290,7 +290,7 @@ const Products = () => {
         <div
           className={`w-full sticky space-y-1
             ${
-              desktopNavbar
+              isNavbarVisible
                 ? "md:top-[21vh] lg:top-[19vh] xl:top-[23vh] 2xl:top-[21.5vh]"
                 : "md:top-[12vh] lg:top-[9vh] xl:top-[14vh] 2xl:top-[13vh]"
             }

@@ -9,6 +9,9 @@ interface UIStore {
 export const useUIStore = create<UIStore>()(
   immer((set) => ({
     desktopNavbar: false,
-    updateDesktopNavbar: (value) => set((state) => { state.desktopNavbar = value; }),
+    updateDesktopNavbar: (value) =>
+      set((state) => {
+        state.desktopNavbar = value;
+      }),
   }))
 );

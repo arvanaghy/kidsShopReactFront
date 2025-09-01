@@ -29,16 +29,11 @@ const MainLayout = () => {
   const { refreshCompare } = useCompareStore();
   const { refreshFavorite } = useFavoriteStore();
 
-  useEffect(() => {
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
-
-  function handleStorageChange(e : any) {
+  function handleStorageChange(e: any) {
     if (e.key === "KidsShop_cart") {
       refreshCart();
     }
-    if (e.key === "KidsShop_user") { 
+    if (e.key === "KidsShop_user") {
       refreshUser();
     }
     if (e.key === "KidsShop_compare") {
@@ -48,6 +43,13 @@ const MainLayout = () => {
       refreshFavorite();
     }
   }
+
+  useEffect(() => {
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
+
 
   useEffect(() => {
     const handleOutsideClick = (event) => {

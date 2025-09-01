@@ -8,12 +8,10 @@ import CartSidebar from "@components/product/CartSidebar";
 import RelatedProducts from "@components/product/RelatedProducts";
 import OfferedProducts from "@components/product/OfferedProducts";
 import Loading from "@components/Loading";
-import { useMainStore } from "@store/useMainStore";
 import { ProductData } from "@types/ProductType";
 
 const Product = () => {
   const { productCode } = useParams<{ productCode: string }>();
-  const { desktopNavbar } = useMainStore();
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<ProductData>({
     product: {},
@@ -52,7 +50,6 @@ const Product = () => {
           <CartSidebar
             productCode={productCode!}
             product={data.product}
-            desktopNavbar={desktopNavbar}
           />
         </div>
         {imageModal.isOpen && (

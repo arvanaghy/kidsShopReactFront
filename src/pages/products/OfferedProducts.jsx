@@ -11,7 +11,7 @@ import ColorFilter from "@components/filters/ColorFilter";
 import SizeFilter from "@components/filters/SizeFilter";
 import ProductSearch from "@components/filters/ProductSearch";
 import { toPersianDigits } from "@utils/numeralHelpers";
-import { useMainStore } from "@store/useMainStore";
+import { useNavbarVisibility } from "@hooks/useMenu";
 
 const OfferedProducts = () => {
   const [searchParams] = useSearchParams();
@@ -23,7 +23,7 @@ const OfferedProducts = () => {
   const max_price = searchParams.get("max_price") || null;
   const sort_price = searchParams.get("sort_price") || null;
   const mobileFilterRef = useRef(null);
-  const { desktopNavbar } = useMainStore();
+  const  isNavbarVisible  = useNavbarVisibility();
 
   const navigate = useNavigate();
 
@@ -235,7 +235,7 @@ const OfferedProducts = () => {
         <div
           className={`w-full sticky space-y-1
             ${
-              desktopNavbar
+              isNavbarVisible
                 ? "md:top-[21vh] lg:top-[19vh] xl:top-[23vh] 2xl:top-[21.5vh]"
                 : "md:top-[12vh] lg:top-[9vh] xl:top-[14vh] 2xl:top-[13vh]"
             }

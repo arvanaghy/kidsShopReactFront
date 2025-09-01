@@ -9,7 +9,9 @@ import NavBarItems from "@components/navbar/NavBarItems";
 import CFOBSection from "@components/navbar/CFOBSection";
 import { useNavbarVisibility } from "@hooks/useMenu";
 
+
 const TopNavBar = () => {
+
   const isNavbarVisible = useNavbarVisibility(false, 600);
 
   return (

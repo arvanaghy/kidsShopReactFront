@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
-import { useMainStore } from "@store/useMainStore";
-
 import axios from "axios";
 import {
   Link,
@@ -17,6 +15,7 @@ import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
 import ColorFilter from "@components/filters/ColorFilter";
 import SizeFilter from "@components/filters/SizeFilter";
 import ProductSearch from "@components/filters/ProductSearch";
+import { useNavbarVisibility } from "@hooks/useMenu";
 
 const SubCategories = () => {
   const [searchParams] = useSearchParams();
@@ -52,7 +51,7 @@ const SubCategories = () => {
   const [colorSets, setColorSets] = useState([]);
   const [isModal, setIsModal] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  const { desktopNavbar } = useMainStore();
+  const isNavbarVisible = useNavbarVisibility();
 
   useEffect(() => {
     const handleResize = () => {
@@ -130,7 +129,9 @@ const SubCategories = () => {
 
   useEffect(() => {
     fetchData(
-      `${import.meta.env.VITE_API_URL}/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -174,13 +175,14 @@ const SubCategories = () => {
         xl:p-4"
       >
         <img
-          src={`${import.meta.env.VITE_CDN_URL}/category-images/webp/${
-            category?.PicName
-          }.webp`}
-          alt={category?.Name}
+          loading="lazy"
           onError={(e) => {
-            e.target.src = import.meta.env.VITE_NO_IMAGE;
+            e.target.onerror = null;
+            e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
           }}
+          src={`${import.meta.env.VITE_CDN_URL}/category-images/webp/${category?.PicName}.webp`}
+          alt={category?.Name}
+
           className="col-span-5 md:col-span-4 w-full object-scale-down rounded-xl shadow-sm shadow-black/60"
         />
         <div className="col-span-7 md:col-span-8 w-full items-center justify-center ">
@@ -226,7 +228,7 @@ const SubCategories = () => {
                 }.webp`}
                 alt={item?.Name}
                 onError={(e) => {
-                  e.target.src = import.meta.env.VITE_NO_IMAGE_AVAILABLE;
+                  e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
                 }}
                 className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-xl shadow-md shadow-gray-300 object-scale-down"
               />
@@ -331,11 +333,11 @@ const SubCategories = () => {
       {!isModal && (
         <button
           onClick={() => setIsModal(true)}
-          className="md:hidden fixed bottom-[10vh] z-50 left-4 bg-blue-700/90 p-4 px-5 rounded-full text-white shadow-md shadow-black/80 
+          className="md:hidden fixed bottom-[10vh] z-50 left-4 bg-blue-700/90 p-4 px-5 rounded-full text-white shadow-md shadow-black/80
           hover:bg-blue-900/90
           "
         >
-          <FontAwesomeIcon icon={faFilter} className="" />
+          <FontAwesomeIcon icon={faFilter} />
         </button>
       )}
       {/* remove filters */}
@@ -345,7 +347,7 @@ const SubCategories = () => {
         <div
           className={`w-full sticky space-y-1
             ${
-              desktopNavbar
+              isNavbarVisible
                 ? "md:top-[21vh] lg:top-[19vh] xl:top-[23vh] 2xl:top-[21.5vh]"
                 : "md:top-[12vh] lg:top-[9vh] xl:top-[14vh] 2xl:top-[13vh]"
             }
@@ -514,17 +516,3 @@ const SubCategories = () => {
 };
 
 export default SubCategories;
-
-{
-  /* <img
-            loading="lazy"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src =
-                "https://api.kidsshop110.ir/No_Image_Available.jpg";
-            }}
-            src={`https://api.kidsshop110.ir/category-images/webp/${category?.PicName}.webp`}
-            alt={category?.Name}
-            className="w-full h-full object-cover rounded-lg"
-          /> */
-}

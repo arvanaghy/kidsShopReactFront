@@ -14,7 +14,7 @@ interface CompareStore {
 
 export const useCompareStore = create<CompareStore>()(
   persist(
-    immer((set, get) => ({
+    immer((set) => ({
       compareList: [],
       updateCompare: (compareList) =>
         set((state) => {
@@ -49,7 +49,18 @@ export const useCompareStore = create<CompareStore>()(
         }),
       refreshCompare: () =>
         set((state) => {
-          state.compareList = get().compareList;
+          const updatedCart = localStorage.getItem("KidsShop_compare");
+          if (updatedCart) {
+            try {
+              state.compareList =
+                JSON.parse(updatedCart).state.compareList || [];
+            } catch (error) {
+              console.error("Error parsing cart from localStorage:", error);
+              state.compareList = [];
+            }
+          } else {
+            state.compareList = [];
+          }
         }),
     })),
     {

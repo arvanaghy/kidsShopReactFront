@@ -3,23 +3,23 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import Unit from "@components/Unit";
 import { useCartStore } from "@store/CartStore";
+import { useNavbarVisibility } from "@hooks/useMenu";
 
 interface CartSidebarProps {
   productCode: string;
   product: any;
-  desktopNavbar: boolean;
 }
 
 const CartSidebar: React.FC<CartSidebarProps> = ({
   productCode,
   product,
-  desktopNavbar,
 }) => {
   const { cart, removeFeatureFromCart } = useCartStore();
+  const isNavbarVisible = useNavbarVisibility(false, 600);
 
   return (
     <div
-      className={`col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2 h-fit lg:sticky ${desktopNavbar
+      className={`col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2 h-fit lg:sticky ${isNavbarVisible
         ? "2xl:top-[21.5vh] xl:top-[22vh] lg:top-[19vh]"
         : "2xl:top-[12vh] xl:top-[12vh] lg:top-[9vh]"
         }`}

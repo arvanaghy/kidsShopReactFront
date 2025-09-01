@@ -49,14 +49,13 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
 
   return (
     <div
-      className={`${colSpan} rounded-lg  h-full xl:flex-shrink-0 flex flex-col overflow-hidden group`}
+      className={`${colSpan} rounded-lg h-full xl:flex-shrink-0 flex flex-col overflow-hidden group`}
     >
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full h-64 rounded-t-lg duration-300 ease-in-out transition-all">
         <img
-          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${
-            item?.PicName
-          }.webp`}
+          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName
+            }.webp`}
           alt={item?.Name}
           loading="lazy"
           onError={(e) => {

@@ -19,9 +19,10 @@ const ProductImages: React.FC<ProductImagesProps> = ({
     setImageModal,
 }) => {
     return (
-        <div className="col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full">
+        <div className="h-fit
+         col-span-12 md:col-span-5 lg:col-span-4 xl:col-span-4 w-full">
             {images.length > 0 ? (
-                <div className="grid grid-cols-12 items-start justify-between gap-2 ">
+                <div className="grid grid-cols-12 items-stretch justify-between gap-2 ">
                     <div className="col-span-2 flex flex-col items-center justify-center gap-2">
                         {images.map((imageItem, index) => (
                             <img
@@ -40,7 +41,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                     </div>
                     <Swiper
                         modules={[Autoplay, FreeMode, Pagination, Navigation]}
-                        className="h-full w-full col-span-10"
+                        className=" w-full flex flex-row items-stretch justify-between  col-span-10"
                         freeMode={false}
                         navigation={true}
                         slidesPerView={1}
@@ -55,7 +56,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                                 <img
                                     src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
                                     alt={productName}
-                                    className=" w-full object-cover rounded-2xl bg-gray-100"
+                                    className=" w-full object-scale-down rounded-2xl bg-gray-100"
                                 />
                             </SwiperSlide>
                         ))}
