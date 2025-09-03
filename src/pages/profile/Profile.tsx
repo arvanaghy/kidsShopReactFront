@@ -1,10 +1,11 @@
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import { useUserStore } from "@store/UserStore";
-import { LuShieldCheck } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
 import { useConfirmedOrders } from "@hooks/useProfile";
 import JumpingDots from "@components/JumpingDots";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShieldHalved } from "@fortawesome/free-solid-svg-icons";
 
 const Profile = () => {
   const { user } = useUserStore();
@@ -20,7 +21,7 @@ const Profile = () => {
               to="/confirmed-orders"
               className="flex flex-col gap-2 lg:text-5xl text-green-600"
             >
-              <LuShieldCheck />
+              <FontAwesomeIcon icon={faShieldHalved} />
               <p className="text-lg ">
                 {isPending ? <JumpingDots /> : formatCurrencyDisplay(confirmedOrdersTotal)}
               </p>

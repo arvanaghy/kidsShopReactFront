@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { IoMdArrowDropdown } from "react-icons/io";
 import { useFAQ } from "@hooks/useGeneralSetting";
 import JumpingDots from "@components/JumpingDots";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const FAQ = () => {
   const [isShowFaq, setIsShowFaq] = useState(false);
@@ -32,7 +33,7 @@ const FAQ = () => {
                 className="flex flex-row justify-between bg-Amber-500 text-black px-4 rounded-3xl py-6 cursor-pointer  hover:bg-Amber-500/80 duration-200 "
               >
                 <div className="text-base 2xl:text-2xl">{item?.Title}</div>
-                <IoMdArrowDropdown
+                <FontAwesomeIcon icon={faCaretDown}
                   className={`text-2xl  ${isShowFaq[item?.Code] ? "rotate-180" : ""
                     } duration-200`}
                 />

@@ -21,6 +21,8 @@ const OfferProductCard = ({ item }) => {
     ).values(),
   ];
 
+  console.log("item", item);
+
   const uniqueSizeNums = [
     ...new Set(
       item?.product_size_color
@@ -32,14 +34,12 @@ const OfferProductCard = ({ item }) => {
   return (
     <Link
       to={`/product/${item?.Code}`}
-      className="grid grid-cols-12 bg-gray-100 rounded-xl h-full items-center justify-center w-full
-      px-16
-    hover:grayscale
-    hover:bg-gray-200
-    duration-300 ease-in-out transition-all
+      className="grid grid-cols-12 bg-gray-100 rounded-xl h-full items-start
+      xl:items-center justify-center w-full
+      p-2
     "
     >
-      <div className="col-span-12 xl:col-span-6 flex flex-col items-start justify-center space-y-3 xl:space-y-6">
+      <div className="col-span-12 xl:col-span-4 flex flex-col items-start justify-center space-y-3 xl:space-y-6">
         <div className="flex flex-row items-center justify-start">
           <span className="flex text-gray-700 flex-row items-center gap-1 text-base xl:text-3xl font-EstedadExtraBold text-center">
             {formatCurrencyDisplay(item?.SPrice)}
@@ -54,7 +54,7 @@ const OfferProductCard = ({ item }) => {
         </p>
         {uniqueColorCodes?.length > 0 && (
           <div className="flex flex-row items-center justify-center gap-2">
-            <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl ">
+            <p className="text-gray-700 font-EstedadExtraBold tracking-wide text-sm xl:text-lg ">
               رنگ:
             </p>
             {uniqueColorCodes?.map((uniqueColorCodes_item, idx) => (
@@ -79,7 +79,7 @@ const OfferProductCard = ({ item }) => {
         )}
         {uniqueSizeNums?.length > 0 && (
           <div className="flex flex-row items-center justify-center gap-2 ">
-            <p className="text-gray-700 font-EstedadMedium text-sm xl:text-3xl">
+            <p className="text-gray-700 font-EstedadExtraBold tracking-wide text-sm xl:text-lg ">
               سایز:
             </p>
             {uniqueSizeNums?.map((uniqueSizeNums_item, idx) => (
@@ -91,62 +91,24 @@ const OfferProductCard = ({ item }) => {
         )}
       </div>
       {/* images  */}
-      <div className="col-span-12 xl:col-span-6 flex flex-col items-start justify-center space-y-6">
+      <div className="col-span-12 xl:col-span-8 flex flex-col items-start justify-center space-y-6">
         {item?.product_images?.length > 0 && (
-          <div className="w-full grid grid-cols-12 gap-4">
-            <div className="w-full col-span-2 flex flex-col justify-center items-center gap-2">
-              {item.product_images
-                .filter((product_image_item) => product_image_item.Def != 1)
-                .slice(0, 4)
-                .map((product_image_item, idx) => (
-                  <div key={idx} className="w-full">
-                    <img
-                      src={`${
-                        import.meta.env.VITE_CDN_URL
-                      }/products-image/webp/${Math.floor(
-                        item?.GCode
-                      )}/${Math.floor(item?.SCode)}/${
-                        product_image_item?.PicName
-                      }.webp`}
-                      alt={item?.Name}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
-                      }}
-                      className="w-full rounded-lg object-scale-down h-full"
-                    />
-                  </div>
-                ))}
-            </div>
-            {item.product_images.find(
-              (product_image_item) => product_image_item.Def == 1
-            ) && (
-              <div className="w-full  col-span-10">
-                {item.product_images
-                  .filter((product_image_item) => product_image_item.Def == 1)
-                  .map((product_image_item, idx) => (
-                    <div className="w-full h-full" key={idx}>
-                      <img
-                        src={`${
-                          import.meta.env.VITE_CDN_URL
-                        }/products-image/webp/${Math.floor(
-                          item?.GCode
-                        )}/${Math.floor(item?.SCode)}/${
-                          product_image_item?.PicName
-                        }.webp`}
-                        alt={item?.Name}
-                        loading="lazy"
-                        onError={(e) => {
-                          e.target.onerror = null;
-                          e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
-                        }}
-                        className="w-full rounded-lg object-cover h-full"
-                      />
-                    </div>
-                  ))}
-              </div>
-            )}
+          <div className="w-full grid grid-cols-12 gap-4 p-3">
+            {item.product_images.slice(0, 4).map((product_image_item, idx) => (
+              <img
+                key={idx}
+                src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${
+                  product_image_item?.PicName
+                }.webp`}
+                alt={item?.Name}
+                loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
+                }}
+                className="col-span-6 md:col-span-3 lg:col-span-3 w-full rounded-lg object-scale-down md:object-fill  lg:h-[38vh] md:h-full h-[18vh]"
+              />
+            ))}
           </div>
         )}
       </div>

@@ -14,7 +14,7 @@ const ProductsBanner = ({ data, link, title, seeMore }: { data: any, link: strin
     return (
         <section
             className="
-           xl:my-10
+           w-full
            xl:py-14
            md:py-5
            xl:p-6

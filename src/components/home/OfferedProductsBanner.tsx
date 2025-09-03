@@ -11,31 +11,29 @@ const OfferedProductsBanner = ({ data }: { data: any }) => {
   return (
     <section
       className="
-     xl:my-10
-     md:py-5
-     xl:py-14
-     xl:p-6
+     w-full p-2 h-[80vh]  
      grid grid-cols-12 items-center justify-center
      bg-red-300
      rounded-xl
+     my-3
      "
     >
-      <div className="w-full col-span-12 xl:col-span-3 p-2 xl:p-0">
+      <div className="w-full col-span-12 xl:col-span-2 p-2 xl:p-0">
         <h2
           className="font-EstedadExtraBold text-center  xl:tracking-wide text-gray-700
             text-xl leading-loose xl:py-1.5
             md:text-3xl md:pb-2
             lg:text-2xl
-            xl:text-4xl 2xl:text-6xl xl:leading-loose 2xl:leading-loose
+            xl:text-4xl  xl:leading-loose 2xl:leading-loose
              "
         >
           محصولات پیشنهادی کیدزشاپ
         </h2>
       </div>
-      <div className="col-span-12 xl:col-span-9 h-full rounded-xl p-2 xl:p-0">
+      <div className="col-span-12 h-[60vh]  xl:col-span-10 w-full rounded-xl p-2 xl:p-0">
         <Swiper
           modules={[Autoplay, FreeMode, Pagination, Navigation]}
-          className="h-full w-full "
+          className=" w-full h-[60vh] flex flex-row items-stretch justify-center"
           freeMode={false}
           navigation={true}
           slidesPerView={1}
@@ -54,16 +52,14 @@ const OfferedProductsBanner = ({ data }: { data: any }) => {
           ))}
         </Swiper>
       </div>
-      <div className="col-span-12 text-center pt-4 xl:pt-12">
-        <Link
-          to="/offered-products"
-          className="font-EstedadExtraBold text-xs text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
-          transition-all duration-300 ease-in-out 2xl:text-2xl 2xl:font-EstedadMedium
+      <Link
+        to="/offered-products"
+        className="col-span-12 flex items-center justify-center h-[5vh]  w-full  font-EstedadExtraBold text-xs text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
+          transition-all duration-300 ease-in-out 2xl:text-lg 2xl:font-EstedadExtraBold tracking-wider
           "
-        >
-          تمامی آفرهای کیدزشاپ
-        </Link>
-      </div>
+      >
+        تمامی آفرهای کیدزشاپ
+      </Link>
     </section>
   )
 }

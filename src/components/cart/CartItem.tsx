@@ -19,7 +19,7 @@ const CartItem = ({ item }: { item: any }) => {
                                 0
                             )
                         )}
-                    <Unit />
+                    <Unit forced={true} />
                 </div>
             </div>
             <div className="col-span-12 md:col-span-3 flex flex-col justify-around gap-2">
@@ -73,13 +73,13 @@ const CartItem = ({ item }: { item: any }) => {
                             className="w-fit px-1.5 flex flex-row gap-2 text-gray-500 text-sm leading-loose"
                         >
                             <p className='w-fil'>
-                                <FontAwesomeIcon icon={faSquareCheck} className="text-green-600" />
+                                <FontAwesomeIcon icon={faSquareCheck} className="text-green-600 mx-1.5" />
                                 {formatCurrencyDisplay(basketItem?.quantity)} {item?.item?.Vahed}{" "}
                                 {item?.item?.Name} <b>{basketItem?.feature?.ColorName} </b>  به سایز{" "}
                                 <b>{toPersianDigits(basketItem?.feature?.SizeNum)}</b> و جمع مبلغ {" "}
                                 {formatCurrencyDisplay(basketItem?.SPrice * basketItem?.quantity)}{" "}
                             </p>
-                            <Unit />
+                            <Unit forced={true} />
                         </div>
                     ))}
             </div>

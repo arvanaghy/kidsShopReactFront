@@ -9,7 +9,6 @@ import { useCartStore } from "@store/CartStore";
 import useCompareStore from "@store/CompareStore";
 import { useFavoriteStore } from "@store/FavoriteStore";
 
-
 interface ProductDetailsProps {
   product: any;
   productCode: string;
@@ -34,6 +33,12 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
   const availableColors = selectedSize
     ? product.product_size_color?.filter(item => item.SizeNum === selectedSize)
     : [];
+
+  const persianCurrentDate = new Date().toLocaleDateString('fa-IR', {
+    calendar: 'persian',
+    numberingSystem: 'latn'
+  });
+  const year = Number(parseInt(persianCurrentDate.split('/')[0]));
 
   return (
     <div className="col-span-12 xl:px-6 md:col-span-7 lg:col-span-5 xl:col-span-5 w-full flex flex-col justify-start xl:gap-4 gap-1.5">
@@ -88,6 +93,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
                 <div className="flex flex-wrap gap-2">
                   {availableColors.map((item, index) => (
                     <button
+                      type="button"
+                      // persian year plus mande for title
+                      title={(year + Number(item.Mande)).toString()}
                       disabled={item.Mande <= 0}
                       onClick={() => setSelectedColor(item)}
                       key={index}
@@ -98,7 +106,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
                     >
                       <span
                         className="block w-5 h-5 rounded-full"
-                        style={{ backgroundColor: RGBtoHexConverter(item.RGB) }}
+                        style={{ backgroundColor: RGBtoHexConverter(item?.RGB || "000000") }}
                       ></span>
                       <span>{item.ColorName}</span>
                     </button>

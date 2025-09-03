@@ -68,7 +68,13 @@ export const fetchUnit = async () => {
       `${import.meta.env.VITE_API_URL}/v2/unit`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
-    return data?.result || import.meta.env.VITE_UNIT;
+    return (
+      data?.result || {
+        value: import.meta.env.VITE_UNIT,
+        last_fetched_at: new Date().toISOString(),
+        status: "success",
+      }
+    );
   } catch (error: any) {
     throw new Error("واحد پولی" + error?.message || "خطا در اتصال");
   }

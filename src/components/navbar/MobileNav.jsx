@@ -1,10 +1,10 @@
-import { FaHome } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoxesStacked,
   faCartShopping,
   faGift,
+  faHouse,
   faIdCardClip,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -61,7 +61,7 @@ const MobileNav = () => {
           to={"/"}
           className="text-3xl flex flex-col items-center justify-center text-CarbonicBlue-500"
         >
-          <FaHome />
+          <FontAwesomeIcon icon={faHouse} />
           <span className="text-sm font-EstedadMedium">خانه</span>
         </Link>
       </div>

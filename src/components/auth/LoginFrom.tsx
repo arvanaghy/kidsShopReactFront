@@ -4,13 +4,13 @@ import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useLogin } from "@hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@store/UserStore";
-const LoginFrom = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | null, redirect: string | null }) => {
+const LoginFrom = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | null, redirect: string | null | undefined }) => {
     const { updateUser } = useUserStore();
     const { loginSubmit, isPending } = useLogin();
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        loginSubmit(e, redirect, (url: string) => navigate(url) , updateUser );
+        loginSubmit(e, redirect, navigate, updateUser);
     };
 
     return (

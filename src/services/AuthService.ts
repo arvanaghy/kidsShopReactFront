@@ -20,6 +20,14 @@ import {
   phoneNumberValidationMessage,
 } from "@entity/validationMessages";
 import { getErrorMessage } from "@utils/getErrorMessage";
+import axios from "axios";
+
+interface User {
+  Code: string;
+  Name: string;
+  UToken: string;
+  Address: string;
+}
 
 export const AuthService = {
   submitRegister: async (
@@ -74,74 +82,77 @@ export const AuthService = {
 
   loginSubmit: async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string,
+    redirect: string | null | undefined,
     navigate: (url: string) => void,
+    isPending: boolean,
     setIsPending: (pending: boolean) => void,
-    updateUser: (user: {
-      Code: number | string;
-      Name: string;
-      UToken: string;
-    }) => void
+    updateUser: (user: User) => void
   ) => {
     e.preventDefault();
-    if (!validatePhoneNumber(e.target.phoneNumber.value)) {
+    if (isPending) return;
+    const formData = new FormData(e.currentTarget);
+    const phoneNumber = formData.get("phoneNumber")?.toString() || "";
+
+    if (!validatePhoneNumber(phoneNumber)) {
       toast.error(phoneNumberValidationMessage);
-      e.target.phoneNumber.focus();
+      e.currentTarget.querySelector("[name='phoneNumber']")?.focus();
       return;
     }
+
     setIsPending(true);
     try {
-      const { data, status } = await loginUser({
-        phone_number: e.target.phoneNumber.value,
-      });
+      const { data, status } = await loginUser({ phone_number: phoneNumber });
       console.log("sms", data);
       if (status === 201) {
         updateUser(data?.result);
-        navigate(redirect ? redirect : "/profile");
+        navigate(redirect || "/profile");
       } else if (status === 202) {
-        navigate(
-          `/SMS-validate/${e.target.phoneNumber.value}${
-            redirect ? "?redirect=" + redirect : ""
-          }`
-        );
+        const params = new URLSearchParams();
+        if (redirect) params.set("redirect", redirect);
+        navigate(`/SMS-validate/${encodeURIComponent(phoneNumber)}?${params}`);
       }
-    } catch (error: any) {
-      if (error.message && error.response?.status === 404) {
-        navigate(
-          `/register?phoneNumber=${e.target.phoneNumber.value}${
-            redirect ? "&redirect=" + redirect : ""
-          }`
-        );
+    } catch (error) {
+      const message = getErrorMessage(error);
+      toast.error(message);
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        const params = new URLSearchParams();
+        params.set("phoneNumber", phoneNumber);
+        if (redirect) params.set("redirect", redirect);
+        navigate(`/register?${params}`);
       }
-      toast.error(getErrorMessage(error));
     } finally {
-      e.target.reset();
+      e.currentTarget.reset();
       setIsPending(false);
     }
   },
-
   otpVerify: async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string,
+    redirect: string | null | undefined,
     navigate: (url: string) => void,
+    isPending: boolean,
     setIsPending: (pending: boolean) => void,
     updateUser: (user: {
-      Code: number | string;
-      Name: string;
-      UToken: string;
+      Code?: number | string;
+      Name?: string;
+      UToken?: string;
+      Address?: string;
     }) => void
   ) => {
     e.preventDefault();
-    if (!validateOtp(e.target.otp.value)) {
+    if (isPending) return;
+    const formData = new FormData(e.currentTarget);
+    const otp = formData.get("otp")?.toString() || "";
+    const phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    if (!validateOtp(otp)) {
       toast.error(otpValidationMessage);
-      e.target.otp.focus();
+      e.currentTarget.querySelector("[name='otp']")?.focus();
       return;
     }
     setIsPending(true);
     try {
       const { data, status } = await otpApi({
-        phone_number: e.target.phoneNumber.value,
-        sms: e.target.otp.value,
+        phone_number: phoneNumber,
+        sms: otp,
       });
       if (status === 202) {
         updateUser(data?.result);
@@ -150,7 +161,7 @@ export const AuthService = {
     } catch (error: any) {
       toast.error(getErrorMessage(error));
     } finally {
-      e.target.reset();
+      e.currentTarget.reset();
       setIsPending(false);
     }
   },

@@ -43,19 +43,6 @@ export const useCompanyInfo = () => {
   return { companyInfo, isPending, refetch: getCompanyInfo };
 };
 
-export const useUnit = () => {
-  const [isPending, setIsPending] = useState(false);
-  const [unit, setUnit] = useState("");
-  const getUnit = async () => {
-    await GeneralSettingService.getUnit(setUnit, setIsPending);
-  };
-  useEffect(() => {
-    getUnit();
-  }, []);
-
-  return { unit, isPending };
-};
-
 export const useContactForm = () => {
   const [isPending, setIsPending] = useState(false);
 

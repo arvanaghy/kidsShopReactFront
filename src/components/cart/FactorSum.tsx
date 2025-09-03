@@ -24,7 +24,7 @@ const FactorSum = () => {
                         ) + (parseInt(transfer?.Mablag || 0))
                     )}
             </span>
-            <Unit />
+            <Unit forced={true} />
         </p>
     )
 }

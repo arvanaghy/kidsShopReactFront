@@ -19,13 +19,15 @@ export const useLogin = () => {
   const [isPending, setIsPending] = useState(false);
   const loginSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string,
-    navigate: (url: string) => void
+    redirect: string | null | undefined,
+    navigate: (url: string) => void,
+    updateUser: (user: any) => void
   ) => {
     await AuthService.loginSubmit(
       e,
       redirect,
       navigate,
+      isPending,
       setIsPending,
       updateUser
     );
@@ -35,16 +37,17 @@ export const useLogin = () => {
 
 export const useOtp = () => {
   const [isPending, setIsPending] = useState(false);
-  const { updateUser } = useUserStore();
   const otpVerify = async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string,
-    navigate: (url: string) => void
+    redirect: string | null | undefined,
+    navigate: (url: string) => void,
+    updateUser: (user: any) => void
   ) => {
     await AuthService.otpVerify(
       e,
       redirect,
       navigate,
+      isPending,
       setIsPending,
       updateUser
     );

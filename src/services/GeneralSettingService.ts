@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-import { fetchUnit } from "@api/generalApi";
 import { fetchAboutUsInfo } from "@api/generalApi";
 import { fetchCompanyInfo } from "@api/generalApi";
 import { sendContactForm } from "@api/GeneralApi";
@@ -16,17 +15,6 @@ import {
 } from "@entity/validations";
 
 export const GeneralSettingService = {
-  getUnit: async (setUnit: any, setIsPending: any) => {
-    setIsPending(true);
-    try {
-      const unit = await fetchUnit();
-      setUnit(unit);
-    } catch (error: any) {
-      toast.error(error?.response?.data?.message || error?.message);
-    } finally {
-      setIsPending(false);
-    }
-  },
   aboutUs: async (setAboutUsInfo: any, setIsPending: any) => {
     setIsPending(true);
     try {

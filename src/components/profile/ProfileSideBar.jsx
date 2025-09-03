@@ -1,9 +1,9 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 
-import { RxDashboard, RxCross2 } from "react-icons/rx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faGauge,
   faGaugeHigh,
   faMoneyCheckDollar,
   faReceipt,
@@ -27,7 +27,11 @@ const ProfileSideBar = () => {
         className="md:hidden fixed bottom-24 left-5 z-30 bg-blue-600 text-white p-3 rounded-full"
         onClick={toggleNav}
       >
-        {isNavOpen ? <RxCross2 size={24} /> : <RxDashboard size={24} />}
+        {isNavOpen ? (
+          <FontAwesomeIcon icon={faGauge} />
+        ) : (
+          <FontAwesomeIcon icon={faGaugeHigh} />
+        )}
       </button>
 
       {/* Sidebar */}

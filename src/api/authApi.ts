@@ -30,29 +30,30 @@ export const loginUser = async (info: any) => {
         },
       }
     );
-    if (status != 201 || status != 202) {
+    if (status != 201 && status != 202) {
       throw new Error(data?.message);
     }
     return { data, status };
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    throw error;
   }
 };
 
 export const otpApi = async (info: any) => {
-  const { data, status } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/v1/verify-sms`,
-    info,
-    {
-      headers: {
-        cache: "no-cache",
-      },
-    }
-  );
-  if (status == 202) {
+  try {
+    const { data, status } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/v1/verify-sms`,
+      info,
+      {
+        headers: {
+          cache: "no-cache",
+        },
+      }
+    );
+    if (status != 202) throw new Error(data?.message);
     return { data, status };
-  } else {
-    throw new Error(data?.message);
+  } catch (error) {
+    throw error;
   }
 };
 
