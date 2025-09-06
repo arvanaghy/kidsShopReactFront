@@ -2,7 +2,9 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import toast from "react-hot-toast";
-import { CartItem, Product, ProductSizeColor } from "@types/StoreType";
+import { Product, ProductSizeColor } from "@types/StoreType";
+import { getErrorMessage } from "@utils/getErrorMessage";
+import { toPersianDigits } from "@utils/numeralHelpers";
 
 interface CartStore {
   cart: CartItem[];
@@ -22,6 +24,17 @@ interface CartStore {
   setDescription: (description: string) => void;
   clearDescription: () => void;
   refreshCart: () => void;
+}
+
+interface BasketItem {
+  feature: ProductSizeColor;
+  quantity: number;
+  SPrice: number;
+}
+
+interface CartItem {
+  item: Product;
+  basket: BasketItem[];
 }
 
 export const useCartStore = create<CartStore>()(
@@ -45,15 +58,18 @@ export const useCartStore = create<CartStore>()(
             }
             const isProductExists = state.cart.find(
               (cartItem: CartItem) =>
-                Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+                Math.floor(cartItem?.item?.Code!) ==
+                Math.floor(parseInt(productCode))
             );
             if (isProductExists) {
               const isFeatureExists = isProductExists.basket.find(
-                (basketItem: CartItem) =>
+                (basketItem: BasketItem) =>
                   basketItem.feature.SCCode == feature.SCCode
               );
               if (
-                isFeatureExists?.quantity >= isFeatureExists?.feature?.Mande
+                isFeatureExists &&
+                isFeatureExists?.quantity >=
+                  (isFeatureExists.feature.Mande ?? 0)
               ) {
                 toast.error("سفارش شما بیشتر از موجودی است.");
                 return;
@@ -74,17 +90,20 @@ export const useCartStore = create<CartStore>()(
               });
             }
             toast.success(
-              `${item?.Name} , ${feature?.ColorName} , ${feature?.SizeNum} به سبد خرید اضافه شد.`
+              `${item?.Name} , ${feature?.ColorName} , سایز ${toPersianDigits(
+                feature?.SizeNum
+              )} به سبد خرید اضافه شد.`
             );
           } catch (error) {
-            toast.error(error?.response?.data?.message || error?.message);
+            toast.error(getErrorMessage(error));
           }
         }),
       removeFeatureFromCart: (item, productCode) =>
         set((state) => {
           const isProductExists = state.cart.find(
             (cartItem) =>
-              Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+              Math.floor(cartItem?.item?.Code!) ==
+              Math.floor(parseInt(productCode))
           );
           if (isProductExists) {
             isProductExists.basket.splice(
@@ -97,28 +116,20 @@ export const useCartStore = create<CartStore>()(
               state.cart.splice(
                 state.cart.findIndex(
                   (cartItem) =>
-                    Math.floor(cartItem?.item?.Code!) == Math.floor(productCode)
+                    Math.floor(cartItem?.item?.Code!) ==
+                    Math.floor(parseInt(productCode))
                 ),
                 1
               );
             }
           }
         }),
-      removeProductFromCart: (productCode) =>
+      removeProductFromCart: (productCode: string) =>
         set((state) => {
           const newCart = state.cart.filter(
-            (item) => item.item.Code !== productCode
+            (item) => item.item.Code !== parseInt(productCode)
           );
           state.cart = newCart;
-        }),
-      description: "",
-      setDescription: (description) =>
-        set((state) => {
-          state.description = description;
-        }),
-      clearDescription: () =>
-        set((state) => {
-          state.description = "";
         }),
       refreshCart: () =>
         set((state) => {
@@ -133,6 +144,15 @@ export const useCartStore = create<CartStore>()(
           } else {
             state.cart = [];
           }
+        }),
+      description: "",
+      setDescription: (description) =>
+        set((state) => {
+          state.description = description;
+        }),
+      clearDescription: () =>
+        set((state) => {
+          state.description = "";
         }),
     })),
     {

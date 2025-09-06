@@ -7,13 +7,11 @@ import useCompareStore from "@store/CompareStore";
 import { useFavoriteStore } from "@store/FavoriteStore";
 import { useTransferStore } from "@store/transferStore";
 import { useUserStore } from "@store/UserStore";
-import { useNavigate } from "react-router-dom";
 
 const LogoutButton = () => {
     const { user, clearUser } = useUserStore();
     const { clearCart, clearDescription } = useCartStore();
     const { clearTransfer } = useTransferStore();
-    const navigate = useNavigate();
     const { logout, isPending } = useLogout();
     const { clearCompare } = useCompareStore();
     const { clearFavorite } = useFavoriteStore();
@@ -27,7 +25,6 @@ const LogoutButton = () => {
             clearDescription,
             clearCompare,
             clearFavorite,
-            navigate
         );
     };
     return (

@@ -7,8 +7,16 @@ import {
   logOutApi,
 } from "@api/authApi";
 import toast from "react-hot-toast";
-import { validateUsername } from "@entity/validations";
-import { nameValidationMessage } from "@entity/validationMessages";
+import {
+  validateCity,
+  validateProvince,
+  validateUsername,
+} from "@entity/validations";
+import {
+  cityValidationMessage,
+  nameValidationMessage,
+  provinceValidationMessage,
+} from "@entity/validationMessages";
 import {
   validateAddress,
   validateOtp,
@@ -32,49 +40,55 @@ interface User {
 export const AuthService = {
   submitRegister: async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string,
-    navigate: (url: string) => void,
+    isPending: boolean,
     setIsPending: (pending: boolean) => void
   ) => {
     e.preventDefault();
+    if (isPending) return;
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name")?.toString() || "";
+    const phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    const address = formData.get("address")?.toString() || "";
+    const province = formData.get("province")?.toString() || "";
+    const city = formData.get("city")?.toString() || "";
 
-    if (!validateUsername(e.target.name.value)) {
+    if (!validateUsername(name)) {
       toast.error(nameValidationMessage);
-      e.target.name.focus();
+      e.currentTarget.querySelector("[name='name']")?.focus();
       return;
     }
-    if (!validatePhoneNumber(e.target.phoneNumber.value)) {
+    if (!validatePhoneNumber(phoneNumber)) {
       toast.error(phoneNumberValidationMessage);
-      e.target.phoneNumber.focus();
+      e.currentTarget.querySelector("[name='phoneNumber']")?.focus();
       return;
     }
-    if (!validateAddress(e.target.address.value)) {
+    if (!validateProvince(province)) {
+      toast.error(provinceValidationMessage);
+      e.currentTarget.querySelector("[name='province']")?.focus();
+      return;
+    }
+    if (!validateCity(city)) {
+      toast.error(cityValidationMessage);
+      e.currentTarget.querySelector("[name='city']")?.focus();
+      return;
+    }
+    if (!validateAddress(address)) {
       toast.error(addressValidationMessage);
-      e.target.address.focus();
+      e.currentTarget.querySelector("[name='address']")?.focus();
       return;
     }
     setIsPending(true);
     try {
-      await registerUser({
-        name: e.target.name.value,
-        phone_number: e.target.phoneNumber.value,
-        Address: e.target.address.value,
+      const { data, status } = await registerUser({
+        name: name,
+        phone_number: phoneNumber,
+        Address: province + " - " + city + " - " + address,
       });
-      e.target.reset();
-      navigate(
-        `/SMS-validate/${e.target.phoneNumber.value}${
-          redirect ? "?redirect=" + redirect : ""
-        }`
-      );
+      e.currentTarget.reset();
+      return { data: data?.result, status: status };
     } catch (error: any) {
-      if (error.message && error.response?.status === 302) {
-        navigate(
-          `/login${redirect ? "?redirect=" + redirect : ""}?phoneNumber=${
-            e.target.phoneNumber.value
-          }`
-        );
-      }
       toast.error(getErrorMessage(error));
+      return { data: error?.response?.data, status: error?.response?.status };
     } finally {
       setIsPending(false);
     }
@@ -193,16 +207,16 @@ export const AuthService = {
     setIsUserValidated: (userValidated: boolean) => void
   ) => {
     if (isPending) return;
-    setIsPending(true);
     const phoneNumber = user?.Mobile;
     const token = user?.UToken;
+    if (!phoneNumber) {
+      return;
+    }
+    if (!token) {
+      return;
+    }
+    setIsPending(true);
     try {
-      if (!phoneNumber) {
-        throw new Error("شماره موبایل وارد نشده است");
-      }
-      if (!token) {
-        throw new Error("توکن وارد نشده است");
-      }
       await isUserValidApi({
         phone_number: phoneNumber,
         UToken: token,
@@ -241,22 +255,19 @@ export const AuthService = {
     clearDescription: () => void,
     clearCompare: () => void,
     clearFavorite: () => void,
-    setIsPending: (pending: boolean) => void,
-    navigate: (url: string) => void
+    setIsPending: (pending: boolean) => void
   ) => {
     if (isPending) return;
     setIsPending(true);
     try {
-      const result = await logOutApi(user.UToken);
-      if (result) {
-        clearUser();
-        clearCart();
-        clearTransfer();
-        clearDescription();
-        clearCompare();
-        clearFavorite();
-        navigate("/login");
-      }
+      await logOutApi(user.UToken);
+      clearUser();
+      clearCart();
+      clearTransfer();
+      clearDescription();
+      clearCompare();
+      clearFavorite();
+      return true;
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {

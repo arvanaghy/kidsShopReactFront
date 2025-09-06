@@ -21,8 +21,6 @@ const OfferProductCard = ({ item }) => {
     ).values(),
   ];
 
-  console.log("item", item);
-
   const uniqueSizeNums = [
     ...new Set(
       item?.product_size_color

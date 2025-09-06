@@ -1,4 +1,4 @@
-import { fetchUnit } from "@api/generalApi";
+import { fetchCurrencyUnit } from "@api/generalApi";
 import { getErrorMessage } from "@utils/getErrorMessage";
 import toast from "react-hot-toast";
 import { create } from "zustand";
@@ -6,17 +6,17 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import moment from "moment";
 
-interface unit {
+interface currencyUnit {
   value: string;
   last_fetched_at: string;
   status: string;
 }
 
 interface GeneralState {
-  unit: unit;
-  setUnit: (unit: unit) => void;
-  clearUnit: () => void;
-  getUnit: (forced: boolean) => void;
+  currencyUnit: currencyUnit;
+  setCurrencyUnit: (currencyUnit: currencyUnit) => void;
+  clearCurrencyUnit: () => void;
+  getCurrencyUnit: (forced: boolean) => void;
 }
 
 const STORAGE_KEY = "KidsShop_general";
@@ -29,38 +29,41 @@ const persistOptions: any = {
 export const useGeneralStore = create<GeneralState>()(
   persist(
     immer((set, get) => ({
-      unit: {
+      currencyUnit: {
         value: "",
         last_fetched_at: "",
         status: "",
       },
-      setUnit: (unit: unit) =>
+      setCurrencyUnit: (currencyUnit: currencyUnit) =>
         set((state) => {
-          state.unit = unit;
+          state.currencyUnit = currencyUnit;
         }),
-      clearUnit: () =>
+      clearCurrencyUnit: () =>
         set((state) => {
-          state.unit = {
+          state.currencyUnit = {
             value: "",
             last_fetched_at: "",
             status: "",
           };
         }),
-      getUnit: async (
+      getCurrencyUnit: async (
         forced = false,
         setIsPending = (pending: boolean) => {}
       ) => {
         setIsPending(true);
-        if (get().unit.last_fetched_at) {
-          const diff = moment().diff(get().unit.last_fetched_at, "hours");
+        if (get().currencyUnit.last_fetched_at) {
+          const diff = moment().diff(
+            get().currencyUnit.last_fetched_at,
+            "hours"
+          );
           if (diff <= 24 && !forced) {
             return;
           }
         }
         try {
-          const unit = await fetchUnit();
+          const unit = await fetchCurrencyUnit();
           set((state) => {
-            state.unit = unit;
+            state.currencyUnit = unit;
           });
         } catch (error) {
           toast.error(getErrorMessage(error));

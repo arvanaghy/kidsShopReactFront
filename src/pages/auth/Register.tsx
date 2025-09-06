@@ -25,20 +25,20 @@ const Register = () => {
   if (isPending) return <Loading />;
 
   return (
-    <main className="w-full grid grid-cols-12 items-center justify-center bg-gray-300/60 min-h-[90vh] gap-3 p-4">
+    <main className="w-full grid grid-cols-12 items-center justify-center bg-gray-300/60 min-h-[90vh] gap-3 p-4 mx-auto">
       <Policy title="قوانین عضویت و کاربری" policy={policy} />
-      <div className="col-span-12 md:col-span-6 w-full grid grid-cols-1 items-center text-gray-900 justify-center">
+      <div className="col-span-12  md:col-span-3  text-center mx-auto justify-center w-full items-center text-gray-900 ">
         {isUserValidated ? (
           <LoggedUser />
         ) : (
           <div
-            className="w-fit mx-auto rounded-md p-4 md:p-12 bg-gray-100 grid grid-cols-1 items-center justify-center text-center space-y-8 
+            className="w-full mx-auto rounded-md p-6  bg-gray-100 items-center justify-center text-center space-y-8
           shadow-lg shadow-gray-400/50"
           >
             <p className="font-EstedadExtraBold text-2xl">عضویت در کیدزشاپ</p>
             <RegisterForm phoneNumberParam={phoneNumberParam} redirect={redirect} />
             <div
-              className="text-sm lg:text-base font-EstedadMedium text-center flex flex-col lg:flex-row space-y-3 lg:space-y-0
+              className="text-sm lg:text-base font-EstedadMedium text-center flex flex-col  space-y-3 
            items-center justify-center"
             >
               <p className="w-full">قبلا ثبت نام کرده اید؟</p>

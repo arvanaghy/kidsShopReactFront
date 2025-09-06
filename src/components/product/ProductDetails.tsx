@@ -8,6 +8,7 @@ import Unit from "@components/Unit";
 import { useCartStore } from "@store/CartStore";
 import useCompareStore from "@store/CompareStore";
 import { useFavoriteStore } from "@store/FavoriteStore";
+import toast from "react-hot-toast";
 
 interface ProductDetailsProps {
   product: any;
@@ -19,7 +20,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
   const url = typeof window !== 'undefined' ? window.location.href : '';
 
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedColor, setSelectedColor] = useState<string | number | null>(null);
   const { favorite, toggleFavorite } = useFavoriteStore();
   const { compareList, toggleCompare } = useCompareStore();
   const { addProductToCart } = useCartStore();
@@ -91,7 +92,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
               <div className="w-full flex flex-col gap-2">
                 <p className="font-EstedadMedium text-gray-800">انتخاب رنگ:</p>
                 <div className="flex flex-wrap gap-2">
-                  {availableColors.map((item, index) => (
+                  {availableColors.map((item: any, index: number) => (
                     <button
                       type="button"
                       // persian year plus mande for title
@@ -134,8 +135,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
           <div className="font-EstedadExtraBold text-start text-Purple-500 text-base lg:text-xl py-4">
             توضیحات :
           </div>
+
           <ul className="md:pr-2 lg:pr-6 space-y-2 text-start font-EstedadLight">
-            {product.Comment.split("\r\n").map((item, index) => (
+            {product.Comment.split("\r\n").map((item : string, index : number) => (
               <li key={index}>{item}</li>
             ))}
           </ul>

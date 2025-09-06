@@ -26,7 +26,7 @@ const UserInfoSectionOnShoppingCart = () => {
                     className='text-base w-fit text-Purple-500' >
                     <FontAwesomeIcon icon={faPenToSquare} />
                 </button>
-                <p className='w-fit text-gray-600 text-sm font-EstedadLight'>{user?.Address}</p>
+                <p className='w-fit text-gray-600 text-sm leading-loose font-EstedadLight'>{user?.Address}</p>
             </div>
         ) : (
             <form onSubmit={handleSubmitChangeAddress} className='w-full justify-center flex flex-row'>

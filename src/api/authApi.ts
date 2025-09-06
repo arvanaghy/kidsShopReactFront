@@ -13,9 +13,10 @@ export const registerUser = async (info: any) => {
         },
       }
     );
-    if (status != 202) throw new Error(data?.message);
+    if (status != 202 && status != 201) throw new Error(data?.message);
+    return { data, status };
   } catch (error) {
-    throw new Error(getErrorMessage(error));
+    throw error;
   }
 };
 
@@ -111,7 +112,6 @@ export const logOutApi = async (token: string) => {
       }
     );
     if (status !== 202) throw new Error(data?.message);
-    return true;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

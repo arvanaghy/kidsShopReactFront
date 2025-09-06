@@ -1,10 +1,11 @@
-import { searchPattern } from "@entity/pattern";
+import { cityPattern, searchPattern } from "@entity/pattern";
 import { mobilePattern } from "@entity/pattern";
 import { namePattern } from "@entity/pattern";
 import { addressPattern } from "@entity/pattern";
 import { otpPattern } from "@entity/pattern";
 import { emailPattern } from "@entity/pattern";
 import { messagePattern } from "@entity/pattern";
+import { provincePattern } from "@entity/pattern";
 
 export const validateSearch = (search: string) => search?.match(searchPattern);
 
@@ -26,3 +27,8 @@ export const messageValidation = (message: string) =>
 
 export const contactValidation = (value: string) =>
   validatePhoneNumber(value) || emailValidation(value);
+
+export const validateProvince = (province: string) =>
+  provincePattern.test(province);
+
+export const validateCity = (city: string) => cityPattern.test(city);

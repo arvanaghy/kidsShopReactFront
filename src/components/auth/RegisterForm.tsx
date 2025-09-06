@@ -1,71 +1,64 @@
-import { useNavigate } from "react-router-dom";
 import { useRegister } from "@hooks/useAuth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import JumpingDots from "@components/JumpingDots";
 
-const RegisterForm = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | null, redirect: string | null }) => {
+const RegisterForm = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | null, redirect: string | null | undefined }) => {
     const { submitRegister, isPending } = useRegister();
-    const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        submitRegister(e, redirect, (url: string) => navigate(url));
+    const handleRegisterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        submitRegister(e, redirect);
     };
 
+    const inputClassName = `
+    w-full bg-white/60 rounded py-2 border
+    border-CarbonicBlue-500 placeholder:indent-2
+    text-sm font-EstedadMedium placeholder:font-EstedadMedium
+    p-1.5 text-gray-800 placeholder:text-gray-600
+  `;
+
     return (
+
         <form
-            onSubmit={handleSubmit}
-            className="px-4 max-w-md mx-auto space-y-4 w-full font-EstedadMedium "
-        >
-            <label className="my-2 text-right block">
-                نام و نام خانوادگی
-                <span className="text-Amber-500 font-EstedadMedium">*</span>
-            </label>
+            onSubmit={handleRegisterSubmit}
+            className="w-full flex flex-col justify-center items-center gap-0.5 space-y-1.5">
+            <input
+                name="name"
+                type="text"
+                placeholder="نام و نام خانوادگی"
+                className={inputClassName}
+            />
+            <input
+                defaultValue={phoneNumberParam || ""}
+                type="tel"
+                name="phoneNumber"
+                placeholder="شماره موبایل"
+                className={inputClassName}
+            />
+            <input
+                name="province"
+                placeholder="استان"
+                className={inputClassName}
+            />
             <input
                 type="text"
-                name="name"
-                className="w-full px-3 py-2 bg-white/60 text-CarbonicBlue-500 focus-within:bg-white duration-150 border rounded-lg shadow-sm outline-none"
+                name="city"
+                placeholder="شهرستان"
+                className={inputClassName}
             />
-
-            <label className="my-2 text-right block ">
-                شماره موبایل
-                <span className="text-Amber-500 font-EstedadMedium">*</span>
-            </label>
-            <input
-                defaultValue={phoneNumberParam}
-                min={0}
-                type="number"
-                name="phoneNumber"
-                className="w-full px-3 py-2 bg-white/60 text-CarbonicBlue-500 focus-within:bg-white duration-150 border rounded-lg shadow-sm outline-none"
-            />
-
-            <label className="my-2 text-right block">
-                آدرس
-                <span className="text-Amber-500 font-EstedadMedium">*</span>
-            </label>
             <textarea
                 name="address"
-                className="w-full px-3 py-2 bg-white/60 text-CarbonicBlue-500 focus-within:bg-white duration-150 border rounded-lg shadow-sm outline-none"
+                placeholder="آدرس"
+                className={inputClassName}
                 rows={4}
-            ></textarea>
-            {isPending ? (<div className="flex items-center justify-center font-EstedadMedium">
-                <button
-                    type="button"
-                    className="inline-flex items-center bg-Purple-500 rounded-lg active:bg-Purple-500 text-white py-2 px-8 mt-3  disabled:bg-Purple-50030 font-EstedadMedium transition ease-in-out duration-150 cursor-not-allowed"
-                    disabled={true}
-                >
-                    درحال پردازش
-                    <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
-                </button>
-            </div>
-            ) :
-                (<button type="submit" className="w-full text-white  px-4 py-2 border font-EstedadMedium bg-CarbonicBlue-500 border-CarbonicBlue-600 hover:bg-CarbonicBlue-300 hover:grayscale delay-150 duration-300  ease-in-out rounded-lg cursor-pointer drop-shadow-xl shadow-Purple-500">
-                    ثبت نام
-                </button>
-                )
-
-            }
-
+            />
+            <button
+                disabled={isPending}
+                type="submit"
+                className={`w-full ${isPending ? 'pointer-events-none bg-purple-500 hover:bg-purple-600' : 'bg-CarbonicBlue-500 hover:bg-CarbonicBlue-600'}  text-white py-2 rounded  transition-colors font-EstedadMedium`}
+            >
+                {isPending ? <JumpingDots color="bg-white" /> : 'ثبت اطلاعات'}
+            </button>
         </form>
+
     )
 }
 

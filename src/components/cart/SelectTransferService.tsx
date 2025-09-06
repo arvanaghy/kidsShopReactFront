@@ -14,9 +14,9 @@ const SelectTransferService = () => {
             setTransfer(selectedService);
         }
     };
-    const { unit, getUnit } = useGeneralStore();
+    const { currencyUnit, getCurrencyUnit } = useGeneralStore();
     useEffect(() => {
-        getUnit(true);
+        getCurrencyUnit(true);
     }, []);
     return (
         <>
@@ -43,7 +43,7 @@ const SelectTransferService = () => {
                         </option>
                         {transferServices.map((service: any, idx: number) => (
                             <option key={idx} value={service.Code}>
-                                {service.Name} - {formatCurrencyDisplay(service.Mablag)} - {unit?.value}
+                                {service.Name} - {formatCurrencyDisplay(service.Mablag)} - {currencyUnit?.value}
                             </option>
                         ))}
                     </select>

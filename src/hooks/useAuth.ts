@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
 import { AuthService } from "@services/AuthService";
+import { useNavigate } from "react-router-dom";
 
 export const useRegister = () => {
   const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
 
   const submitRegister = async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string,
-    navigate: (url: string) => void
+    redirect?: string | null | undefined
   ) => {
-    await AuthService.submitRegister(e, redirect, navigate, setIsPending);
+    const params = new URLSearchParams();
+    if (redirect) params.set("redirect", redirect);
+    const phone_number = e.currentTarget.phoneNumber.value;
+    const { data, status } = await AuthService.submitRegister(
+      e,
+      isPending,
+      setIsPending
+    );
+    if (status === 302) {
+      params.set("phoneNumber", phone_number);
+      navigate(`/login?${params}`);
+    }
+    if (status === 202) {
+      console.log("otp", data);
+      navigate(`/SMS-validate/${encodeURIComponent(phone_number)}?${params}`);
+    }
   };
 
   return { submitRegister, isPending };
@@ -65,6 +81,7 @@ export const useResendSMS = () => {
 
 export const useLogout = () => {
   const [isPending, setIsPending] = useState(false);
+  const navigate = useNavigate();
   const logout = async (
     user: any,
     clearUser: () => void,
@@ -72,10 +89,9 @@ export const useLogout = () => {
     clearTransfer: () => void,
     clearDescription: () => void,
     clearCompare: () => void,
-    clearFavorite: () => void,
-    navigate: (url: string) => void
+    clearFavorite: () => void
   ) => {
-    await AuthService.logoutSubmit(
+    const status = await AuthService.logoutSubmit(
       user,
       isPending,
       clearUser,
@@ -84,16 +100,16 @@ export const useLogout = () => {
       clearDescription,
       clearCompare,
       clearFavorite,
-      setIsPending,
-      navigate
+      setIsPending
     );
+    if (status == true) navigate("/");
   };
   return { logout, isPending };
 };
 
 export const useUserValidation = (user: any) => {
-  const [isPending, setIsPending] = useState(false);
-  const [isUserValidated, setIsUserValidated] = useState(false);
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [isUserValidated, setIsUserValidated] = useState<boolean>(false);
 
   const validateUser = async () => {
     await AuthService.validateUser(

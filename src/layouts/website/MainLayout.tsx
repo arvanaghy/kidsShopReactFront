@@ -108,8 +108,8 @@ const MainLayout = () => {
       <div className="min-h-[90vh]">
         <Toaster
           toastOptions={{
-            className: "font-EstedadMedium",
-            duration: 9000,
+            className: "font-EstedadLight text-xs leading-loos tracking-wide",
+            duration: 6000,
             position: "top-center",
           }}
         />

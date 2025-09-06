@@ -5,3 +5,5 @@ export const addressPattern: RegExp = /^.{10,}$/;
 export const otpPattern: RegExp = /^.{4}$/;
 export const emailPattern: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 export const messagePattern: RegExp = /^.{5,}$/;
+export const provincePattern: RegExp = /^.{3,}$/;
+export const cityPattern: RegExp = /^.{3,}$/;

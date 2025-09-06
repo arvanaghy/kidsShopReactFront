@@ -62,10 +62,10 @@ export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
   }
 };
 
-export const fetchUnit = async () => {
+export const fetchCurrencyUnit = async () => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/unit`
+      `${import.meta.env.VITE_API_URL}/v2/currency-unit`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return (
