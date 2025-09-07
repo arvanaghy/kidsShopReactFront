@@ -13,8 +13,9 @@ export const registerUser = async (info: any) => {
         },
       }
     );
-    if (status != 202 && status != 201) throw new Error(data?.message);
-    return { data, status };
+
+    console.log('registerUser', data, status);
+    return status ;
   } catch (error) {
     throw error;
   }
@@ -52,7 +53,7 @@ export const otpApi = async (info: any) => {
       }
     );
     if (status != 202) throw new Error(data?.message);
-    return { data, status };
+    return { data: data?.result, status };
   } catch (error) {
     throw error;
   }

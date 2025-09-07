@@ -5,15 +5,15 @@ interface JumpingDotsProps {
 
 const JumpingDots: React.FC<JumpingDotsProps> = ({ color = 'bg-blue-500' }) => {
   return (
-    <div className="flex justify-center items-center">
+    <span className="flex justify-center items-center">
       {[1, 2, 3].map((index) => (
-        <div
+        <span
           key={index}
           className={`w-1 h-1 mx-1 ${color} rounded-full animate-jump`}
           style={{ animationDelay: `${index * 0.2}s` }}
-        ></div>
+        ></span>
       ))}
-    </div>
+    </span>
   );
 };
 

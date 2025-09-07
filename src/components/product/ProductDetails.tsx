@@ -8,7 +8,7 @@ import Unit from "@components/Unit";
 import { useCartStore } from "@store/CartStore";
 import useCompareStore from "@store/CompareStore";
 import { useFavoriteStore } from "@store/FavoriteStore";
-import toast from "react-hot-toast";
+import { useUserStore } from "@store/UserStore";
 
 interface ProductDetailsProps {
   product: any;
@@ -16,6 +16,8 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode }) => {
+
+  const { user } = useUserStore();
 
   const url = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -95,8 +97,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
                   {availableColors.map((item: any, index: number) => (
                     <button
                       type="button"
-                      // persian year plus mande for title
-                      title={(year + Number(item.Mande)).toString()}
                       disabled={item.Mande <= 0}
                       onClick={() => setSelectedColor(item)}
                       key={index}
@@ -105,11 +105,27 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
                         disabled:cursor-not-allowed hover:bg-gray-400 hover:text-gray-100
                         ${item.SCCode === selectedColor?.SCCode ? "bg-green-500 text-white border-green-600" : ""}`}
                     >
-                      <span
-                        className="block w-5 h-5 rounded-full"
-                        style={{ backgroundColor: RGBtoHexConverter(item?.RGB || "000000") }}
-                      ></span>
-                      <span>{item.ColorName}</span>
+                      {user && user?.Owner == 1 ? (
+                        <>
+                          <span
+                            className="block w-5 h-5 rounded-full"
+                            style={{ backgroundColor: RGBtoHexConverter(item?.RGB || "000000") }}
+                          >
+                          </span>
+                          <span>{item.ColorName}</span>
+                          <span>({item.Mande})</span>
+                        </>
+                      ) : (
+                        <>
+                          <span
+                            className="block w-5 h-5 rounded-full"
+                            style={{ backgroundColor: RGBtoHexConverter(item?.RGB || "000000") }}
+                          >
+                          </span>
+                          <span>{item.ColorName}</span>
+                        </>
+                      )}
+
                     </button>
                   ))}
                 </div>
@@ -121,8 +137,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
       <div className="w-full flex flex-row justify-end items-center py-3 md:py-6">
         <button
           disabled={!selectedSize || !selectedColor}
-          className={`w-fit flex flex-row gap-2 items-center justify-center border-2 border-green-600 rounded-md px-4 py-2 
-            ${selectedSize && selectedColor ? "bg-green-500 text-white hover:bg-green-600 hover:text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"} 
+          className={`w-fit flex flex-row gap-2 items-center justify-center border-2 border-green-600 rounded-md px-4 py-2
+            ${selectedSize && selectedColor ? "bg-green-500 text-white hover:bg-green-600 hover:text-white" : "bg-gray-300 text-gray-500 cursor-not-allowed"}
             space-x-1.5 duration-300 ease-in-out transition-all`}
           onClick={() => selectedColor && addProductToCart(product, productCode, selectedColor)}
         >
@@ -137,7 +153,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
           </div>
 
           <ul className="md:pr-2 lg:pr-6 space-y-2 text-start font-EstedadLight">
-            {product.Comment.split("\r\n").map((item : string, index : number) => (
+            {product.Comment.split("\r\n").map((item: string, index: number) => (
               <li key={index}>{item}</li>
             ))}
           </ul>

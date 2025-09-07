@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AuthService } from "@services/AuthService";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@store/UserStore";
 
 export const useRegister = () => {
   const [isPending, setIsPending] = useState(false);
@@ -13,22 +14,36 @@ export const useRegister = () => {
     const params = new URLSearchParams();
     if (redirect) params.set("redirect", redirect);
     const phone_number = e.currentTarget.phoneNumber.value;
-    const { data, status } = await AuthService.submitRegister(
+    const resultStatusCode = await AuthService.submitRegister(
       e,
       isPending,
       setIsPending
     );
-    if (status === 302) {
+    if (resultStatusCode === 302) {
       params.set("phoneNumber", phone_number);
       navigate(`/login?${params}`);
     }
-    if (status === 202) {
-      console.log("otp", data);
+    if (resultStatusCode === 202) {
       navigate(`/SMS-validate/${encodeURIComponent(phone_number)}?${params}`);
     }
   };
 
   return { submitRegister, isPending };
+};
+
+export const useRegisterOnCart = () => {
+  const [isPending, setIsPending] = useState(false);
+
+  const submitRegisterOnCart = async (e: React.FormEvent<HTMLFormElement>) => {
+    const resultStatusCode = await AuthService.submitRegister(
+      e,
+      isPending,
+      setIsPending
+    );
+    return resultStatusCode ?? 404;
+  };
+
+  return { submitRegisterOnCart, isPending };
 };
 
 export const useLogin = () => {
@@ -53,20 +68,43 @@ export const useLogin = () => {
 
 export const useOtp = () => {
   const [isPending, setIsPending] = useState(false);
+  const { updateUser } = useUserStore();
+  const navigate = useNavigate();
+
   const otpVerify = async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string | null | undefined,
-    navigate: (url: string) => void,
-    updateUser: (user: any) => void
+    redirect: string | null | undefined
   ) => {
-    await AuthService.otpVerify(
+    const { data, status } = (await AuthService.otpVerify(
       e,
-      redirect,
-      navigate,
       isPending,
-      setIsPending,
-      updateUser
-    );
+      setIsPending
+    )) ?? { data: null, status: 404 };
+    switch (status) {
+      case 202:
+        updateUser(data);
+        navigate(redirect ? redirect : "/profile");
+        break;
+    }
+  };
+  return { otpVerify, isPending };
+};
+
+export const useOtpOnCart = () => {
+  const [isPending, setIsPending] = useState(false);
+  const { updateUser } = useUserStore();
+  const otpVerify = async (e: React.FormEvent<HTMLFormElement>) => {
+    const { data, status } = (await AuthService.otpVerify(
+      e,
+      isPending,
+      setIsPending
+    )) ?? { data: null, status: 404 };
+    switch (status) {
+      case 202:
+        updateUser(data);
+        break;
+    }
+    return status;
   };
   return { otpVerify, isPending };
 };

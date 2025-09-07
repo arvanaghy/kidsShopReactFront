@@ -11,7 +11,7 @@ const OfferedProductsBanner = ({ data }: { data: any }) => {
   return (
     <section
       className="
-     w-full p-2 h-[80vh]  
+     w-full p-2 h-[80vh]
      grid grid-cols-12 items-center justify-center
      bg-red-300
      rounded-xl
@@ -54,8 +54,8 @@ const OfferedProductsBanner = ({ data }: { data: any }) => {
       </div>
       <Link
         to="/offered-products"
-        className="col-span-12 flex items-center justify-center h-[5vh]  w-full  font-EstedadExtraBold text-xs text-center bg-blue-700 hover:bg-blue-600 text-white py-2 px-4 rounded-xl
-          transition-all duration-300 ease-in-out 2xl:text-lg 2xl:font-EstedadExtraBold tracking-wider
+        className="col-span-4  flex flex-row items-center justify-center w-fit text-center  font-EstedadExtraBold text-xs  text-white py-2 px-4
+          transition-all duration-300 ease-in-out 2xl:text-lg  hover:text-gray-200 tracking-wider
           "
       >
         تمامی آفرهای کیدزشاپ

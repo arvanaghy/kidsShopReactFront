@@ -108,7 +108,7 @@ const MainLayout = () => {
       <div className="min-h-[90vh]">
         <Toaster
           toastOptions={{
-            className: "font-EstedadLight text-xs leading-loos tracking-wide",
+            className: "font-EstedadLight text-xs leading-loose tracking-wide",
             duration: 6000,
             position: "top-center",
           }}
@@ -140,7 +140,6 @@ const MainLayout = () => {
         ref={contactWithUsModalRef}
         onSubmit={(e) => contactWithUsFromSubmit(e)}
         className={`fixed
-          
           bottom-[20vh] right-4
           md:bottom-[18vh] md:right-10 z-30 p-3 bg-gray-100 shadow-md shadow-gray-300 rounded-lg flex flex-col justify-center items-center gap-2
           ${contactWithUsModal ? "" : "hidden"}

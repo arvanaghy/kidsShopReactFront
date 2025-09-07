@@ -2,15 +2,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { useOtp } from "@hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { useUserStore } from "@store/UserStore";
 const OtpForm = ({ phoneNumber, redirect }: { phoneNumber: string, redirect: string | null | undefined }) => {
     const { otpVerify, isPending } = useOtp();
-    const navigate = useNavigate();
-    const { updateUser } = useUserStore();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        otpVerify(e, redirect, navigate, updateUser);
+        otpVerify(e, redirect);
     };
     return (
         <form onSubmit={handleSubmit}>

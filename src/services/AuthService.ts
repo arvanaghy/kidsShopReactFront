@@ -45,7 +45,8 @@ export const AuthService = {
   ) => {
     e.preventDefault();
     if (isPending) return;
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const name = formData.get("name")?.toString() || "";
     const phoneNumber = formData.get("phoneNumber")?.toString() || "";
     const address = formData.get("address")?.toString() || "";
@@ -79,17 +80,19 @@ export const AuthService = {
     }
     setIsPending(true);
     try {
-      const { data, status } = await registerUser({
+      const status = await registerUser({
         name: name,
         phone_number: phoneNumber,
         Address: province + " - " + city + " - " + address,
       });
-      e.currentTarget.reset();
-      return { data: data?.result, status: status };
+      return status;
     } catch (error: any) {
       toast.error(getErrorMessage(error));
-      return { data: error?.response?.data, status: error?.response?.status };
+      return error?.response?.status;
     } finally {
+      if (form && typeof form.reset === "function") {
+        form.reset();
+      }
       setIsPending(false);
     }
   },
@@ -141,20 +144,13 @@ export const AuthService = {
   },
   otpVerify: async (
     e: React.FormEvent<HTMLFormElement>,
-    redirect: string | null | undefined,
-    navigate: (url: string) => void,
     isPending: boolean,
-    setIsPending: (pending: boolean) => void,
-    updateUser: (user: {
-      Code?: number | string;
-      Name?: string;
-      UToken?: string;
-      Address?: string;
-    }) => void
+    setIsPending: (pending: boolean) => void
   ) => {
     e.preventDefault();
     if (isPending) return;
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const otp = formData.get("otp")?.toString() || "";
     const phoneNumber = formData.get("phoneNumber")?.toString() || "";
     if (!validateOtp(otp)) {
@@ -168,14 +164,13 @@ export const AuthService = {
         phone_number: phoneNumber,
         sms: otp,
       });
-      if (status === 202) {
-        updateUser(data?.result);
-        navigate(redirect ? redirect : "/profile");
-      }
+      return { data, status };
     } catch (error: any) {
       toast.error(getErrorMessage(error));
     } finally {
-      e.currentTarget.reset();
+      if (form && typeof form.reset === "function") {
+        form.reset();
+      }
       setIsPending(false);
     }
   },
