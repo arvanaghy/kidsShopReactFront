@@ -19,11 +19,11 @@ export const useRegister = () => {
       isPending,
       setIsPending
     );
-    if (resultStatusCode === 302) {
+    if (resultStatusCode == 200) {
       params.set("phoneNumber", phone_number);
       navigate(`/login?${params}`);
     }
-    if (resultStatusCode === 202) {
+    if (resultStatusCode == 201) {
       navigate(`/SMS-validate/${encodeURIComponent(phone_number)}?${params}`);
     }
   };

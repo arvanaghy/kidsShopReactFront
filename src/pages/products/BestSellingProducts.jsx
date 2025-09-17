@@ -110,7 +110,7 @@ const BestSellingProducts = () => {
 
   useEffect(() => {
     fetchData(
-      `https://api.kidsshop110.ir/api/v2/list-best-seller?product_page=${product_page}${
+      `${import.meta.env.VITE_API_URL}/v2/list-best-seller?product_page=${product_page}${
         search != null ? `&search=${search}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -312,7 +312,7 @@ const BestSellingProducts = () => {
                   onClick={() => {
                     navigate(
                       link?.url.replace(
-                        "https://api.kidsshop110.ir/api/v2/list-best-seller",
+                        `${import.meta.env.VITE_API_URL}/v2/list-best-seller`,
                         "/best-selling-products"
                       )
                     );

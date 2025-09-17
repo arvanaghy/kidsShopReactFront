@@ -3,15 +3,19 @@ import ProfileSideBar from "@components/profile/ProfileSideBar";
 import { useUserValidation } from "@hooks/useAuth";
 import { useUserStore } from "@store/UserStore";
 
-import { useNavigate } from "react-router-dom";
 const ProfileLayout = ({ children }: { children: React.ReactNode }) => {
-  const navigate = useNavigate();
   const { user } = useUserStore();
   const { isPending, isUserValidated } = useUserValidation(user);
 
   if (isPending) return <Loading />;
 
-  if (!isUserValidated) navigate("/login");
+  if (!isUserValidated) return (
+    <div className="flex w-full h-full min-h-[90vh] items-center justify-center ">
+      <p className="flex flex-row  inset-0 font-EstedadExtraBold tracking-wider justify-center items-center w-full h-full text-2xl text-center">
+        دسترسی غیر مجاز
+      </p>
+    </div>
+  );
 
   return (
     <div className="w-full h-full grid grid-cols-12 min-h-[90vh] items-start justify-start ">

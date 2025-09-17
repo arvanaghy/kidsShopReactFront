@@ -34,7 +34,7 @@ export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
     const { data, status } = await axios.get<CompanyPropsResponse>(
       `${import.meta.env.VITE_API_URL}/v2/company-info`
     );
-    if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
+    if (status !== 200) throw new Error(data?.message);
     return {
       Address:
         data.company_info.Address || import.meta.env.VITE_CONTACT_INFO_ADDRESS,

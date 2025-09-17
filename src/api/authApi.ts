@@ -14,8 +14,7 @@ export const registerUser = async (info: any) => {
       }
     );
 
-    console.log('registerUser', data, status);
-    return status ;
+    return { data, status };
   } catch (error) {
     throw error;
   }

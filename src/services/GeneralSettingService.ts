@@ -13,27 +13,38 @@ import {
   messageValidation,
   validateUsername,
 } from "@entity/validations";
+import { getErrorMessage } from "@utils/getErrorMessage";
 
 export const GeneralSettingService = {
-  aboutUs: async (setAboutUsInfo: any, setIsPending: any) => {
+  aboutUs: async (
+    setAboutUsInfo: any,
+    setIsPending: (pending: boolean) => void,
+    isPending: boolean
+  ) => {
+    if (isPending) return;
     setIsPending(true);
     try {
       const data = await fetchAboutUsInfo();
       setAboutUsInfo(data);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      getErrorMessage(error);
     } finally {
       setIsPending(false);
     }
   },
 
-  companyInfo: async (setCompanyInfo: any, setIsPending: any) => {
+  companyInfo: async (
+    setCompanyInfo: any,
+    setIsPending: (pending: boolean) => void,
+    isPending: boolean
+  ) => {
+    if (isPending) return;
     setIsPending(true);
     try {
       const data = await fetchCompanyInfo();
       setCompanyInfo(data);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      getErrorMessage(error);
     } finally {
       setIsPending(false);
     }
@@ -41,20 +52,26 @@ export const GeneralSettingService = {
 
   submitContactForm: async (
     e: React.FormEvent<HTMLFormElement>,
-    setIsPending: (pending: boolean) => void
+    setIsPending: (pending: boolean) => void,
+    isPending: boolean
   ) => {
     e.preventDefault();
-    if (!validateUsername(e.target.info.value)) {
+    if (isPending) return;
+    const formData = new FormData(e.currentTarget);
+    const info = formData.get("info")?.toString() || "";
+    const contact = formData.get("contact")?.toString() || "";
+    const message = formData.get("message")?.toString() || "";
+    if (!validateUsername(info)) {
       e.target.info.focus();
       toast.error(nameValidationMessage);
       return;
     }
-    if (!contactValidation(e.target.contact.value)) {
+    if (!contactValidation(contact)) {
       e.target.contact.focus();
       toast.error(contactValidationMessage);
       return;
     }
-    if (!messageValidation(e.target.message.value)) {
+    if (!messageValidation(message)) {
       e.target.message.focus();
       toast.error(messageValidationMessage);
       return;
@@ -62,26 +79,31 @@ export const GeneralSettingService = {
     setIsPending(true);
     try {
       await sendContactForm({
-        info: e.target.info.value,
-        contact: e.target.contact.value,
-        message: e.target.message.value,
+        info: info,
+        contact: contact,
+        message: message,
       });
       toast.success("پیام شما با موفقیت ارسال شد");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      getErrorMessage(error);
     } finally {
       e.target.reset();
       setIsPending(false);
     }
   },
 
-  getFAQ: async (setFaqInfo: any, setIsPending: any) => {
+  getFAQ: async (
+    setFaqInfo: any,
+    setIsPending: (pending: boolean) => void,
+    isPending: boolean
+  ) => {
+    if (isPending) return;
     setIsPending(true);
     try {
       const data = await fetchFAQ();
       setFaqInfo(data);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      getErrorMessage(error);
     } finally {
       setIsPending(false);
     }

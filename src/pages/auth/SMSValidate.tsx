@@ -12,6 +12,7 @@ const SMSValidate = () => {
   const [searchParams] = useSearchParams();
   const { phoneNumber = "" } = useParams();
   const redirect: string | null = searchParams.get("redirect");
+  const phoneNumberParam: string | null = searchParams.get("phoneNumber");
 
   const { user } = useUserStore();
   const { isPending, isUserValidated } = useUserValidation(user);

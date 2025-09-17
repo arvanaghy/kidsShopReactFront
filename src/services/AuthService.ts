@@ -80,11 +80,15 @@ export const AuthService = {
     }
     setIsPending(true);
     try {
-      const status = await registerUser({
+      const { data, status } = await registerUser({
         name: name,
         phone_number: phoneNumber,
         Address: province + " - " + city + " - " + address,
       });
+      toast.success(data?.message);
+      if (status == 201) {
+        console.log("sms", data);
+      }
       return status;
     } catch (error: any) {
       toast.error(getErrorMessage(error));
@@ -107,12 +111,19 @@ export const AuthService = {
   ) => {
     e.preventDefault();
     if (isPending) return;
-    const formData = new FormData(e.currentTarget);
+
+    const form = e.currentTarget as HTMLFormElement;
+    if (!(form instanceof HTMLFormElement)) {
+      toast.error("فرم معتبر نیست");
+      return;
+    }
+
+    const formData = new FormData(form);
     const phoneNumber = formData.get("phoneNumber")?.toString() || "";
 
     if (!validatePhoneNumber(phoneNumber)) {
       toast.error(phoneNumberValidationMessage);
-      e.currentTarget.querySelector("[name='phoneNumber']")?.focus();
+      form.querySelector("[name='phoneNumber']")?.focus();
       return;
     }
 
@@ -138,7 +149,9 @@ export const AuthService = {
         navigate(`/register?${params}`);
       }
     } finally {
-      e.currentTarget.reset();
+      if (form && typeof form.reset === "function") {
+        form.reset();
+      }
       setIsPending(false);
     }
   },

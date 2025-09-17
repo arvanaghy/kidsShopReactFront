@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
 import {
   Link,
   useNavigate,
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import toast from "react-hot-toast";
 import ProductCard from "@components/product/ProductCard";
 import Loading from "@components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,6 +14,13 @@ import ColorFilter from "@components/filters/ColorFilter";
 import SizeFilter from "@components/filters/SizeFilter";
 import ProductSearch from "@components/filters/ProductSearch";
 import { useNavbarVisibility } from "@hooks/useMenu";
+import {
+  useFilters,
+  useRemoveFilters,
+  useSubCategory,
+} from "@hooks/useCategories";
+import ListAsBar from "@components/subcategoris/ListAsBar";
+import Pagination from "@components/Pagination";
 
 const SubCategories = () => {
   const [searchParams] = useSearchParams();
@@ -24,29 +29,12 @@ const SubCategories = () => {
   const subcategory_page = searchParams.get("subcategory_page") || 1;
   const size = searchParams.get("size") || null;
   const color = searchParams.get("color") || null;
-  const min_price = searchParams.get("min_price") || null;
-  const max_price = searchParams.get("max_price") || null;
   const sort_price = searchParams.get("sort_price") || null;
   const mobileFilterRef = useRef(null);
   const { categoryCode } = useParams();
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState({
-    data: [],
-    links: [],
-  });
-
-  const [subCategories, setSubCategories] = useState({
-    data: [],
-    links: [],
-  });
-  const [category, setCategory] = useState(null);
-
-  const [sizes, setSizes] = useState([]);
-  const [colors, setColors] = useState([]);
-  const [price, setPrice] = useState({ max_price: 0, min_price: 0 });
   const [sizeSets, setSizeSets] = useState([]);
   const [colorSets, setColorSets] = useState([]);
   const [isModal, setIsModal] = useState(false);
@@ -94,188 +82,86 @@ const SubCategories = () => {
     };
   }, []);
 
-  const fetchData = async (_url) => {
-    if (loading) return;
-    try {
-      setLoading(true);
-      const { data, status } = await axios.get(_url, {
-        headers: {
-          cache: "no-cache",
-        },
-      });
-      if (status !== 200) throw new Error(data?.message);
-      setSubCategories({
-        data: data?.result?.subcategories?.data,
-        links: data?.result?.subcategories?.links,
-      });
-      setCategory(data?.result?.category);
-      setProducts({
-        data: data?.result?.products?.data,
-        links: data?.result?.products?.links,
-      });
-      setSizes(data?.result?.sizes);
-      setColors(data?.result?.colors);
-      setPrice(data?.result?.prices);
-    } catch (error) {
-      toast.error(
-        "دسته بندی: " + error?.response?.data?.message ||
-          error?.message ||
-          "خطا در اتصال"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData(
-      `${
-        import.meta.env.VITE_API_URL
-      }/v2/list-subcategories/${categoryCode}?product_page=${product_page}&subcategory_page=${subcategory_page}${
-        search != null ? `&search=${search}` : ""
-      }${size != null ? `&size=${size}` : ""}${
-        color != null ? `&color=${color}` : ""
-      }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
+  const { subCategories, isPending, category, products, sizes, colors } =
+    useSubCategory(
+      categoryCode,
+      product_page,
+      subcategory_page,
+      search,
+      size,
+      color,
+      sort_price
     );
-  }, [product_page, subcategory_page, search, size, color, sort_price]);
 
-  const applyFilters = () => {
-    try {
-      isModal && setIsModal(false);
-      navigate(
-        `/category/${categoryCode}?product_page=${1}&subcategory_page=${1}${
-          search != null ? `&search=${search}` : ""
-        }${sizeSets.length > 0 ? `&size=${sizeSets.join(",")}` : ""}${
-          colorSets.length > 0 ? `&color=${colorSets.join(",")}` : ""
-        }${sort_price != null ? `&sort_price=${sort_price}` : ""}`
-      );
-    } catch (error) {
-      toast.error(error?.message);
-    }
-  };
+  const { isPending: isPendingFilters, applyFilters } = useFilters(
+    isModal,
+    setIsModal,
+    categoryCode,
+    search,
+    sort_price,
+    sizeSets,
+    colorSets
+  );
 
-  const removeFilters = () => {
-    setSizeSets;
-    setSizeSets([]);
-    setColorSets([]);
-    setIsModal(false);
-    navigate(`/category/${categoryCode}`);
-  };
+  const { isPending: isPendingRemove, removeFilters } = useRemoveFilters(
+    categoryCode,
+    setSizeSets,
+    setColorSets,
+    setIsModal
+  );
 
-  if (loading) return <Loading />;
+  if (isPending || isPendingFilters || isPendingRemove) return <Loading />;
 
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
-      <div
-        className="col-span-12 grid grid-cols-12 
-        items-center justify-center 
-        px-2
-        py-3
-        md:gap-2
-        xl:p-4"
-      >
-        <img
-          loading="lazy"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
-          }}
-          src={`${import.meta.env.VITE_CDN_URL}/category-images/webp/${category?.PicName}.webp`}
-          alt={category?.Name}
-
-          className="col-span-5 md:col-span-4 w-full object-scale-down rounded-xl shadow-sm shadow-black/60"
-        />
-        <div className="col-span-7 md:col-span-8 w-full items-center justify-center ">
-          <h1
-            className=" text-center  font-EstedadExtraBold tracking-wider leading-relaxed
-      text-lg py-4
-      sm:text-4xl sm:py-4
-      md:text-2xl md:py-6
-      lg:text-3xl lg:py-7
-      xl:text-4xl xl:py-8
-      2xl:text-5xl 2xl:py-10
-      text-transparent bg-clip-text bg-gradient-to-r from-Amber-500 to-CarbonicBlue-500 
-      "
-          >
-            {category?.Name}
-          </h1>
-          <p
-            className="font-EstedadMedium tracking-wide leading-loose 
-          p-1.5
-          md:text-sm md:p-2
-
-          xl:text-base xl:p-4 text-justify  "
-          >
-            {category?.Comment}
-          </p>
-        </div>
-      </div>
-
       {/* subcategories */}
-      <section className="col-span-12 w-full max-w-2xl xl:max-w-7xl 2xl:max-w-full mx-auto p-3 bg-gray-300 rounded-2xl xl:py-8 flex overflow-x-auto 2xl:gap-5">
-        {subCategories?.data?.map((item, idx) => (
-          <div key={idx} className="flex-shrink-0 w-24 xl:w-30">
-            <Link
-              to={`/sub-category-products/${Math.floor(item?.Code)}`}
-              className={`w-full flex flex-col justify-center
-                                    items-center
-                                    cursor-pointer
-                                    md:hover:scale-105  duration-300  ease-in-out transition-all `}
-            >
-              <img
-                src={`${import.meta.env.VITE_CDN_URL}/subCategory-images/webp/${
-                  item?.PicName
-                }.webp`}
-                alt={item?.Name}
-                onError={(e) => {
-                  e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
-                }}
-                className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-xl shadow-md shadow-gray-300 object-scale-down"
-              />
-              <h4 className="text-xs xl:text-base 2xl:text-lg text-center text-gray-900 font-EstedadMedium">
-                {item?.Name}
-              </h4>
-            </Link>
-          </div>
-        ))}
-      </section>
+      {subCategories?.data && subCategories?.data?.length > 0 && (
+        <ListAsBar info={subCategories?.data} />
+      )}
       {subCategories?.links?.length > 3 && (
-        <div className="col-span-12 flex flex-row flex-wrap items-center justify-center py-8 gap-2">
-          {subCategories?.links?.map((link, idx) => (
-            <button
-              key={idx}
-              disabled={link.url === null}
-              onClick={() => {
-                navigate(
-                  link?.url.replace(
-                    `${
-                      import.meta.env.VITE_API_URL
-                    }/v2/list-subcategories/${categoryCode}`,
-                    `/category/${categoryCode}`
-                  )
-                );
-              }}
-              className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 
-                  2xl:text-sm
-  
-                  text-xs px-2 py-1
-                  disabled:cursor-not-allowed
-                  transition-all duration-300 ease-in-out
-                  hover:bg-CarbonicBlue-500/80 hover:text-white
-                  ${
-                    link.active
-                      ? "bg-CarbonicBlue-500 text-white"
-                      : "bg-gray-300 text-black"
-                  }`}
-            >
-              {link.label === "&laquo; Previous"
-                ? "قبلی"
-                : link.label === "Next &raquo;"
-                ? " بعدی"
-                : link.label}
-            </button>
-          ))}
-        </div>
+
+        <Pagination
+          links={subCategories?.links}
+          replace={{
+            url: `/category/${categoryCode}`,
+            phrase: category?.name,
+          }}
+        />
+        // <div className="col-span-12 flex flex-row flex-wrap items-center justify-center py-8 gap-2">
+        //   {subCategories?.links?.map((link, idx) => (
+        //     <button
+        //       key={idx}
+        //       disabled={link.url === null}
+        //       onClick={() => {
+        //         navigate(
+        //           link?.url.replace(
+        //             `${
+        //               import.meta.env.VITE_API_URL
+        //             }/v2/list-subcategories/${categoryCode}`,
+        //             `/category/${categoryCode}`
+        //           )
+        //         );
+        //       }}
+        //       className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 
+        //           2xl:text-sm
+        //           text-xs px-2 py-1
+        //           disabled:cursor-not-allowed
+        //           transition-all duration-300 ease-in-out
+        //           hover:bg-CarbonicBlue-500/80 hover:text-white
+        //           ${
+        //             link.active
+        //               ? "bg-CarbonicBlue-500 text-white"
+        //               : "bg-gray-300 text-black"
+        //           }`}
+        //     >
+        //       {link.label === "&laquo; Previous"
+        //         ? "قبلی"
+        //         : link.label === "Next &raquo;"
+        //         ? " بعدی"
+        //         : link.label}
+        //     </button>
+        //   ))}
+        // </div>
       )}
       {/* subcategories */}
       {/* modal */}
@@ -483,14 +369,15 @@ const SubCategories = () => {
                   onClick={() => {
                     navigate(
                       link?.url.replace(
-                        `https://api.kidsshop110.ir/api/v2/list-subcategories/${categoryCode}`,
+                        `${
+                          import.meta.env.VITE_API_URL
+                        }/v2/list-subcategories/${categoryCode}`,
                         `/category/${categoryCode}`
                       )
                     );
                   }}
                   className={`2xl:px-4 2xl:py-2 rounded-md cursor-pointer 
                   2xl:text-sm
-  
                   text-xs px-2 py-1
                   disabled:cursor-not-allowed
                   transition-all duration-300 ease-in-out

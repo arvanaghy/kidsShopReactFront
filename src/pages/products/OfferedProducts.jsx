@@ -371,7 +371,7 @@ const OfferedProducts = () => {
                   onClick={() => {
                     navigate(
                       link?.url.replace(
-                        "https://api.kidsshop110.ir/api/v2/list-all-offers",
+                        `${import.meta.env.VITE_API_URL}/v2/list-all-offers`,
                         "/offered-products"
                       )
                     );

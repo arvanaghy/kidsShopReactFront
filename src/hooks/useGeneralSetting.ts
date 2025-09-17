@@ -8,14 +8,14 @@ export const useAboutUsInfo = () => {
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const getAboutUsInfo = async () => {
-    await GeneralSettingService.aboutUs(setAboutUsInfo, setIsPending);
+    await GeneralSettingService.aboutUs(setAboutUsInfo, setIsPending , isPending);
   };
 
   useEffect(() => {
     getAboutUsInfo();
   }, []);
 
-  return { aboutUsInfo, isPending, refetch: getAboutUsInfo };
+  return { aboutUsInfo, isPending };
 };
 
 export const useCompanyInfo = () => {
@@ -30,24 +30,28 @@ export const useCompanyInfo = () => {
     latitude: 0,
     longitude: 0,
   });
-  const [isPending, setIsPending] = useState<boolean>(true);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
   const getCompanyInfo = async () => {
-    await GeneralSettingService.companyInfo(setCompanyInfo, setIsPending);
+    await GeneralSettingService.companyInfo(
+      setCompanyInfo,
+      setIsPending,
+      isPending
+    );
   };
 
   useEffect(() => {
     getCompanyInfo();
   }, []);
 
-  return { companyInfo, isPending, refetch: getCompanyInfo };
+  return { companyInfo, isPending };
 };
 
 export const useContactForm = () => {
   const [isPending, setIsPending] = useState(false);
 
   const submitContactForm = async (e: React.FormEvent<HTMLFormElement>) => {
-    await GeneralSettingService.submitContactForm(e, setIsPending);
+    await GeneralSettingService.submitContactForm(e, setIsPending, isPending);
   };
   return { isPending, submitContactForm };
 };
@@ -57,7 +61,7 @@ export const useFAQ = () => {
   const [isPending, setIsPending] = useState<boolean>(false);
 
   const getFAQ = async () => {
-    await GeneralSettingService.getFAQ(setFaqInfo, setIsPending);
+    await GeneralSettingService.getFAQ(setFaqInfo, setIsPending, isPending);
   };
 
   useEffect(() => {

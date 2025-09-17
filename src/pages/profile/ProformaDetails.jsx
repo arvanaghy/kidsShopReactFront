@@ -46,7 +46,7 @@ const ProformaDetails = () => {
     if (!orderCode) return;
     if (!user?.UToken) return;
     getOrderDetails(
-      `https://api.kidsshop110.ir/api/v1/list-unverified-orders-products/${Math.floor(
+      `${import.meta.env.VITE_API_URL}/v1/list-unverified-orders-products/${Math.floor(
         orderCode
       )}?page=1`
     );
