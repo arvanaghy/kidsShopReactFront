@@ -29,7 +29,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                                 key={index}
                                 src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
                                 alt={productName}
-                                className="col-span-3 w-full object-scale-down rounded-md hover:cursor-pointer hover:scale-105 hover:grayscale transition-all duration-300 ease-in-out"
+                                className="col-span-3 w-full object-scale-down rounded-xl hover:cursor-pointer hover:scale-105 hover:grayscale transition-all duration-300 ease-in-out aspect-square"
                                 onClick={() =>
                                     setImageModal({
                                         isOpen: true,
@@ -56,7 +56,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                                 <img
                                     src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
                                     alt={productName}
-                                    className=" w-full object-scale-down rounded-2xl bg-gray-100"
+                                    className="w-full object-scale-down rounded-xl bg-gray-100 aspect-square"
                                 />
                             </SwiperSlide>
                         ))}
@@ -66,7 +66,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
             ) : (
                 <img
                     src={import.meta.env.VITE_NO_IMAGE_URL}
-                    className="w-full object-cover rounded-2xl shadow-lg shadow-gray-300"
+                    className="w-full object-fill aspect-square rounded-xl shadow shadow-gray-150"
                 />
             )}
         </div>

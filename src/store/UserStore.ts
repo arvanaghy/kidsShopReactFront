@@ -10,12 +10,14 @@ interface UserStore {
     Name: string;
     UToken: string;
     Address: string;
+    Mobile: string | number;
   };
   updateUser: (user: {
     Code: number | string;
     Name: string;
     UToken: string;
     Address: string;
+    Mobile: string | number;
   }) => void;
   verifyUserToken: (
     redirect?: string,
@@ -28,12 +30,13 @@ interface UserStore {
 export const useUserStore = create<UserStore>()(
   persist(
     immer((set) => ({
-      user: { Code: "", Name: "", UToken: "", Address: "" },
+      user: { Code: "", Name: "", UToken: "", Address: "", Mobile: "" },
       updateUser: (user: {
         Code: number | string;
         Name: string;
         UToken: string;
         Address: string;
+        Mobile: string | number;
       }) =>
         set((state) => {
           state.user = user;
@@ -46,7 +49,13 @@ export const useUserStore = create<UserStore>()(
           const user = get().user;
           if (!user || !user?.UToken) {
             set((state) => {
-              state.user = { Code: "", Name: "", UToken: "", Address: "" };
+              state.user = {
+                Code: "",
+                Name: "",
+                UToken: "",
+                Address: "",
+                Mobile: "",
+              };
             });
             throw new Error("کاربر ذخیره شده وجود ندارد");
           }
@@ -67,7 +76,13 @@ export const useUserStore = create<UserStore>()(
             }
           } else {
             set((state) => {
-              state.user = { Code: "", Name: "", UToken: "", Address: "" };
+              state.user = {
+                Code: "",
+                Name: "",
+                UToken: "",
+                Address: "",
+                Mobile: "",
+              };
             });
             toast.error(data?.message);
             if (navigate) {
@@ -76,7 +91,13 @@ export const useUserStore = create<UserStore>()(
           }
         } catch (error) {
           set((state) => {
-            state.user = { Code: "", Name: "", UToken: "", Address: "" };
+            state.user = {
+              Code: "",
+              Name: "",
+              UToken: "",
+              Address: "",
+              Mobile: "",
+            };
           });
           toast.error(
             "اعتبارسنجی " +
@@ -89,7 +110,7 @@ export const useUserStore = create<UserStore>()(
         }
       },
       clearUser: () =>
-        set(() => ({ user: { Code: "", Name: "", UToken: "", Address: "" } })),
+        set(() => ({ user: { Code: "", Name: "", UToken: "", Address: ""  , Mobile: ""} })),
       refreshUser: () =>
         set((state) => {
           const updatedUser = localStorage.getItem("KidsShop_user");
@@ -103,10 +124,22 @@ export const useUserStore = create<UserStore>()(
               };
             } catch (error) {
               console.error("Error parsing user from localStorage:", error);
-              state.user = { Code: "", Name: "", UToken: "", Address: "" };
+              state.user = {
+                Code: "",
+                Name: "",
+                UToken: "",
+                Address: "",
+                Mobile: "",
+              };
             }
           } else {
-            state.user = { Code: "", Name: "", UToken: "", Address: "" };
+            state.user = {
+              Code: "",
+              Name: "",
+              UToken: "",
+              Address: "",
+              Mobile: "",
+            };
           }
         }),
     })),

@@ -79,7 +79,7 @@ const ConfirmedOrderDetails = () => {
       </div>
 
       {/* pagination */}
-      <ProfilePagination links={confirmedOrderDetailsLinks} replace={replacement} />
+      <ProfilePagination links={confirmedOrderDetailsLinks} replacement={replacement} />
     </ProfileLayout>
   );
 };

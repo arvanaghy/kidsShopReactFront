@@ -27,7 +27,7 @@ const SelectTransferService = () => {
                     </div>
                     <button
                         type="button"
-                        className="text-amber-700 hover:text-amber-500 duration-200 delay-150 ease-in-out transition-all font-EstedadLight "
+                        className="text-amber-700 font-EstedadExtraBold hover:text-amber-900 duration-200 delay-150 ease-in-out transition-all tracking-widest "
                         onClick={clearTransfer}
                     >
                         تغییر نحوه ارسال
@@ -35,7 +35,7 @@ const SelectTransferService = () => {
                 </div>) :
                 (
                     <select
-                        className="ring-CarbonicBlue-500 font-EstedadLight rounded-md py-2 px-4 text-sm"
+                        className="ring-purple-500 font-EstedadLight rounded-md py-2 px-4 text-sm"
                         onChange={handleChange}
                     >
                         <option value="" className="rounded-md font-EstedadLight">

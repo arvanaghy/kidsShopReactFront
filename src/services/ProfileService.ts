@@ -45,7 +45,7 @@ export const ProfileService = {
       toast.success("اطلاعات شما با موفقیت ویرایش شد");
       navigate(redirect ? redirect : "/profile");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
     }
@@ -55,15 +55,25 @@ export const ProfileService = {
     user: any,
     updateUser: (user: any) => void,
     address: any,
+    updateAddress: (address: string) => void,
     isPending: boolean,
     setIsPending: (pending: boolean) => void
   ) => {
     if (isPending) return;
     setIsPending(true);
+
     try {
+      if (!validateAddress(address)) {
+        throw new Error(addressValidationMessage);
+      }
+      if (address == user?.Address) {
+        throw new Error("تغییری در آدرس وجود ندارد");
+      }
       const result = await submitUserAddressUpdate(address, user?.UToken);
       updateUser(result);
+      updateAddress(result?.Address);
     } catch (error) {
+      updateAddress(user?.Address);
       toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);

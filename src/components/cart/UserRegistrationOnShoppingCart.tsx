@@ -1,3 +1,4 @@
+import { useState } from "react";
 import JumpingDots from "@components/JumpingDots";
 import { useUserValidation } from "@hooks/useAuth";
 import { useUserStore } from "@store/UserStore";
@@ -7,14 +8,19 @@ import UserRegistrationFormOnShoppingCart from "@components/cart/UserRegistratio
 const UserRegistrationOnShoppingCart = () => {
   const { user } = useUserStore();
   const { isPending, isUserValidated } = useUserValidation(user);
+  const [isOtpVerified, setIsOtpVerified] = useState(false);
 
-  if (isPending) return <JumpingDots />
+  const handleOtpSuccess = () => {
+    setIsOtpVerified(true);
+  };
 
-  if (isUserValidated) {
+  if (isPending) return <JumpingDots />;
+
+  if (isUserValidated || isOtpVerified) {
     return <UserInfoSectionOnShoppingCart />;
-  } else {
-    return <UserRegistrationFormOnShoppingCart />
   }
-}
 
-export default UserRegistrationOnShoppingCart
+  return <UserRegistrationFormOnShoppingCart onOtpSuccess={handleOtpSuccess} />;
+};
+
+export default UserRegistrationOnShoppingCart;

@@ -86,9 +86,7 @@ export const AuthService = {
         Address: province + " - " + city + " - " + address,
       });
       toast.success(data?.message);
-      if (status == 201) {
-        console.log("sms", data);
-      }
+      console.log("sms", data);
       return status;
     } catch (error: any) {
       toast.error(getErrorMessage(error));
@@ -241,7 +239,7 @@ export const AuthService = {
     try {
       if (
         validateUsername(user.Name) &&
-        validatePhoneNumber(user.Phone_number) &&
+        validatePhoneNumber(user.Mobile) &&
         validateAddress(user.Address)
       ) {
         return true;
@@ -280,6 +278,19 @@ export const AuthService = {
       toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
+    }
+  },
+
+  validateUserOnCart: async (mobile: string, token: string) => {
+    try {
+      await isUserValidApi({
+        phone_number: mobile,
+        UToken: token,
+      });
+      return true;
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+      return false;
     }
   },
 };

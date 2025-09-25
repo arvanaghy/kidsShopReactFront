@@ -22,7 +22,7 @@ const AboutUs: React.FC = () => {
         با ما بیشتر آشنا شوید
       </h1>
       <div className="w-full grid place-items-center
-      grid-cols-12 
+      grid-cols-12
       px-4
       gap-3
       xl:gap-6 xl:px-6

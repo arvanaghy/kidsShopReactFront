@@ -33,8 +33,8 @@ const PaymentDetails = () => {
                 </ul>
             </div>
             <UserRegistrationOnShoppingCart />
-            <OrderDescription />
             <SelectTransferService />
+            <OrderDescription />
             <FactorSum />
             <OnlinePaymentButton />
         </div>

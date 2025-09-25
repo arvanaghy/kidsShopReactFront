@@ -19,7 +19,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
 
   return (
     <div
-      className={`col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-2xl shadow-lg shadow-gray-300 p-2 h-fit lg:sticky ${isNavbarVisible
+      className={`col-span-12 lg:col-span-3 flex flex-col gap-6 justify-start items-start bg-white rounded-lg shadow shadow-gray-150 p-2 h-fit lg:sticky ${isNavbarVisible
         ? "2xl:top-[21.5vh] xl:top-[22vh] lg:top-[19vh]"
         : "2xl:top-[12vh] xl:top-[12vh] lg:top-[9vh]"
         }`}
@@ -27,7 +27,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({
       {cart.length > 0 &&
         cart.find((item) => Math.floor(item?.item?.Code!) === Math.floor(productCode)) ? (
         <div className="w-full text-pretty py-2">
-          <p className="font-EstedadMedium xl:p-2 text-CarbonicBlue-500 leading-relaxed">
+          <p className="font-EstedadMedium text-sm text-center xl:p-2 text-purple-500 leading-relaxed">
             لیست آیتم های این محصول در سبد خرید شما
           </p>
           {(() => {

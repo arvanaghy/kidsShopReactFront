@@ -1,11 +1,13 @@
 import {
   fetchTransferServicesList,
   onlinePaymentAvailability,
+  processOrderAndPayment,
   submitOrderPost,
 } from "@api/cartApi";
 import toast from "react-hot-toast";
 import { AuthService } from "@services/AuthService";
 import { useTransferStore } from "@store/transferStore";
+import { getErrorMessage } from "@utils/getErrorMessage";
 
 export const CartService = {
   getTransfer: async (
@@ -107,35 +109,37 @@ export const CartService = {
         navigate("/");
         throw new Error("سبد خرید خالی است");
       }
-      if (!transfer) {
-        throw new Error("خدمات حمل و نقل انتخاب نشده است");
+      if (!user?.Mobile || !user?.UToken) {
+        navigate("/login?redirect=/shopping-cart");
+        throw new Error("باید ابتدا وارد شوید");
       }
-      // if (!(await AuthService.validateUser(user.Mobile, user.UToken))) {
-      //   navigate("/login?redirect=/shopping-cart");
-      //   throw new Error("باید ابتدا وارد شوید");
-      // }
+      if (!(await AuthService.validateUserOnCart(user.Mobile, user.UToken))) {
+        navigate("/login?redirect=/shopping-cart");
+        throw new Error("کاربر وارد شده معتبر نیست");
+      }
       if (!AuthService.isUserInfoCompleted(user)) {
         navigate("/edit-info?redirect=/shopping-cart");
         throw new Error("اطلاعات کاربری کامل نیست");
       }
-      const payResult = await CartService.submitOrder(
-        CartService.basket(cart),
+      if (!transfer || transfer?.CodeKhadamat == 0) {
+        throw new Error("نحوه ارسال انتخاب نشده است");
+      }
+
+      const redirectUrl = await processOrderAndPayment(
         user.UToken,
+        CartService.basket(cart),
         description,
         transfer
       );
+
       clearCart();
       clearTransfer();
       clearDescription();
-      window.location.href = `${
-        import.meta.env.VITE_API_URL
-      }/v1/checkout-with-order?BearerToken=${user.UToken}&orderCode=${
-        payResult?.Code
-      }`;
+      window.location.href = redirectUrl;
 
-      toast.success("پرداخت شما با موفقیت انجام شد");
+      toast.success("در حال انتقال به درگاه پرداخت");
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+      toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
     }

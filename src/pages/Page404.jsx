@@ -8,7 +8,7 @@ const Page404 = () => {
       <div className="flex items-center justify-start h-screen max-w-screen-xl px-4 mx-auto lg:px-8">
         <div className="flex-row-reverse items-center justify-between flex-1 max-w-lg gap-12 mx-auto lg:max-w-none lg:flex">
           <div className="flex-1 max-w-lg">
-            <img src="/src/assets/images/404.png" alt="404" />
+            <img src="/src/assets/images/secondLogo.png" alt="404" />
           </div>
           <div className="flex-1 max-w-xl mt-12 space-y-9 lg:mt-0">
             <h3 className="text-Purple-500 font-EstedadExtraBold">خطأ 404</h3>

@@ -111,7 +111,7 @@ export const submitUserAddressUpdate = async (address: any, token: string) => {
   try {
     const { data, status } = await axios.post(
       `${import.meta.env.VITE_API_URL}/v2/update-user-address`,
-      address,
+      { address },
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -127,7 +127,7 @@ export const useCartStore = create<CartStore>()(
       removeProductFromCart: (productCode: string) =>
         set((state) => {
           const newCart = state.cart.filter(
-            (item) => item.item.Code !== parseInt(productCode)
+            (item) => parseInt(item.item.Code || "0") !== parseInt(productCode)
           );
           state.cart = newCart;
         }),

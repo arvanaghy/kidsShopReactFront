@@ -13,14 +13,14 @@ const QuickAccessMenusLink: React.FC<QuickAccessMenusLinkProps> = ({ icon, title
     return (
         <Link
             to={link || "/"}
-            className="flex flex-row items-center font-EstedadMedium  gap-4 text-gray-600 group"
+            className="flex flex-row items-center font-EstedadMedium gap-4 text-gray-600 group"
         >
             <FontAwesomeIcon
                 icon={icon}
                 className="text-base md:text-2xl group-hover:text-green-700 duration-300 transition-all ease-in-out"
             />
             <div
-                className=" text-sm xl:text-base 2xl:text-lg
+                className=" text-sm xl:text-base
                       group-hover:text-green-700
                       group-hover:-translate-x-2
                       duration-300 transition-all ease-in-out"

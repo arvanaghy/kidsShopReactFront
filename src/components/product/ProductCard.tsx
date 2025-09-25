@@ -52,7 +52,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
       className={`${colSpan} rounded-lg h-full xl:flex-shrink-0 flex flex-col overflow-hidden group`}
     >
       {/* Top Section: Image and Labels */}
-      <div className="relative flex flex-col justify-center items-center w-full h-64 rounded-t-lg duration-300 ease-in-out transition-all">
+      <div className="relative flex flex-col justify-center items-center w-full  rounded-t-lg duration-300 ease-in-out transition-all">
         <img
           src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName
             }.webp`}
@@ -62,14 +62,14 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
             e.target.onerror = null;
             e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
           }}
-          className="w-full rounded-t-lg object-scale-down h-full"
+          className="w-full rounded-t-lg aspect-square object-fill"
         />
 
-        <h2 className="w-1/2 text-center  z-30 absolute top-0 left-0 text-white font-EstedadLight bg-CarbonicBlue-500/80 px-2  rounded-tl-xl text-xs py-1 lg:text-sm overflow-hidden opacity-80">
+        <h2 className="w-1/2 text-center z-30 absolute top-0 left-0 text-white font-EstedadLight bg-purple-500/80 px-0.5 rounded-tl-xl text-xs py-1 lg:text-sm overflow-hidden opacity-80">
           <p className="w-full  line-clamp-1">{item?.GName}</p>
         </h2>
         <h2
-          className="text-center w-1/2  z-30 absolute top-0 text-white right-0 font-EstedadLight bg-CarbonicBlue-500/80 line-clamp-1 px-1.5  text-xs lg:text-sm py-1
+          className="text-center w-1/2  z-30 absolute top-0 text-white right-0 font-EstedadLight bg-purple-500/80 line-clamp-1 px-0.5  text-xs lg:text-sm py-1
          opacity-80
         "
         >
