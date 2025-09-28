@@ -1,11 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose, faEraser, faFilter } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import ProductSearch from "@components/filters/ProductSearch";
 import SizeFilter from "@components/filters/SizeFilter";
 import ColorFilter from "@components/filters/ColorFilter";
-import { buildQueryString } from "@utils/queryUtils";
 import { useFilterNavigation } from "@hooks/useFilters";
 
 interface MobileFilterModalProps {
@@ -35,7 +33,6 @@ const MobileFilterModal = ({
     colors,
     navigation,
 }: MobileFilterModalProps) => {
-    const navigate = useNavigate();
     const mobileFilterRef = useRef<HTMLDivElement>(null);
 
     const { removeFilters, applyFilters } = useFilterNavigation(

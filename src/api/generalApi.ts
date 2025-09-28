@@ -4,7 +4,7 @@ import {
   CompanyPropsResponse,
   AboutProps,
   AboutPropsResponse,
-} from "@types/CompanyType";
+} from "@definitions/CompanyType";
 
 export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
   try {

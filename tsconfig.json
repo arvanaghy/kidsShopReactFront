@@ -10,7 +10,7 @@
       "@hooks/*": ["hooks/*"],
       "@context/*": ["context/*"],
       "@api/*": ["api/*"],
-      "@types/*": ["types/*"],
+      "@definitions/*": ["definitions/*"],
       "@store/*": ["store/*"],
       "@services/*": ["services/*"],
       "@entity/*": ["entity/*"]

@@ -1,24 +1,12 @@
 import { useCompanyInfo } from "@hooks/useGeneralSetting";
 import JumpingDots from "@components/JumpingDots";
-interface ContactInfoType {
-    title: string;
-    value: string;
-}
-interface CompanyInfoType {
-    Address: string;
-    Phone: string;
-    Email: string;
-    Instagram: string;
-    Telegram: string;
-    Whatsapp: string;
-    Comment: string;
-}
+import { companyInfoResponse, ContactKeyValues } from "@definitions/CompanyType";
 
 const ContactInfo = () => {
-    const { companyInfo, isPending } = useCompanyInfo<CompanyInfoType>();
+    const { companyInfo, isPending }: companyInfoResponse = useCompanyInfo();
     if (isPending) return <JumpingDots />;
 
-    const contactsInfoArray = [
+    const contactsInfoArray: ContactKeyValues[] = [
         {
             title: 'شماره تماس',
             value: companyInfo.Phone
@@ -31,10 +19,10 @@ const ContactInfo = () => {
 
     return (
         <ul className="flex flex-col p-4 space-y-2 font-EstedadMedium bg-gray-50/80 rounded-xl  ">
-            {contactsInfoArray.map((item: ContactInfoType, index: number) => (
-                <li key={index} className="text-sm xl:text-xl leading-relaxed text-CarbonicBlue-500">
+            {contactsInfoArray.map((item: ContactKeyValues, index: number) => (
+                <li key={index} className="text-sm xl:text-base leading-relaxed text-CarbonicBlue-500">
                     <span className="font-bold">{item.title}:</span>
-                    <span className="text-black text-sm xl:text-lg px-1.5">
+                    <span className="text-black text-sm xl:text-base px-1.5">
                         {item.value}
                     </span>
                 </li>

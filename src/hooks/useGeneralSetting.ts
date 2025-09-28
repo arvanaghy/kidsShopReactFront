@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { CompanyProps } from "@types/CompanyType";
+import { CompanyProps } from "@definitions/CompanyType";
 import { GeneralSettingService } from "@services/GeneralSettingService";
-import { AboutProps } from "@types/CompanyType";
+import { AboutProps } from "@definitions/CompanyType";
 
 export const useAboutUsInfo = () => {
   const [aboutUsInfo, setAboutUsInfo] = useState<AboutProps[]>([]);

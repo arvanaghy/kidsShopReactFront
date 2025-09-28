@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import toast from "react-hot-toast";
-import { Product, ProductSizeColor } from "@types/StoreType";
+import { Product, ProductSizeColor } from "@definitions/StoreType";
 import { getErrorMessage } from "@utils/getErrorMessage";
 import { toPersianDigits } from "@utils/numeralHelpers";
 

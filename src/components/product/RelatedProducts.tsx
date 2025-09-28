@@ -1,5 +1,5 @@
 import ProductCard from "@components/product/ProductCard";
-import { Product } from "@types/ProductType";
+import { Product } from "@definitions/ProductType";
 
 interface RelatedProductsProps {
   products: Product[];

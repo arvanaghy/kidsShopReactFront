@@ -8,7 +8,7 @@ import CartSidebar from "@components/product/CartSidebar";
 import RelatedProducts from "@components/product/RelatedProducts";
 import OfferedProducts from "@components/product/OfferedProducts";
 import Loading from "@components/Loading";
-import { ProductData } from "@types/ProductType";
+import { ProductData } from "@definitions/ProductType";
 
 const Product = () => {
   const { productCode } = useParams<{ productCode: string }>();

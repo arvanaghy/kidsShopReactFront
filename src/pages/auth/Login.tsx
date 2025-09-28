@@ -27,7 +27,7 @@ const Login = () => {
       <Policy title="قوانین ورود" policy={policy} />
       <div className="col-span-12 md:col-span-6 w-full grid grid-cols-1 items-center text-gray-900 justify-center  ">
         {isUserValidated ? <LoggedUser /> : (<div
-          className="w-fit mx-auto rounded-md p-4 md:p-12 bg-gray-100 grid grid-cols-1 items-center justify-center text-center space-y-8 
+          className="w-fit mx-auto rounded-md p-4 md:p-12 bg-gray-100 grid grid-cols-1 items-center justify-center text-center space-y-8
           shadow-md shadow-black/60
           "
         >

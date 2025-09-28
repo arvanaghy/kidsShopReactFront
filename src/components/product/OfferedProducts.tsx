@@ -1,8 +1,8 @@
 import ProductCard from "@components/product/ProductCard";
-import { Product } from "@types/ProductType";
+import { ProductProps } from "@definitions/ProductType";
 
 interface OfferedProductsProps {
-  products: Product[];
+  products: ProductProps[];
 }
 
 const OfferedProducts: React.FC<OfferedProductsProps> = ({ products }) => {

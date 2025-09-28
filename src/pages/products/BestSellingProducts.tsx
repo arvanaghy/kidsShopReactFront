@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "@components/product/ProductCard";
 import Loading from "@components/Loading";
@@ -9,6 +9,7 @@ import Pagination from "@components/product/Pagination";
 import MobileFilterModal from "@components/product/filter/MobileFilterModal";
 import MobileFilterToggle from "@components/product/filter/MobileFilterToggle";
 import { useFilters } from "@hooks/useFilters";
+import SortFilters from "@components/product/filter/SortFilters";
 
 const BestSellingProducts = () => {
   const [searchParams] = useSearchParams();
@@ -33,9 +34,7 @@ const BestSellingProducts = () => {
     sort_price,
   });
 
-
   const [isModal, setIsModal] = useState(false);
-
 
   if (isPending) return <Loading />;
 
@@ -68,6 +67,13 @@ const BestSellingProducts = () => {
         navigation="best-selling-products"
       />
       <div className="w-full col-span-12 md:col-span-8 xl:col-span-9 grid grid-cols-12 md:order-2 space-y-6 order-1">
+        <SortFilters
+          sort_price={sort_price}
+          searchPhrase={searchPhrase}
+          size={size}
+          color={color}
+          navigation="best-selling-products"
+        />
         <div className="w-full col-span-12 bg-Cream-500 p-6 flex flex-col">
           <div className="w-full grid grid-cols-12 gap-6">
             {bestSellingProducts?.data?.length > 0 ? (

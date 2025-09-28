@@ -1,8 +1,8 @@
-import { AboutInfoType } from "@types/AboutInfoType"
-const AboutUsInfoCard: React.FC<AboutInfoType> = ({  Title, Comment  }) => {
-    return (
-        <div
-            className="border
+import { AboutProps } from "@definitions/CompanyType";
+const AboutUsInfoCard: React.FC<AboutProps> = ({ Title, Comment }) => {
+  return (
+    <div
+      className="border
               flex flex-col justify-between items-center w-full h-full bg-white rounded-2xl
               border-gray-500/40
               col-span-12
@@ -12,11 +12,9 @@ const AboutUsInfoCard: React.FC<AboutInfoType> = ({  Title, Comment  }) => {
               p-2
               lg:p-4
               xl:p-6
-
               overflow-scroll
-              "
-        >
-            <span className="
+              ">
+      <span className="
               text-base
               sm:text-lg
               md:text-lg
@@ -28,9 +26,9 @@ const AboutUsInfoCard: React.FC<AboutInfoType> = ({  Title, Comment  }) => {
               truncate
 
               whitespace-break-spaces ">
-                {Title}
-            </span>
-            <p className="
+        {Title}
+      </span>
+      <p className="
               truncate
               p-4
               whitespace-break-spaces
@@ -42,12 +40,12 @@ const AboutUsInfoCard: React.FC<AboutInfoType> = ({  Title, Comment  }) => {
               2xl:text-lg
               overflow-hidden
                font-EstedadMedium text-justify text-gray-500 leading-relaxed
-               text-pretty 
+               text-pretty
               ">
-                {Comment}
-            </p>
-        </div>
-    )
+        {Comment}
+      </p>
+    </div>
+  )
 }
 
 export default AboutUsInfoCard

@@ -42,7 +42,7 @@ const Categories = () => {
               "
           >
             {categories &&
-              categories.map((item, idx) => (
+              categories.map((item : any, idx : number) => (
                 <CategorySquareCard key={idx} item={item} />
               ))}
           </div>

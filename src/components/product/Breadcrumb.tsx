@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faHouse } from "@fortawesome/free-solid-svg-icons";
-import { Product } from "@types/ProductType";
+import { ProductProps } from "@definitions/ProductType";
 
 interface BreadcrumbProps {
-  product: Product;
+  product: ProductProps;
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ product }) => {

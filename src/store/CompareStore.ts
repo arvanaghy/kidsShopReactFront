@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import toast from "react-hot-toast";
-import { Product } from "@types/StoreType";
+import { Product } from "@definitions/StoreType";
 
 interface CompareStore {
   compareList: Product[];

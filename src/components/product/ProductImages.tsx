@@ -5,10 +5,10 @@ import "swiper/css/scrollbar";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
-import { ProductImage } from "@types/ProductType";
+import { ProductImageProps } from "@definitions/ProductType";
 
 interface ProductImagesProps {
-    images: ProductImage[];
+    images: ProductImageProps[];
     productName: string;
     setImageModal: (modal: { isOpen: boolean; image: string | null }) => void;
 }

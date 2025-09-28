@@ -1,6 +1,6 @@
 
 import { useAboutUsInfo } from "@hooks/useGeneralSetting";
-import { AboutProps } from "@types/CompanyType";
+import { AboutProps } from "@definitions/CompanyType";
 import AboutUsInfoCard from "@components/aboutUs/AboutUsInfoCard";
 import JumpingDots from "@components/JumpingDots";
 

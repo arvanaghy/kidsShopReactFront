@@ -50,7 +50,7 @@ export interface Order {
   Comment: string;
 }
 
-interface OrderState {
+export interface OrderState {
   order: Order;
   updateOrder: (order: Order) => void;
   clearOrder: () => void;

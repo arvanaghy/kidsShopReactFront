@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist, PersistOptions } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
-import { Order, OrderState } from "@types/StoreType";
+import { Order, OrderState } from "@definitions/StoreType";
 
 const STORAGE_KEY = "KidsShop_order";
 

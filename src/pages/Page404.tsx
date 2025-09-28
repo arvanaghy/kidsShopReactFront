@@ -1,5 +1,6 @@
 import { faArrowsTurnRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toPersianDigits } from "@utils/numeralHelpers";
 import { Link } from "react-router-dom";
 
 const Page404 = () => {
@@ -11,7 +12,7 @@ const Page404 = () => {
             <img src="/src/assets/images/secondLogo.png" alt="404" />
           </div>
           <div className="flex-1 max-w-xl mt-12 space-y-9 lg:mt-0">
-            <h3 className="text-Purple-500 font-EstedadExtraBold">خطأ 404</h3>
+            <h3 className="text-Purple-500 font-EstedadExtraBold">خطأ {toPersianDigits(404)}</h3>
             <p className="text-xl lg:text-4xl text-gray-800 font-EstedadExtraBold">
               صفحه مورد نظر یافت نشد
             </p>
