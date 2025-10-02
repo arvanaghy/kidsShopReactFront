@@ -54,7 +54,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full  rounded-t-lg duration-300 ease-in-out transition-all">
         <img
-          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName
+          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.GCode}/${item?.SCode}/${item?.PicName
             }.webp`}
           alt={item?.Name}
           loading="lazy"

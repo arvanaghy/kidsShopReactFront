@@ -60,8 +60,7 @@ const ConfirmedOrderDetails = () => {
                     {orderDetail.Name}
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {Math.floor(orderDetail.Tedad)} {orderDetail.Vahed},{" "}
-                    {Math.floor(orderDetail.KTedad)} {orderDetail.KVahed}
+                    {Math.floor(orderDetail.Tedad)} {orderDetail.Vahed}
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {formatCurrencyDisplay(orderDetail.Fee)} <Unit />

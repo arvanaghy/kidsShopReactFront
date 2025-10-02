@@ -1,5 +1,4 @@
 import axios from "axios";
-import toast from "react-hot-toast";
 
 export const fetchTransferServicesList = async () => {
   try {
@@ -43,18 +42,22 @@ export const submitOrderPost = async (token: string, info: any) => {
   }
 };
 
-export const processOrderAndPayment = async (
-  token: string,
-  orderData: any,
-  description: string,
-  transferService: any
-) => {
+export const processOrderAndPayment = async ({
+  token,
+  orderData,
+  description,
+  transferService,
+}: {
+  token: string;
+  orderData: any;
+  description: string;
+  transferService: any;
+}) => {
   try {
     const info = {
       products: orderData,
       description,
       CodeKhadamat: transferService?.CodeKhadamat || 0,
-      MKhadamat: transferService?.Mablag || 0,
     };
     const { data, status } = await axios.post(
       `${import.meta.env.VITE_API_URL}/v2/process-order-and-payment`,
@@ -66,6 +69,7 @@ export const processOrderAndPayment = async (
       }
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
+    console.log('processOrderAndPayment', data);
     return data.result.redirect_url;
   } catch (error: any) {
     throw error;

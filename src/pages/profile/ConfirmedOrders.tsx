@@ -1,5 +1,5 @@
 import { useUserStore } from "@store/UserStore";
-import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
+import { dateToPersianDigits, formatCurrencyDisplay } from "@utils/numeralHelpers";
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import { useSearchParams } from "react-router-dom";
 import Loading from "@components/Loading";
@@ -66,7 +66,7 @@ const ConfirmedOrders = () => {
                 </td>
                 <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                   <span className="flex items-center justify-center gap-2">
-                    {toPersianDigits(orderItem?.SDate)}
+                    {dateToPersianDigits(orderItem?.SDate)}
                   </span>
                 </td>
                 <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">

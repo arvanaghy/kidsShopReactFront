@@ -27,3 +27,9 @@ export function toPersianDigits(amount: any): string {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return amount.toString().replace(/\d/g, (d) => persianDigits[parseInt(d)]);
 }
+
+
+export function dateToPersianDigits(dateString : string) : string {
+  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+  return dateString.replace(/\d/g, (digit) => persianDigits[digit]);
+}

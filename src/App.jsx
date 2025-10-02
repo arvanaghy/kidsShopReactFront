@@ -27,6 +27,7 @@ import Success from "@pages/paymentResults/Success";
 import Failed from "@pages/paymentResults/Failed";
 import SuccessMobile from "@pages/paymentResults/SuccessMobile";
 import FailedMobile from "@pages/paymentResults/FailedMobile";
+import ConfirmedOrderDetails from "@pages/profile/ConfirmedOrderDetails";
 
 function App() {
   const router = createBrowserRouter([
@@ -54,6 +55,7 @@ function App() {
         { path: "/edit-info", element: <EditInfo /> },
         { path: "/invoice", element: <Invoice /> },
         { path: "/confirmed-orders", element: <ConfirmedOrders /> },
+        { path: "/confirmed-order-details/:orderCode", element: <ConfirmedOrderDetails /> },
         { path: "/faq", element: <FAQ /> },
         { path: "/web-payment", element: <WebPayment /> },
         { path: "/payment-success/:transID", element: <Success /> },

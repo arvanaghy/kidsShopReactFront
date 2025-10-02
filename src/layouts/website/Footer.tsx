@@ -16,6 +16,8 @@ import SocialMediaLink from "@components/footer/SocialMediaLink";
 import Copyright from "@components/footer/Copyright";
 import QuickAccessMenusLink from "@components/footer/QuickAccessMenusLink";
 import ScrollToTop from "@components/footer/ScrollToTop";
+import UsefulLinks from "@components/footer/UsefulLinks";
+import JumpingDots from "@components/JumpingDots";
 
 const quickAccessLinks = [
   { icon: faCertificate, title: "محصولات ویژه کیدزشاپ", link: "/offered-products" },
@@ -26,9 +28,15 @@ const quickAccessLinks = [
   { icon: faAddressBook, title: "تماس با ما", link: "/contact-us" },
 ];
 
+const usefulLinks = [
+  { title: "رهگیری سفارش پستی", link: "https://tracking.post.ir/" },
+  { title: "رهگیری سفارش  تیپاکس ", link: "https://tipaxco.com/tracking" },
+];
+
+
 const Footer: React.FC = () => {
   const { companyInfo, isPending } = useCompanyInfo();
-  if (isPending) return <>در حال بارگذاری</>;
+  if (isPending) return <JumpingDots />;
 
   return (
     <footer className="w-full bg-gray-100 text-gray-700">
@@ -36,7 +44,7 @@ const Footer: React.FC = () => {
         <ScrollToTop />
         <div className="my-2 md:my-3 border-b-2 border-gray-300"></div>
         <div className="grid grid-cols-12 gap-2 md:gap-6 lg:py-2">
-          <div className="col-span-12 md:col-span-6 p-3 space-y-6">
+          <div className="col-span-12 md:col-span-4 p-3 space-y-6">
             <p className="font-EstedadExtraBold text-sm lg:text-base xl:text-lg py-5 tracking-wide">
               پشتیبانی {toPersianDigits(9)} تا {toPersianDigits(17)} در ایتا و تلگرام
             </p>
@@ -61,10 +69,16 @@ const Footer: React.FC = () => {
               )}
             </div>
           </div>
-          <div className="col-span-12 md:col-span-6 p-3 space-y-6">
+          <div className="col-span-12 md:col-span-4 p-3 space-y-6">
             <h3 className="text-sm lg:text-lg 2xl:text-2xl font-EstedadExtraBold">دسترسی سریع</h3>
             {quickAccessLinks.map((link) => (
               <QuickAccessMenusLink key={link.link} icon={link.icon} title={link.title} link={link.link} />
+            ))}
+          </div>
+          <div className="col-span-12 md:col-span-4 p-3 space-y-6">
+            <h3 className="text-sm lg:text-lg 2xl:text-2xl font-EstedadExtraBold">پیوند های مفید</h3>
+            {usefulLinks.map((link) => (
+              <UsefulLinks key={link.link} title={link.title} link={link.link} />
             ))}
           </div>
         </div>

@@ -81,10 +81,16 @@ export const CartService = {
 
   basket: (cart: any) => {
     try {
-      return cart.map((product: any) => ({
-        KCode: product?.item?.Code,
-        Basket: product?.basket,
-      }));
+      const result = cart.flatMap((cartItem: any) =>
+        cartItem.basket.map((basketItem: any) => ({
+          KCode: basketItem.feature.CodeKala,
+          Tedad: basketItem.quantity,
+          ColorCode: basketItem.feature.ColorCode,
+          RGB: basketItem.feature.RGB,
+          SizeNum: basketItem.feature.SizeNum,
+        }))
+      );
+      return result;
     } catch (error) {
       return [];
     }
@@ -124,13 +130,13 @@ export const CartService = {
       if (!transfer || transfer?.CodeKhadamat == 0) {
         throw new Error("نحوه ارسال انتخاب نشده است");
       }
-
-      const redirectUrl = await processOrderAndPayment(
-        user.UToken,
-        CartService.basket(cart),
+      const orderData = CartService.basket(cart);
+      const redirectUrl = await processOrderAndPayment({
+        token: user.UToken,
+        orderData: orderData,
         description,
-        transfer
-      );
+        transferService: transfer,
+      });
 
       clearCart();
       clearTransfer();
