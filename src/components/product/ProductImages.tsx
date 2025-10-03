@@ -8,12 +8,16 @@ import "swiper/css/free-mode";
 import { ProductImageProps } from "@definitions/ProductType";
 
 interface ProductImagesProps {
+    GCode?: number;
+    SCode?: number;
     images: ProductImageProps[];
     productName: string;
     setImageModal: (modal: { isOpen: boolean; image: string | null }) => void;
 }
 
 const ProductImages: React.FC<ProductImagesProps> = ({
+    GCode,
+    SCode,
     images,
     productName,
     setImageModal,
@@ -27,13 +31,13 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                         {images.map((imageItem, index) => (
                             <img
                                 key={index}
-                                src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
+                                src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${GCode}/${SCode}/${imageItem.PicName}.webp`}
                                 alt={productName}
                                 className="col-span-3 w-full object-scale-down rounded-xl hover:cursor-pointer hover:scale-105 hover:grayscale transition-all duration-300 ease-in-out aspect-square"
                                 onClick={() =>
                                     setImageModal({
                                         isOpen: true,
-                                        image: `${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`,
+                                        image: `${import.meta.env.VITE_CDN_URL}/products-image/webp/${GCode}/${SCode}/${imageItem.PicName}.webp`,
                                     })
                                 }
                             />
@@ -54,7 +58,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                         {images.map((imageItem, index) => (
                             <SwiperSlide key={index}>
                                 <img
-                                    src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${imageItem.PicName}.webp`}
+                                    src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${GCode}/${SCode}/${imageItem.PicName}.webp`}
                                     alt={productName}
                                     className="w-full object-scale-down rounded-xl bg-gray-100 aspect-square"
                                 />

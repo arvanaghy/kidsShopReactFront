@@ -1,62 +1,43 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import { useUserStore } from "@store/UserStore";
-import axios from "axios";
 import Loading from "@components/Loading";
-import toast from "react-hot-toast";
 import { formatCurrencyDisplay } from "@utils/numeralHelpers";
-import { toPersianDigits } from "@utils/numeralHelpers";
 import Unit from "@components/Unit";
+import ProfilePagination from "@components/profile/ProfilePagination";
+import { RGBtoHexConverter } from "@utils/RGBtoHexConverter";
+import { useUnconfirmedOrderDetails } from "@hooks/useProfile";
+
+interface OrderItem {
+  Code: number;
+  Name: string;
+  Tedad: number;
+  Vahed: number;
+  Fee: number;
+  JamKol: number;
+  Comment: string;
+  SizeNum: string | number;
+  ColorName: string;
+  RGB: string;
+}
 
 const ProformaDetails = () => {
-  const { orderCode } = useParams();
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
+  const { orderCode } = useParams() || "0";
   const { user } = useUserStore();
-  const [isloading, setIsloading] = useState(false);
-  const [orderDetail, setOrderDetail] = useState([]);
-  const [detailsLink, setDetailsLink] = useState([]);
+  const replacement = { path: "/proforma-details", url: `${import.meta.env.VITE_API_URL}/v1/list-past-orders-products` };
 
-  const getOrderDetails = async (url) => {
-    if (!user?.UToken) return;
-    if (isloading) return;
-    try {
-      setIsloading(true);
-      const { data, status } = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${user.UToken}`,
-          "Cache-Control": "no-cache",
-          "Content-Type": "application/json",
-        },
-      });
-      if (status !== 201) throw new Error(data?.message);
-      setOrderDetail(data?.result?.data);
-      setDetailsLink(data?.result?.links);
-    } catch (error) {
-      toast.error(
-        "جزییات سفارش " + (error?.response?.data?.message || error?.message) ||
-          "خطا در اتصال"
-      );
-    } finally {
-      setIsloading(false);
-    }
-  };
+  const { unconfirmedOrderDetailsList, unconfirmedOrderDetailsLinks, isPending } =
+    useUnconfirmedOrderDetails(user, orderCode, page);
 
-  useEffect(() => {
-    if (!orderCode) return;
-    if (!user?.UToken) return;
-    getOrderDetails(
-      `${import.meta.env.VITE_API_URL}/v1/list-unverified-orders-products/${Math.floor(
-        orderCode
-      )}?page=1`
-    );
-  }, [orderCode]);
+  if (isPending) return <Loading />;
 
-  if (isloading) return <Loading />;
 
   return (
     <ProfileLayout>
-      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start">
+      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start font-EstedadLight">
         <p className="text-lg md:text-xl font-EstedadExtraBold">
           جزییات پیش فاکتور
         </p>
@@ -64,38 +45,72 @@ const ProformaDetails = () => {
           {orderCode && formatCurrencyDisplay(orderCode)}
         </p>
       </div>
-
       <div className="w-full overflow-x-auto py-4">
         <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg">
           <thead>
-            <tr className="bg-CarbonicBlue-500 text-white">
-              <th className="p-1.5 lg:p-4 text-right text-sm">نام</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">تعداد</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">فی</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">جمع</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">توضیحات</th>
+            <tr className="bg-CarbonicBlue-500 text-white font-EstedadLight">
+              <th className="p-1.5 lg:p-4 text-center text-sm">نام</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">تعداد</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">فی</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">جمع</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">توضیحات</th>
             </tr>
           </thead>
           <tbody>
-            {orderDetail &&
-              orderDetail?.length > 0 &&
-              orderDetail.map((orderDetail, idx) => (
+            {unconfirmedOrderDetailsList &&
+              unconfirmedOrderDetailsList?.length > 0 &&
+              unconfirmedOrderDetailsList.map((orderDetail: OrderItem, idx: number) => (
                 <tr
                   key={idx}
-                  className="border-b cursor-pointer hover:bg-stone-200 transition duration-300 ease-in-out"
+                  className="border-b cursor-pointer hover:bg-stone-200 transition duration-300 ease-in-out font-EstedadLight"
                 >
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {orderDetail?.Name}
+                    <div className="flex  flex-row items-center justify-center gap-1.5 ">
+                      <p className="font-EstedadMedium">
+                        {orderDetail?.Name}
+                      </p>
+                      <p>
+                        سایز
+                      </p>
+                      <p className="font-EstedadMedium">
+                        {orderDetail?.SizeNum}
+                      </p>
+
+                      <p>
+                        رنگ
+                      </p>
+                      <p
+                        className="w-5 h-5 rounded-full"
+                        style={{
+                          backgroundColor: RGBtoHexConverter(
+                            orderDetail?.RGB
+                          ),
+                        }}
+                      ></p>
+                      <p className="font-EstedadMedium">
+                        {orderDetail?.ColorName}
+                      </p>
+
+                    </div>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {Math.floor(orderDetail?.Tedad)} {orderDetail?.Vahed},{" "}
-                    {Math.floor(orderDetail?.KTedad)} {orderDetail?.KVahed}
+                    <div className=" flex flex-row items-center justify-center font-EstedadMedium">
+                      {formatCurrencyDisplay(Math.floor(orderDetail?.Tedad))}
+                      <p className="text-sm p-1.5 font-EstedadLight">
+                        {orderDetail?.Vahed}
+                      </p>
+                    </div>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {formatCurrencyDisplay(orderDetail?.Fee)} <Unit />
+                    <p className="flex flex-row items-center justify-center">
+                      {formatCurrencyDisplay(orderDetail?.Fee)} <Unit />
+                    </p>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
-                    {formatCurrencyDisplay(orderDetail?.JamKol)} <Unit />
+                    <p className="flex flex-row items-center justify-center">
+
+                      {formatCurrencyDisplay(orderDetail?.JamKol)} <Unit />
+                    </p>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     {orderDetail?.Comment ? orderDetail?.Comment : "-"}
@@ -107,32 +122,7 @@ const ProformaDetails = () => {
       </div>
 
       {/* pagination */}
-      <div className="flex flex-row items-center justify-center mx-auto flex-warp py-5">
-        {detailsLink?.length > 0 &&
-          detailsLink.map((link, idx) => (
-            <button
-              key={idx}
-              disabled={link.active}
-              onClick={() => {
-                link?.url ? getOrderDetails(link?.url) : null;
-              }}
-              className={`
-                  rounded-md cursor-pointer
-                  m-1 text-xs p-1.5
-                  lg:px-4 lg:py-2 md:m-2 ${
-                    link.active
-                      ? "bg-CarbonicBlue-500 text-white"
-                      : "bg-gray-300 text-black"
-                  }`}
-            >
-              {link.label === "&laquo; Previous"
-                ? "قبلی"
-                : link.label === "Next &raquo;"
-                ? " بعدی"
-                : link.label}
-            </button>
-          ))}
-      </div>
+      <ProfilePagination links={unconfirmedOrderDetailsLinks} replacement={replacement} />
     </ProfileLayout>
   );
 };

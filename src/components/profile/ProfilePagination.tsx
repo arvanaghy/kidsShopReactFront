@@ -1,3 +1,4 @@
+import { toPersianDigits } from "@utils/numeralHelpers";
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -34,7 +35,7 @@ const ProfilePagination: FC<ProfilePaginationProps> = ({
     };
 
     return (
-        <div className="flex flex-row items-center justify-center mx-auto flex-wrap py-5 gap-2">
+        <div className="flex flex-row items-center justify-center mx-auto flex-wrap py-5 gap-2 font-EstedadLight">
             {links.map((link) => {
                 const label =
                     link.label === "&laquo; Previous"
@@ -57,7 +58,7 @@ const ProfilePagination: FC<ProfilePaginationProps> = ({
               ${!link.url || link.active ? "cursor-not-allowed opacity-50" : "cursor-pointer"}
             `}
                     >
-                        {label}
+                        {toPersianDigits(label)}
                     </button>
                 );
             })}

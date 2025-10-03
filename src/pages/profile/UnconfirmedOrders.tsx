@@ -1,127 +1,95 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import axios from "axios";
+
 import { useUserStore } from "@store/UserStore";
-import { formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
+import { dateToPersianDigits, formatCurrencyDisplay } from "@utils/numeralHelpers";
 import ProfileLayout from "@layouts/user/ProfileLayout";
-import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Loading from "@components/Loading";
 import Unit from "@components/Unit";
+import { useNavigateUnconfirmedOrderDetails, useUnconfirmedOrders } from "@hooks/useProfile";
+import ProfilePagination from "@components/profile/ProfilePagination";
+
+interface OrderItem {
+  Code: number;
+  CodeFactor: number;
+  Tedad: number;
+  Vahed: string;
+  SDate: string;
+  JamKol: number;
+  JamKK: number;
+}
 
 const UnconfirmedOrders = () => {
+
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("page")) || 1;
   const { user } = useUserStore();
-  const [orderList, setOrderList] = useState([]);
-  const [isOrderloading, setIsOrderloading] = useState(false);
-  const [links, setLinks] = useState([]);
-  const [totalOrder, setTotalOrder] = useState(0);
+  const replacement = { path: "/unconfirmed-orders", url: `${import.meta.env.VITE_API_URL}/v1/list-past-orders` };
 
-  const fetchOrders = async (
-    orderUrl = `${import.meta.env.VITE_API_URL}/v1/list-unverified-orders?page=1`
-  ) => {
-    if (isOrderloading) return;
+  const {
+    unconfirmedOrdersTotal,
+    isPending,
+    unconfirmedOrdersList,
+    unconfirmedOrdersLinks,
+  } = useUnconfirmedOrders(user, page);
 
-    try {
-      setIsOrderloading(true);
+  const { navigateToDetails, isPending: isPendingDetails } = useNavigateUnconfirmedOrderDetails();
 
-      const { data, status } = await axios.get(orderUrl, {
-        headers: { Authorization: `Bearer ${user?.UToken}`, cache: "no-cache" },
-      });
-      if (status !== 201) throw new Error(data?.message);
-      setOrderList(data?.result?.data);
-      setTotalOrder(data?.result?.total);
-      setLinks(data?.result?.links);
-    } catch (error) {
-      toast.error(
-        " دریافت سفارشات : " + error?.response?.data?.message ||
-          error?.message ||
-          "خطا در اتصال"
-      );
-    } finally {
-      setIsOrderloading(false);
-    }
-  };
+  const handleNavigateToDetails = (orderCode: number) => {
+    if (isPendingDetails) return;
+    navigateToDetails(orderCode);
+  }
 
-  const navigateTo = useNavigate();
+  if (isPending) return <Loading />;
 
-  const getDetails = async (orderCode) => {
-    if (!orderCode) return;
-    navigateTo(`/proforma-details/${Math.floor(orderCode)}`);
-    return;
-  };
-
-  useEffect(() => {
-    if (user?.UToken === "") {
-      toast.error("برای مشاهده این صفحه باید وارد شوید");
-      navigateTo("/Login");
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (user?.UToken !== "") {
-      fetchOrders(
-        `${import.meta.env.VITE_API_URL}/v1/list-unverified-orders?page=1`
-      );
-    }
-  }, [user]);
-
-  if (isOrderloading) return <Loading />;
 
   return (
     <ProfileLayout>
-      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start">
+      <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start font-EstedadLight">
         <p className="text-lg md:text-xl font-EstedadExtraBold">
-          سفارشات تایید نشده
+          سفارشات در صف انتظار (پیش فاکتور)
         </p>
         <p className="text-lg md:text-xl font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
-          {totalOrder && formatCurrencyDisplay(totalOrder)}
+          {unconfirmedOrdersTotal && formatCurrencyDisplay(unconfirmedOrdersTotal)}
         </p>
       </div>
 
       <div className="w-full overflow-x-auto py-4">
         <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg lg:text-xl text-md">
           <thead>
-            <tr className="bg-CarbonicBlue-500 text-white">
-              <th className="p-1.5 lg:p-4 text-right text-sm">کد پیش فاکتور</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">تاریخ</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">تعداد</th>
-              <th className="p-1.5 lg:p-4 text-right text-sm">مبلغ</th>
+            <tr className="bg-CarbonicBlue-500 text-white font-EstedadLight">
+              <th className="p-1.5 lg:p-4 text-center text-sm">کد پیش فاکتور</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">تاریخ</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">تعداد</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">مبلغ</th>
             </tr>
           </thead>
           <tbody>
-            {orderList?.length > 0 &&
-              orderList.map((orderItem, idx) => (
+            {unconfirmedOrdersList?.length > 0 &&
+              unconfirmedOrdersList.map((orderItem: OrderItem, idx: number) => (
                 <tr
                   key={idx}
-                  onClick={() => getDetails(orderItem?.Code)}
-                  className="border-b cursor-pointer hover:bg-stone-200 transition duration-300 ease-in-out"
+                  onClick={() => handleNavigateToDetails(orderItem?.Code)}
+                  className="border-b cursor-pointer hover:bg-stone-200 transition duration-300 ease-in-out font-EstedadLight"
                 >
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
-                      {formatCurrencyDisplay(Math.floor(orderItem?.CodeFactor))}
+                      {formatCurrencyDisplay(Math.floor(orderItem?.Code))}
                     </span>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
-                      {toPersianDigits(orderItem?.SDate)}
+                      {dateToPersianDigits(orderItem?.SDate)}
                     </span>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
                       {formatCurrencyDisplay(orderItem?.Tedad)}
                       <span className="text-xs">{orderItem?.Vahed}</span>
-                      {orderItem?.KTedad > 0 && (
-                        <span className="flex items-center justify-center gap-2">
-                          {formatCurrencyDisplay(orderItem?.KTedad)}
-                          <span className="text-xs">{orderItem?.KVahed}</span>
-                        </span>
-                      )}
                     </span>
                   </td>
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
-                      {formatCurrencyDisplay(orderItem?.JamKol)} <Unit />
+                      {formatCurrencyDisplay(orderItem?.JamKK)} <Unit />
                     </span>
                   </td>
                 </tr>
@@ -131,32 +99,8 @@ const UnconfirmedOrders = () => {
       </div>
 
       {/* pagination */}
-      <div className="flex flex-row items-center justify-center mx-auto flex-warp py-5">
-        {links?.length > 3 &&
-          links.map((link, idx) => (
-            <button
-              key={idx}
-              disabled={link.active}
-              onClick={() => {
-                link?.url ? fetchOrders(link?.url) : null;
-              }}
-              className={`
-                rounded-md cursor-pointer
-                m-1 text-xs p-1.5
-                lg:px-4 lg:py-2 md:m-2 ${
-                  link.active
-                    ? "bg-CarbonicBlue-500 text-white"
-                    : "bg-gray-300 text-black"
-                }`}
-            >
-              {link.label === "&laquo; Previous"
-                ? "قبلی"
-                : link.label === "Next &raquo;"
-                ? " بعدی"
-                : link.label}
-            </button>
-          ))}
-      </div>
+      <ProfilePagination links={unconfirmedOrdersLinks} replacement={replacement} />
+
     </ProfileLayout>
   );
 };

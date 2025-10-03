@@ -39,6 +39,8 @@ const Product = () => {
       <div className="relative flex flex-col justify-around lg:justify-between w-full">
         <div className="grid w-full grid-cols-12 gap-1.5 md:gap-3 lg:gap-5 xl:gap-6">
           <ProductImages
+            GCode={data.product.GCode}
+            SCode={data.product.SCode}
             images={data.product.product_images || []}
             productName={data.product.Name || ""}
             setImageModal={setImageModal}
@@ -56,7 +58,7 @@ const Product = () => {
           <div
             onClick={() => setImageModal({ isOpen: false, image: null })}
             className="fixed top-0 right-0 bottom-0 left-0 inset-0 bg-black/50 w-screen h-screen flex justify-center items-center z-50"
-            style={{ backdropFilter: "blur(2px)" , zIndex: 9999 }}
+            style={{ backdropFilter: "blur(2px)", zIndex: 9999 }}
           >
             <img
               src={imageModal.image || ""}

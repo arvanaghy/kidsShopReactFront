@@ -20,14 +20,16 @@ import ComparePage from "@pages/products/ComparePage";
 import Profile from "@pages/profile/Profile";
 import Invoice from "@pages/profile/Invoice";
 import EditInfo from "@pages/profile/EditInfo";
-import ConfirmedOrders from "@pages/profile/ConfirmedOrders";
 import ShoppingCart from "@pages/cartCheckout/ShoppingCart";
 import WebPayment from "@pages/cartCheckout/WebPayment";
 import Success from "@pages/paymentResults/Success";
 import Failed from "@pages/paymentResults/Failed";
 import SuccessMobile from "@pages/paymentResults/SuccessMobile";
 import FailedMobile from "@pages/paymentResults/FailedMobile";
+import ConfirmedOrders from "@pages/profile/ConfirmedOrders";
 import ConfirmedOrderDetails from "@pages/profile/ConfirmedOrderDetails";
+import UnconfirmedOrders from "@pages/profile/UnconfirmedOrders";
+import ProformaDetails from "@pages/profile/ProformaDetails";
 
 function App() {
   const router = createBrowserRouter([
@@ -56,6 +58,8 @@ function App() {
         { path: "/invoice", element: <Invoice /> },
         { path: "/confirmed-orders", element: <ConfirmedOrders /> },
         { path: "/confirmed-order-details/:orderCode", element: <ConfirmedOrderDetails /> },
+        { path: "/unconfirmed-orders", element: <UnconfirmedOrders /> },
+        { path: "/proforma-details/:orderCode", element: <ProformaDetails /> },
         { path: "/faq", element: <FAQ /> },
         { path: "/web-payment", element: <WebPayment /> },
         { path: "/payment-success/:transID", element: <Success /> },

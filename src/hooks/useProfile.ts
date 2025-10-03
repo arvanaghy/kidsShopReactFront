@@ -99,7 +99,7 @@ export const useInvoice = (user = {}, page = 1) => {
 
 export const useConfirmedOrderDetails = (
   user = {},
-  orderCode: number = 0,
+  orderCode: number | string = 0,
   page: number = 1
 ) => {
   const [isPending, setIsPending] = useState<boolean>(false);
@@ -129,4 +129,81 @@ export const useConfirmedOrderDetails = (
     getConfirmedOrderDetails(user, orderCode, page);
   }, []);
   return { confirmedOrderDetailsList, confirmedOrderDetailsLinks, isPending };
+};
+
+export const useUnconfirmedOrders = (user = {}, page = 1) => {
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [unconfirmedOrdersTotal, setUnconfirmedOrdersTotal] = useState(0);
+  const [unconfirmedOrdersList, setUnconfirmedOrdersList] = useState([]);
+  const [unconfirmedOrdersLinks, setUnconfirmedOrdersLinks] = useState([]);
+  const getUnconfirmedOrders = async (user: any) => {
+    await ProfileService.getUnconfirmedOrders(
+      user,
+      page,
+      setUnconfirmedOrdersTotal,
+      setUnconfirmedOrdersList,
+      setUnconfirmedOrdersLinks,
+      isPending,
+      setIsPending
+    );
+  };
+  useEffect(() => {
+    getUnconfirmedOrders(user);
+  }, []);
+  return {
+    unconfirmedOrdersTotal,
+    unconfirmedOrdersList,
+    unconfirmedOrdersLinks,
+    isPending,
+  };
+};
+
+export const useNavigateUnconfirmedOrderDetails = () => {
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const navigateToDetails = (orderCode: number = 0) => {
+    ProfileService.navigateToUnconfirmedOrderDetails(
+      orderCode,
+      navigate,
+      isPending,
+      setIsPending
+    );
+  };
+  return { navigateToDetails, isPending };
+};
+
+export const useUnconfirmedOrderDetails = (
+  user = {},
+  orderCode: number | string = 0,
+  page: number = 1
+) => {
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [unconfirmedOrderDetailsList, setUnconfirmedOrderDetailsList] =
+    useState([]);
+  const [unconfirmedOrderDetailsLinks, setUnconfirmedOrderDetailsLinks] =
+    useState([]);
+
+  const getUnconfirmedOrderDetails = async (
+    user: any = {},
+    orderCode: number = 0,
+    page: number = 1
+  ) => {
+    await ProfileService.getUnconfirmedOrderDetails(
+      page,
+      user,
+      orderCode,
+      setUnconfirmedOrderDetailsList,
+      setUnconfirmedOrderDetailsLinks,
+      isPending,
+      setIsPending
+    );
+  };
+  useEffect(() => {
+    getUnconfirmedOrderDetails(user, orderCode, page);
+  }, []);
+  return {
+    unconfirmedOrderDetailsList,
+    unconfirmedOrderDetailsLinks,
+    isPending,
+  };
 };

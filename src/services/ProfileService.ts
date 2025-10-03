@@ -3,6 +3,8 @@ import {
   fetchConfirmedOrderDetails,
   fetchConfirmedOrders,
   fetchInvoice,
+  fetchUnconfirmedOrderDetails,
+  fetchUnconfirmedOrders,
   submitUserAddressUpdate,
   submitUserInfoEdit,
 } from "@api/profileApi";
@@ -180,6 +182,74 @@ export const ProfileService = {
       );
       setConfirmedOrderDetailsList(result?.data);
       setConfirmedOrderDetailsLinks(result?.links);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
+    }
+  },
+
+  getUnconfirmedOrders: async (
+    user: any,
+    page: number,
+    setUnconfirmedOrdersTotal: (total: number) => void,
+    setUnconfirmedOrdersList: (list: any) => void,
+    setUnconfirmedOrdersLinks: (links: any) => void,
+    isPending: boolean,
+    setIsPending: (pending: boolean) => void
+  ) => {
+    if (isPending) return;
+    setIsPending(true);
+    try {
+      const result = await fetchUnconfirmedOrders(user.UToken, (page = 1));
+      setUnconfirmedOrdersTotal(result?.total);
+      setUnconfirmedOrdersList(result?.data);
+      setUnconfirmedOrdersLinks(result?.links);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
+    }
+  },
+
+  navigateToUnconfirmedOrderDetails: (
+    orderCode: number,
+    navigate: any,
+    isPending: boolean,
+    setIsPending: (pending: boolean) => void
+  ) => {
+    if (isPending) return;
+    setIsPending(true);
+    try {
+      if (!orderCode) throw new Error("کد سفارش وارد نشده است");
+      navigate(`/proforma-details/${Math.floor(orderCode)}`);
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
+    }
+  },
+
+  getUnconfirmedOrderDetails: async (
+    page: number,
+    user: any,
+    orderCode: number,
+    setUnconfirmedOrderDetailsList: (list: any) => void,
+    setUnconfirmedOrderDetailsLinks: (links: any) => void,
+    isPending: boolean,
+    setIsPending: (pending: boolean) => void
+  ) => {
+    if (isPending) return;
+    setIsPending(true);
+    try {
+      if (!orderCode) throw new Error("کد سفارش وارد نشده است");
+      const result = await fetchUnconfirmedOrderDetails(
+        user.UToken,
+        orderCode,
+        (page = 1)
+      );
+      setUnconfirmedOrderDetailsList(result?.data);
+      setUnconfirmedOrderDetailsLinks(result?.links);
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {

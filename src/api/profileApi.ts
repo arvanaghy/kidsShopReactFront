@@ -126,3 +126,50 @@ export const submitUserAddressUpdate = async (address: any, token: string) => {
     throw new Error(getErrorMessage(error));
   }
 };
+
+export const fetchUnconfirmedOrders = async (token: string , page = 1) => {
+  try {
+    if (!token) throw new Error("توکن وجود ندارد");
+    const { data, status } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/v1/list-unverified-orders?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (status !== 201) throw new Error(data?.message);
+    return data?.result;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+};
+
+
+export const fetchUnconfirmedOrderDetails = async (
+  token: string,
+  code: number,
+  page = 1
+) => {
+  try {
+    if (!token) throw new Error("توکن وجود ندارد");
+    const { data, status } = await axios.get(
+      `${
+        import.meta.env.VITE_API_URL
+      }/v1/list-unverified-orders-products/${code}?page=${page}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Cache-Control": "no-cache",
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (status !== 201) throw new Error(data?.message);
+    return data?.result;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+};

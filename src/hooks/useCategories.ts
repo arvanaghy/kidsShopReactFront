@@ -51,7 +51,7 @@ export const listCategory = (search: string, page: number): Categories => {
   return { categories, isPending, links };
 };
 
-export const searchCategory = (e: React.FormEvent<HTMLFormElement>) => {
+export const searchCategory = () => {
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false);
 
@@ -59,7 +59,9 @@ export const searchCategory = (e: React.FormEvent<HTMLFormElement>) => {
     await CategoryService.handleSearch(e, setIsPending, navigate);
   };
 
-  return { handleSearch, isPending };
+  const removeSearchParam = () => navigate("/categories");
+
+  return { removeSearchParam, handleSearch, isPending };
 };
 
 export const useSubCategory = (

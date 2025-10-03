@@ -67,13 +67,13 @@ const BestSellingProducts = () => {
         navigation="best-selling-products"
       />
       <div className="w-full col-span-12 md:col-span-8 xl:col-span-9 grid grid-cols-12 md:order-2 space-y-6 order-1">
-        <SortFilters
+        {/* <SortFilters
           sort_price={sort_price}
           searchPhrase={searchPhrase}
           size={size}
           color={color}
           navigation="best-selling-products"
-        />
+        /> */}
         <div className="w-full col-span-12 bg-Cream-500 p-6 flex flex-col">
           <div className="w-full grid grid-cols-12 gap-6">
             {bestSellingProducts?.data?.length > 0 ? (
