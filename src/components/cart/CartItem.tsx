@@ -8,9 +8,9 @@ import { RGBtoHexConverter } from '@utils/RGBtoHexConverter';
 
 const CartItem = ({ item }: { item: any }) => {
     return (
-        <div className="grid grid-cols-12 w-full p-4 place-items-center border-b gap-2">
+        <div className="grid grid-cols-12 w-full p-1.5 md:p-4 place-items-center border-b gap-2">
 
-            <div className="col-span-12 md:col-span-3 flex flex-col justify-around gap-2">
+            <div className="col-span-12 md:col-span-3 flex flex-col justify-around md:gap-2 gap-1.5">
                 {item?.item?.product_images?.length > 0 ? (
                     item.item.product_images
                         .filter((img: any) => img?.Def == 1)
@@ -30,14 +30,14 @@ const CartItem = ({ item }: { item: any }) => {
                 )}
             </div>
             <div className="w-full col-span-12 md:col-span-9 flex flex-col gap-2  text-black space-y-3 p-1 lg:p-3">
-                <div className="w-full flex flex-row justify-center items-center">
+                <div className="w-full flex flex-row justify-center items-center flex-wrap">
                     <Link
                         to={`/product/${item?.item?.Code}`}
                         className="text-base line-clamp-1 font-bold text-CarbonicBlue-500 text-center lg:text-start w-full py-2 lg:py-0"
                     >
                         {item?.item?.Name}
                     </Link>
-                    <div className="w-full flex flex-row items-center gap-3 text-sm justify-end text-end">
+                    <div className="w-full flex flex-row items-center md:gap-3 text-sm md:justify-end md:text-end flex-wrap">
                         <Link
                             className="whitespace-nowrap block w-fit text-gray-500 hover:text-gray-700 duration-300 ease-in-out transition-all"
                             to={`/category/${Math.floor(item?.item?.GCode)}`}
@@ -58,9 +58,8 @@ const CartItem = ({ item }: { item: any }) => {
                     item.basket.map((basketItem: any, idx: number) => (
                         <div
                             key={idx}
-                            className="w-full px-1.5 flex flex-row gap-2 text-gray-500 text-sm leading-loose items-center"
+                            className="w-full px-1.5 flex flex-row gap-2 text-gray-500 text-xs md:text-sm leading-loose items-center flex-wrap"
                         >
-                            {/* <FontAwesomeIcon icon={faSquareCheck} className="text-green-600 mx-1.5" /> */}
                             <p className='font-EstedadExtraBold border-b-2 border-gray-300 '>
 
                                 {formatCurrencyDisplay(basketItem?.quantity)}

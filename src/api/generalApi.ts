@@ -9,7 +9,7 @@ import {
 export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
   try {
     const { data, status } = await axios.get<AboutPropsResponse>(
-      `${import.meta.env.VITE_API_URL}/v1/about-us`
+      `${import.meta.env.VITE_API_URL}/v2/about-us`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
@@ -20,7 +20,7 @@ export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
 export const fetchFAQ = async () => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v1/faq`
+      `${import.meta.env.VITE_API_URL}/v2/faq`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
@@ -83,7 +83,7 @@ export const fetchCurrencyUnit = async () => {
 export const sendContactForm = async (info) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/contact-us`,
+      `${import.meta.env.VITE_API_URL}/v2/contact-us`,
       info,
       {
         headers: {

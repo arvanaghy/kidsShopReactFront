@@ -77,7 +77,7 @@ const Products = () => {
                 <ProductCard
                   item={item}
                   key={item.id ?? `product-${index}`}
-                  colSpan="col-span-12 md:col-span-6 xl:col-span-3"
+                  colSpan="col-span-6 md:col-span-6 xl:col-span-3"
                 />
               ))
             ) : (

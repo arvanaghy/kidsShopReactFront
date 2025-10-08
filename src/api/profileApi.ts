@@ -4,7 +4,7 @@ import axios from "axios";
 export const submitUserInfoEdit = async (info: any, token: string) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/edit-user-info`,
+      `${import.meta.env.VITE_API_URL}/v2/edit-user-info`,
       info,
       {
         headers: {

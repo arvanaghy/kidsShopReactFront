@@ -12,7 +12,7 @@ import { useUserStore } from "@store/UserStore";
 
 interface ProductDetailsProps {
   product: any;
-  productCode: string;
+  productCode: string | number;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode }) => {

@@ -1,37 +1,34 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { ProductData } from "@definitions/ProductType";
 import { getErrorMessage } from "@utils/getErrorMessage";
 import {
   fetchBestSellingProducts,
   fetchOfferedProducts,
+  fetchProduct,
   fetchProducts,
   fetchSubcategoryProducts,
 } from "@api/productApi";
 
 export const ProductService = {
-  fetchProductData: async (
-    productCode: string,
-    setData: (data: ProductData) => void,
-    setLoading: (loading: boolean) => void
+  getSingleProduct: async (
+    isPending: boolean,
+    setIsPending: (pending: boolean) => void,
+    setProduct: (product: ProductData) => void,
+    setRelatedProducts: (products: any) => void,
+    setSuggestedProducts: (products: any) => void,
+    id: string | number
   ) => {
-    setLoading(true);
+    if (isPending) return;
     try {
-      const { data, status } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/v2/show-product/${productCode}`,
-        {
-          headers: {
-            cache: "no-cache",
-          },
-        }
-      );
-      if (status !== 200)
-        throw new Error(data?.message || "خطا در دریافت اطلاعات");
-      setData(data);
+      setIsPending(true);
+      const data = await fetchProduct(id);
+      setRelatedProducts(data?.relatedProducts);
+      setSuggestedProducts(data?.suggestedProducts);
+      setProduct(data?.product);
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {
-      setLoading(false);
+      setIsPending(false);
     }
   },
 

@@ -17,7 +17,7 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ products }) => {
           <ProductCard
             item={item}
             key={idx}
-            colSpan="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3"
+            colSpan="col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-3"
           />
         ))}
       </div>

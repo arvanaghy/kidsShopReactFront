@@ -100,12 +100,12 @@ const SubCategories = () => {
         <div className="w-full col-span-12 bg-Cream-500 p-6 flex flex-col">
           <div className="w-full grid grid-cols-12 gap-6">
             {products?.data?.length > 0 ? (
-              products?.data?.map((item : any, idx : number) => (
+              products?.data?.map((item: any, idx: number) => (
                 <ProductCard
                   item={item}
                   key={idx}
-                  colSpan="col-span-12
-                md:col-span-6 xl:col-span-3"
+                  colSpan="col-span-6
+                md:col-span-4 xl:col-span-3"
                 />
               ))
             ) : (
@@ -118,9 +118,9 @@ const SubCategories = () => {
             )}
           </div>
           <Pagination
-            links={products?.links  || []}
+            links={products?.links || []}
             baseUrl={`${import.meta.env.VITE_API_URL
-              }/v2/list-subcategories/${categoryCode}`}
+              }/v2/list-category-subcategories-and-products/${categoryCode}`}
             replaceUrl={`/category/${categoryCode}`}
           />
         </div>

@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBoxesStacked,
   faCartShopping,
-  faGift,
   faHouse,
-  faIdCardClip,
+  faStore,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useUserStore } from "@store/UserStore";
 import { useCartStore } from "@store/CartStore";
+import { toPersianDigits } from "@utils/numeralHelpers";
 
 const MobileNav = () => {
   const { user } = useUserStore();
@@ -22,35 +23,47 @@ const MobileNav = () => {
             to={"/products"}
             className="flex flex-col items-center space-y-1.5"
           >
-            <FontAwesomeIcon icon={faGift} />
+            <FontAwesomeIcon icon={faStore} />
+            <span className="text-xs line-clamp-1">محصولات</span>
           </Link>
           <Link
             to={"/categories"}
-            className="flex flex-col items-center space-y-1 col-span-1 justify-self-center text-center"
+            className="flex flex-col items-center space-y-1.5 col-span-1 justify-self-center text-center"
           >
             <FontAwesomeIcon icon={faBoxesStacked} />
+            <span className="text-xs line-clamp-1">دسته بندی</span>
           </Link>
           <div className="col-span-2"></div>
           <Link
             to={"/shopping-cart"}
-            className="flex flex-col items-center py-2"
+            className="flex flex-col items-center space-y-1.5 col-span-1 justify-self-center text-center"
           >
             <FontAwesomeIcon icon={faCartShopping} />
+            <span className="text-xs">سبد خرید</span>
             {cart?.length > 0 && (
-              <span className="absolute px-2 py-1.5 text-xs font-bold leading-none text-center text-white transform translate-x-1/2 -translate-y-1/2 rounded-full shadow-sm top-2 bg-Amber-500 hover:bg-BrightOrange-500 shadow-Silver-900 animate-bounce">
-                {cart?.length}
+              <span className="absolute px-2 py-1.5 text-xs font-bold leading-none text-center text-white transform translate-x-1/2 -translate-y-/2 rounded-full shadow top-1 bg-Amber-500/80 hover:bg-Amber-500 shadow-fuchsia-500 animate-bounce">
+                {toPersianDigits(cart?.length)}
               </span>
             )}
           </Link>
 
-          {user?.Name !== undefined && user?.UToken !== undefined ? (
-            <Link to={"/profile"} className="flex flex-col items-center ">
-              <FontAwesomeIcon icon={faIdCardClip} />
-              <span className="text-xs">{user?.Name.split(" ", 1)}</span>
+          {user?.Name ? (
+            <Link
+              to={"/login"}
+              className="flex flex-col items-center space-y-1.5 col-span-1 justify-self-center text-center "
+            >
+              <FontAwesomeIcon icon={faUser} />
+              <span className="text-xs line-clamp-1">
+                {user?.Name.split(" ", 1)}
+              </span>
             </Link>
           ) : (
-            <Link to={"/login"} className="flex flex-col items-center">
-              <FontAwesomeIcon icon={faIdCardClip} />
+            <Link
+              to={"/login"}
+              className="flex flex-col items-center space-y-1.5 col-span-1 justify-self-center text-center "
+            >
+              <FontAwesomeIcon icon={faUser} />
+              <span className="text-xs line-clamp-1">حساب کاربری</span>
             </Link>
           )}
         </div>
@@ -62,7 +75,7 @@ const MobileNav = () => {
           className="text-3xl flex flex-col items-center justify-center text-CarbonicBlue-500"
         >
           <FontAwesomeIcon icon={faHouse} />
-          <span className="text-sm font-EstedadMedium">خانه</span>
+          <span className="text-sm font-EstedadMedium line-clamp-1">خانه</span>
         </Link>
       </div>
     </div>

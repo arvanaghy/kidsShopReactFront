@@ -60,7 +60,7 @@ const MainLayout = () => {
           <Outlet />
         </div>
       </div>
-      <ContactModal />
+      {/* <ContactModal /> */}
       <ToTopButton />
       <div
         className="md:hidden fixed h-[8vh] bottom-0 w-full bg-gray-500 rounded-t-lg"

@@ -121,3 +121,21 @@ export const fetchSubcategoryProducts = async (
     throw new Error(getErrorMessage(error));
   }
 };
+
+export const fetchProduct = async (productCode: string | number) => {
+  try {
+    const { data, status } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/v2/show-product/${productCode}`,
+      {
+        headers: {
+          cache: "no-cache",
+        },
+      }
+    );
+    if (status !== 200)
+      throw new Error(data?.message || "خطا در دریافت اطلاعات");
+    return data;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+};

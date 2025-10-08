@@ -31,7 +31,7 @@ export const fetchSubCategories = async (
 ) => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/list-subcategories/${categoryCode}`,
+      `${import.meta.env.VITE_API_URL}/v2/list-category-subcategories-and-products/${categoryCode}`,
       {
         params: {
           product_page,

@@ -52,7 +52,7 @@ const ProfilePagination: FC<ProfilePaginationProps> = ({
                         className={`
               rounded-md
               m-1 px-3 py-1.5 text-sm
-              lg:px-4 lg:py-2 lg:text-base
+              lg:px-4 lg:py-2 
               transition duration-200
               ${link.active ? "bg-CarbonicBlue-500 text-white" : "bg-gray-300 text-black hover:bg-gray-400"}
               ${!link.url || link.active ? "cursor-not-allowed opacity-50" : "cursor-pointer"}

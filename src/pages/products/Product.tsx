@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ProductService } from "@services/ProductService";
+import { useState } from "react";
 import Breadcrumb from "@components/product/Breadcrumb";
 import ProductImages from "@components/product/ProductImages";
 import ProductDetails from "@components/product/ProductDetails";
@@ -8,16 +7,11 @@ import CartSidebar from "@components/product/CartSidebar";
 import RelatedProducts from "@components/product/RelatedProducts";
 import OfferedProducts from "@components/product/OfferedProducts";
 import Loading from "@components/Loading";
-import { ProductData } from "@definitions/ProductType";
+import { useSingleProduct } from "@hooks/useProduct";
 
 const Product = () => {
-  const { productCode } = useParams<{ productCode: string }>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<ProductData>({
-    product: {},
-    relatedProducts: [],
-    offeredProducts: [],
-  });
+  const { productCode } = useParams() as { productCode: string | number };
+
   const [imageModal, setImageModal] = useState<{
     isOpen: boolean;
     image: string | null;
@@ -26,32 +20,33 @@ const Product = () => {
     image: null,
   });
 
-  useEffect(() => {
-    ProductService.fetchProductData(productCode!, setData, setLoading);
-  }, [productCode]);
+  const { product,
+    isPending,
+    relatedProducts,
+    suggestedProducts } = useSingleProduct(productCode);
 
 
-  if (loading) return <Loading />;
+  if (isPending) return <Loading />;
 
   return (
     <div className="w-full py-6 space-y-3">
-      <Breadcrumb product={data.product} />
+      <Breadcrumb product={product} />
       <div className="relative flex flex-col justify-around lg:justify-between w-full">
         <div className="grid w-full grid-cols-12 gap-1.5 md:gap-3 lg:gap-5 xl:gap-6">
           <ProductImages
-            GCode={data.product.GCode}
-            SCode={data.product.SCode}
-            images={data.product.product_images || []}
-            productName={data.product.Name || ""}
+            GCode={product.GCode}
+            SCode={product.SCode}
+            images={product.product_images || []}
+            productName={product.Name || ""}
             setImageModal={setImageModal}
           />
           <ProductDetails
-            product={data.product}
+            product={product}
             productCode={productCode!}
           />
           <CartSidebar
             productCode={productCode!}
-            product={data.product}
+            product={product}
           />
         </div>
         {imageModal.isOpen && (
@@ -68,8 +63,8 @@ const Product = () => {
           </div>
         )}
       </div>
-      <RelatedProducts products={data.relatedProducts} />
-      <OfferedProducts products={data.offeredProducts} />
+      <RelatedProducts products={relatedProducts} />
+      <OfferedProducts products={suggestedProducts} />
     </div>
   );
 };

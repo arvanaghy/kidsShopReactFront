@@ -39,51 +39,74 @@ const MobileTopMenu = () => {
       >
         <Link
           to={"/compare-products"}
-          className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
+          className="w-fit flex flex-col justify-center items-center
+        space-y-1.5
             "
           title="مقایسه محصولات"
         >
-          <FontAwesomeIcon icon={faRestroom} />
+          <FontAwesomeIcon
+            icon={faRestroom}
+            className="p-1.5 bg-gray-600 rounded-md text-gray-50
+        hover:bg-gray-900 duration-300 ease-in-out transition-all"
+          />
+          <p className="text-xs line-clamp-1"> مقایسه محصولات</p>
         </Link>
         <Link
           to={"/my-favorite"}
-          className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
+          className="w-fit flex flex-col justify-center items-center space-y-1.5
             "
           title="علاقه مندی ها"
         >
-          <FontAwesomeIcon icon={faBookmark} />
+          <FontAwesomeIcon
+            icon={faBookmark}
+            className=" p-1.5 bg-gray-600 rounded-md text-gray-50
+        hover:bg-gray-900 duration-300 ease-in-out transition-all"
+          />
+          <p className="text-xs line-clamp-1"> علاقه مندی </p>
         </Link>
         <Link
           to={"/offered-products"}
           className="
-             w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
+             w-fit flex flex-col justify-center items-center
+             space-y-1.5
              "
           title="محصولات ویژه"
         >
-          <FontAwesomeIcon icon={faCertificate} />
+          <FontAwesomeIcon
+            icon={faCertificate}
+            className=" p-1.5 bg-gray-600 rounded-md text-gray-50
+        hover:bg-gray-900 duration-300 ease-in-out transition-all"
+          />
+          <span className="text-xs line-clamp-1">حراجی</span>
         </Link>
         <Link
           to={"/best-selling-products"}
-          className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
+          className="w-fit flex flex-col justify-center items-center space-y-1.5
              "
           title="پرفروش ترین ها"
         >
-          <FontAwesomeIcon icon={faBoxesPacking} />
+          <FontAwesomeIcon
+            icon={faBoxesPacking}
+            className="p-1.5 bg-gray-600 rounded-md text-gray-50
+        hover:bg-gray-900 duration-300 ease-in-out transition-all"
+          />
+          <p className="text-xs line-clamp-1">پرفروش ترین</p>
         </Link>
         <button
           onClick={() => setSearchModal((prev) => !prev)}
-          className="w-fit flex flex-row justify-center items-center p-1.5 bg-gray-600 rounded-md text-gray-50
-        hover:bg-gray-900 duration-300 ease-in-out transition-all
+          className="w-fit flex flex-col justify-center items-center 
+          space-y-1.5
         "
         >
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          <FontAwesomeIcon
+            icon={faMagnifyingGlass}
+            className="p-1.5 bg-gray-600 rounded-md text-gray-50
+        hover:bg-gray-900 duration-300 ease-in-out transition-all"
+          />
+          <p className="text-xs line-clamp-1">جستجو</p>
         </button>
       </div>
-      {searchModal && <MobileNavbarSearch />}
+      {searchModal && <MobileNavbarSearch setSearchModal={setSearchModal} />}
     </div>
   );
 };

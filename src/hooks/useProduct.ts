@@ -204,3 +204,32 @@ export const useSubcategoryProducts = ({
     isPending,
   };
 };
+
+export const useSingleProduct = (id: number | string) => {
+  const [product, setProduct] = useState({});
+  const [isPending, setIsPending] = useState(false);
+  const [relatedProducts, setRelatedProducts] = useState([]);
+  const [suggestedProducts, setSuggestedProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id === undefined || id === null || id === "") return;
+      await ProductService.getSingleProduct(
+        isPending,
+        setIsPending,
+        setProduct,
+        setRelatedProducts,
+        setSuggestedProducts,
+        id
+      );
+    };
+    fetchProduct();
+  }, [id]);
+
+  return {
+    product,
+    isPending,
+    relatedProducts,
+    suggestedProducts,
+  };
+};

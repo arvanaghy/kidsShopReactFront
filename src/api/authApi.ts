@@ -100,7 +100,7 @@ export const logOutApi = async (token: string) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/log-out`,
+      `${import.meta.env.VITE_API_URL}/v2/log-out`,
       {
         UToken: token,
       },

@@ -66,7 +66,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
         />
 
         <h2 className="w-1/2 text-center z-30 absolute top-0 left-0 text-white font-EstedadLight bg-purple-500/80 px-0.5 rounded-tl-xl text-xs py-1 lg:text-sm overflow-hidden opacity-80">
-          <p className="w-full  line-clamp-1">{item?.GName}</p>
+          <p className="w-full line-clamp-1">{item?.GName}</p>
         </h2>
         <h2
           className="text-center w-1/2  z-30 absolute top-0 text-white right-0 font-EstedadLight bg-purple-500/80 line-clamp-1 px-0.5  text-xs lg:text-sm py-1
@@ -78,7 +78,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
         <div className="absolute top-8 left-0 flex flex-col gap-1 px-1">
           <button
             onClick={() => toggleFavorite(item)}
-            className="text-xl text-red-500 hover:scale-110 transition-transform"
+            className="text-sm md:text-xl text-red-500 hover:scale-110 transition-transform"
           >
             <FontAwesomeIcon
               icon={isFavorite ? faSolidHeart : faHeart}
@@ -87,7 +87,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
           </button>
           <button
             onClick={() => toggleCompare(item)}
-            className="text-xl text-red-500 hover:scale-110 transition-transform"
+            className="text-sm md:text-xl text-red-500 hover:scale-110 transition-transform"
           >
             <FontAwesomeIcon
               icon={faRestroom}
@@ -106,7 +106,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
         "
       >
         <div className="flex flex-col justify-between items-center w-full h-full">
-          <p className="z-20 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm lg:font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out">
+          <p className="z-20 text-justify line-clamp-2 leading-relaxed py-1.5 text-xs lg:text-sm font-EstedadExtraBold 2xl:text-lg text-CarbonicBlue-500 hover:text-CarbonicBlue-700 transition-all duration-300 ease-in-out">
             {item?.Name}
           </p>
           <div className="flex flex-row items-center gap-2 z-20 text-sm py-2">
@@ -115,44 +115,44 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
               <Unit />
             </span>
           </div>
-          <div className="w-full flex flex-row flex-wrap justify-between items-center gap-2">
+          <div className="w-full flex flex-row flex-wrap justify-between items-center gap-1 text-xs md:gap-2 ">
             {uniqueColorCodes?.length > 0 ? (
               uniqueColorCodes.map((uniqueColorCodes_item, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-row items-center justify-center gap-2"
+                  className="flex flex-row items-center justify-center gap-1 md:gap-2"
                 >
                   <p
-                    className="w-5 h-5 rounded-full"
+                    className="w-2 h-2 md:w-5 md:h-5 rounded-full"
                     style={{
                       backgroundColor: RGBtoHexConverter(
                         uniqueColorCodes_item?.RGB
                       ),
                     }}
                   ></p>
-                  <p className="text-xs tracking-wide text-gray-800 ">
+                  <p className="text-xs tracking-tighter md:tracking-wide text-gray-800 ">
                     {uniqueColorCodes_item?.ColorName}
                   </p>
                 </div>
               ))
             ) : (
-              <div className="h-5"></div>
+              <div className="h-2 md:h-5"></div>
             )}
           </div>
           {/* Color and Size Section with Fixed Height */}
 
-          <div className="w-full flex flex-row flex-wrap items-center justify-between gap-2 text-sm py-2">
+          <div className="w-full flex flex-row flex-wrap items-center justify-between gap-1 md:gap-2 text-xs md:text-sm py-2">
             {uniqueSizeNums?.length > 0 ? (
               uniqueSizeNums.map((uniqueSizeNums_item, idx) => (
                 <div
                   key={idx}
-                  className="flex flex-row items-center bg-slate-500 px-2 py-1 rounded-md"
+                  className="flex flex-row items-center bg-slate-500 md:px-2 md:py-1 rounded-md px-1.5 py-0.5"
                 >
                   {toPersianDigits(uniqueSizeNums_item)}
                 </div>
               ))
             ) : (
-              <div className="h-5"></div>
+              <div className="h-2 md:h-5"></div>
             )}
           </div>
         </div>

@@ -6,7 +6,7 @@ import { useCartStore } from "@store/CartStore";
 import { useNavbarVisibility } from "@hooks/useMenu";
 
 interface CartSidebarProps {
-  productCode: string;
+  productCode: string | number;
   product: any;
 }
 
