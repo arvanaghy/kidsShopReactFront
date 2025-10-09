@@ -9,7 +9,7 @@ import {
 export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
   try {
     const { data, status } = await axios.get<AboutPropsResponse>(
-      `${import.meta.env.VITE_API_URL}/v2/about-us`
+      `${import.meta.env.VITE_API_URL}/general/company/about-us`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
@@ -20,7 +20,7 @@ export const fetchAboutUsInfo = async (): Promise<AboutProps[]> => {
 export const fetchFAQ = async () => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/faq`
+      `${import.meta.env.VITE_API_URL}/general/company/faq`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
@@ -32,7 +32,7 @@ export const fetchFAQ = async () => {
 export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
   try {
     const { data, status } = await axios.get<CompanyPropsResponse>(
-      `${import.meta.env.VITE_API_URL}/v2/company-info`
+      `${import.meta.env.VITE_API_URL}/general/company/company-info`
     );
     if (status !== 200) throw new Error(data?.message);
     return {
@@ -65,7 +65,7 @@ export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
 export const fetchCurrencyUnit = async () => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/currency-unit`
+      `${import.meta.env.VITE_API_URL}/general/financial/currency-unit`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return (
@@ -83,7 +83,7 @@ export const fetchCurrencyUnit = async () => {
 export const sendContactForm = async (info) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/contact-us`,
+      `${import.meta.env.VITE_API_URL}/general/contact-us`,
       info,
       {
         headers: {

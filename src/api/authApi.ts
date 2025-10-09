@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export const registerUser = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/register`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/register`,
       info,
       {
         headers: {
@@ -23,7 +23,7 @@ export const registerUser = async (info: any) => {
 export const loginUser = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/login`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/login`,
       info,
       {
         headers: {
@@ -43,7 +43,7 @@ export const loginUser = async (info: any) => {
 export const otpApi = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/verify-sms`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/verify-sms`,
       info,
       {
         headers: {
@@ -60,7 +60,7 @@ export const otpApi = async (info: any) => {
 
 export const resendMSApi = async (info: any) => {
   const { data, status } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/v2/resend-sms`,
+    `${import.meta.env.VITE_API_URL}/general/customer-auth/resend-sms`,
     info,
     {
       headers: {
@@ -79,7 +79,7 @@ export const resendMSApi = async (info: any) => {
 export const isUserValidApi = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/verify-token`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/verify-token`,
       info,
       {
         headers: {
@@ -100,7 +100,7 @@ export const logOutApi = async (token: string) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/log-out`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/log-out`,
       {
         UToken: token,
       },

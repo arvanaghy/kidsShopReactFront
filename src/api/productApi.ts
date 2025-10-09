@@ -12,7 +12,7 @@ export const fetchBestSellingProducts = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-best-seller?product_page=${product_page}${
+      }/v2/products/list-best-seller?product_page=${product_page}${
         searchPhrase != null ? `&search=${searchPhrase}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -42,7 +42,7 @@ export const fetchOfferedProducts = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-all-offers?product_page=${product_page}${
+      }/v2/products/list-all-offers?product_page=${product_page}${
         searchPhrase != null ? `&search=${searchPhrase}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -72,7 +72,7 @@ export const fetchProducts = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-all-products?product_page=${product_page}${
+      }/v2/products/list-all-products?product_page=${product_page}${
         searchPhrase != null ? `&search=${searchPhrase}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -103,7 +103,7 @@ export const fetchSubcategoryProducts = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-subcategory-products/${subCategoryCode}?product_page=${product_page}${
+      }/v2/categories-and-subcategories/list-subcategory-products/${subCategoryCode}?product_page=${product_page}${
         searchPhrase != null ? `&search=${searchPhrase}` : ""
       }${size != null ? `&size=${size}` : ""}${
         color != null ? `&color=${color}` : ""
@@ -125,7 +125,7 @@ export const fetchSubcategoryProducts = async (
 export const fetchProduct = async (productCode: string | number) => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/show-product/${productCode}`,
+      `${import.meta.env.VITE_API_URL}/v2/products/show-product/${productCode}`,
       {
         headers: {
           cache: "no-cache",

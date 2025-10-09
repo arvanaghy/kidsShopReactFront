@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const fetchMenuSubItems = async () => {
   const { data, status } = await axios.get(
-    `${import.meta.env.VITE_API_URL}/v2/top-menu`,
+    `${import.meta.env.VITE_API_URL}/general/ui-ux/top-menu`,
     {
       headers: {
         cache: "no-cache",

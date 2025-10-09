@@ -11,7 +11,7 @@ export const fetchCategory = async ({
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-categories?search=${search}&page=${page}`
+      }/general/list-categories?search=${search}&page=${page}`
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
@@ -31,7 +31,7 @@ export const fetchSubCategories = async (
 ) => {
   try {
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/list-category-subcategories-and-products/${categoryCode}`,
+      `${import.meta.env.VITE_API_URL}/v2/categories-and-subcategories/list-category-subcategories-and-products/${categoryCode}`,
       {
         params: {
           product_page,

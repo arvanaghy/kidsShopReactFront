@@ -4,7 +4,7 @@ import axios from "axios";
 export const submitUserInfoEdit = async (info: any, token: string) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/edit-user-info`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/edit-user-info`,
       info,
       {
         headers: {
@@ -25,7 +25,7 @@ export const fetchConfirmedOrders = async (token: string, page = 1) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/list-past-orders?page=${page}`,
+      `${import.meta.env.VITE_API_URL}/general/profile/list-past-orders?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export const fetchBalance = async (token: string) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/account-balance`,
+      `${import.meta.env.VITE_API_URL}/general/profile/account-balance`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export const fetchInvoice = async (token: string, page: number = 1) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/list-past-invoice?page=${page}`,
+      `${import.meta.env.VITE_API_URL}/general/profile/list-past-invoice?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ export const fetchConfirmedOrderDetails = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-past-orders-products/${code}?page=${page}`,
+      }/general/profile/list-past-orders-products/${code}?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ export const fetchConfirmedOrderDetails = async (
 export const submitUserAddressUpdate = async (address: any, token: string) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v2/update-user-address`,
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/update-user-address`,
       { address },
       {
         headers: {
@@ -131,7 +131,7 @@ export const fetchUnconfirmedOrders = async (token: string, page = 1) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/list-unverified-orders?page=${page}`,
+      `${import.meta.env.VITE_API_URL}/general/profile/list-unverified-orders?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -157,7 +157,7 @@ export const fetchUnconfirmedOrderDetails = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/list-unverified-orders-products/${code}?page=${page}`,
+      }/general/profile/list-unverified-orders-products/${code}?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
