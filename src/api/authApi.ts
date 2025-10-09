@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export const registerUser = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/register`,
+      `${import.meta.env.VITE_API_URL}/v2/register`,
       info,
       {
         headers: {
@@ -23,7 +23,7 @@ export const registerUser = async (info: any) => {
 export const loginUser = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/login`,
+      `${import.meta.env.VITE_API_URL}/v2/login`,
       info,
       {
         headers: {
@@ -43,7 +43,7 @@ export const loginUser = async (info: any) => {
 export const otpApi = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/verify-sms`,
+      `${import.meta.env.VITE_API_URL}/v2/verify-sms`,
       info,
       {
         headers: {
@@ -60,7 +60,7 @@ export const otpApi = async (info: any) => {
 
 export const resendMSApi = async (info: any) => {
   const { data, status } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/v1/resend-sms`,
+    `${import.meta.env.VITE_API_URL}/v2/resend-sms`,
     info,
     {
       headers: {
@@ -79,7 +79,7 @@ export const resendMSApi = async (info: any) => {
 export const isUserValidApi = async (info: any) => {
   try {
     const { data, status } = await axios.post(
-      `${import.meta.env.VITE_API_URL}/v1/verify-token`,
+      `${import.meta.env.VITE_API_URL}/v2/verify-token`,
       info,
       {
         headers: {

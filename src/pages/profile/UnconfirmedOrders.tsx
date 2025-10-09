@@ -23,7 +23,7 @@ const UnconfirmedOrders = () => {
   const [searchParams] = useSearchParams();
   const page = Number(searchParams.get("page")) || 1;
   const { user } = useUserStore();
-  const replacement = { path: "/unconfirmed-orders", url: `${import.meta.env.VITE_API_URL}/v1/list-past-orders` };
+  const replacement = { path: "/unconfirmed-orders", url: `${import.meta.env.VITE_API_URL}/v2/list-past-orders` };
 
   const {
     unconfirmedOrdersTotal,

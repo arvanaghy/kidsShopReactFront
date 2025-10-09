@@ -25,7 +25,7 @@ export const fetchConfirmedOrders = async (token: string, page = 1) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v1/list-past-orders?page=${page}`,
+      `${import.meta.env.VITE_API_URL}/v2/list-past-orders?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export const fetchBalance = async (token: string) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v1/account-balance`,
+      `${import.meta.env.VITE_API_URL}/v2/account-balance`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ export const fetchInvoice = async (token: string, page: number = 1) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v1/list-past-invoice?page=${page}`,
+      `${import.meta.env.VITE_API_URL}/v2/list-past-invoice?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -91,7 +91,7 @@ export const fetchConfirmedOrderDetails = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v1/list-past-orders-products/${code}?page=${page}`,
+      }/v2/list-past-orders-products/${code}?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -127,11 +127,11 @@ export const submitUserAddressUpdate = async (address: any, token: string) => {
   }
 };
 
-export const fetchUnconfirmedOrders = async (token: string , page = 1) => {
+export const fetchUnconfirmedOrders = async (token: string, page = 1) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v1/list-unverified-orders?page=${page}`,
+      `${import.meta.env.VITE_API_URL}/v2/list-unverified-orders?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -147,7 +147,6 @@ export const fetchUnconfirmedOrders = async (token: string , page = 1) => {
   }
 };
 
-
 export const fetchUnconfirmedOrderDetails = async (
   token: string,
   code: number,
@@ -158,7 +157,7 @@ export const fetchUnconfirmedOrderDetails = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v1/list-unverified-orders-products/${code}?page=${page}`,
+      }/v2/list-unverified-orders-products/${code}?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

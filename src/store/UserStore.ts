@@ -60,7 +60,7 @@ export const useUserStore = create<UserStore>()(
             throw new Error("کاربر ذخیره شده وجود ندارد");
           }
           const { data, status } = await axios.post(
-            `${import.meta.env.VITE_API_URL}/v1/verify-token`,
+            `${import.meta.env.VITE_API_URL}/v2/verify-token`,
             {
               UToken: user.UToken,
             }

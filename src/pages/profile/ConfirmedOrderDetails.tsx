@@ -24,7 +24,7 @@ const ConfirmedOrderDetails = () => {
   const page = Number(searchParams.get("page")) || 1;
   const { orderCode } = useParams() || "0";
   const { user } = useUserStore();
-  const replacement = { path: "/confirmed-order-details", url: `${import.meta.env.VITE_API_URL}/v1/list-past-orders-products` };
+  const replacement = { path: "/confirmed-order-details", url: `${import.meta.env.VITE_API_URL}/v2/list-past-orders-products` };
 
   const { confirmedOrderDetailsList, confirmedOrderDetailsLinks, isPending } =
     useConfirmedOrderDetails(user, orderCode, page);

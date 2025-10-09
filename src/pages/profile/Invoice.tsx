@@ -35,7 +35,7 @@ const Invoice = () => {
   const page = Number(searchParams.get("page")) || 1;
   const replacement = {
     path: "/invoice",
-    url: `${import.meta.env.VITE_API_URL}/v1/list-past-invoice`,
+    url: `${import.meta.env.VITE_API_URL}/v2/list-past-invoice`,
   };
 
 
