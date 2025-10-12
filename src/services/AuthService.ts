@@ -130,11 +130,12 @@ export const AuthService = {
       const { data, status } = await loginUser({ phone_number: phoneNumber });
       console.log("sms", data);
       if (status === 201) {
-        updateUser(data?.result);
+        updateUser(data?.customer);
         navigate(redirect || "/profile");
       } else if (status === 202) {
         const params = new URLSearchParams();
         if (redirect) params.set("redirect", redirect);
+        toast.success(data?.message);
         navigate(`/SMS-validate/${encodeURIComponent(phoneNumber)}?${params}`);
       }
     } catch (error) {

@@ -2,9 +2,11 @@ import JumpingDots from "@components/JumpingDots";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { searchProduct } from "@hooks/useMenu";
+import { useState } from "react";
 
 const DesktopNavbarSearch = () => {
-    const { handleSearch, isPending } = searchProduct();
+    const [searchModal, setSearchModal] = useState(false);
+    const { handleSearch, isPending } = searchProduct(setSearchModal);
 
     return (
         <form

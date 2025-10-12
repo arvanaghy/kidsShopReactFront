@@ -70,6 +70,7 @@ export const resendMSApi = async (info: any) => {
   );
   if (status == 202) {
     toast.success(data?.message);
+    console.log('resend', data?.result);
     return { status };
   } else {
     throw new Error(data?.message);

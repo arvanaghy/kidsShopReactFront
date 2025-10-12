@@ -69,7 +69,7 @@ const UserRegistrationFormOnShoppingCart: React.FC<UserRegistrationFormProps> = 
                         onClick={() => setFormResult(404)}
                         className="w-full bg-gray-300 text-black py-1.5 rounded hover:bg-gray-600 duration-150 ease-in-out hover:text-white transition-colors text-sm font-EstedadLight"
                     >
-                        {isPending ? <JumpingDots /> : 'تغییر اطلاعات تماس'}
+                        {isPending ? <JumpingDots color="bg-white" /> : 'تغییر اطلاعات تماس'}
                     </button>
                     <button
                         type="button"
@@ -77,7 +77,7 @@ const UserRegistrationFormOnShoppingCart: React.FC<UserRegistrationFormProps> = 
                         onClick={handleResendSMS}
                         disabled={isResendPending}
                     >
-                        {isResendPending ? <JumpingDots /> : 'ارسال مجدد پیامک'}
+                        {isResendPending ? <JumpingDots color="bg-white" /> : 'ارسال مجدد پیامک'}
                     </button>
                 </div>
             </div>

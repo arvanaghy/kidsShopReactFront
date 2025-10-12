@@ -33,7 +33,7 @@ const OnlinePaymentButton = () => {
                         onClick={handlePayment}
                         disabled={isPending}
                     >
-                        {isPending ? <JumpingDots /> :
+                        {isPending ? <JumpingDots color="bg-white" /> :
                             (
                                 <p className="group">
                                     <FontAwesomeIcon icon={faMoneyBill1Wave} className="hidden mx-2 group-hover:inline" />

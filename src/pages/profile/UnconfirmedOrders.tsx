@@ -41,26 +41,26 @@ const UnconfirmedOrders = () => {
 
   if (isPending) return <Loading />;
 
-
   return (
     <ProfileLayout>
       <div className="w-full bg-CarbonicBlue-500 p-2 md:p-4 rounded-xl text-white flex flex-row items-center justify-between self-start place-self-start justify-self-start font-EstedadLight">
         <p className="text-lg md:text-xl font-EstedadExtraBold">
           سفارشات در صف انتظار (پیش فاکتور)
         </p>
-        <p className="text-lg md:text-xl font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
+        <p className="text-sm md:text-base font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
           {unconfirmedOrdersTotal && formatCurrencyDisplay(unconfirmedOrdersTotal)}
         </p>
       </div>
 
       <div className="w-full overflow-x-auto py-4">
-        <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg lg:text-xl text-md">
+        <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg ">
           <thead>
             <tr className="bg-CarbonicBlue-500 text-white font-EstedadLight">
               <th className="p-1.5 lg:p-4 text-center text-sm">کد پیش فاکتور</th>
               <th className="p-1.5 lg:p-4 text-center text-sm">تاریخ</th>
               <th className="p-1.5 lg:p-4 text-center text-sm">تعداد</th>
               <th className="p-1.5 lg:p-4 text-center text-sm">مبلغ</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">وضعیت</th>
             </tr>
           </thead>
           <tbody>
@@ -90,6 +90,11 @@ const UnconfirmedOrders = () => {
                   <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                     <span className="flex items-center justify-center gap-2">
                       {formatCurrencyDisplay(orderItem?.JamKK)} <Unit />
+                    </span>
+                  </td>
+                  <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
+                    <span className="flex items-center justify-center gap-2">
+                      {orderItem?.Status}
                     </span>
                   </td>
                 </tr>

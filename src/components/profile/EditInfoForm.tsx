@@ -1,7 +1,6 @@
 import { useUserStore } from "@store/UserStore";
 import JumpingDots from "@components/JumpingDots";
 import { useEditInfo } from "@hooks/useProfile";
-import React from "react";
 const EditInfoForm = () => {
 
     const { user, updateUser } = useUserStore();
@@ -44,7 +43,7 @@ const EditInfoForm = () => {
                     disabled={isPending}
                     className="px-8 py-3 text-center rounded-lg text-white font-EstedadMedium bg-CarbonicBlue-500 hover:bg-CarbonicBlue-500/80 transation-all duration-500 ease-in-out shadow shadow-black hover:shadow-black/60 "
                 >
-                    {isPending ? <JumpingDots /> : (
+                    {isPending ? <JumpingDots color="bg-white"  /> : (
 
                         <span>
                             تایید ویرایش اطلاعات

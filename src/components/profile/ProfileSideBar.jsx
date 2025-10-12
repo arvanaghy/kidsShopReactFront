@@ -7,7 +7,6 @@ import {
   faGaugeHigh,
   faHourglassHalf,
   faMoneyCheckDollar,
-  faReceipt,
   faStamp,
   faUserPen,
 } from "@fortawesome/free-solid-svg-icons";
@@ -26,7 +25,7 @@ const ProfileSideBar = () => {
     <div className="w-full h-full relative items-start justify-start">
       {/* Toggle Button for Mobile View */}
       <button
-        className="md:hidden fixed bottom-24 left-5 z-30 bg-blue-600 text-white p-3 rounded-full"
+        className="md:hidden fixed top-40 left-5 z-30 bg-blue-600 text-white p-4 rounded-full shadow-md shadow-black/80 hover:bg-blue-700 duration-200 ease-in-out"
         onClick={toggleNav}
       >
         {isNavOpen ? (
@@ -38,11 +37,11 @@ const ProfileSideBar = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed w-full  h-full bg-gray-400 text-white z-20 transform ${
+        className={`fixed w-full h-full bg-gray-400 text-white z-20 transform ${
           isNavOpen ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:w-full md:max-w-none  `}
+        } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 md:w-full md:max-w-none items-center justify-center`}
       >
-        <div className="flex flex-col items-center w-full h-full justify-around font-EstedadMedium">
+        <div className="flex flex-col  w-full h-full items-center justify-start md:justify-around  font-EstedadMedium pt-12 md:pt-0">
           <div className="w-full">
             <ul className="text-white px-6 md:px-2  flex flex-col items-center justify-center w-full h-full gap-4">
               <li className="w-full">

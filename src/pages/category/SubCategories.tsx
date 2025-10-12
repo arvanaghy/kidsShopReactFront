@@ -44,8 +44,6 @@ const SubCategories = () => {
 
   if (isPending) return <Loading />;
 
-  console.log("subCategories", subCategories);
-
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
       {/* subcategories */}

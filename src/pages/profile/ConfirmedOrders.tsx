@@ -1,11 +1,12 @@
 import { useUserStore } from "@store/UserStore";
-import { dateToPersianDigits, formatCurrencyDisplay } from "@utils/numeralHelpers";
+import { dateToPersianDigits, formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 import ProfileLayout from "@layouts/user/ProfileLayout";
 import { useSearchParams } from "react-router-dom";
 import Loading from "@components/Loading";
 import Unit from "@components/Unit";
 import { useConfirmedOrders, useNavigateConfirmedOrderDetails } from "@hooks/useProfile";
 import ProfilePagination from "@components/profile/ProfilePagination";
+import orderTransferStatus from "@utils/orderTransferStatus";
 
 interface OrderItem {
   Code: number;
@@ -36,6 +37,7 @@ const ConfirmedOrders = () => {
     navigateToDetails(orderCode);
   }
 
+  console.log('confirmedOrdersList', confirmedOrdersList);
   if (isPending) return <Loading />;
 
   return (
@@ -44,19 +46,24 @@ const ConfirmedOrders = () => {
         <p className="text-lg md:text-xl font-EstedadExtraBold">
           سفارشات تایید شده
         </p>
-        <p className="text-lg md:text-xl font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
+        <p className="text-sm md:text-base font-EstedadExtraBold text-Amber-500 underline underline-offset-8">
           {formatCurrencyDisplay(confirmedOrdersTotal)}
         </p>
       </div>
 
       <div className="w-full overflow-x-auto py-4">
-        <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg lg:text-xl text-md">
+        <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg ">
           <thead>
             <tr className="bg-CarbonicBlue-500 text-white font-EstedadLight" >
               <th className="p-1.5 lg:p-4 text-center text-sm">کد فاکتور</th>
               <th className="p-1.5 lg:p-4 text-center text-sm">تاریخ</th>
               <th className="p-1.5 lg:p-4 text-center text-sm">تعداد</th>
               <th className="p-1.5 lg:p-4 text-center text-sm">مبلغ</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">وضعیت سفارش</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">تاریخ ارسال</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">کدرهگیری</th>
+              <th className="p-1.5 lg:p-4 text-center text-sm">توضیحات</th>
+
             </tr>
           </thead>
           <tbody>
@@ -85,6 +92,26 @@ const ConfirmedOrders = () => {
                 <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
                   <span className="flex items-center justify-center gap-2">
                     {formatCurrencyDisplay(orderItem?.SumKala)} <Unit />
+                  </span>
+                </td>
+                <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
+                  <span className="flex items-center justify-center gap-2">
+                    {orderTransferStatus(orderItem?.SiteErsalStatus)}
+                  </span>
+                </td>
+                <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
+                  <span className="flex items-center justify-center gap-2">
+                    {orderItem.SiteErsalDate}
+                  </span>
+                </td>
+                <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
+                  <span className="flex items-center justify-center gap-2">
+                    {toPersianDigits(orderItem.SiteErsalCode)}
+                  </span>
+                </td>
+                <td className="p-1.5 lg:p-4 text-center leading-relaxed text-nowrap whitespace-nowrap">
+                  <span className="flex items-center justify-center gap-2">
+                    {orderItem.SiteErsalComment}
                   </span>
                 </td>
               </tr>
