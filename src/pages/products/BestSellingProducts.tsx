@@ -92,7 +92,7 @@ const BestSellingProducts = () => {
           </div>
           <Pagination
             links={bestSellingProducts?.links || []}
-            baseUrl={`${import.meta.env.VITE_API_URL}/v2/list-best-seller`}
+            baseUrl={`${import.meta.env.VITE_API_URL}/v2/products/list-best-seller`}
             replaceUrl="/best-selling-products"
           />
         </div>

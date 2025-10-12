@@ -45,6 +45,8 @@ export const listCategory = (search: string, page: number): Categories => {
   };
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     getCategories(search, page);
   }, [search, page]);
 
@@ -65,7 +67,7 @@ export const searchCategory = () => {
 };
 
 export const useSubCategory = (
-  categoryCode: number | string,
+  categoryCode?: number | string,
   product_page: number | string | null | undefined,
   subcategory_page: number | string | null | undefined,
   search: string | undefined | null,
@@ -101,6 +103,8 @@ export const useSubCategory = (
     );
   };
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
     getSubCategories(categoryCode);
   }, [
     categoryCode,

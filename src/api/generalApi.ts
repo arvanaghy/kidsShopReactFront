@@ -96,3 +96,15 @@ export const sendContactForm = async (info) => {
     throw new Error("ارسال پیام" + error?.message);
   }
 };
+
+export const fetchHomePageData = async () => {
+  try {
+    const { data, status } = await axios.get(
+      `${import.meta.env.VITE_API_URL}/general/home-page`
+    );
+    if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
+    return data.result;
+  } catch (error: any) {
+    throw new Error("خدمات حمل و نقل: " + error?.message);
+  }
+};

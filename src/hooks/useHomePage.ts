@@ -1,6 +1,5 @@
-import axios from "axios";
+import { GeneralSettingService } from "@services/GeneralSettingService";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 interface Result {
   categories?: any;
@@ -15,32 +14,23 @@ interface Data {
   message?: string;
 }
 
-const useHomePage = () : { result: Result | null; loading: boolean } => {
+const useHomePage = (): { result: Result | null; isPending: boolean } => {
   const [result, setResult] = useState<Result | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isPending, setIsPending] = useState<boolean>(false);
 
-  const fetchData = async (_url: string) => {
-    if (loading) return;
-    try {
-      setLoading(true);
-      const { data, status } = await axios.get(_url);
-      if (status !== 200) throw new Error(data?.message);
-      setResult(data?.result);
-    } catch (error: any) {
-      toast.error(
-        "خطا در اتصال: " +
-          (error?.response?.data?.message || error?.message)
-      );
-    } finally {
-      setLoading(false);
-    }
+  const getHomePageData = async () => {
+    await GeneralSettingService.getHomePageData(
+      setResult,
+      setIsPending,
+      isPending
+    );
   };
 
   useEffect(() => {
-    fetchData(`${import.meta.env.VITE_API_URL}/v2/home-page`);
+    getHomePageData();
   }, []);
 
-  return { result, loading }; 
+  return { result, isPending };
 };
 
 export default useHomePage;

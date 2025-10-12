@@ -9,7 +9,7 @@ import { DynamicBannerGroupProps } from '@definitions/GeneralTypes'
 
 import InstagramBanner from "@components/home/InstagramBanner";
 const Home = () => {
-  const { result, loading } = useHomePage();
+  const { result, isPending } = useHomePage();
 
   const hasData = (data: any) => Array.isArray(data) && data.length > 0;
 
@@ -18,7 +18,7 @@ const Home = () => {
     return <BannerGroup banners={banners && banners.slice(start, end)} />;
   };
 
-  if (loading) return <Loading />;
+  if (isPending) return <Loading />;
   return (
     <>
       {/* categories */}

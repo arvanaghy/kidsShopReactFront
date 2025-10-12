@@ -98,7 +98,7 @@ const OfferedProducts = () => {
           </div>
           <Pagination
             links={OfferedProducts?.links || []}
-            baseUrl={`${import.meta.env.VITE_API_URL}/v2/list-all-offers`}
+            baseUrl={`${import.meta.env.VITE_API_URL}/v2/products/list-all-offers`}
             replaceUrl="/offered-products"
           />
         </div>

@@ -1,12 +1,12 @@
 import { useCartStore } from "@store/CartStore";
 import CartItem from "@components/cart/CartItem";
-import EmptyList from "@components/EmptyList";
 import ClearCart from "@components/cart/ClearCart";
 import PaymentDetails from "@components/cart/PaymentDetails";
+import EmptyCart from "@components/cart/EmptyCart";
 
 const ShoppingCart = () => {
   const { cart } = useCartStore();
-  if (cart?.length === 0) return <EmptyList title="سبد خرید شما خالی است" />;
+  if (cart?.length === 0) return <EmptyCart />;
 
   return (
     <div className="grid grid-cols-12 w-full p-3 gap-2 font-EstedadMedium">

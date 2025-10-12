@@ -69,7 +69,6 @@ export const processOrderAndPayment = async ({
       }
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
-    console.log('processOrderAndPayment', data);
     return data.result.redirect_url;
   } catch (error: any) {
     throw error;

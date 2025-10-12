@@ -53,7 +53,7 @@ const Categories = () => {
       {/* Pagination Controls */}
       <Pagination
         links={links}
-        replace={{ url: "/v2/list-categories", phrase: "/categories" }}
+        replace={{ url: "/general/list-categories", phrase: "/categories" }}
       />
     </div>
   );

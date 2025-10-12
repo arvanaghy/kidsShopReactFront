@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const SortFilters = (
-    { sort_price, searchPhrase, size, color , navigation }: { sort_price: string, searchPhrase: string | null, size: string | null, color: string | null , navigation: string }
+    { sort_price, searchPhrase, size, color , navigation }: { sort_price: string | null, searchPhrase: string | null, size: string | null, color: string | null , navigation: string }
 ) => {
     return (
         <div className="w-full col-span-12 gap-3 flex flex-row justify-start items-center">

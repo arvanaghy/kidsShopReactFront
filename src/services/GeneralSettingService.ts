@@ -1,8 +1,12 @@
 import toast from "react-hot-toast";
-import { fetchAboutUsInfo } from "@api/generalApi";
-import { fetchCompanyInfo } from "@api/generalApi";
-import { sendContactForm } from "@api/GeneralApi";
-import { fetchFAQ } from "@api/GeneralApi";
+import {
+  fetchAboutUsInfo,
+  fetchHomePageData,
+  fetchCompanyInfo,
+  sendContactForm,
+  fetchFAQ,
+} from "@api/generalApi";
+
 import {
   contactValidationMessage,
   messageValidationMessage,
@@ -102,6 +106,23 @@ export const GeneralSettingService = {
     try {
       const data = await fetchFAQ();
       setFaqInfo(data);
+    } catch (error) {
+      getErrorMessage(error);
+    } finally {
+      setIsPending(false);
+    }
+  },
+
+  getHomePageData: async (
+    setResult: any,
+    setIsPending: (pending: boolean) => void,
+    isPending: boolean
+  ) => {
+    if (isPending) return;
+    setIsPending(true);
+    try {
+      const data = await fetchHomePageData();
+      setResult(data);
     } catch (error) {
       getErrorMessage(error);
     } finally {

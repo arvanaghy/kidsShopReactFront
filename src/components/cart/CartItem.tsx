@@ -1,7 +1,5 @@
 import React from 'react'
 import { formatCurrencyDisplay, toPersianDigits } from '@utils/numeralHelpers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Unit from '@components/Unit';
 import { RGBtoHexConverter } from '@utils/RGBtoHexConverter';

@@ -44,6 +44,8 @@ const SubCategories = () => {
 
   if (isPending) return <Loading />;
 
+  console.log("subCategories", subCategories);
+
   return (
     <div className="relative w-full min-h-[65vh] grid grid-cols-12 justify-center items-start gap-2 py-4 xl:py-6 xl:gap-4">
       {/* subcategories */}
@@ -120,7 +122,7 @@ const SubCategories = () => {
           <Pagination
             links={products?.links || []}
             baseUrl={`${import.meta.env.VITE_API_URL
-              }/v2/list-category-subcategories-and-products/${categoryCode}`}
+              }/v2/categories-and-subcategories/list-category-subcategories-and-products/${categoryCode}`}
             replaceUrl={`/category/${categoryCode}`}
           />
         </div>
