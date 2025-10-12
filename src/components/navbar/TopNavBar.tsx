@@ -12,7 +12,7 @@ import { useNavbarVisibility } from "@hooks/useMenu";
 
 const TopNavBar = () => {
 
-  const isNavbarVisible = useNavbarVisibility(false, 600);
+  const isNavbarVisible = useNavbarVisibility(false, 500);
 
   return (
     <header
