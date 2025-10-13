@@ -49,7 +49,7 @@ const Products = () => {
         colors={productsColors}
         navigation="products"
       />
-      <MobileFilterToggle setIsModal={setIsModal} />
+      <MobileFilterToggle setIsModal={setIsModal} isModal={isModal} />
       <SideFilter
         searchPhrase={searchPhrase}
         sizeSets={sizeSets}

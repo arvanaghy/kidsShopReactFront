@@ -8,7 +8,6 @@ const CategoryCircleCard = ({
     Code: 0,
     Name: "",
     PicName: "",
-    Comment: "",
   },
   colSpan = "col-span-12",
 }) => {
@@ -21,9 +20,7 @@ const CategoryCircleCard = ({
                         md:hover:scale-105  duration-300  ease-in-out transition-all ${colSpan}`}
     >
       <img
-        src={
-          `${import.meta.env.VITE_CDN_URL}/category-images/webp/${item?.PicName}.webp`
-        }
+        src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName}.webp`}
         alt={item?.Name}
         onError={(e) => {
           e.target.onerror = null;
@@ -32,7 +29,7 @@ const CategoryCircleCard = ({
         }}
         className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-full shadow-md shadow-gray-300"
       />
-      <h4 className="text-xs xl:text-base 2xl:text-lg text-center text-gray-900 font-EstedadMedium">
+      <h4 className="text-xs xl:text-base 2xl:text-lg text-center text-gray-900 font-EstedadMedium line-clamp-1">
         {item?.Name}
       </h4>
     </Link>

@@ -37,7 +37,6 @@ const ConfirmedOrders = () => {
     navigateToDetails(orderCode);
   }
 
-  console.log('confirmedOrdersList', confirmedOrdersList);
   if (isPending) return <Loading />;
 
   return (

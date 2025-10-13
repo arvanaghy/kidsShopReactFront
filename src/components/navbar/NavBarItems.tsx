@@ -117,7 +117,7 @@ const NavBarItems = () => {
                     {categoryImage && (
                       <div className="flex flex-col items-center justify-center">
                         <img
-                          src={`${import.meta.env.VITE_CDN_URL}/category-images/webp/${categoryImage.PicName}.webp`}
+                          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${categoryImage?.PicName}.webp`}
                           alt={categoryImage.Name}
                           onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                             e.currentTarget.onerror = null;

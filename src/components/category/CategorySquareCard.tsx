@@ -10,7 +10,7 @@ const CategorySquareCard = ({ item = { Code: 0, Name: "", PicName: "" } }) => {
                     col-span-6  md:col-span-4
                     lg:col-span-3
                     2xl:col-span-3
-                    gap-2
+                    gap-4
                     "
     >
       <img
@@ -19,13 +19,12 @@ const CategorySquareCard = ({ item = { Code: 0, Name: "", PicName: "" } }) => {
           e.target.onerror = null;
           e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
         }}
-        src={`${import.meta.env.VITE_CDN_URL}/category-images/webp/${
-          item.PicName
-        }.webp`}
+        src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName}.webp`}
         alt={item.Name}
         className="
+        aspect-square w-full object-scale-down
                     group-hover:scale-105 duration-300 ease-in-out
-                    rounded-xl shadow-md shadow-gray-300"
+                    "
       />
       <div className="flex flex-col px-3 gap-2">
         <h4

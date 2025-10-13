@@ -55,7 +55,7 @@ const SideFilter = ({
     }, []);
 
     return (
-        <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full order-2 md:order-1">
+        <div className="w-full col-span-12 md:col-span-4 xl:col-span-3 h-full order-2 md:order-1 p-4 bg-gray-600 rounded-lg">
             <div
                 className={`w-full sticky space-y-1
                 ${isNavbarVisible
@@ -63,22 +63,22 @@ const SideFilter = ({
                         : 'md:top-[12vh] lg:top-[9vh] xl:top-[14vh] 2xl:top-[13vh]'
                     }`}
             >
-                <div className="flex md:flex-col lg:flex-row items-center justify-between gap-1.5">
+                <div className="flex md:flex-col lg:flex-row items-center justify-between gap-3 py-1.5">
                     <button
-                        className="hidden md:flex group bg-red-600 text-white rounded-lg w-full py-2 items-center justify-center hover:bg-red-800 transition-all duration-300 ease-in-out gap-x-2"
+                        className="hidden md:flex group bg-red-600 text-white rounded-lg w-full py-1.5 items-center justify-center hover:bg-red-800 transition-all duration-300 ease-in-out gap-x-2"
                         onClick={removeFilters}
                     >
                         <FontAwesomeIcon icon={faEraser} className="text-lg" />
-                        <span className="group-hover:-translate-x-1 duration-300 ease-in-out font-EstedadMedium">
+                        <span className="group-hover:-translate-x-1 duration-300 ease-in-out font-EstedadMedium text-sm">
                             پاک کردن فیلتر
                         </span>
                     </button>
                     <button
                         onClick={applyFilters}
-                        className="hidden md:flex flex-row gap-x-2 bg-green-600 text-white rounded-lg w-full py-2 items-center justify-center group hover:bg-green-800 transition-all duration-300 ease-in-out"
+                        className="hidden md:flex flex-row gap-x-2 bg-green-600 text-white rounded-lg w-full py-1.5 items-center justify-center group hover:bg-green-800 transition-all duration-300 ease-in-out"
                     >
                         <FontAwesomeIcon icon={faFilter} />
-                        <p className="group-hover:-translate-x-1 duration-300 ease-in-out font-EstedadMedium">
+                        <p className="group-hover:-translate-x-1 duration-300 ease-in-out font-EstedadMedium text-sm">
                             اعمال فیلتر
                         </p>
                     </button>

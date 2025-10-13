@@ -17,9 +17,9 @@ const Categories = () => {
   if (isPending) return <Loading />;
 
   return (
-    <div className="w-full h-full flex inset-0 flex-col justify-center items-center">
+    <div className="w-full h-full flex inset-0 flex-col justify-center items-center py-8">
       {/* categories */}
-      <section className="w-full md:pt-7 lg:pt-10">
+      <section className="w-full py-7 lg:py-10">
         <div className="w-full px-4 mx-auto text-gray-600 lg:px-8">
           <div className="w-full flex flex-col md:flex-row justify-between items-center mx-auto sm:text-center">
             <h3
@@ -33,9 +33,9 @@ const Categories = () => {
           </div>
           <div
             className="
-              pt-4 md:pt-12
+              py-4 md:py-12
               w-full grid grid-cols-12
-              gap-x-3
+              gap-3
               md:gap-4
               lg:gap-6
               2xl:gap-8

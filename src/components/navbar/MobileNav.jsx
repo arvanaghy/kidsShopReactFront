@@ -41,7 +41,7 @@ const MobileNav = () => {
             <FontAwesomeIcon icon={faCartShopping} />
             <span className="text-xs">سبد خرید</span>
             {cart?.length > 0 && (
-              <span className="absolute px-2 py-1.5 text-xs font-bold leading-none text-center text-white transform translate-x-1/2 -translate-y-/2 rounded-full shadow top-1 bg-Amber-500/80 hover:bg-Amber-500 shadow-fuchsia-500 animate-bounce">
+              <span className="absolute px-2 py-1.5 text-xs font-bold leading-none text-center text-white transform translate-x-1/2 -translate-y-/2 rounded-full shadow top-1 bg-fuchsia-700/90 hover:bg-fuchsia-700 shadow-purple-500 animate-bounce">
                 {toPersianDigits(cart?.length)}
               </span>
             )}

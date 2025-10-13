@@ -78,7 +78,7 @@ const MobileFilterModal = ({
     return (
         <div
             ref={mobileFilterRef}
-            className="fixed inset-2 max-h-[75vh] top-[15vh] rounded-xl bg-stone-100 p-1.5 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-2 shadow-lg shadow-gray-600"
+            className="fixed inset-2 max-h-[90vh] top-[1vh] rounded-xl bg-gray-600 overflow-y-scroll z-50 md:hidden flex flex-col items-center justify-between space-y-2 p-4 shadow-lg shadow-gray-600"
         >
             <div className="flex flex-row items-center justify-between w-full">
                 <button
