@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { MenuService } from "@services/MenuService";
 import { throttle } from "lodash";
 
-
 export const searchProduct = (setSearchModal: (value: boolean) => void) => {
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false);
@@ -44,7 +43,7 @@ export const useNavbarVisibility = (
       const currentScrollY = window.scrollY;
       const scrollDelta = Math.abs(currentScrollY - lastScrollY);
 
-      if (currentScrollY === 0) {
+      if (currentScrollY == 0) {
         setIsNavbarVisible(true);
       } else if (scrollDelta > 120) {
         setIsNavbarVisible(currentScrollY <= lastScrollY);

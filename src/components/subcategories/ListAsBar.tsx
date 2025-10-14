@@ -6,7 +6,6 @@ interface ListAsBarProps {
 
 const ListAsBar = ({ info }: ListAsBarProps) => {
 
-  console.log('info', info);
   return (
     <section className="col-span-12 w-full max-w-2xl xl:max-w-7xl 2xl:max-w-full mx-auto p-3 bg-gray-300 rounded-2xl xl:py-8 flex overflow-x-auto 2xl:gap-5">
       {info?.map((item, idx) => (
@@ -24,7 +23,7 @@ const ListAsBar = ({ info }: ListAsBarProps) => {
               onError={(e) => {
                 e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
               }}
-              className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-xl shadow-md shadow-gray-300 object-scale-down"
+              className="w-20 h-20 xl:w-24 xl:h-24 m-1 xl:m-2 rounded-full shadow-md shadow-gray-300 object-fill"
             />
             <h4 className="text-xs md:text-base text-center text-gray-900 font-EstedadMedium">
               {item?.Name}
