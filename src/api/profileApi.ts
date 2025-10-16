@@ -15,7 +15,7 @@ export const submitUserInfoEdit = async (info: any, token: string) => {
       }
     );
     if (status !== 202) throw new Error(data?.message);
-    return data?.result;
+    return data?.customer;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }
@@ -121,7 +121,7 @@ export const submitUserAddressUpdate = async (address: any, token: string) => {
       }
     );
     if (status !== 202) throw new Error(data?.message);
-    return data?.result;
+    return data?.customer;
   } catch (error) {
     throw new Error(getErrorMessage(error));
   }

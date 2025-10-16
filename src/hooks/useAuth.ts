@@ -90,7 +90,7 @@ export const useOtp = () => {
   return { otpVerify, isPending };
 };
 
-export const useOtpOnCart = () => {
+export const useOtpOnCart =  () => {
   const [isPending, setIsPending] = useState(false);
   const { updateUser } = useUserStore();
   const otpVerify = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -2,7 +2,7 @@ import {
   registerUser,
   loginUser,
   otpApi,
-  resendMSApi,
+  resendSMSApi,
   isUserValidApi,
   logOutApi,
 } from "@api/authApi";
@@ -86,7 +86,6 @@ export const AuthService = {
         Address: province + " - " + city + " - " + address,
       });
       toast.success(data?.message);
-      console.log("sms", data);
       return status;
     } catch (error: any) {
       toast.error(getErrorMessage(error));
@@ -128,7 +127,6 @@ export const AuthService = {
     setIsPending(true);
     try {
       const { data, status } = await loginUser({ phone_number: phoneNumber });
-      console.log("sms", data);
       if (status === 201) {
         updateUser(data?.customer);
         navigate(redirect || "/profile");
@@ -197,7 +195,7 @@ export const AuthService = {
     }
     setIsPending(true);
     try {
-      await resendMSApi({
+      await resendSMSApi({
         phone_number: phoneNumber,
       });
     } catch (error: any) {

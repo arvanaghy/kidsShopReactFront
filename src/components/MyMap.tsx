@@ -42,7 +42,7 @@ const MyMap = () => {
       <Marker position={storeLocation}>
         <Popup>
           <span className="font-EstedadExtraBold w-full block">
-            فروشگاه الکتروشاپ
+            {import.meta.env.VITE_APP_NAME}
           </span>
         </Popup>
       </Marker>

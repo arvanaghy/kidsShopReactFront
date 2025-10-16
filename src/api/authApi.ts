@@ -52,13 +52,13 @@ export const otpApi = async (info: any) => {
       }
     );
     if (status != 202) throw new Error(data?.message);
-    return { data: data?.result, status };
+    return { data: data?.customer, status };
   } catch (error) {
     throw error;
   }
 };
 
-export const resendMSApi = async (info: any) => {
+export const resendSMSApi = async (info: any) => {
   const { data, status } = await axios.post(
     `${import.meta.env.VITE_API_URL}/general/customer-auth/resend-sms`,
     info,
@@ -70,7 +70,6 @@ export const resendMSApi = async (info: any) => {
   );
   if (status == 202) {
     toast.success(data?.message);
-    console.log('resend', data?.result);
     return { status };
   } else {
     throw new Error(data?.message);

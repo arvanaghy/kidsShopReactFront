@@ -52,7 +52,7 @@ const MainLayout = () => {
         <Toaster
           toastOptions={{
             className: "font-EstedadLight text-xs leading-loose tracking-wide",
-            duration: 6000,
+            duration: 1000,
             position: "top-center",
           }}
         />
