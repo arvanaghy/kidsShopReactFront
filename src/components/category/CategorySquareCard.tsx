@@ -1,6 +1,8 @@
+import { categoryImageModeSelector } from "@utils/imageModeSelector";
 import { Link } from "react-router-dom";
 
 const CategorySquareCard = ({ item = { Code: 0, Name: "", PicName: "" } }) => {
+  const imageSrcUrl = categoryImageModeSelector(item);
   return (
     <Link
       to={`/category/${Math.floor(item.Code)}`}
@@ -19,7 +21,7 @@ const CategorySquareCard = ({ item = { Code: 0, Name: "", PicName: "" } }) => {
           e.target.onerror = null;
           e.target.src = import.meta.env.VITE_NO_IMAGE_URL;
         }}
-        src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName}.webp`}
+        src={imageSrcUrl}
         alt={item.Name}
         className="
         aspect-square w-full object-scale-down

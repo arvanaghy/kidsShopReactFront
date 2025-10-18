@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_NAME: string;
   readonly VITE_CONTACT_INFO_LATITUDE: string;
   readonly VITE_CONTACT_INFO_LONGITUDE: string;
+  readonly VITE_CATEGORY_AND_SUBCATEGORY_IMAGE_MODE: string;
 }
 
 interface ImportMeta {

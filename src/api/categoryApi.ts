@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const fetchCategory = async ({
+export const fetchCategories = async ({
   search,
   page,
 }: {
@@ -8,10 +8,19 @@ export const fetchCategory = async ({
   page: number | string | undefined | null;
 }) => {
   try {
+    const categoryImageMode = import.meta.env.VITE_CATEGORY_AND_SUBCATEGORY_IMAGE_MODE;
     const { data, status } = await axios.get(
-      `${
-        import.meta.env.VITE_API_URL
-      }/general/list-categories?search=${search}&page=${page}`
+      `${import.meta.env.VITE_API_URL}/general/list-categories`,
+      {
+        params: {
+          search,
+          page,
+          categoryImageMode,
+        },
+        headers: {
+          cache: "no-cache",
+        },
+      }
     );
     if (status !== 200) throw new Error(data?.message || "خطا در اتصال");
     return data.result;
@@ -20,7 +29,7 @@ export const fetchCategory = async ({
   }
 };
 
-export const fetchSubCategories = async (
+export const fetchRelatedSubCategories = async (
   categoryCode: number | string,
   product_page: number | string | null | undefined,
   subcategory_page: number | string | null | undefined,
@@ -30,8 +39,11 @@ export const fetchSubCategories = async (
   sort_price: string | undefined | null
 ) => {
   try {
+    const categoryImageMode = import.meta.env.VITE_CATEGORY_AND_SUBCATEGORY_IMAGE_MODE;
     const { data, status } = await axios.get(
-      `${import.meta.env.VITE_API_URL}/v2/categories-and-subcategories/list-category-subcategories-and-products/${categoryCode}`,
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/categories-and-subcategories/list-category-subcategories-and-products/${categoryCode}`,
       {
         params: {
           product_page,
@@ -40,6 +52,7 @@ export const fetchSubCategories = async (
           size,
           color,
           sort_price,
+          categoryImageMode,
         },
         headers: {
           cache: "no-cache",

@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { fetchCategory, fetchSubCategories } from "@api/categoryApi";
+import { fetchCategories, fetchRelatedSubCategories } from "@api/categoryApi";
 import { validateSearch } from "@entity/validations";
 import { searchValidationMessage } from "@entity/validationMessages";
 import { getErrorMessage } from "@utils/getErrorMessage";
@@ -14,7 +14,7 @@ export const CategoryService = {
   }) => {
     setIsPending(true);
     try {
-      const data = await fetchCategory({ search, page });
+      const data = await fetchCategories({ search, page });
       setCategories(data?.data);
       setLinks(data?.links);
     } catch (error) {
@@ -63,7 +63,7 @@ export const CategoryService = {
     if (isPending) return;
     setIsPending(true);
     try {
-      const data = await fetchSubCategories(
+      const data = await fetchRelatedSubCategories(
         categoryCode,
         product_page,
         subcategory_page,

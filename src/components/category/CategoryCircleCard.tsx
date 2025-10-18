@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line react/prop-types
 import { Link } from "react-router-dom";
-
+import { categoryImageModeSelector } from "@utils/imageModeSelector";
 const CategoryCircleCard = ({
   item = {
     Code: 0,
@@ -11,6 +8,8 @@ const CategoryCircleCard = ({
   },
   colSpan = "col-span-12",
 }) => {
+
+  const imageSrcUrl = categoryImageModeSelector(item);
   return (
     <Link
       to={`/category/${Math.floor(item?.Code)}`}
@@ -20,7 +19,7 @@ const CategoryCircleCard = ({
                         md:hover:scale-105  duration-300  ease-in-out transition-all ${colSpan}`}
     >
       <img
-        src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName}.webp`}
+        src={imageSrcUrl}
         alt={item?.Name}
         onError={(e) => {
           e.target.onerror = null;

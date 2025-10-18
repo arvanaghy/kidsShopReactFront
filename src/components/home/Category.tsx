@@ -8,7 +8,6 @@ interface Props {
 }
 
 const Category = ({ result }: Props = { result: null }) => {
-
   return (
     <section className="w-full max-w-2xl xl:max-w-7xl 2xl:max-w-full mx-auto py-3 xl:py-8 flex overflow-x-auto 2xl:gap-5">
       {result?.categories?.map((item: any, idx: number) => (
