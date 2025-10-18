@@ -5,8 +5,7 @@ import { searchProduct } from "@hooks/useMenu";
 import { useState } from "react";
 
 const DesktopNavbarSearch = () => {
-    const [searchModal, setSearchModal] = useState(false);
-    const { handleSearch, isPending } = searchProduct(setSearchModal);
+    const { handleSearch, isPending } = searchProduct();
 
     return (
         <form
