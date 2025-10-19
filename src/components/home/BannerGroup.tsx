@@ -9,8 +9,8 @@ const BannerGroup = ({ banners = [] }: any) => {
       <div className="grid grid-cols-12 gap-4 xl:gap-8">
         {items.slice(0, 2).map((item: any, idx: number) => (
           <Link
-            to={`${item?.CodeKalaSubGroup
-              ? `/sub-category-products/${item?.CodeKalaSubGroup}`
+            to={`${item?.CodeKalaGroup
+              ? `/category/${item?.CodeKalaGroup}`
               : "/"
               }`}
             key={idx}
@@ -21,7 +21,7 @@ const BannerGroup = ({ banners = [] }: any) => {
               alt={item?.title || "no-image"}
               className="w-full object-fill shadow-sm shadow-black/60 rounded-xl  aspect-video"
             />
-            <p className="absolute bottom-0 left-0 text-lg font-EstedadExtraBold text-white w-full tracking-wide text-center bg-black/60 py-2 rounded-t-xl">{item?.Comment}</p>
+            {/* <p className="absolute bottom-0 left-0 text-lg font-EstedadExtraBold text-white w-full tracking-wide text-center bg-black/60 py-2 rounded-t-xl">{item?.Comment}</p> */}
           </Link>
         ))}
       </div>

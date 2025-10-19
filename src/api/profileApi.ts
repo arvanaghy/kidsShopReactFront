@@ -61,7 +61,7 @@ export const fetchBalance = async (token: string) => {
   }
 };
 
-export const fetchInvoice = async (token: string, page: number = 1) => {
+export const fetchInvoice = async (token: string, page: number ) => {
   try {
     if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.get(

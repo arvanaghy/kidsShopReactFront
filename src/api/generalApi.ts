@@ -51,10 +51,10 @@ export const fetchCompanyInfo = async (): Promise<CompanyProps> => {
         import.meta.env.VITE_SOCIAL_MEDIA_WHATSAPP,
       Comment: data.company_info.Comment || "",
       latitude:
-        data?.company_info?.latitude ||
+        data?.company_info?.DSLat ||
         import.meta.env.VITE_CONTACT_INFO_LATITUDE,
       longitude:
-        data?.company_info?.longitude ||
+        data?.company_info?.DSLong ||
         import.meta.env.VITE_CONTACT_INFO_LONGITUDE,
     };
   } catch (error: any) {

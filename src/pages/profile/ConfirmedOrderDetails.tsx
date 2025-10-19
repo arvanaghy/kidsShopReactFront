@@ -29,6 +29,8 @@ const ConfirmedOrderDetails = () => {
   const { confirmedOrderDetailsList, confirmedOrderDetailsLinks, isPending } =
     useConfirmedOrderDetails(user, orderCode, page);
 
+  console.log('confirmedOrderDetailsList', confirmedOrderDetailsList);
+
   if (isPending) return <Loading />;
 
   return (
@@ -41,7 +43,7 @@ const ConfirmedOrderDetails = () => {
           {orderCode && formatCurrencyDisplay(orderCode)}
         </p>
       </div>
- 
+
       <div className="w-full overflow-x-auto py-4">
         <table className="w-full border-collapse bg-stone-100 rounded-lg shadow-lg font-EstedadLight">
           <thead>

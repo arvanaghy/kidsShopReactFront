@@ -152,7 +152,7 @@ export const ProfileService = {
     if (isPending) return;
     setIsPending(true);
     try {
-      const result = await fetchInvoice(user.UToken, (page = 1));
+      const result = await fetchInvoice(user.UToken, page);
       setInvoiceList(result?.data);
       setInvoiceLinks(result?.links);
     } catch (error) {

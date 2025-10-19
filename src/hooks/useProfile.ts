@@ -81,7 +81,7 @@ export const useInvoice = (user = {}, page = 1) => {
   const [invoiceList, setInvoiceList] = useState([]);
   const [invoiceLinks, setInvoiceLinks] = useState([]);
   const [isPending, setIsPending] = useState<boolean>(false);
-  const getInvoice = async (user: any) => {
+  const getInvoice = async (user: any , page: number) => {
     await ProfileService.getInvoice(
       page,
       user,
@@ -92,8 +92,9 @@ export const useInvoice = (user = {}, page = 1) => {
     );
   };
   useEffect(() => {
-    getInvoice(user);
-  }, []);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    getInvoice(user, page);
+  }, [page]);
   return { invoiceList, invoiceLinks, isPending };
 };
 

@@ -19,6 +19,9 @@ const MyMap = () => {
   // L.Marker.prototype.options.icon = DefaultIcon;
 
   const { companyInfo, isPending }: companyInfoResponse = useCompanyInfo();
+
+  console.log('companyInfo', companyInfo);
+
   if (isPending) return <JumpingDots />;
 
   const lat = Number(companyInfo?.latitude) || import.meta.env.VITE_CONTACT_INFO_LATITUDE;
@@ -28,12 +31,12 @@ const MyMap = () => {
 
   return (
     <MapContainer
-      zoomControl={false}
+      zoomControl={true}
       doubleClickZoom={false}
       dragging={false}
       scrollWheelZoom={false}
       center={storeLocation}
-      zoom={13}
+      zoom={14}
       className="order-1 lg:order-2 p-3 mx-5 w-full h-[50vh] lg:h-screen rounded-2xl shadow-2xl"
     >
       <TileLayer
