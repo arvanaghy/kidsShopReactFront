@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import TopMenu from "@components/navbar/TopMenu";
 import Footer from "@layouts/website/Footer";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
 import MobileNav from "@components/navbar/MobileNav";
 import { useEffect } from "react";
@@ -15,7 +15,13 @@ import { useFavoriteStore } from "@store/FavoriteStore";
 import ToTopButton from "@components/layout/ToTopButton";
 import ContactModal from "@components/layout/ContactModal";
 
+import { useToasterStore } from "react-hot-toast";
+
+
 const MainLayout = () => {
+
+  const TOAST_LIMIT = 2;
+  const { toasts } = useToasterStore();
 
 
   const { refreshCart } = useCartStore();
@@ -43,6 +49,13 @@ const MainLayout = () => {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+  useEffect(() => {
+    toasts
+      .filter((t) => t.visible)
+      .filter((_, i) => i >= TOAST_LIMIT)
+      .forEach((t) => toast.dismiss(t.id));
+  }, [toasts]);
+
   return (
     <div className="min-h-screen w-full bg-gray-50">
       <ScrollToTop />
@@ -51,10 +64,17 @@ const MainLayout = () => {
       <div className="min-h-[90vh]">
         <Toaster
           toastOptions={{
-            className: "font-EstedadLight text-xs leading-loose tracking-wide",
+            className: "font-EstedadLight text-xs leading-loose tracking-wide custom-toast-container ",
             duration: 1000,
-            position: "top-center",
+            position: "bottom-right",
+            style: {
+              background: "#333",
+              color: "#fff",
+              border: "1px solid #333",
+              fontSize: "0.8rem",
+            },
           }}
+          containerClassName="custom-toast-container"
         />
         <div className="max-w-[95vw] xl:max-w-[80vw] mx-auto">
           <Outlet />

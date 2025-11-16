@@ -78,7 +78,7 @@ const ShareOnSocialMedia: React.FC<ShareOnSocialMediaProps> = ({ url, shareServi
     if (platform.name === 'copy') {
       try {
         await shareService.copyToClipboard(url);
-        shareService.notifySuccess('لینک کپی شدW');
+        shareService.notifySuccess('افندیم . لینک کپی شد :)');
       } catch {
         shareService.notifyError('خطا در کپی کردن لینک');
       }

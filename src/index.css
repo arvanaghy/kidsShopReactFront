@@ -84,3 +84,9 @@ input::-webkit-inner-spin-button {
 .animate-jump {
   animation: jump 0.5s ease-in-out infinite;
 }
+
+
+.custom-toast-container {
+  bottom: 15vh !important;
+  gap: 8px !important;
+}

@@ -3,12 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { MenuService } from "@services/MenuService";
 import { throttle } from "lodash";
 
-export const searchProduct = () => {
+export const searchProduct = ({
+  setSearchModal,
+}: {
+  setSearchModal: (value: boolean) => void;
+}) => {
   const navigate = useNavigate();
   const [isPending, setIsPending] = useState(false);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     await MenuService.handleSearch(e, setIsPending, navigate, isPending);
+    setSearchModal(false);
   };
 
   return { handleSearch, isPending };

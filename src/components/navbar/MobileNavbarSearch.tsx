@@ -2,7 +2,8 @@ import JumpingDots from "@components/JumpingDots";
 import { searchProduct } from "@hooks/useMenu";
 
 const MobileNavbarSearch = ({ setSearchModal }: { setSearchModal: (value: boolean) => void }) => {
-    const { handleSearch, isPending } = searchProduct(setSearchModal);
+
+    const { handleSearch, isPending } = searchProduct({setSearchModal});
     return (
         <form
             onSubmit={handleSearch}
