@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AuthService } from "@services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useUserStore } from "@store/UserStore";
+import { convertPersianNumbers } from "@utils/numeralHelpers";
 
 export const useRegister = () => {
   const [isPending, setIsPending] = useState(false);
@@ -13,7 +14,9 @@ export const useRegister = () => {
   ) => {
     const params = new URLSearchParams();
     if (redirect) params.set("redirect", redirect);
-    const phone_number = e.currentTarget.phoneNumber.value;
+    const _phone_number = e.currentTarget.phoneNumber.value;
+    const phone_number = convertPersianNumbers(_phone_number);
+
     const resultStatusCode = await AuthService.submitRegister(
       e,
       isPending,

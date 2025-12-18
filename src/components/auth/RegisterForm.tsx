@@ -29,6 +29,7 @@ const RegisterForm = ({ phoneNumberParam, redirect }: { phoneNumberParam: string
             <input
                 defaultValue={phoneNumberParam || ""}
                 type="tel"
+                inputMode="numeric"
                 name="phoneNumber"
                 placeholder="شماره موبایل"
                 className={inputClassName}

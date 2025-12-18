@@ -1,5 +1,5 @@
 import Loading from '@components/Loading';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCloudArrowUp, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useImagesUpload, useSingleProduct } from '@hooks/useProduct';
 import AdminLayout from '@layouts/admin/AdminLayout';
@@ -9,7 +9,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 const AdminProductImages = () => {
 
   const { productCode } = useParams() as { productCode: string | number };
-  const navigate = useNavigate();
   const [images, setImages] = React.useState<any[]>([]);
 
   const { product,
@@ -27,12 +26,21 @@ const AdminProductImages = () => {
   return (
     <AdminLayout>
       <div className="w-full items-center h-full justify-center text-center font-EstedadMedium">
-        <div className="border rounded-2xl shadow-lg bg-white py-4 flex flex-col justify-around">
-          <p className='text-lg'>
-            افزودن تصاویر برای محصول {product?.Name}
-          </p>
+        <div className="border rounded-2xl shadow-lg bg-white py-4 flex flex-col justify-around p-2">
+          <div className="w-full flex flex-row items-center justify-between p-4">
+            <h2>افزودن تصاویر {" "}
+              <a href={`/admin/product/${productCode}`} className='underline text-blue-500'>
+                {product?.Name}
+              </a>
+            </h2>
+            <button
+              onClick={handleProductImagesUpload}
+              className="bg-green-500 text-white rounded-lg px-4 py-2 mx-2 hover:bg-green-700">
+              <FontAwesomeIcon icon={faCloudArrowUp} />
+            </button>
+          </div>
 
-          <div className="mt-4 border-dashed border-2 border-gray-400 rounded-lg p-4 flex flex-col items-center justify-center">
+          <div className="flex flex-row m-2 border-dashed border-2 border-gray-400 rounded-lg p-4  items-center justify-between">
             <input
               type="file"
               multiple
@@ -57,24 +65,14 @@ const AdminProductImages = () => {
             <button
               onClick={() => {
                 setImages([])
-
               }}
             >
               <FontAwesomeIcon
                 icon={faTrashCan}
-                className="text-red-500 ml-2"
+                className="text-red-500 hover:text-red-700 text-xl"
               />
             </button>
           </div>
-
-          <div className="flex justify-center mt-4">
-            <button
-              onClick={handleProductImagesUpload}
-              className="bg-green-500 text-white rounded-lg px-4 py-2 mx-2 hover:bg-green-700">
-              آپلود تصاویر
-            </button>
-          </div>
-
           <div className="w-full p-1.5 flex flex-row flex-wrap my-4 gap-1.5 justify-center items-stretch">
             {images.map((image, index) => (
               <div key={index} className="w-2/12 p-2 border border-gray-300 rounded-lg relative">

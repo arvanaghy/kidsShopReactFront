@@ -209,3 +209,24 @@ export const updateCommentApi = async (
     throw error;
   }
 };
+
+export const makeProductImageMainApi = async (
+  imageCode: string | number,
+  token: string
+) => {
+  try {
+    const { data, status } = await axios.get(
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/products/make-product-image-main/${imageCode}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return { data, status };
+  } catch (error) {
+    throw error;
+  }
+};

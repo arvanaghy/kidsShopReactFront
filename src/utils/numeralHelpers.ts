@@ -28,8 +28,14 @@ export function toPersianDigits(amount: any): string {
   return amount.toString().replace(/\d/g, (d) => persianDigits[parseInt(d)]);
 }
 
-
-export function dateToPersianDigits(dateString : string) : string {
-  const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+export function dateToPersianDigits(dateString: string): string {
+  const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return dateString.replace(/\d/g, (digit) => persianDigits[digit]);
 }
+
+export const convertPersianNumbers = (str: any) => {
+  if (!str) return "";
+  return str
+    .replace(/[۰-۹]/g, (d: any) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d))
+    .replace(/[٠-٩]/g, (d: any) => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
+};

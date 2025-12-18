@@ -1,7 +1,7 @@
 import Loading from '@components/Loading';
 import { faFlag, faKeyboard, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSingleProduct } from '@hooks/useProduct';
+import { useDeleteProductImage, useMakeProductImageMain, useSingleProduct } from '@hooks/useProduct';
 import AdminLayout from '@layouts/admin/AdminLayout'
 import { formatCurrencyDisplay, toPersianDigits } from '@utils/numeralHelpers';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -19,11 +19,10 @@ const AdminProduct = () => {
         isPending,
     } = useSingleProduct(productCode);
 
-    const makeMainImage = (e: any) => {
-        e.preventDefault();
-    }
+    const { handleMakeProductImageMain, isPending: isPendingMakeMain } = useMakeProductImageMain();
+    const { handleDeleteProductImage, isPending: isPendingDelete } = useDeleteProductImage();
 
-    if (isPending) return <Loading />;
+    if (isPending || isPendingMakeMain || isPendingDelete) return <Loading />;
 
     return (
         <AdminLayout>
@@ -82,22 +81,19 @@ const AdminProduct = () => {
                                 <div className="relative" key={index}>
                                     <img src={`https://api.kidsshop110.ir/products-image/webp/${product?.GCode}/${product?.SCode}/${img?.PicName}.webp`} alt="product" className="w-24 object-scale-down m-2 inline-block" />
                                     <button
+                                        onClick={() => handleDeleteProductImage(img?.Code)}
                                         className="absolute bottom-0 left-0 right-0 py-0.5 leading-relaxed hover:bg-red-800 text-xs bg-red-500 text-white rounded-lg">
                                         <FontAwesomeIcon icon={faTrashCan} />
                                     </button>
                                     {img?.Def != 1 ? (
-                                        <form onSubmit={makeMainImage} className='absolute top-0 left-0 p-2 text-xs bg-yellow-500 text-white rounded-lg hover:bg-yellow-700
+                                        <button
+                                            onClick={() => handleMakeProductImageMain(img?.Code)}
+                                            className='absolute top-0 left-0 p-2 text-xs bg-yellow-500 text-white rounded-lg hover:bg-yellow-700
                                     cursor-pointer transition-all ease-in-out duration-300'
                                             aria-label='انتخاب به عنوان عکس  کاور'
                                         >
-                                            <input type="hidden" name="imageCode" value={img?.Code} />
-                                            <input type="hidden" name="CodeKala" value={img?.CodeKala} />
-                                            <button
-                                                type="submit"
-                                                className="">
-                                                <FontAwesomeIcon icon={faFlag} />
-                                            </button>
-                                        </form>
+                                            <FontAwesomeIcon icon={faFlag} />
+                                        </button>
                                     ) : (
 
                                         <div className="absolute top-0 left-0 p-2 text-xs bg-green-500 text-white rounded-lg ">

@@ -8,6 +8,7 @@ import {
   fetchProduct,
   fetchProducts,
   fetchSubcategoryProducts,
+  makeProductImageMainApi,
   productImageApi,
   updateCommentApi,
 } from "@api/productApi";
@@ -241,6 +242,15 @@ export const ProductService = {
         comment,
         token
       );
+      return { data, status };
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  makeProductImageMain: async (imageCode: string | number , token : string) => {
+    try {
+      const { data, status } = await makeProductImageMainApi(imageCode , token);
       return { data, status };
     } catch (error) {
       throw error;

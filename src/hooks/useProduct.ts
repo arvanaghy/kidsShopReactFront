@@ -259,16 +259,37 @@ export const useImagesUpload = (
   return { handleProductImagesUpload };
 };
 
-export const useDeleteProductImage = (imageCode: string | number) => {
+export const useDeleteProductImage = () => {
   const { user } = useUserStore();
-  const handleDeleteProductImage = async () => {
+  const [isPending, setIsPending] = useState(false);
+  const handleDeleteProductImage = async (imageCode: string | number) => {
     try {
+      setIsPending(true);
       await ProductService.deleteProductImage(imageCode, user?.UToken || "");
     } catch (error) {
       toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
     }
   };
-  return { handleDeleteProductImage };
+  return { handleDeleteProductImage, isPending };
+};
+
+export const useMakeProductImageMain = () => {
+  const [isPending, setIsPending] = useState(false);
+  const { user } = useUserStore();
+
+  const handleMakeProductImageMain = async (imageCode: string | number) => {
+    setIsPending(true);
+    try {
+      await ProductService.makeProductImageMain(imageCode, user?.UToken || "");
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
+    }
+  };
+  return { handleMakeProductImageMain, isPending };
 };
 
 export const useUpdateComment = (

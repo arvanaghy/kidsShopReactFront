@@ -26,6 +26,7 @@ const LoginFrom = ({ phoneNumberParam, redirect }: { phoneNumberParam: string | 
                 <input
                     type="number"
                     min={0}
+                    inputMode="numeric"
                     name="phoneNumber"
                     defaultValue={phoneNumberParam || ""}
                     className="w-full px-3 py-2 my-2 bg-stone-50/60 text-gray-500 font-EstedadMedium focus-within:bg-stone-50 duration-150 border rounded-lg shadow-sm outline-none placeholder:text-gray-400 focus-within:ring-1 focus-within:ring-gray-500 focus-within:border-gray-500 ease-in-out"

@@ -30,6 +30,7 @@ import {
 } from "@entity/validationMessages";
 import { getErrorMessage } from "@utils/getErrorMessage";
 import axios from "axios";
+import { convertPersianNumbers } from "@utils/numeralHelpers";
 
 interface User {
   Code: string;
@@ -49,8 +50,10 @@ export const AuthService = {
     const form = e.currentTarget;
     const formData = new FormData(form);
     const name = formData.get("name")?.toString() || "";
-    const phoneNumber = formData.get("phoneNumber")?.toString() || "";
-    const address = formData.get("address")?.toString() || "";
+    const _phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    const phoneNumber = convertPersianNumbers(_phoneNumber);
+    const _address = formData.get("address")?.toString() || "";
+    const address = convertPersianNumbers(_address);
     const province = formData.get("province")?.toString() || "";
     const city = formData.get("city")?.toString() || "";
 
@@ -117,7 +120,8 @@ export const AuthService = {
     }
 
     const formData = new FormData(form);
-    const phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    const _phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    const phoneNumber = convertPersianNumbers(_phoneNumber);
 
     if (!validatePhoneNumber(phoneNumber)) {
       toast.error(phoneNumberValidationMessage);
@@ -162,8 +166,10 @@ export const AuthService = {
     if (isPending) return;
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const otp = formData.get("otp")?.toString() || "";
-    const phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    const _otp = formData.get("otp")?.toString() || "";
+    const otp = convertPersianNumbers(_otp);
+    const _phoneNumber = formData.get("phoneNumber")?.toString() || "";
+    const phoneNumber = convertPersianNumbers(_phoneNumber);
     if (!validateOtp(otp)) {
       toast.error(otpValidationMessage);
       e.currentTarget.querySelector("[name='otp']")?.focus();
