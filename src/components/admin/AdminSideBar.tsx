@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faArrowUpShortWide,
   faGauge,
   faGaugeHigh,
   faListCheck,
@@ -42,7 +43,6 @@ const AdminSideBar = () => {
         <div className="flex flex-col  w-full h-full items-center justify-start md:justify-around  font-EstedadMedium pt-12 md:pt-0">
           <div className="w-full">
             <ul className="text-white px-6 md:px-2  flex flex-col items-center justify-center w-full h-full gap-4">
-
               <li className="w-full">
                 <Link
                   to="/admin/products"
@@ -54,6 +54,19 @@ const AdminSideBar = () => {
                 >
                   <FontAwesomeIcon icon={faListCheck} />
                   <span>لیست کالا ها</span>
+                </Link>
+              </li>
+              <li className="w-full">
+                <Link
+                  to="/admin/orders"
+                  className={`w-full flex flex-row items-center
+                    justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6  md:px-2 lg:px-4 rounded-2xl shadow-xl ${pathname === "/admin/orders"
+                      ? "bg-blue-800 border-blue-800 text-white scale-95"
+                      : "bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
+                    }`}
+                >
+                  <FontAwesomeIcon icon={faArrowUpShortWide} />
+                  <span>لیست سفارش ها</span>
                 </Link>
               </li>
               <li className="w-full">

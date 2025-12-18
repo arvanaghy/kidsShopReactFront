@@ -1,14 +1,17 @@
 import Loading from '@components/Loading';
-import { faFlag, faKeyboard, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faFlag, faKeyboard, faSquarePlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSingleProduct } from '@hooks/useProduct';
 import AdminLayout from '@layouts/admin/AdminLayout'
 import { formatCurrencyDisplay, toPersianDigits } from '@utils/numeralHelpers';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import parse from 'html-react-parser';
+
 
 const AdminProduct = () => {
 
     const { productCode } = useParams() as { productCode: string | number };
+    const navigate = useNavigate();
 
 
     const { product,
@@ -17,13 +20,11 @@ const AdminProduct = () => {
 
     const makeMainImage = (e: any) => {
         e.preventDefault();
-        // Logic to make an image the main image
     }
 
 
     if (isPending) return <Loading />;
 
-    console.log(product)
 
     return (
         <AdminLayout>
@@ -42,13 +43,13 @@ const AdminProduct = () => {
                         </p>
                     </div>
                     <div className="text-xs flex items-center justify-center">
-                        {product?.Comment }
+                        {parse(product?.Comment || '')}
                         <button
-                        onClick={() => {
-                            
-                        }
-                        className="bg-blue-500 text-white rounded-lg px-2 py-1 mx-2 hover:bg-blue-700">
-                           <FontAwesomeIcon icon={faKeyboard} className='text-lg' />
+                            onClick={() => {
+                                navigate(`/admin/product/comment/${product?.Code}`);
+                            }}
+                            className="bg-blue-500 text-white rounded-lg px-2 py-1 mx-2 hover:bg-blue-700">
+                            <FontAwesomeIcon icon={faKeyboard} className='text-lg' />
                         </button>
                     </div>
                     <div className="">
@@ -69,8 +70,8 @@ const AdminProduct = () => {
                                 </button>
                                 {img?.Def != 1 ? (
                                     <form onSubmit={makeMainImage} className='absolute top-0 left-0 p-2 text-xs bg-yellow-500 text-white rounded-lg hover:bg-yellow-700
-                                    '
-                                    aria-label='انتخاب به عنوان عکس  کاور'
+                                    cursor-pointer transition-all ease-in-out duration-300'
+                                        aria-label='انتخاب به عنوان عکس  کاور'
                                     >
                                         <input type="hidden" name="imageCode" value={img?.Code} />
                                         <input type="hidden" name="CodeKala" value={img?.CodeKala} />
@@ -89,6 +90,13 @@ const AdminProduct = () => {
 
                             </div>
                         ))}
+                        <button
+                            onClick={() => {
+                                navigate(`/admin/product/images/${product?.Code}`);
+                            }}
+                            className='text-blue-500 text-2xl hover:text-blue-700'>
+                            <FontAwesomeIcon icon={faSquarePlus} />
+                        </button>
                     </div>
 
                 </div>

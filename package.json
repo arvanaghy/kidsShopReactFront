@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^9.5.0",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
@@ -18,8 +19,10 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "axios": "^1.6.5",
     "chart.js": "^4.4.4",
+    "ckeditor5": "^43.3.1",
     "dotenv": "^17.2.1",
     "framer-motion": "^12.23.24",
+    "html-react-parser": "^5.2.10",
     "immer": "^10.1.1",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",

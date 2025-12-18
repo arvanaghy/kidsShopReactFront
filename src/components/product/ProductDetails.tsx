@@ -9,6 +9,7 @@ import { useCartStore } from "@store/CartStore";
 import useCompareStore from "@store/CompareStore";
 import { useFavoriteStore } from "@store/FavoriteStore";
 import { useUserStore } from "@store/UserStore";
+import parse from 'html-react-parser';
 
 interface ProductDetailsProps {
   product: any;
@@ -75,7 +76,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
               value={selectedSize || ""}
               onChange={(e) => {
                 setSelectedSize(e.target.value);
-                setSelectedColor(null); // Reset color selection when size changes
+                setSelectedColor(null);
               }}
               className="w-full p-2 border-2 border-gray-200 rounded-md bg-gray-100 font-EstedadMedium text-gray-800 focus:outline-none focus:border-green-500"
             >
@@ -150,14 +151,12 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
             توضیحات :
           </div>
 
-          <ul className="md:pr-2 lg:pr-6 space-y-2 text-start font-EstedadLight">
-            {product.Comment.split("\r\n").map((item: string, index: number) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          {parse(product?.Comment || '')}
+
         </div>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 

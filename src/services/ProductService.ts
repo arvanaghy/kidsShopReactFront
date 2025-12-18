@@ -7,6 +7,8 @@ import {
   fetchProduct,
   fetchProducts,
   fetchSubcategoryProducts,
+  productImageApi,
+  updateCommentApi,
 } from "@api/productApi";
 
 export const ProductService = {
@@ -195,6 +197,43 @@ export const ProductService = {
       toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
+    }
+  },
+
+  uploadProductImages: async (
+    productCode: string | number,
+    images: any[],
+    token: string
+  ) => {
+    try {
+      const formData = new FormData();
+      images.forEach((imageObj, index) => {
+        formData.append(`images[${index}]`, imageObj.file);
+      });
+      const { data, status } = await productImageApi(
+        productCode,
+        formData,
+        token
+      );
+      return { data, status };
+    } catch (error) {
+      throw error;
+    }
+  },
+  updateComment: async (
+    productCode: string | number,
+    comment: string,
+    token: string
+  ) => {
+    try {
+      const { data, status } = await updateCommentApi(
+        productCode,
+        comment,
+        token
+      );
+      return { data, status };
+    } catch (error) {
+      toast.error(getErrorMessage(error));
     }
   },
 };

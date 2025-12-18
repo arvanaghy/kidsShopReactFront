@@ -34,6 +34,8 @@ import AdminProducts from "@pages/admin/AdminProducts";
 import AdminProductImages from "@pages/admin/AdminProductImages";
 import Admin from "@pages/admin/Admin";
 import AdminProduct from "@pages/admin/AdminProduct";
+import AdminProductComment from "@pages/admin/AdminProductComment";
+import AdminOrders from "@pages/admin/AdminOrders";
 
 function App() {
   const router = createBrowserRouter([
@@ -87,6 +89,11 @@ function App() {
           path: "/admin/product/images/:productCode",
           element: <AdminProductImages />,
         },
+        {
+          path: "/admin/product/comment/:productCode",
+          element: <AdminProductComment />,
+        },
+        { path: "/admin/orders", element: <AdminOrders /> },
       ],
     },
     { path: "*", element: <Page404 /> },

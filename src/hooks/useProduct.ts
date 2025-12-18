@@ -1,5 +1,7 @@
 import { ProductService } from "@services/ProductService";
+import { useUserStore } from "@store/UserStore";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export const useBestSellingProducts = ({
   searchPhrase,
@@ -107,7 +109,7 @@ export const useProducts = ({
   sort_price,
 }: {
   searchPhrase: string | null | undefined;
-  product_page: number |string;
+  product_page: number | string;
   size: string | null;
   color: string | null;
   sort_price: string | null;
@@ -232,4 +234,52 @@ export const useSingleProduct = (id: number | string) => {
     relatedProducts,
     suggestedProducts,
   };
+};
+
+export const useImagesUpload = (
+  productCode: string | number,
+  images: any[],
+  setImages: React.Dispatch<React.SetStateAction<any[]>>
+) => {
+  const { user } = useUserStore();
+  const handleProductImagesUpload = async () => {
+    try {
+      await ProductService.uploadProductImages(
+        productCode,
+        images,
+        user?.token || ""
+      );
+    } catch (error) {
+      console.error("Error uploading images:", error);
+    } finally {
+      setImages([]);
+    }
+  };
+  return { handleProductImagesUpload };
+};
+
+export const useUpdateComment = (
+  productCode: string | number,
+  comment: string,
+  setComment: React.Dispatch<React.SetStateAction<string>>
+) => {
+  const { user } = useUserStore();
+  const [isUpdatingComment, setIsUpdatingComment] = useState(false);
+  const handleUpdateComment = async () => {
+    setIsUpdatingComment(true);
+    try {
+      await ProductService.updateComment(
+        productCode,
+        comment,
+        user?.token || ""
+      );
+      setComment(comment);
+      toast.success("نظر شما با موفقیت بروزرسانی شد.");
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    } finally {
+      setIsUpdatingComment(false);
+    }
+  };
+  return { handleUpdateComment, isUpdatingComment };
 };

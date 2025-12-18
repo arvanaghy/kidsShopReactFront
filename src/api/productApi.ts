@@ -139,3 +139,51 @@ export const fetchProduct = async (productCode: string | number) => {
     throw new Error(getErrorMessage(error));
   }
 };
+
+export const productImageApi = async (
+  productCode: string | number,
+  formData: FormData,
+  token: string
+) => {
+  try {
+    const { data, status } = await axios.post(
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/products/upload-product-images/${productCode}`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return { data, status };
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateCommentApi = async (
+  productCode: string | number,
+  comment: string,
+  token: string
+) => {
+  try {
+    const { data, status } = await axios.post(
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/products/update-product-comment/${productCode}`,
+      { comment },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return { data, status };
+  } catch (error) {
+    throw error;
+  }
+};
