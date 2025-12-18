@@ -1,5 +1,6 @@
 import AdminPagination from "@components/admin/AdminPagination";
 import Loading from "@components/Loading";
+import Unit from "@components/Unit";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useProducts } from "@hooks/useProduct";
@@ -77,8 +78,8 @@ const AdminProducts = () => {
                     <td className="p-0.5 border border-gray-300">{product?.CodeKala}</td>
                     <td className="p-0.5 border border-gray-300">{product?.Name}</td>
                     <td className="p-0.5 border border-gray-300 text-xs">{product?.GName} / {product?.SName}</td>
-                    <td className="p-0.5 border border-gray-300">{formatCurrencyDisplay(product?.SPrice)}</td>
-                    <td className="p-0.5 border border-gray-300 flex justify-center items-center">
+                    <td className="p-0.5 border border-gray-300 flex justify-center items-center">{formatCurrencyDisplay(product?.SPrice)} <Unit /></td>
+                    <td className="p-0.5 border border-gray-300 ">
                       <a href={`/admin/product/${product?.Code}`} className="block  bg-blue-500 hover:bg-blue-700 duration-300 ease-in-out text-white px-2 py-1 rounded text-xs">ویرایش</a>
                     </td>
                   </tr>

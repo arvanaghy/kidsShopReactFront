@@ -2,6 +2,7 @@ import Loading from "@components/Loading";
 import { useProforma } from "@hooks/useOrders";
 import AdminLayout from "@layouts/admin/AdminLayout";
 import AdminPagination from "@components/admin/AdminPagination";
+import { dateToPersianDigits, formatCurrencyDisplay, toPersianDigits } from "@utils/numeralHelpers";
 
 const AdminOrders = () => {
 
@@ -41,11 +42,11 @@ const AdminOrders = () => {
                     <td className="border border-slate-300 p-1.5">{proforma.CodeFactor}</td>
                     <td className="border border-slate-300 p-1.5">{proforma.CustomerName}</td>
                     <td className="border border-slate-300 p-1.5">{proforma.CustomerAddress}</td>
-                    <td className="border border-slate-300 p-1.5">{proforma.CustomerMobile}</td>
-                    <td className="border border-slate-300 p-1.5">{proforma.SDate}</td>
-                    <td className="border border-slate-300 p-1.5">{proforma.SumKala}</td>
-                    <td className="border border-slate-300 p-1.5">{proforma.SumTedad}</td>
-                    <td className="border border-slate-300 p-1.5">{proforma.SumKhadamat}</td>
+                    <td className="border border-slate-300 p-1.5">{toPersianDigits(proforma.CustomerMobile)}</td>
+                    <td className="border border-slate-300 p-1.5">{dateToPersianDigits(proforma.SDate)}</td>
+                    <td className="border border-slate-300 p-1.5">{formatCurrencyDisplay(proforma.SumKala)}</td>
+                    <td className="border border-slate-300 p-1.5">{formatCurrencyDisplay(proforma.SumTedad)}</td>
+                    <td className="border border-slate-300 p-1.5">{formatCurrencyDisplay(proforma.SumKhadamat)}</td>
                     <td className="border border-slate-300 p-1.5">{proforma.SiteErsalStatus}</td>
                     <td className="border border-slate-300 p-1.5">{proforma.SiteErsalCode}</td>
                     <td className="border border-slate-300 p-1.5">{proforma.SiteErsalComment}</td>
