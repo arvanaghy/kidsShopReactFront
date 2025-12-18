@@ -30,7 +30,6 @@ const ConfirmedOrders = () => {
     confirmedOrdersLinks,
   } = useConfirmedOrders(user, page);
 
-  console.log('confirmedOrdersList', confirmedOrdersList);
 
   const { navigateToDetails, isPending: isPendingDetails } = useNavigateConfirmedOrderDetails();
 

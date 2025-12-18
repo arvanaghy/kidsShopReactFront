@@ -5,6 +5,7 @@ import {
   resendSMSApi,
   isUserValidApi,
   logOutApi,
+  isAdminValidApi,
 } from "@api/authApi";
 import toast from "react-hot-toast";
 import {
@@ -227,6 +228,39 @@ export const AuthService = {
         UToken: token,
       });
       setIsUserValidated(true);
+    } catch (error: any) {
+      toast.error(getErrorMessage(error));
+    } finally {
+      setIsPending(false);
+    }
+  },
+
+  validateAdmin: async (
+    user: any,
+    isPending: boolean,
+    setIsPending: (pending: boolean) => void,
+    setIsAdminValidated: (adminValidated: boolean) => void
+  ) => {
+    if (isPending) return;
+    const phoneNumber = user?.Mobile;
+    const token = user?.UToken;
+    if (!phoneNumber) {
+      return;
+    }
+    if (!token) {
+      return;
+    }
+    if (user?.Owner != 1) {
+      toast.error("کاربر ادمین نیست");
+      return;
+    }
+    setIsPending(true);
+    try {
+      await isAdminValidApi({
+        phone_number: phoneNumber,
+        UToken: token,
+      });
+      setIsAdminValidated(true);
     } catch (error: any) {
       toast.error(getErrorMessage(error));
     } finally {

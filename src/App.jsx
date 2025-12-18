@@ -30,6 +30,9 @@ import ConfirmedOrders from "@pages/profile/ConfirmedOrders";
 import ConfirmedOrderDetails from "@pages/profile/ConfirmedOrderDetails";
 import UnconfirmedOrders from "@pages/profile/UnconfirmedOrders";
 import ProformaDetails from "@pages/profile/ProformaDetails";
+import AdminProducts from "@pages/admin/AdminProducts";
+import AdminProductImages from "@pages/admin/AdminProductImages";
+import Admin from "@pages/admin/Admin";
 
 function App() {
   const router = createBrowserRouter([
@@ -57,7 +60,10 @@ function App() {
         { path: "/edit-info", element: <EditInfo /> },
         { path: "/invoice", element: <Invoice /> },
         { path: "/confirmed-orders", element: <ConfirmedOrders /> },
-        { path: "/confirmed-order-details/:orderCode", element: <ConfirmedOrderDetails /> },
+        {
+          path: "/confirmed-order-details/:orderCode",
+          element: <ConfirmedOrderDetails />,
+        },
         { path: "/unconfirmed-orders", element: <UnconfirmedOrders /> },
         { path: "/proforma-details/:orderCode", element: <ProformaDetails /> },
         { path: "/faq", element: <FAQ /> },
@@ -72,6 +78,13 @@ function App() {
         { path: "/best-selling-products", element: <BestSellingProducts /> },
         { path: "/my-favorite", element: <FavoritesPage /> },
         { path: "/compare-products", element: <ComparePage /> },
+
+        { path: "/admin", element: <Admin /> },
+        { path: "/admin-products", element: <AdminProducts /> },
+        {
+          path: "/admin-product-images/:productCode",
+          element: <AdminProductImages />,
+        },
       ],
     },
     { path: "*", element: <Page404 /> },

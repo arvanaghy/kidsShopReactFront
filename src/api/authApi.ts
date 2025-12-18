@@ -116,3 +116,24 @@ export const logOutApi = async (token: string) => {
     throw new Error(getErrorMessage(error));
   }
 };
+
+export const isAdminValidApi = async (info: any) => {
+  // # TODO : change endpoint when admin auth ready
+  try {
+    const { data, status } = await axios.post(
+      `${import.meta.env.VITE_API_URL}/general/customer-auth/verify-token`,
+      info,
+      {
+        headers: {
+          cache: "no-cache",
+        },
+      }
+    );
+    if (status != 202) {
+      throw new Error(data?.message);
+    }
+    return true;
+  } catch (error) {
+    throw new Error(getErrorMessage(error));
+  }
+};

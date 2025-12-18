@@ -128,8 +128,8 @@ export const ProductService = {
     setProducts: (products: any) => void,
     setProductsSizes: (sizes: any) => void,
     setProductsColors: (colors: any) => void,
-    searchPhrase: string | null,
-    product_page: number | null | undefined,
+    searchPhrase: string | null | undefined,
+    product_page: number | string,
     size: string | null,
     color: string | null,
     sort_price: string | null
@@ -138,7 +138,7 @@ export const ProductService = {
     setIsPending(true);
     try {
       const data = await fetchProducts(
-        product_page || 1,
+        product_page,
         searchPhrase,
         size,
         color,

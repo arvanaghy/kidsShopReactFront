@@ -12,10 +12,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import LogoutButton from "@components/profile/LogoutButton";
+import { useUserStore } from "@store/UserStore";
 
 const ProfileSideBar = () => {
   const { pathname } = useLocation();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { user } = useUserStore();
 
   const toggleNav = () => {
     setIsNavOpen(!isNavOpen);
@@ -44,6 +46,22 @@ const ProfileSideBar = () => {
         <div className="flex flex-col  w-full h-full items-center justify-start md:justify-around  font-EstedadMedium pt-12 md:pt-0">
           <div className="w-full">
             <ul className="text-white px-6 md:px-2  flex flex-col items-center justify-center w-full h-full gap-4">
+              {user?.Owner !== 1 && (
+                <li className="w-full">
+                  <Link
+                    to="/admin"
+                    className={`w-full flex flex-row items-center
+                    justify-around gap-2 text-lg md:text-sm lg:text-base border py-4 px-6 md:px-2 lg:px-4 rounded-2xl shadow-xl ${
+                      pathname === "/admin"
+                        ? "bg-blue-800 border-blue-800 text-white scale-95"
+                        : "bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
+                    }`}
+                  >
+                    <FontAwesomeIcon icon={faGaugeHigh} />
+                    <span>پنل ادمین</span>
+                  </Link>
+                </li>
+              )}
               <li className="w-full">
                 <Link
                   to="/profile"
@@ -61,7 +79,7 @@ const ProfileSideBar = () => {
               <li className="w-full">
                 <Link
                   to="/confirmed-orders"
-                  className={`w-full flex flex-row items-center 
+                  className={`w-full flex flex-row items-center
                     justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6  md:px-2 lg:px-4 rounded-2xl shadow-xl ${
                       pathname === "/confirmed-orders"
                         ? "bg-blue-800 border-blue-800 text-white scale-95"

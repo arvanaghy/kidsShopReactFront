@@ -90,7 +90,7 @@ export const useOtp = () => {
   return { otpVerify, isPending };
 };
 
-export const useOtpOnCart =  () => {
+export const useOtpOnCart = () => {
   const [isPending, setIsPending] = useState(false);
   const { updateUser } = useUserStore();
   const otpVerify = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -162,4 +162,22 @@ export const useUserValidation = (user: any) => {
   }, []);
 
   return { isPending, isUserValidated };
+};
+
+export const useAdminValidation = (user: any) => {
+  const [isPending, setIsPending] = useState<boolean>(false);
+  const [isAdminValidated, setIsAdminValidated] = useState<boolean>(false);
+  const validateAdmin = async () => {
+    await AuthService.validateAdmin(
+      user,
+      isPending,
+      setIsPending,
+      setIsAdminValidated
+    );
+  };
+  useEffect(() => {
+    validateAdmin();
+  }, []);
+
+  return { isPending, isAdminValidated };
 };

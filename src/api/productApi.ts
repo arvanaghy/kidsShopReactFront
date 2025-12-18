@@ -62,7 +62,7 @@ export const fetchOfferedProducts = async (
 };
 
 export const fetchProducts = async (
-  product_page = 1,
+  product_page = 1 as number | string,
   searchPhrase = null,
   size = null,
   color = null,

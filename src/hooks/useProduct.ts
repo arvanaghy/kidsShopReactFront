@@ -101,13 +101,13 @@ export const useOfferedProducts = ({
 
 export const useProducts = ({
   searchPhrase,
-  product_page,
+  product_page = 1,
   size,
   color,
   sort_price,
 }: {
-  searchPhrase: string | null;
-  product_page: number | null | undefined;
+  searchPhrase: string | null | undefined;
+  product_page: number |string;
   size: string | null;
   color: string | null;
   sort_price: string | null;

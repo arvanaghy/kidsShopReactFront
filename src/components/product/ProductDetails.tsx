@@ -29,10 +29,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product, productCode })
   const isFavorite = favorite.some((p) => Math.floor(p.Code!) == Math.floor(productCode));
   const isCompared = compareList.some((p) => Math.floor(p.Code!) == Math.floor(productCode));
 
-  // Get unique sizes
   const uniqueSizes = Array.from(new Set(product.product_size_color?.map(item => item.SizeNum)));
 
-  // Get colors for selected size
   const availableColors = selectedSize
     ? product.product_size_color?.filter(item => item.SizeNum === selectedSize)
     : [];
