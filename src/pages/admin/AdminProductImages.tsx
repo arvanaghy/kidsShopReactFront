@@ -40,12 +40,13 @@ const AdminProductImages = () => {
             </button>
           </div>
 
-          <div className="flex flex-row m-2 border-dashed border-2 border-gray-400 rounded-lg p-4  items-center justify-between">
+          <div className="w-full flex flex-row  flex-wrap border-dashed border-2 border-gray-400 rounded-lg p-4 items-center justify-between">
             <input
               type="file"
               multiple
               accept="image/*"
-              className="mb-2"
+              className="mb-2 w-48! border "
+              style={{ width: "250px" }}
               onChange={(e) => {
                 const files = e.target.files;
                 if (files) {
@@ -58,10 +59,6 @@ const AdminProductImages = () => {
                 }
               }}
             />
-            {images.length > 0 && (<p className="mt-2 text-sm text-gray-600">
-              {images.length} تصویر انتخاب شده است.
-            </p>
-            )}
             <button
               onClick={() => {
                 setImages([])
