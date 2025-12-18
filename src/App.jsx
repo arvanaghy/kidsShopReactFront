@@ -33,6 +33,7 @@ import ProformaDetails from "@pages/profile/ProformaDetails";
 import AdminProducts from "@pages/admin/AdminProducts";
 import AdminProductImages from "@pages/admin/AdminProductImages";
 import Admin from "@pages/admin/Admin";
+import AdminProduct from "@pages/admin/AdminProduct";
 
 function App() {
   const router = createBrowserRouter([
@@ -80,9 +81,10 @@ function App() {
         { path: "/compare-products", element: <ComparePage /> },
 
         { path: "/admin", element: <Admin /> },
-        { path: "/admin-products", element: <AdminProducts /> },
+        { path: "/admin/products", element: <AdminProducts /> },
+        { path: "/admin/product/:productCode", element: <AdminProduct /> },
         {
-          path: "/admin-product-images/:productCode",
+          path: "/admin/product/images/:productCode",
           element: <AdminProductImages />,
         },
       ],

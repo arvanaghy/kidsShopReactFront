@@ -20,7 +20,7 @@ const AdminProducts = () => {
     e.preventDefault();
     const _searchPhrase = e.target.searchPhrase.value;
     _searchPhrase.trim();
-    navigate(`/admin-products?search=${_searchPhrase}`);
+    navigate(`/admin/products?search=${_searchPhrase}`);
   }
 
   const replacement = { path: "/admin-products", url: `${import.meta.env.VITE_API_URL}/v2/products/list-all-products` };

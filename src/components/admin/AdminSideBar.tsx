@@ -45,9 +45,9 @@ const AdminSideBar = () => {
 
               <li className="w-full">
                 <Link
-                  to="/admin-products"
+                  to="/admin/products"
                   className={`w-full flex flex-row items-center
-                    justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6  md:px-2 lg:px-4 rounded-2xl shadow-xl ${pathname === "/admin-products"
+                    justify-around gap-2 text-lg  md:text-sm  lg:text-base border py-4 px-6  md:px-2 lg:px-4 rounded-2xl shadow-xl ${pathname === "/admin/products"
                       ? "bg-blue-800 border-blue-800 text-white scale-95"
                       : "bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
                     }`}

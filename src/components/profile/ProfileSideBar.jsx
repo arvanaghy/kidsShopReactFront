@@ -13,6 +13,7 @@ import {
 
 import LogoutButton from "@components/profile/LogoutButton";
 import { useUserStore } from "@store/UserStore";
+import { faBlackTie } from "@fortawesome/free-brands-svg-icons";
 
 const ProfileSideBar = () => {
   const { pathname } = useLocation();
@@ -53,11 +54,11 @@ const ProfileSideBar = () => {
                     className={`w-full flex flex-row items-center
                     justify-around gap-2 text-lg md:text-sm lg:text-base border py-4 px-6 md:px-2 lg:px-4 rounded-2xl shadow-xl ${
                       pathname === "/admin"
-                        ? "bg-blue-800 border-blue-800 text-white scale-95"
-                        : "bg-white text-CarbonicBlue-500 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
+                        ? "bg-red-800 border-red-800 text-white scale-95"
+                        : "bg-red-500 text-white hover:bg-red-600 hover:border-red-600 hover:text-white hover:scale-95 duration-200 ease-in-out"
                     }`}
                   >
-                    <FontAwesomeIcon icon={faGaugeHigh} />
+                    <FontAwesomeIcon icon={faBlackTie} />
                     <span>پنل ادمین</span>
                   </Link>
                 </li>
