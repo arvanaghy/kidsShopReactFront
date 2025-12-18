@@ -1,5 +1,6 @@
 import { ProductService } from "@services/ProductService";
 import { useUserStore } from "@store/UserStore";
+import { getErrorMessage } from "@utils/getErrorMessage";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -247,15 +248,27 @@ export const useImagesUpload = (
       await ProductService.uploadProductImages(
         productCode,
         images,
-        user?.token || ""
+        user?.UToken || ""
       );
     } catch (error) {
-      console.error("Error uploading images:", error);
+      toast.error(getErrorMessage(error));
     } finally {
       setImages([]);
     }
   };
   return { handleProductImagesUpload };
+};
+
+export const useDeleteProductImage = (imageCode: string | number) => {
+  const { user } = useUserStore();
+  const handleDeleteProductImage = async () => {
+    try {
+      await ProductService.deleteProductImage(imageCode, user?.UToken || "");
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
+  };
+  return { handleDeleteProductImage };
 };
 
 export const useUpdateComment = (
@@ -271,12 +284,12 @@ export const useUpdateComment = (
       await ProductService.updateComment(
         productCode,
         comment,
-        user?.token || ""
+        user?.UToken || ""
       );
       setComment(comment);
       toast.success("نظر شما با موفقیت بروزرسانی شد.");
     } catch (error) {
-      console.error("Error updating comment:", error);
+      toast.error(getErrorMessage(error));
     } finally {
       setIsUpdatingComment(false);
     }

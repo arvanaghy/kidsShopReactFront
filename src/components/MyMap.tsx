@@ -5,22 +5,14 @@ import JumpingDots from "@components/JumpingDots";
 import { companyInfoResponse } from "@definitions/CompanyType";
 import "leaflet/dist/leaflet.css";
 
-// import L from "leaflet";
-// import icon from "leaflet/dist/images/marker-icon.png";
-// import iconShadow from "leaflet/dist/images/marker-shadow.png";
+
 
 const MyMap = () => {
 
-  // const DefaultIcon = L.icon({
-  //   iconUrl: icon,
-  //   shadowUrl: iconShadow,
-  // });
 
-  // L.Marker.prototype.options.icon = DefaultIcon;
 
   const { companyInfo, isPending }: companyInfoResponse = useCompanyInfo();
 
-  console.log('companyInfo', companyInfo);
 
   if (isPending) return <JumpingDots />;
 

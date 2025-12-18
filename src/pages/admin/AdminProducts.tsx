@@ -23,7 +23,7 @@ const AdminProducts = () => {
     navigate(`/admin/products?search=${_searchPhrase}`);
   }
 
-  const replacement = { path: "/admin-products", url: `${import.meta.env.VITE_API_URL}/v2/products/list-all-products` };
+  const replacement = { path: "/admin/products", url: `${import.meta.env.VITE_API_URL}/v2/products/list-all-products` };
 
   if (isPending) return <Loading />;
 
@@ -50,15 +50,15 @@ const AdminProducts = () => {
                   type="reset"
                   onClick={() => navigate("/admin-products")}
                   className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors duration-200 text-xs">
-                    <FontAwesomeIcon icon={faXmark} />
-                  </button>
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               )
             }
             <button
               type="submit"
               className="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition-colors duration-200">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
           </form>
           <div className="overflow-x-auto text-xs w-full px-2">
             <table className="min-w-full border-collapse border border-gray-300">

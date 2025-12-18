@@ -29,7 +29,6 @@ const ConfirmedOrderDetails = () => {
   const { confirmedOrderDetailsList, confirmedOrderDetailsLinks, isPending } =
     useConfirmedOrderDetails(user, orderCode, page);
 
-  console.log('confirmedOrderDetailsList', confirmedOrderDetailsList);
 
   if (isPending) return <Loading />;
 

@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { ProductData } from "@definitions/ProductType";
 import { getErrorMessage } from "@utils/getErrorMessage";
 import {
+  destroyProductImageApi,
   fetchBestSellingProducts,
   fetchOfferedProducts,
   fetchProduct,
@@ -220,6 +221,15 @@ export const ProductService = {
       throw error;
     }
   },
+
+  deleteProductImage: async (imageCode: string | number, token: string) => {
+    try {
+      const { data, status } = await destroyProductImageApi(imageCode, token);
+      return { data, status };
+    } catch (error) {
+      throw error;
+    }
+  },
   updateComment: async (
     productCode: string | number,
     comment: string,
@@ -233,7 +243,7 @@ export const ProductService = {
       );
       return { data, status };
     } catch (error) {
-      toast.error(getErrorMessage(error));
+      throw error;
     }
   },
 };

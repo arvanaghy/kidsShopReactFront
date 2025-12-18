@@ -164,12 +164,34 @@ export const productImageApi = async (
   }
 };
 
+export const destroyProductImageApi = async (
+  imageCode: string | number,
+  token: string
+) => {
+  try {
+    const { data, status } = await axios.delete(
+      `${
+        import.meta.env.VITE_API_URL
+      }/v2/products/delete-product-images/${imageCode}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return { data, status };
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const updateCommentApi = async (
   productCode: string | number,
   comment: string,
   token: string
 ) => {
   try {
+    if (!token) throw new Error("توکن وجود ندارد");
     const { data, status } = await axios.post(
       `${
         import.meta.env.VITE_API_URL
