@@ -14,18 +14,23 @@ export function formatCurrencyDisplay(amount: any): string {
   return formattedAmount;
 }
 
-export function toPersianDigits(amount: any): string {
+export function toPersianDigits(amount: string | number): string {
   if (amount === null || amount === undefined) {
     return "۰";
   }
-  if (typeof amount === "string" && !/\d/.test(amount)) {
-    return amount;
-  }
-  if (typeof amount === "string") {
-    amount = parseFloat(amount);
-  }
+
+  const str = amount.toString();
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
-  return amount.toString().replace(/\d/g, (d) => persianDigits[parseInt(d)]);
+
+  return str
+    .split("")
+    .map((char) => {
+      if (char >= "0" && char <= "9") {
+        return persianDigits[parseInt(char)];
+      }
+      return char;
+    })
+    .join("");
 }
 
 export function dateToPersianDigits(dateString: string): string {

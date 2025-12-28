@@ -8,7 +8,7 @@ export const useFilters = () => {
   const [searchParams] = useSearchParams();
   const size = searchParams.get("size") || null;
   const color = searchParams.get("color") || null;
-  const [sizeSets, setSizeSets] = useState<string[]>([]);
+  const [sizeSets, setSizeSets] = useState<number[] | string[]>([]);
   const [colorSets, setColorSets] = useState<string[]>([]);
 
   useEffect(() => {
@@ -19,11 +19,10 @@ export const useFilters = () => {
   return { sizeSets, setSizeSets, colorSets, setColorSets };
 };
 
-
 export const useFilterNavigation = (
   navigation: string,
   searchPhrase: string | null,
-  sizeSets: string[],
+  sizeSets: number[] | string[],
   colorSets: string[],
   sort_price: string | null,
   setSizeSets: (sizeSets: string[]) => void,
@@ -41,7 +40,12 @@ export const useFilterNavigation = (
 
   const applyFilters = () => {
     setIsModal?.(false);
-    const query = buildQueryString(searchPhrase, sizeSets, colorSets, sort_price);
+    const query = buildQueryString(
+      searchPhrase,
+      sizeSets,
+      colorSets,
+      sort_price
+    );
     navigate(`/${navigation}?${query}`);
   };
 

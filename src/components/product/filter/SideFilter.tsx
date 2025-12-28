@@ -19,11 +19,11 @@ const SideFilter = ({
     navigation,
 }: {
     searchPhrase: string;
-    sizeSets: string[];
-    setSizeSets: (sizeSets: string[]) => void;
+    sizeSets: number[] |string[];
+    setSizeSets: (sizeSets: number[] | string[]) => void;
     colorSets: string[];
     setColorSets: (colorSets: string[]) => void;
-    sort_price: string | undefined | null;
+    sort_price: string | null;
     sizes: string[];
     colors: string[];
     navigation: string;

@@ -63,20 +63,22 @@ export const fetchOfferedProducts = async (
 
 export const fetchProducts = async (
   product_page = 1 as number | string,
-  searchPhrase = null,
-  size = null,
-  color = null,
-  sort_price = null
+  searchPhrase = null as string | null | undefined,
+  size = null as string | null,
+  color = null as string | null,
+  sort_price = null as string | null
 ) => {
   try {
+    const params = new URLSearchParams();
+    if (searchPhrase != null) params.append("search", searchPhrase);
+    if (size != null) params.append("size", size);
+    if (color != null) params.append("color", color);
+    if (sort_price != null) params.append("sort_price", sort_price);
+    params.append("product_page", product_page.toString());
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/products/list-all-products?product_page=${product_page}${
-        searchPhrase != null ? `&search=${searchPhrase}` : ""
-      }${size != null ? `&size=${size}` : ""}${
-        color != null ? `&color=${color}` : ""
-      }${sort_price != null ? `&sort_price=${sort_price}` : ""}`,
+      }/v2/products/list-all-products?${params.toString()}`,
       {
         headers: {
           cache: "no-cache",
