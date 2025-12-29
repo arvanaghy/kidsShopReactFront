@@ -3,6 +3,7 @@ import { useUserStore } from "@store/UserStore";
 import { getErrorMessage } from "@utils/getErrorMessage";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const useBestSellingProducts = ({
   searchPhrase,
@@ -243,29 +244,44 @@ export const useImagesUpload = (
   setImages: React.Dispatch<React.SetStateAction<any[]>>
 ) => {
   const { user } = useUserStore();
+  const router = useNavigate();
+  const [isPending, setIsPending] = useState(false);
   const handleProductImagesUpload = async () => {
+    setIsPending(true);
     try {
       await ProductService.uploadProductImages(
         productCode,
         images,
         user?.UToken || ""
       );
+      toast.success("تصاویر با موفقیت بروزرسانی شد.");
+      router(`/admin/product/${productCode}`);
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {
+      setIsPending(false);
       setImages([]);
     }
   };
-  return { handleProductImagesUpload };
+  return { isPending, handleProductImagesUpload };
 };
 
 export const useDeleteProductImage = () => {
   const { user } = useUserStore();
   const [isPending, setIsPending] = useState(false);
-  const handleDeleteProductImage = async (imageCode: string | number) => {
+  const handleDeleteProductImage = async (
+    productCode: string | number,
+    imageCode: string | number
+  ) => {
     try {
       setIsPending(true);
-      await ProductService.deleteProductImage(imageCode, user?.UToken || "");
+      await ProductService.deleteProductImage(
+        productCode,
+        imageCode,
+        user?.UToken || ""
+      );
+      toast.success("تصویر با موفقیت حذف شد.");
+      window.location.reload();
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {
@@ -279,10 +295,19 @@ export const useMakeProductImageMain = () => {
   const [isPending, setIsPending] = useState(false);
   const { user } = useUserStore();
 
-  const handleMakeProductImageMain = async (imageCode: string | number) => {
+  const handleMakeProductImageMain = async (
+    productCode: string | number,
+    imageCode: string | number
+  ) => {
     setIsPending(true);
     try {
-      await ProductService.makeProductImageMain(imageCode, user?.UToken || "");
+      await ProductService.makeProductImageMain(
+        productCode,
+        imageCode,
+        user?.UToken || ""
+      );
+      toast.success("تصویر اصلی با موفقیت تغییر کرد.");
+      window.location.reload();
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {
@@ -299,6 +324,7 @@ export const useUpdateComment = (
 ) => {
   const { user } = useUserStore();
   const [isUpdatingComment, setIsUpdatingComment] = useState(false);
+  const router = useNavigate();
   const handleUpdateComment = async () => {
     setIsUpdatingComment(true);
     try {
@@ -308,7 +334,8 @@ export const useUpdateComment = (
         user?.UToken || ""
       );
       setComment(comment);
-      toast.success("نظر شما با موفقیت بروزرسانی شد.");
+      router(`/admin/product/${productCode}`);
+      toast.success("توضیحات  با موفقیت بروزرسانی شد.");
     } catch (error) {
       toast.error(getErrorMessage(error));
     } finally {

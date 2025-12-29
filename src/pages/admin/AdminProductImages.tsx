@@ -15,14 +15,14 @@ const AdminProductImages = () => {
     isPending,
   } = useSingleProduct(productCode);
 
-  const { handleProductImagesUpload } = useImagesUpload(
+  const { isPending: isUploading, handleProductImagesUpload } = useImagesUpload(
     productCode,
     images,
     setImages
   );
 
 
-  if (isPending) return <Loading />;
+  if (isPending || isUploading) return <Loading />;
   return (
     <AdminLayout>
       <div className="w-full items-center h-full justify-center text-center font-EstedadMedium">

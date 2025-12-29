@@ -151,7 +151,7 @@ export const productImageApi = async (
     const { data, status } = await axios.post(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/products/upload-product-images/${productCode}`,
+      }/v2/products/${productCode}/upload-product-images`,
       formData,
       {
         headers: {
@@ -167,6 +167,7 @@ export const productImageApi = async (
 };
 
 export const destroyProductImageApi = async (
+  productCode: string | number,
   imageCode: string | number,
   token: string
 ) => {
@@ -174,7 +175,7 @@ export const destroyProductImageApi = async (
     const { data, status } = await axios.delete(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/products/delete-product-images/${imageCode}`,
+      }/v2/products/${productCode}/delete-product-image/${imageCode}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -197,7 +198,7 @@ export const updateCommentApi = async (
     const { data, status } = await axios.post(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/products/update-product-comment/${productCode}`,
+      }/v2/products/${productCode}/update-product-comment`,
       { comment },
       {
         headers: {
@@ -213,6 +214,7 @@ export const updateCommentApi = async (
 };
 
 export const makeProductImageMainApi = async (
+  productCode: string | number,
   imageCode: string | number,
   token: string
 ) => {
@@ -220,7 +222,7 @@ export const makeProductImageMainApi = async (
     const { data, status } = await axios.get(
       `${
         import.meta.env.VITE_API_URL
-      }/v2/products/make-product-image-main/${imageCode}`,
+      }/v2/products/${productCode}/make-product-image-main/${imageCode}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

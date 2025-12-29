@@ -210,7 +210,11 @@ export const ProductService = {
     try {
       const formData = new FormData();
       images.forEach((imageObj, index) => {
-        formData.append(`images[${index}]`, imageObj.file);
+        if (imageObj.file && imageObj.file instanceof File) {
+          formData.append(`images[${index}]`, imageObj.file);
+        } else if (imageObj instanceof File) {
+          formData.append(`images[${index}]`, imageObj);
+        }
       });
       const { data, status } = await productImageApi(
         productCode,
@@ -223,9 +227,17 @@ export const ProductService = {
     }
   },
 
-  deleteProductImage: async (imageCode: string | number, token: string) => {
+  deleteProductImage: async (
+    productCode: string | number,
+    imageCode: string | number,
+    token: string
+  ) => {
     try {
-      const { data, status } = await destroyProductImageApi(imageCode, token);
+      const { data, status } = await destroyProductImageApi(
+        productCode,
+        imageCode,
+        token
+      );
       return { data, status };
     } catch (error) {
       throw error;
@@ -248,9 +260,17 @@ export const ProductService = {
     }
   },
 
-  makeProductImageMain: async (imageCode: string | number , token : string) => {
+  makeProductImageMain: async (
+    productCode: string | number,
+    imageCode: string | number,
+    token: string
+  ) => {
     try {
-      const { data, status } = await makeProductImageMainApi(imageCode , token);
+      const { data, status } = await makeProductImageMainApi(
+        productCode,
+        imageCode,
+        token
+      );
       return { data, status };
     } catch (error) {
       throw error;
