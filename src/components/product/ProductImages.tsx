@@ -31,13 +31,13 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                         {images.map((imageItem, index) => (
                             <img
                                 key={index}
-                                src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${GCode}/${SCode}/${imageItem.PicName}.webp`}
+                                src={imageItem?.PicName || import.meta.env.VITE_NO_IMAGE_URL}
                                 alt={productName}
                                 className="col-span-3 w-full object-scale-down rounded-xl hover:cursor-pointer hover:scale-105 hover:grayscale transition-all duration-300 ease-in-out aspect-square"
                                 onClick={() =>
                                     setImageModal({
                                         isOpen: true,
-                                        image: `${import.meta.env.VITE_CDN_URL}/products-image/webp/${GCode}/${SCode}/${imageItem.PicName}.webp`,
+                                        image: imageItem?.PicName,
                                     })
                                 }
                             />
@@ -58,7 +58,7 @@ const ProductImages: React.FC<ProductImagesProps> = ({
                         {images.map((imageItem, index) => (
                             <SwiperSlide key={index}>
                                 <img
-                                    src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${GCode}/${SCode}/${imageItem.PicName}.webp`}
+                                    src={imageItem?.PicName || import.meta.env.VITE_NO_IMAGE_URL}
                                     alt={productName}
                                     className="w-full object-scale-down rounded-xl bg-gray-100 aspect-square"
                                 />

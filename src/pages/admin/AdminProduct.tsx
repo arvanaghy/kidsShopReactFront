@@ -79,7 +79,7 @@ const AdminProduct = () => {
                         <div className="flex flex-row flex-wrap gap-1.5 justify-center items-center">
                             {product?.product_images?.map((img: string, index: number) => (
                                 <div className="relative" key={index}>
-                                    <img src={`https://api.kidsshop110.ir/products-image/webp/${product?.GCode}/${product?.SCode}/${img?.PicName}.webp`} alt="product" className="w-24 object-scale-down m-2 inline-block" />
+                                    <img src={`${img?.PicName || ''}`} alt="product" className="w-24 object-scale-down m-2 inline-block" />
                                     <button
                                         onClick={() => handleDeleteProductImage(img?.Code)}
                                         className="absolute bottom-0 left-0 right-0 py-0.5 leading-relaxed hover:bg-red-800 text-xs bg-red-500 text-white rounded-lg">
