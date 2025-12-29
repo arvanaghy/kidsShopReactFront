@@ -18,7 +18,7 @@ const ListAsBar = ({ info }: ListAsBarProps) => {
                                     md:hover:scale-105  duration-300  ease-in-out transition-all gap-2 `}
           >
             <img
-              src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.PicName}.webp`}
+              src={item?.PicName || import.meta.env.VITE_NO_IMAGE_URL}
               alt={item?.Name}
               onError={(e) => {
                 e.target.src = import.meta.env.VITE_NO_IMAGE_URL;

@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { searchValidationMessage } from "@entity/validationMessages";
 import { validateSearch } from "@entity/validations";
 import { fetchMenuSubItems } from "@api/menuApi";
+import { getErrorMessage } from "@utils/getErrorMessage";
 
 export const MenuService = {
   handleSearch: async (
@@ -40,7 +41,8 @@ export const MenuService = {
       const data = await fetchMenuSubItems();
       setCategoryList(data?.categories);
     } catch (error) {
-      toast.error(error?.response?.data?.message || error?.message);
+
+      toast.error(getErrorMessage(error));
     } finally {
       setIsPending(false);
     }

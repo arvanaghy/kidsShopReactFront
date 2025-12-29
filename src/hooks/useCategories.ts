@@ -67,13 +67,13 @@ export const searchCategory = () => {
 };
 
 export const useSubCategory = (
-  categoryCode?: number | string,
-  product_page: number | string | null | undefined,
-  subcategory_page: number | string | null | undefined,
-  search: string | undefined | null,
-  size: string | undefined | null,
-  color: string | undefined | null,
-  sort_price: string | undefined | null
+  categoryCode: number | string,
+  product_page?: number | string,
+  subcategory_page?: number | string | null | undefined,
+  search?: string | undefined | null,
+  size?: string | undefined | null,
+  color?: string | undefined | null,
+  sort_price?: string | undefined | null
 ) => {
   const [isPending, setIsPending] = useState(false);
   const [subCategories, setSubCategories] = useState([]);

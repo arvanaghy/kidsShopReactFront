@@ -73,7 +73,7 @@ const SubCategories = () => {
         colors={colors}
         navigation={`category/${categoryCode}`}
       />
-      <MobileFilterToggle setIsModal={setIsModal} />
+      <MobileFilterToggle isModal={isModal} setIsModal={setIsModal} />
       {/* side bar */}
       <SideFilter
         searchPhrase={searchPhrase}

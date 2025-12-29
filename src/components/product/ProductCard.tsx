@@ -47,6 +47,9 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
     ),
   ];
 
+
+  const findDefImage = (item: any) => item?.product_images?.find((img: any) => img?.Def == 1);
+
   return (
     <div
       className={`${colSpan} rounded-lg h-full xl:flex-shrink-0 flex flex-col overflow-hidden group`}
@@ -54,8 +57,7 @@ const ProductCard = ({ item = {}, colSpan = "col-span-4" }) => {
       {/* Top Section: Image and Labels */}
       <div className="relative flex flex-col justify-center items-center w-full  rounded-t-lg duration-300 ease-in-out transition-all">
         <img
-          src={`${import.meta.env.VITE_CDN_URL}/products-image/webp/${item?.GCode}/${item?.SCode}/${item?.PicName
-            }.webp`}
+          src={findDefImage(item)?.PicName || import.meta.env.VITE_NO_IMAGE_URL}
           alt={item?.Name}
           loading="lazy"
           onError={(e) => {
